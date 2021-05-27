@@ -5,7 +5,10 @@ DROP TABLE IF EXISTS `News`;
 DROP TABLE IF EXISTS `Manager`;
 DROP TABLE IF EXISTS `QA`;
 
-DROP TABLE IF EXISTS `ArticleTitleOpt`; -- NOT YET
+drop table if exists `ForumArticle`;
+drop table if exists `ArticleTitleOpt`;
+drop table if exists `ArticleReport`;
+drop table if exists `ForumComment`;
 
 DROP TABLE IF EXISTS `AdPic`;
 DROP TABLE IF EXISTS `AdOrder`;
@@ -364,14 +367,52 @@ CREATE TABLE `AdPic` (
 
 -- --------------------------------------FORUM(有點問題還有4張)----------------------------------------
 
+create table `ArticleTitleOpt` (
+	`articleTitleOptSN` int not null auto_increment comment '發文選項編號' primary key,
+	`articleTitleOptText` char(12) not null comment '選項內容'
+)AUTO_INCREMENT = 31 COMMENT='發文標題選項';
 
-CREATE TABLE `ArticleTitleOpt` (
-  `articleTitleOptSN` int NOT NULL AUTO_INCREMENT COMMENT '發文選項編號',
-  `articleTitleOptText` char(12) NOT NULL COMMENT '選項內容',
-  PRIMARY KEY (`articleTitleOptSN`)
-) COMMENT='發文標題選項';
+create table `ForumArticle` (
+	`articleSN` int not null auto_increment comment '文章編號' primary key,
+	`articleTitle` varchar(60) not null comment '文章標題',
+	`publishedDate` timestamp not null comment '發文時間',
+	`articleText` longText not null comment '發文內容',
+	`articleStatus` int not null comment '文章狀態',
+	`userID` int not null comment '會員編號',
+	`articleTitleOptSN` int not null comment '發文選項編號',
+	`rateGCount` int not null comment '文章好評',
+	`rateGNCount` int not null comment '文章負評',
+	CONSTRAINT `ForumArticle_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`),
+	CONSTRAINT `ForumArticle_articleTitleOptSN` FOREIGN KEY (`articleTitleOptSN`) REFERENCES `ArticleTitleOpt` (`articleTitleOptSN`)
+)AUTO_INCREMENT = 30001 COMMENT='討論區文章';
 
+create table `ForumRate` (
+	`articleRateSN` int not null auto_increment comment '文章評價編號' primary key,
+	`userID` int not null comment '會員編號',
+	`articleSN` int not null comment '文章編號',
+	`articleRate` boolean not null comment '評價',
+	CONSTRAINT `ForumRate_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`),
+	CONSTRAINT `ForumRate_articleSN` FOREIGN KEY (`articleSN`) REFERENCES `ForumArticle` (`articleSN`)
+)AUTO_INCREMENT = 30000001 COMMENT='文章評價';
 
+create table `ArticleReport` (
+	`reportSN` int not null auto_increment comment '檢舉編號' primary key,
+	`reportReason` varchar(150) not null comment '檢舉原因',
+	`userID` int not null comment '會員編號',
+	`articleSN` int not null comment '文章編號',
+	CONSTRAINT `ArticleReport_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`),
+	CONSTRAINT `ArticleReport_articleSN` FOREIGN KEY (`articleSN`) REFERENCES `ForumArticle` (`articleSN`)
+)AUTO_INCREMENT = 3001 COMMENT='文章檢舉';
+
+create table `ForumComment` (
+	`commentSN` int not null auto_increment comment '留言編號' primary key,
+	`commentDate` timestamp not null comment '留言時間',
+	`commentText` varchar(150)not null comment '留言內容',
+	`userID` int not null comment '會員編號',
+	`articleSN` int not null comment '文章編號',
+	CONSTRAINT `ForumComment_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`),
+	CONSTRAINT `ForumComment_articleSN` FOREIGN KEY (`articleSN`) REFERENCES `ForumArticle` (`articleSN`)
+)AUTO_INCREMENT = 300001 COMMENT='討論區留言';
 
 -- --------------------------------------孤兒們 QA MANAGER NEWS----------------------------------------
 
