@@ -1,6 +1,6 @@
 package com.articleTitleOpt.model;
 
-public class articleTitleOptVO implements java.io.Serializable{
+public class ArticleTitleOptVO implements java.io.Serializable{
 	
 	private Integer articleTitleOptSN;
 	private String articleTitleOptText;

@@ -1,6 +1,6 @@
 package com.articleReport.model;
 
-public class articleReportVO implements java.io.Serializable{
+public class ArticleReportVO implements java.io.Serializable{
 	
 	private Integer reportSN;
 	private Integer userID;
