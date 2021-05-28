@@ -1,14 +1,10 @@
 CREATE DATABASE IF NOT EXISTS UNDERWATER;
-USE UNDERWATER;
 
 DROP TABLE IF EXISTS `News`;
 DROP TABLE IF EXISTS `Manager`;
 DROP TABLE IF EXISTS `QA`;
 
-drop table if exists `ForumArticle`;
-drop table if exists `ArticleTitleOpt`;
-drop table if exists `ArticleReport`;
-drop table if exists `ForumComment`;
+DROP TABLE IF EXISTS `ArticleTitleOpt`; -- NOT YET
 
 DROP TABLE IF EXISTS `AdPic`;
 DROP TABLE IF EXISTS `AdOrder`;
@@ -59,10 +55,7 @@ CREATE TABLE `Member` (
   UNIQUE KEY `UK_MEMBER_account` (`account`)
 ) COMMENT='會員';
 
-insert into member (account, pwd, nickName, userName, gender, birthDate, phone, personID, address, createTime, `status`, upDateTime, ratePeople, ratePoint)
-values ('uuuu', 'uuuu', 'uuuu', 'uuuu', '1', '2010-10-10', '0999999999', 'A999999999', '台北', now(), '0', now(), '1', '1'), 
-('Feng', 'Feng', 'Feng', 'Feng', '0', '1999-11-11', '0900000000', 'Q111111111', '花蓮', now(), '0', now(), '2', '2'),
-('Ks', 'Ks', 'Ks', 'Ks', '1', '2020-05-27', '0911111111', 'O000000000', '高雄', now(), '0', now(), '3', '3');
+
 
 CREATE TABLE `Diveinfo` (
   `pointSN` int NOT NULL AUTO_INCREMENT COMMENT '潛點編號',
@@ -79,9 +72,6 @@ CREATE TABLE `Diveinfo` (
   `status` varchar(20) NOT NULL,
   PRIMARY KEY (`pointSN`)
 ) COMMENT='潛點資訊' AUTO_INCREMENT = 200001;
-
-insert into Diveinfo (pointName, latitude, longitude, view, introduction, season, local, pic, ratePoint, ratePeople, status)
-values ('綠島', '162.2', '22.8', '不錯', '不錯不錯', '春夏秋冬一年四季', '這啥', 1001, '10', '2', '0');
 
 
 -- --------------------------------------套裝行程----------------------------------------
@@ -156,18 +146,14 @@ CREATE TABLE `Party` (
   `partyMinSize` int NOT NULL COMMENT '揪團最低人數',
   `partyLocation` int NOT NULL COMMENT '揪團地點',
   `partyDetail` longtext NOT NULL COMMENT '揪團詳細內容',
-  `createTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '揪團發文時間',
-  `status` char(1) NOT NULL DEFAULT '0' COMMENT '揪團狀態 0:熱烈報名中, 1:已額滿, 2:已結束, 3: 已取消, 4: 已成團(仍可收), 5: 被下架',
+  `createTime` timestamp NOT NULL COMMENT '揪團發文時間',
+  `status` char(1) NOT NULL COMMENT '揪團狀態',
   PRIMARY KEY (`partySN`),
   KEY `FK_Party_partyHost` (`partyHost`),
   KEY `FK_Party_partyLocation` (`partyLocation`),
   CONSTRAINT `FK_Party_partyHost` FOREIGN KEY (`partyHost`) REFERENCES `Member` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_Party_partyLocation` FOREIGN KEY (`partyLocation`) REFERENCES `DiveInfo` (`pointSN`) ON DELETE CASCADE ON UPDATE CASCADE
-) COMMENT='揪團列表' AUTO_INCREMENT=400001;
-
-insert into party (partyHost, partyTitle, regDate, closeDate, startDate, endDate, partyMinSize, partyLocation, partyDetail)
-values ('1', '要不要一起去看海龜1', '2020-01-01', '2020-01-31', '2020-03-03', '2020-03-04', '5', '200001', 'testInsertedBySQLDDL'), 
-('1', '要不要一起去看海龜2', '1999-09-09', '1999-10-10', '1999-12-20', '1999-12-23', '2', '200001', 'testInsertedBySQLDDL2');
+) COMMENT='揪團列表';
 
 
 CREATE TABLE `PartyMember` (
@@ -180,19 +166,15 @@ CREATE TABLE `PartyMember` (
   `birthDate` date NOT NULL COMMENT '生日',
   `personID` char(10) NOT NULL COMMENT '身份證字號',
   `certificationPic` longblob COMMENT '證照圖片',
-  `appliedDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '報名時間',
+  `appliedDate` timestamp NOT NULL COMMENT '報名日期',
   `comment` varchar(1000) DEFAULT NULL COMMENT '備註',
-  `status` int NOT NULL DEFAULT '0' COMMENT '報名狀態 0:待審核 1:審核通過 2:審核未通過',
+  `status` int NOT NULL COMMENT '報名狀態 0:待審核 1:審核通過 2:審核未通過',
   PRIMARY KEY (`partyMemberSN`),
   UNIQUE KEY `UK_PartyMember_partySN_partyMember` (`partySN`,`partyMember`),
   KEY `FK_PartyMember_partyMember` (`partyMember`),
   CONSTRAINT `FK_PartyMember_partyMember` FOREIGN KEY (`partyMember`) REFERENCES `Member` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_PartyMember_partySN` FOREIGN KEY (`partySN`) REFERENCES `Party` (`partySN`) ON DELETE CASCADE ON UPDATE CASCADE
-) COMMENT='揪團團員名單' AUTO_INCREMENT=400001;
-
-insert into PartyMember (partySN, partyMember, gender, email, phone, birthDate, personID, comment)
-values ('400002', '2', '2', 'test111@test.com', '0988888888', '1998-02-02', 'B555555555', 'insertByDDL'), 
-('400002', '1', '2', 'test222@test.com', '0911222333', '1900-02-02', 'C555555555', 'insertByDDL');
+) COMMENT='揪團團員名單';
 
 
 CREATE TABLE `MemberRate` (
@@ -203,7 +185,7 @@ CREATE TABLE `MemberRate` (
   `rateRecipiant` int NOT NULL COMMENT '被評論方',
   `rate` int NOT NULL COMMENT '評價',
   `rateDetail` varchar(3000) DEFAULT NULL COMMENT '評價詳細內容',
-  `createTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '評價時間',
+  `createTime` timestamp NOT NULL COMMENT '評價時間',
   PRIMARY KEY (`SN`),
   KEY `FK_MemberRate_partySN` (`partySN`),
   KEY `FK_MemberRate_orderSN` (`orderSN`),
@@ -213,10 +195,8 @@ CREATE TABLE `MemberRate` (
   CONSTRAINT `FK_MemberRate_partySN` FOREIGN KEY (`partySN`) REFERENCES `Party` (`partySN`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_rateMaker` FOREIGN KEY (`rateMaker`) REFERENCES `Member` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_rateRecipiant` FOREIGN KEY (`rateRecipiant`) REFERENCES `Member` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE
-) COMMENT='會員評價' AUTO_INCREMENT=400001;
+) COMMENT='會員評價';
 
-insert into MemberRate (partySN, rateMaker, rateRecipiant, rate, rateDetail)
-values ('400002', '1', '2', '5', 'testByDDL');
 
 -- --------------------------------------商城相關表格----------------------------------------
 
@@ -383,52 +363,14 @@ CREATE TABLE `AdPic` (
 
 -- --------------------------------------FORUM(有點問題還有4張)----------------------------------------
 
-create table `ArticleTitleOpt` (
-	`articleTitleOptSN` int not null auto_increment comment '發文選項編號' primary key,
-	`articleTitleOptText` char(12) not null comment '選項內容'
-)AUTO_INCREMENT = 31 COMMENT='發文標題選項';
 
-create table `ForumArticle` (
-	`articleSN` int not null auto_increment comment '文章編號' primary key,
-	`articleTitle` varchar(60) not null comment '文章標題',
-	`publishedDate` timestamp not null comment '發文時間',
-	`articleText` longText not null comment '發文內容',
-	`articleStatus` int not null comment '文章狀態',
-	`userID` int not null comment '會員編號',
-	`articleTitleOptSN` int not null comment '發文選項編號',
-	`rateGCount` int not null comment '文章好評',
-	`rateGNCount` int not null comment '文章負評',
-	CONSTRAINT `ForumArticle_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`),
-	CONSTRAINT `ForumArticle_articleTitleOptSN` FOREIGN KEY (`articleTitleOptSN`) REFERENCES `ArticleTitleOpt` (`articleTitleOptSN`)
-)AUTO_INCREMENT = 30001 COMMENT='討論區文章';
+CREATE TABLE `ArticleTitleOpt` (
+  `articleTitleOptSN` int NOT NULL AUTO_INCREMENT COMMENT '發文選項編號',
+  `articleTitleOptText` char(12) NOT NULL COMMENT '選項內容',
+  PRIMARY KEY (`articleTitleOptSN`)
+) COMMENT='發文標題選項';
 
-create table `ForumRate` (
-	`articleRateSN` int not null auto_increment comment '文章評價編號' primary key,
-	`userID` int not null comment '會員編號',
-	`articleSN` int not null comment '文章編號',
-	`articleRate` boolean not null comment '評價',
-	CONSTRAINT `ForumRate_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`),
-	CONSTRAINT `ForumRate_articleSN` FOREIGN KEY (`articleSN`) REFERENCES `ForumArticle` (`articleSN`)
-)AUTO_INCREMENT = 30000001 COMMENT='文章評價';
 
-create table `ArticleReport` (
-	`reportSN` int not null auto_increment comment '檢舉編號' primary key,
-	`reportReason` varchar(150) not null comment '檢舉原因',
-	`userID` int not null comment '會員編號',
-	`articleSN` int not null comment '文章編號',
-	CONSTRAINT `ArticleReport_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`),
-	CONSTRAINT `ArticleReport_articleSN` FOREIGN KEY (`articleSN`) REFERENCES `ForumArticle` (`articleSN`)
-)AUTO_INCREMENT = 3001 COMMENT='文章檢舉';
-
-create table `ForumComment` (
-	`commentSN` int not null auto_increment comment '留言編號' primary key,
-	`commentDate` timestamp not null comment '留言時間',
-	`commentText` varchar(150)not null comment '留言內容',
-	`userID` int not null comment '會員編號',
-	`articleSN` int not null comment '文章編號',
-	CONSTRAINT `ForumComment_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`),
-	CONSTRAINT `ForumComment_articleSN` FOREIGN KEY (`articleSN`) REFERENCES `ForumArticle` (`articleSN`)
-)AUTO_INCREMENT = 300001 COMMENT='討論區留言';
 
 -- --------------------------------------孤兒們 QA MANAGER NEWS----------------------------------------
 
