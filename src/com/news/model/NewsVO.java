@@ -5,10 +5,10 @@ public class NewsVO implements java.io.Serializable{
 	private Integer newsSN;
 	private String title;
 	private String content;
-	private Byte[] image;
-	private Date date;
+	private byte[] image;
+	private Date newsDate;
 	private String newsFrom;
-	private char newsType;
+	private String newsType;
 	public Integer getNewsSN() {
 		return newsSN;
 	}
@@ -27,17 +27,18 @@ public class NewsVO implements java.io.Serializable{
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public Byte[] getImage() {
+	public byte[] getImage() {
 		return image;
 	}
-	public void setImage(Byte[] image) {
+	public void setImage(byte[] image) {
 		this.image = image;
 	}
-	public Date getDate() {
-		return date;
+
+	public Date getNewsDate() {
+		return newsDate;
 	}
-	public void setDate(Date date) {
-		this.date = date;
+	public void setNewsDate(Date newsDate) {
+		this.newsDate = newsDate;
 	}
 	public String getNewsFrom() {
 		return newsFrom;
@@ -45,10 +46,10 @@ public class NewsVO implements java.io.Serializable{
 	public void setNewsFrom(String newsFrom) {
 		this.newsFrom = newsFrom;
 	}
-	public char getNewsType() {
+	public String getNewsType() {
 		return newsType;
 	}
-	public void setNewsType(char newsType) {
+	public void setNewsType(String newsType) {
 		this.newsType = newsType;
 	}
 	
