@@ -9,7 +9,7 @@ public class MemberVO implements Serializable{
 	private String account;//帳號
 	private String pwd;//密碼
 	private String nickName;//暱稱
-	private String gender;//性別
+	private String gender;//性別 hello
 	private Date birthDate;//會員生日
 	private String phone;//聯絡電話
 	private String certification;//證照
