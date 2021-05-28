@@ -1,14 +1,10 @@
 CREATE DATABASE IF NOT EXISTS UNDERWATER;
-USE UNDERWATER;
 
 DROP TABLE IF EXISTS `News`;
 DROP TABLE IF EXISTS `Manager`;
 DROP TABLE IF EXISTS `QA`;
 
-drop table if exists `ForumArticle`;
-drop table if exists `ArticleTitleOpt`;
-drop table if exists `ArticleReport`;
-drop table if exists `ForumComment`;
+DROP TABLE IF EXISTS `ArticleTitleOpt`; -- NOT YET
 
 DROP TABLE IF EXISTS `AdPic`;
 DROP TABLE IF EXISTS `AdOrder`;
@@ -365,7 +361,8 @@ CREATE TABLE `AdPic` (
   CONSTRAINT `AdPic_adPicSN_FK` FOREIGN KEY (`adPicSN`) REFERENCES `AdOrder` (`orderSN`)
 ) COMMENT='廣告圖片';
 
--- --------------------------------------FORUM(有點問題還有4張)----------------------------------------
+-- --------------------------------------FORUM----------------------------------------
+
 
 create table `ArticleTitleOpt` (
 	`articleTitleOptSN` int not null auto_increment comment '發文選項編號' primary key,
@@ -390,7 +387,7 @@ create table `ForumRate` (
 	`articleRateSN` int not null auto_increment comment '文章評價編號' primary key,
 	`userID` int not null comment '會員編號',
 	`articleSN` int not null comment '文章編號',
-	`articleRate` boolean not null comment '評價',
+	`articleRate` tinyint(1) not null comment '評價',
 	CONSTRAINT `ForumRate_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`),
 	CONSTRAINT `ForumRate_articleSN` FOREIGN KEY (`articleSN`) REFERENCES `ForumArticle` (`articleSN`)
 )AUTO_INCREMENT = 30000001 COMMENT='文章評價';
@@ -413,6 +410,8 @@ create table `ForumComment` (
 	CONSTRAINT `ForumComment_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`),
 	CONSTRAINT `ForumComment_articleSN` FOREIGN KEY (`articleSN`) REFERENCES `ForumArticle` (`articleSN`)
 )AUTO_INCREMENT = 300001 COMMENT='討論區留言';
+
+
 
 -- --------------------------------------孤兒們 QA MANAGER NEWS----------------------------------------
 
