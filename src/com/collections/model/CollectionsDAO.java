@@ -1,12 +1,8 @@
 package com.collections.model;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.*;
 import util.Util;
-
-
 
 public class CollectionsDAO implements CollectionsDAO_interface {
 	
@@ -68,10 +64,6 @@ public class CollectionsDAO implements CollectionsDAO_interface {
 				}
 			}
 		}	
-	}
-
-	@Override
-	public void update() { // no need	
 	}
 
 	@Override

@@ -4,8 +4,7 @@ import java.util.List;
 
 public interface CollectionsDAO_interface {
 	public void insert(CollectionsVO collectionsVO);
-	public void update();	// no need
 	public void delete(CollectionsVO collectionsVO);
-	public List<Integer> findByUserID(Integer userID);	// // FK need imports Åã¥Ü·|­û¦¬ÂÃªº®M¸Ë¦æµ{
+	public List<Integer> findByUserID(Integer userID);	// // FK need imports ï¿½ï¿½Ü·|ï¿½ï¿½ï¿½ï¿½ï¿½Ãªï¿½ï¿½Mï¿½Ë¦ï¿½{
 	
 }
