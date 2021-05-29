@@ -176,6 +176,7 @@ CREATE TABLE `PartyMember` (
   `phone` varchar(10) NOT NULL COMMENT '手機',
   `birthDate` date NOT NULL COMMENT '生日',
   `personID` char(10) NOT NULL COMMENT '身份證字號',
+  `certification` char(2) COMMENT '證照',
   `certificationPic` longblob COMMENT '證照圖片',
   `appliedDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '報名時間',
   `comment` varchar(1000) DEFAULT NULL COMMENT '備註',
