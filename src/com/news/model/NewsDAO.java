@@ -2,9 +2,7 @@ package com.news.model;
 
 import java.sql.*;
 import java.util.*;
-
 import javax.naming.*;
-
 import javax.sql.DataSource;
 
 
