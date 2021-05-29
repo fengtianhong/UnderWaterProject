@@ -9,7 +9,7 @@ public class DiveInfoVO implements java.io.Serializable{
 	private String introduction;
 	private String season;
 	private String local;
-	private Byte[] pic;
+	private byte[] pic;
 	private Integer ratePoint;
 	private Integer ratePeople;
 	private String status;
@@ -61,10 +61,10 @@ public class DiveInfoVO implements java.io.Serializable{
 	public void setLocal(String local) {
 		this.local = local;
 	}
-	public Byte[] getPic() {
+	public byte[] getPic() {
 		return pic;
 	}
-	public void setPic(Byte[] pic) {
+	public void setPic(byte[] pic) {
 		this.pic = pic;
 	}
 	public Integer getRatePoint() {
