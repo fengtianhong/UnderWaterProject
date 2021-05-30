@@ -1,5 +1,4 @@
 CREATE DATABASE IF NOT EXISTS UNDERWATER;
-USE UNDERWATER;
 
 DROP TABLE IF EXISTS `News`;
 DROP TABLE IF EXISTS `Manager`;
@@ -163,8 +162,8 @@ CREATE TABLE `Party` (
 ) COMMENT='揪團列表' AUTO_INCREMENT=400001;
 
 insert into party (partyHost, partyTitle, regDate, closeDate, startDate, endDate, partyMinSize, partyLocation, partyDetail)
-values ('1', '要不要一起去看海龜1', '2020-01-01', '2020-01-31', '2020-03-03', '2020-03-04', '5', '200001', 'testInsertedBySQLDDL'), 
-('1', '要不要一起去看海龜2', '1999-09-09', '1999-10-10', '1999-12-20', '1999-12-23', '2', '200001', 'testInsertedBySQLDDL2');
+values ('1', '要不要一起去找山迪', '2000-01-01', '2000-01-31', '2000-03-03', '2000-03-04', '5', '200001', '這是測試DDL'), 
+('1', '或者去追逐派大興', '2001-09-09', '2001-10-10', '2001-12-20', '2001-12-23', '2', '200001', '這也是測試DDL');
 
 
 CREATE TABLE `PartyMember` (
@@ -178,9 +177,9 @@ CREATE TABLE `PartyMember` (
   `personID` char(10) NOT NULL COMMENT '身份證字號',
   `certification` char(2) COMMENT '證照',
   `certificationPic` longblob COMMENT '證照圖片',
-  `appliedDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '報名時間',
+  `appliedTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '報名時間',
   `comment` varchar(1000) DEFAULT NULL COMMENT '備註',
-  `status` int NOT NULL DEFAULT '0' COMMENT '報名狀態 0:待審核 1:審核通過 2:審核未通過',
+  `status` int NOT NULL DEFAULT '0' COMMENT '報名狀態 0:待審核 1:審核通過 2:審核未通過 3:不顯示',
   PRIMARY KEY (`partyMemberSN`),
   UNIQUE KEY `UK_PartyMember_partySN_partyMember` (`partySN`,`partyMember`),
   KEY `FK_PartyMember_partyMember` (`partyMember`),
@@ -189,8 +188,8 @@ CREATE TABLE `PartyMember` (
 ) COMMENT='揪團團員名單' AUTO_INCREMENT=400001;
 
 insert into PartyMember (partySN, partyMember, gender, email, phone, birthDate, personID, comment)
-values ('400002', '2', '2', 'test111@test.com', '0988888888', '1998-02-02', 'B555555555', 'insertByDDL'), 
-('400002', '1', '2', 'test222@test.com', '0911222333', '1900-02-02', 'C555555555', 'insertByDDL');
+values ('400002', '1', '2', 'thisisSpongeBob@test.com', '0988888888', '1998-02-02', 'B555555555', '這是測試DDL'), 
+('400002', '2', '2', 'thisisSomeone@test.com', '0911222333', '1900-02-02', 'C777777777', '這是測試DDL');
 
 
 CREATE TABLE `MemberRate` (
@@ -214,7 +213,7 @@ CREATE TABLE `MemberRate` (
 ) COMMENT='會員評價' AUTO_INCREMENT=400001;
 
 insert into MemberRate (partySN, rateMaker, rateRecipiant, rate, rateDetail)
-values ('400002', '1', '2', '5', 'testByDDL');
+values ('400002', '1', '2', '5', '測試第一筆評價DDL');
 
 -- --------------------------------------商城相關表格----------------------------------------
 
@@ -379,15 +378,55 @@ CREATE TABLE `AdPic` (
   CONSTRAINT `AdPic_adPicSN_FK` FOREIGN KEY (`adPicSN`) REFERENCES `AdOrder` (`orderSN`)
 ) COMMENT='廣告圖片';
 
--- --------------------------------------FORUM(有點問題還有4張)----------------------------------------
+-- --------------------------------------FORUM----------------------------------------
 
 
-CREATE TABLE `ArticleTitleOpt` (
-  `articleTitleOptSN` int NOT NULL AUTO_INCREMENT COMMENT '發文選項編號',
-  `articleTitleOptText` char(12) NOT NULL COMMENT '選項內容',
-  PRIMARY KEY (`articleTitleOptSN`)
-) COMMENT='發文標題選項';
+create table `ArticleTitleOpt` (
+	`articleTitleOptSN` int not null auto_increment comment '發文選項編號' primary key,
+	`articleTitleOptText` char(12) not null comment '選項內容'
+)AUTO_INCREMENT = 31 COMMENT='發文標題選項';
 
+create table `ForumArticle` (
+	`articleSN` int not null auto_increment comment '文章編號' primary key,
+	`articleTitle` varchar(60) not null comment '文章標題',
+	`publishedDate` timestamp not null comment '發文時間',
+	`articleText` longText not null comment '發文內容',
+	`articleStatus` int not null comment '文章狀態',
+	`userID` int not null comment '會員編號',
+	`articleTitleOptSN` int not null comment '發文選項編號',
+	`rateGCount` int not null comment '文章好評',
+	`rateGNCount` int not null comment '文章負評',
+	CONSTRAINT `ForumArticle_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`),
+	CONSTRAINT `ForumArticle_articleTitleOptSN` FOREIGN KEY (`articleTitleOptSN`) REFERENCES `ArticleTitleOpt` (`articleTitleOptSN`)
+)AUTO_INCREMENT = 30001 COMMENT='討論區文章';
+
+create table `ForumRate` (
+	`articleRateSN` int not null auto_increment comment '文章評價編號' primary key,
+	`userID` int not null comment '會員編號',
+	`articleSN` int not null comment '文章編號',
+	`articleRate` tinyint(1) not null comment '評價',
+	CONSTRAINT `ForumRate_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`),
+	CONSTRAINT `ForumRate_articleSN` FOREIGN KEY (`articleSN`) REFERENCES `ForumArticle` (`articleSN`)
+)AUTO_INCREMENT = 30000001 COMMENT='文章評價';
+
+create table `ArticleReport` (
+	`reportSN` int not null auto_increment comment '檢舉編號' primary key,
+	`reportReason` varchar(150) not null comment '檢舉原因',
+	`userID` int not null comment '會員編號',
+	`articleSN` int not null comment '文章編號',
+	CONSTRAINT `ArticleReport_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`),
+	CONSTRAINT `ArticleReport_articleSN` FOREIGN KEY (`articleSN`) REFERENCES `ForumArticle` (`articleSN`)
+)AUTO_INCREMENT = 3001 COMMENT='文章檢舉';
+
+create table `ForumComment` (
+	`commentSN` int not null auto_increment comment '留言編號' primary key,
+	`commentDate` timestamp not null comment '留言時間',
+	`commentText` varchar(150)not null comment '留言內容',
+	`userID` int not null comment '會員編號',
+	`articleSN` int not null comment '文章編號',
+	CONSTRAINT `ForumComment_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`),
+	CONSTRAINT `ForumComment_articleSN` FOREIGN KEY (`articleSN`) REFERENCES `ForumArticle` (`articleSN`)
+)AUTO_INCREMENT = 300001 COMMENT='討論區留言';
 
 
 -- --------------------------------------孤兒們 QA MANAGER NEWS----------------------------------------
