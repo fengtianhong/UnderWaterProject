@@ -153,7 +153,12 @@ CREATE TABLE `Party` (
   KEY `FK_Party_partyLocation` (`partyLocation`),
   CONSTRAINT `FK_Party_partyHost` FOREIGN KEY (`partyHost`) REFERENCES `Member` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_Party_partyLocation` FOREIGN KEY (`partyLocation`) REFERENCES `DiveInfo` (`pointSN`) ON DELETE CASCADE ON UPDATE CASCADE
-) COMMENT='揪團列表';
+
+) COMMENT='揪團列表' AUTO_INCREMENT=400001;
+
+insert into party (partyHost, partyTitle, regDate, closeDate, startDate, endDate, partyMinSize, partyLocation, partyDetail)
+values ('1', '要不要一起去找山迪', '2000-01-01', '2000-01-31', '2000-03-03', '2000-03-04', '5', '200001', '這是測試DDL'), 
+('1', '或者去追逐派大興', '2001-09-09', '2001-10-10', '2001-12-20', '2001-12-23', '2', '200001', '這也是測試DDL');
 
 
 CREATE TABLE `PartyMember` (
@@ -165,17 +170,22 @@ CREATE TABLE `PartyMember` (
   `phone` varchar(10) NOT NULL COMMENT '手機',
   `birthDate` date NOT NULL COMMENT '生日',
   `personID` char(10) NOT NULL COMMENT '身份證字號',
+  `certification` char(2) COMMENT '證照',
   `certificationPic` longblob COMMENT '證照圖片',
-  `appliedDate` timestamp NOT NULL COMMENT '報名日期',
+  `appliedTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '報名時間',
   `comment` varchar(1000) DEFAULT NULL COMMENT '備註',
-  `status` int NOT NULL COMMENT '報名狀態 0:待審核 1:審核通過 2:審核未通過',
+  `status` int NOT NULL DEFAULT '0' COMMENT '報名狀態 0:待審核 1:審核通過 2:審核未通過 3:不顯示',
+
   PRIMARY KEY (`partyMemberSN`),
   UNIQUE KEY `UK_PartyMember_partySN_partyMember` (`partySN`,`partyMember`),
   KEY `FK_PartyMember_partyMember` (`partyMember`),
   CONSTRAINT `FK_PartyMember_partyMember` FOREIGN KEY (`partyMember`) REFERENCES `Member` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_PartyMember_partySN` FOREIGN KEY (`partySN`) REFERENCES `Party` (`partySN`) ON DELETE CASCADE ON UPDATE CASCADE
-) COMMENT='揪團團員名單';
+) COMMENT='揪團團員名單' AUTO_INCREMENT=400001;
 
+insert into PartyMember (partySN, partyMember, gender, email, phone, birthDate, personID, comment)
+values ('400002', '1', '2', 'thisisSpongeBob@test.com', '0988888888', '1998-02-02', 'B555555555', '這是測試DDL'), 
+('400002', '2', '2', 'thisisSomeone@test.com', '0911222333', '1900-02-02', 'C777777777', '這是測試DDL');
 
 CREATE TABLE `MemberRate` (
   `SN` int NOT NULL AUTO_INCREMENT COMMENT '會員評價流水編號',
@@ -197,6 +207,9 @@ CREATE TABLE `MemberRate` (
   CONSTRAINT `FK_rateRecipiant` FOREIGN KEY (`rateRecipiant`) REFERENCES `Member` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) COMMENT='會員評價';
 
+
+insert into MemberRate (partySN, rateMaker, rateRecipiant, rate, rateDetail)
+values ('400002', '1', '2', '5', '測試第一筆評價DDL');
 
 -- --------------------------------------商城相關表格----------------------------------------
 
@@ -369,6 +382,7 @@ create table `ArticleTitleOpt` (
 	`articleTitleOptText` char(12) not null comment '選項內容'
 )AUTO_INCREMENT = 31 COMMENT='發文標題選項';
 
+
 create table `ForumArticle` (
 	`articleSN` int not null auto_increment comment '文章編號' primary key,
 	`articleTitle` varchar(60) not null comment '文章標題',
@@ -412,7 +426,6 @@ create table `ForumComment` (
 )AUTO_INCREMENT = 300001 COMMENT='討論區留言';
 
 
-
 -- --------------------------------------孤兒們 QA MANAGER NEWS----------------------------------------
 
 CREATE TABLE `QA` (
@@ -446,3 +459,24 @@ CREATE TABLE `News` (
   `newsType` char(1) NOT NULL COMMENT '新聞類型',
   PRIMARY KEY (`newsSN`)
 ) COMMENT='最新消息' AUTO_INCREMENT = 500001;
+
+
+-- Diveinfo table 潛點資訊
+insert into Diveinfo(pointName,latitude,longitude,`view`,introduction,season,
+`local`,pic,ratePoint,ratePeople,status)
+values("澎湖",23.249750, 119.674783,"測試文字",
+"澎湖南方四島國家公園海域遊憩區擁有美麗壯闊的珊瑚生態和魚群，歡迎民眾來親近海洋，雖然目前交通仍然不方便，但也因此保留了更多原始風貌",
+"春,夏,秋,冬","離島","",5,1,1);
+-- News table 新聞消息
+insert into News(title,content,image,newsdate,newsfrom,newstype)
+values("澎湖水母群聚感染COVID-19","澎湖近期發生人傳水母武漢肺炎之症狀，還請各位潛水客避免前往以免感染",1,"2000-12-12","唬爛嘴","0");
+
+-- Follow table 互追好友1與2
+insert into Follow(follower,followed) values (1,2);
+insert into Follow(follower,followed) values (2,1);
+
+-- chat 聊天訊息 
+insert into Chat(fromAccount, toAccount,content,dateTime)
+values (1,2,"啟源吃早餐",now());
+insert into Chat(fromAccount, toAccount,content,dateTime)
+values (2,1,"喔市喔",now()+5000);
