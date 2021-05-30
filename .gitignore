@@ -13,8 +13,12 @@ gen/
 # Eclipse project files  
 .classpath  
 .project  
+<<<<<<< HEAD
 .DS_Store
 /build/
 
 
 
+=======
+.DS_Store
+>>>>>>> origin/uuuu

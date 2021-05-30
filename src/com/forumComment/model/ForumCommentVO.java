@@ -2,7 +2,7 @@ package com.forumComment.model;
 
 import java.sql.Timestamp;
 
-public class forumCommentVO implements java.io.Serializable{
+public class ForumCommentVO implements java.io.Serializable{
 
 	private Integer commentSN;
 	private Integer articleSN;
