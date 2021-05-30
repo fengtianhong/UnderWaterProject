@@ -9,7 +9,7 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-<<<<<<< HEAD
+
   
   
     <resource-ref>
@@ -21,6 +21,5 @@
   
   
   
-=======
->>>>>>> origin/uuuu
+
 </web-app>
