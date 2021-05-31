@@ -22,6 +22,7 @@ import javax.servlet.http.*;
 import com.chat.model.*;
 import com.diveinfo.model.*;
 import com.news.model.*;
+import com.follow.model.*;
 
 @WebServlet("/Test_DataSource")
 public class Test_DataSource extends HttpServlet {
@@ -101,17 +102,29 @@ public class Test_DataSource extends HttpServlet {
 	
 			
 //=======================ChatDAO Test===========================
-			ChatDAO chatDAO = new ChatDAO();
+//			ChatDAO chatDAO = new ChatDAO();
 //			ChatVO chatVO = new ChatVO();
 //			chatVO.setFromAccount(1);
 //			chatVO.setToAccount(2);
 //			chatVO.setContent("現在時間1040部隊起床");
 //			chatVO.setDateTime(new Timestamp(System.currentTimeMillis()));
 //			chatDAO.insert(chatVO);
-			out.println(chatDAO.findByAccount(1));
+//			out.println(chatDAO.findByAccount(1));
 //			out.println(chatDAO.findByAtoB(1, 2));
 //==============================================================
-			
+            
+//=======================FollowDAO Test=========================
+
+//            FollowDAO followDAO = new FollowDAO();
+//            FollowVO followVO = new FollowVO();
+//            followVO.setFollower(1);//增加一追蹤二
+//            followVO.setFollowed(2);
+//            followDAO.insert(followVO);
+//            out.println(followDAO.findFollower(1));
+//            out.println(followDAO.findFollowed(1));
+//            followDAO.delete(1, 2);
+//            out.println(followDAO.findFollower(1));
+//            out.println(followDAO.findFollowed(1));	
 			
 		} 
 		catch (Exception e) {
