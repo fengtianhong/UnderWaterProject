@@ -133,7 +133,7 @@ create table `LocationRate` (
 ) COMMENT='地點評價資料' AUTO_INCREMENT=6001;
 
 
--- --------------------------------------揪團----------------------------------------
+-- --------------------------------------揪團&會員評價----------------------------------------
 
 CREATE TABLE `Party` (
   `partySN` int NOT NULL AUTO_INCREMENT COMMENT '揪團編號',
