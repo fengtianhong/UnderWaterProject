@@ -4,21 +4,23 @@ import java.util.List;
 
 public interface PartyMemberDAO_interface {
 	
+	// Function UPDATE is pending.
+	
 	public int insert(PartyMemberVO partyMemberVO);  //done
 	
-	public void update(PartyMemberVO partyMemberVO);
+	public void update(PartyMemberVO partyMemberVO);  //pending
 	
 	public int updateStatus(Integer partyMemberSN, String status);  //done
 	
 	public PartyMemberVO findByPartyMemberSN(Integer partyMemberSN);  //done
 	
-	public List<PartyMemberVO> findByPartyMember(Integer partyMemebr);
+	public List<PartyMemberVO> findByPartyMember(Integer partyMember);  //done
 	
-	public List<PartyMemberVO> findByPartySN(Integer partySN);
+	public List<PartyMemberVO> findByPartySN(Integer partySN);  //done
 	
-	public List<PartyMemberVO> getAll(); 
+	public List<PartyMemberVO> getAll(); // done
 	
-	public void deleteByPartyMemberSN(Integer partyMemberSN);
+	public int deleteByPartyMemberSN(Integer partyMemberSN);	//done
 
 
 }

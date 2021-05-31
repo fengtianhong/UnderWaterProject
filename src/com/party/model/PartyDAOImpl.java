@@ -49,10 +49,10 @@ public class PartyDAOImpl implements PartyDAO_interface{
 //			}
 			
 // test findByPartyLocation
-			List<PartyVO> L3 = dao.findByPartyLocation(200002);
-			for (PartyVO j : L3) {
-				System.out.println(j.getPartyHost() + ", " + j.getPartyTitle() + ", " + j.getPartyLocation());
-			}
+//			List<PartyVO> L3 = dao.findByPartyLocation(200002);
+//			for (PartyVO j : L3) {
+//				System.out.println(j.getPartyHost() + ", " + j.getPartyTitle() + ", " + j.getPartyLocation());
+//			}
 			
 // test getAll
 //			List<PartyVO> L2 = dao.getAll();
@@ -76,8 +76,8 @@ public class PartyDAOImpl implements PartyDAO_interface{
 	private static final String FINDBYPARTYSN_STMT = "select * from party where partySN = ?";
 	private static final String FINDBYPARTYHOST_STMT = "select * from party where partyHost = ?";
 	private static final String FINDBYPARTYLOCATION_STMT = "select * from party where partyLocation = ?";
-	private static final String DELETEBYPARTYSN_STMT = "delete from party where partySN = ?";
 	private static final String GETALL_STMT = "select * from party";
+	private static final String DELETEBYPARTYSN_STMT = "delete from party where partySN = ?";
 	
 	
 	static {
@@ -422,7 +422,6 @@ public class PartyDAOImpl implements PartyDAO_interface{
 		}
 		return i;
 	}
-	
 	
 
 }

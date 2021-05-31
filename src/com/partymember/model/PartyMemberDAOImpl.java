@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.party.model.PartyVO;
@@ -40,7 +41,7 @@ public class PartyMemberDAOImpl implements PartyMemberDAO_interface {
 		
 		PartyMemberVO pm1 = new PartyMemberVO();
 		pm1.setPartySN(400003);
-		pm1.setPartyMember(3);	//應該會錯, 重複了
+		pm1.setPartyMember(1);
 		pm1.setGender("1");
 		pm1.setEmail("firsttest@firsttest.gmail.com");
 		pm1.setPhone("0988111222");
@@ -61,10 +62,31 @@ public class PartyMemberDAOImpl implements PartyMemberDAO_interface {
 //		System.out.println("update status!");
 		
 // test findByPartyMemberSN
-		PartyMemberVO pm2 = dao.findByPartyMemberSN(400004);
-		System.out.println(pm2.getEmail());
-		System.out.println(pm2.getBirthDate());
-	
+//		PartyMemberVO pm2 = dao.findByPartyMemberSN(400002);
+//		System.out.println(pm2.getEmail());
+//		System.out.println(pm2.getBirthDate());
+		
+// test findByPartyMember
+//		List<PartyMemberVO> list_findByPartyMember = dao.findByPartyMember(2);
+//		for (PartyMemberVO i : list_findByPartyMember) {
+//			System.out.println(i.getAppliedTime());
+//		}
+		
+// test findByPartySN
+//		List<PartyMemberVO> list_findByPartySN = dao.findByPartySN(400003);
+//		for (PartyMemberVO i : list_findByPartySN) {
+//			System.out.println(i.getPartyMember());
+//		}
+		
+// test getAll
+//		List<PartyMemberVO> list_getAll = dao.getAll();
+//		for (PartyMemberVO i : list_getAll) {
+//			System.out.println(i.getPersonID());
+//		}
+		
+// test deleteByPartyMemberSN
+//		System.out.println(dao.deleteByPartyMemberSN(400005));
+		
 	}
 	
 	
@@ -73,6 +95,10 @@ public class PartyMemberDAOImpl implements PartyMemberDAO_interface {
 	private static final String UPDATESTATUS_STMT = 
 			"update PartyMember set status = ? where partyMemberSN = ?";
 	private static final String FINDBYPARTYMEMBERSN_STMT = "select * from partyMember where partyMemberSN = ?";
+	private static final String FINDBYPARTYMEMBER_STMT = "select * from partyMember where partyMember = ?";
+	private static final String FINDBYPARTYSN_STMT = "select * from partyMember where partySN = ?";
+	private static final String GETALL_STMT = "select * from partyMember";
+	private static final String DELETEBYPARTYMEMBERSN_STMT = "delete from partyMember where partyMemberSN = ?";
 	
 	static {
 		try {
@@ -187,6 +213,7 @@ public class PartyMemberDAOImpl implements PartyMemberDAO_interface {
 				p1 = new PartyMemberVO();
 				p1.setPartyMemberSN(rs.getInt("partyMemberSN"));
 				p1.setPartySN(rs.getInt("partySN"));
+				p1.setPartyMember(rs.getInt("partyMember"));
 				p1.setGender(rs.getString("gender"));
 				p1.setEmail(rs.getString("email"));
 				p1.setPhone(rs.getString("phone"));
@@ -194,7 +221,7 @@ public class PartyMemberDAOImpl implements PartyMemberDAO_interface {
 				p1.setPersonID(rs.getString("personID"));
 				p1.setCertification(rs.getString("certification"));
 				p1.setCertificationPic(rs.getBytes("certificationPic"));
-				p1.setAppliedDate(rs.getDate("appliedDate"));
+				p1.setAppliedTime(rs.getTimestamp("appliedTime"));
 				p1.setComment(rs.getString("comment"));
 				p1.setStatus(rs.getString("status"));
 			}
@@ -222,27 +249,202 @@ public class PartyMemberDAOImpl implements PartyMemberDAO_interface {
 	}
 
 	@Override
-	public List<PartyMemberVO> findByPartyMember(Integer partyMemebr) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<PartyMemberVO> findByPartyMember(Integer partyMember) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		PartyMemberVO p1 = null;
+		List<PartyMemberVO> list1 = new ArrayList<>();
+	
+		try {
+			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			pstmt = con.prepareStatement(FINDBYPARTYMEMBER_STMT);
+			
+			pstmt.setInt(1, partyMember);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				p1 = new PartyMemberVO();
+				p1.setPartyMemberSN(rs.getInt("partyMemberSN"));
+				p1.setPartySN(rs.getInt("partySN"));
+				p1.setPartyMember(rs.getInt("partyMember"));
+				p1.setGender(rs.getString("gender"));
+				p1.setEmail(rs.getString("email"));
+				p1.setPhone(rs.getString("phone"));
+				p1.setBirthDate(rs.getDate("birthDate"));
+				p1.setPersonID(rs.getString("personID"));
+				p1.setCertification(rs.getString("certification"));
+				p1.setCertificationPic(rs.getBytes("certificationPic"));
+				p1.setAppliedTime(rs.getTimestamp("appliedTime"));
+				p1.setComment(rs.getString("comment"));
+				p1.setStatus(rs.getString("status"));
+				list1.add(p1);
+			}
+			
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace();
+				}
+			}
+			
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return list1;
 	}
 
 	@Override
 	public List<PartyMemberVO> findByPartySN(Integer partySN) {
-		// TODO Auto-generated method stub
-		return null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		PartyMemberVO p1 = null;
+		List<PartyMemberVO> list1 = new ArrayList<>();
+	
+		try {
+			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			pstmt = con.prepareStatement(FINDBYPARTYSN_STMT);
+			
+			pstmt.setInt(1, partySN);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				p1 = new PartyMemberVO();
+				p1.setPartyMemberSN(rs.getInt("partyMemberSN"));
+				p1.setPartySN(rs.getInt("partySN"));
+				p1.setPartyMember(rs.getInt("partyMember"));
+				p1.setGender(rs.getString("gender"));
+				p1.setEmail(rs.getString("email"));
+				p1.setPhone(rs.getString("phone"));
+				p1.setBirthDate(rs.getDate("birthDate"));
+				p1.setPersonID(rs.getString("personID"));
+				p1.setCertification(rs.getString("certification"));
+				p1.setCertificationPic(rs.getBytes("certificationPic"));
+				p1.setAppliedTime(rs.getTimestamp("appliedTime"));
+				p1.setComment(rs.getString("comment"));
+				p1.setStatus(rs.getString("status"));
+				list1.add(p1);
+			}
+			
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace();
+				}
+			}
+			
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return list1;
 	}
 
 	@Override
 	public List<PartyMemberVO> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		PartyMemberVO p1 = null;
+		List<PartyMemberVO> list1 = new ArrayList<>();
+	
+		try {
+			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			pstmt = con.prepareStatement(GETALL_STMT);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				p1 = new PartyMemberVO();
+				p1.setPartyMemberSN(rs.getInt("partyMemberSN"));
+				p1.setPartySN(rs.getInt("partySN"));
+				p1.setPartyMember(rs.getInt("partyMember"));
+				p1.setGender(rs.getString("gender"));
+				p1.setEmail(rs.getString("email"));
+				p1.setPhone(rs.getString("phone"));
+				p1.setBirthDate(rs.getDate("birthDate"));
+				p1.setPersonID(rs.getString("personID"));
+				p1.setCertification(rs.getString("certification"));
+				p1.setCertificationPic(rs.getBytes("certificationPic"));
+				p1.setAppliedTime(rs.getTimestamp("appliedTime"));
+				p1.setComment(rs.getString("comment"));
+				p1.setStatus(rs.getString("status"));
+				list1.add(p1);
+			}
+			
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace();
+				}
+			}
+			
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return list1;
 	}
 
 	@Override
-	public void deleteByPartyMemberSN(Integer partyMemberSN) {
-		// TODO Auto-generated method stub
-		
+	public int deleteByPartyMemberSN(Integer partyMemberSN) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int i = 0;
+	
+		try {
+			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			pstmt = con.prepareStatement(DELETEBYPARTYMEMBERSN_STMT);
+			
+			pstmt.setInt(1, partyMemberSN);
+			i = pstmt.executeUpdate();
+			
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace();
+				}
+			}
+			
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return i;
 	}
 	
 	

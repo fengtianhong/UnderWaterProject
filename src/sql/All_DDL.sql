@@ -133,7 +133,7 @@ create table `LocationRate` (
 ) COMMENT='地點評價資料' AUTO_INCREMENT=6001;
 
 
--- --------------------------------------揪團----------------------------------------
+-- --------------------------------------揪團&會員評價----------------------------------------
 
 CREATE TABLE `Party` (
   `partySN` int NOT NULL AUTO_INCREMENT COMMENT '揪團編號',
@@ -204,7 +204,9 @@ CREATE TABLE `MemberRate` (
   CONSTRAINT `FK_MemberRate_orderSN` FOREIGN KEY (`orderSN`) REFERENCES `GroupTour` (`groupTourSN`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_MemberRate_partySN` FOREIGN KEY (`partySN`) REFERENCES `Party` (`partySN`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_rateMaker` FOREIGN KEY (`rateMaker`) REFERENCES `Member` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_rateRecipiant` FOREIGN KEY (`rateRecipiant`) REFERENCES `Member` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_rateRecipiant` FOREIGN KEY (`rateRecipiant`) REFERENCES `Member` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  UNIQUE KEY `UK_MemberRate_partySN_rateMaker_rateRecipiant` (`partySN`,`rateMaker`, `rateRecipiant`),
+  UNIQUE KEY `UK_MemberRate_orderSN_rateMaker_rateRecipiant` (`orderSN`,`rateMaker`, `rateRecipiant`)
 ) COMMENT='會員評價';
 
 

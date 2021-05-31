@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface PartyDAO_interface {
 	
-	// Functions including PARTYDETAIL need to be updated.
+	// Functions including PARTYDETAIL(CLOB) need to be updated.
 	// Function UPDATE is pending.
 	
 	public int insert(PartyVO partyVO);  //done
