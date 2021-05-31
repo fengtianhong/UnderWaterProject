@@ -1,6 +1,7 @@
 package com.partymember.model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class PartyMemberVO {
 	
@@ -14,7 +15,7 @@ public class PartyMemberVO {
 	private String personID;
 	private String certification;
 	private byte[] certificationPic;
-	private Date appliedDate;
+	private Timestamp appliedTime;
 	private String comment;
 	private String status;
 	
@@ -24,7 +25,7 @@ public class PartyMemberVO {
 
 	public PartyMemberVO(Integer partyMemberSN, Integer partySN, Integer partyMember, String gender, String email,
 			String phone, Date birthDate, String personID, String certification, byte[] certificationPic,
-			Date appliedDate, String comment, String status) {
+			Timestamp appliedTime, String comment, String status) {
 		super();
 		this.partyMemberSN = partyMemberSN;
 		this.partySN = partySN;
@@ -36,7 +37,7 @@ public class PartyMemberVO {
 		this.personID = personID;
 		this.certification = certification;
 		this.certificationPic = certificationPic;
-		this.appliedDate = appliedDate;
+		this.appliedTime = appliedTime;
 		this.comment = comment;
 		this.status = status;
 	}
@@ -121,12 +122,12 @@ public class PartyMemberVO {
 		this.certificationPic = certificationPic;
 	}
 
-	public Date getAppliedDate() {
-		return appliedDate;
+	public Timestamp getAppliedTime() {
+		return appliedTime;
 	}
 
-	public void setAppliedDate(Date appliedDate) {
-		this.appliedDate = appliedDate;
+	public void setAppliedTime(Timestamp appliedTime) {
+		this.appliedTime = appliedTime;
 	}
 
 	public String getComment() {
