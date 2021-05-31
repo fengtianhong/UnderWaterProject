@@ -96,16 +96,16 @@ public class NewsDAO implements NewsDAO_interface {
 
 		NewsVO newsVO = null;
 		Connection con = null;
-		PreparedStatement pstmt = null;
+		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(GET_ONE_STMT);
+			ps = con.prepareStatement(GET_ONE_STMT);
 
-			pstmt.setInt(1, newsSN);
+			ps.setInt(1, newsSN);
 
-			rs = pstmt.executeQuery();
+			rs = ps.executeQuery();
 
 			while (rs.next()) {
 				newsVO = new NewsVO();
@@ -129,9 +129,9 @@ public class NewsDAO implements NewsDAO_interface {
 					se.printStackTrace(System.err);
 				}
 			}
-			if (pstmt != null) {
+			if (ps != null) {
 				try {
-					pstmt.close();
+					ps.close();
 				} catch (SQLException se) {
 					se.printStackTrace(System.err);
 				}
@@ -153,13 +153,13 @@ public class NewsDAO implements NewsDAO_interface {
 		NewsVO newsVO = null;
 
 		Connection con = null;
-		PreparedStatement pstmt = null;
+		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(GET_ALL_STMT);
-			rs = pstmt.executeQuery();
+			ps = con.prepareStatement(GET_ALL_STMT);
+			rs = ps.executeQuery();
 
 			while (rs.next()) {
 				newsVO = new NewsVO();
@@ -183,9 +183,9 @@ public class NewsDAO implements NewsDAO_interface {
 					se.printStackTrace(System.err);
 				}
 			}
-			if (pstmt != null) {
+			if (ps != null) {
 				try {
-					pstmt.close();
+					ps.close();
 				} catch (SQLException se) {
 					se.printStackTrace(System.err);
 				}
