@@ -5,7 +5,7 @@ import java.util.List;
 public interface OrderForProductDAO_interface {
 	public void insert(OrderForProductVO orderForProductVO);
 
-	public void delete(Integer orderSN);
+	public void changeStatus(OrderForProductVO orderForProductVO);
 
 	public void update(OrderForProductVO orderForProductVO);
 

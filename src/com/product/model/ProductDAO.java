@@ -1,35 +1,36 @@
 package com.product.model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 public class ProductDAO implements ProductDAO_interface {
-	private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-	private static final String URL = "jdbc:mysql://114.34.127.72:3306/UnderWater?serverTimezone=Asia/Taipei";
-	private static final String USER = "robert";
-	private static final String PASSWORD = "55688";
+	private static final String INSERT_STMT = "INSERT INTO Product (productClass, productName, productPrice,"
+			+ "productQuantity, productStatus, productDetail, productDiscount, productPrime) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 
-	private static final String INSERT_STMT = "INSERT INTO Product (productClass,productName,productPrice,"
-			+ "productQuantity,productStatus,productDetail,productDiscount,productPrime,productPoint,"
-			+ "productNumber) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String OFFSHELF_STMT = "UPDATE Product SET productStatus = 0 WHERE productSN = ?";
 
-	private static final String OFFSHELF_STMT = "SELETE FROM Product WHERE productSN = ?";
-
-	private static final String UPDATE_STMT = "UPDATE productSN SET productClass = ?, productName = ?, productPrice = ?,"
-			+ "productQuantity = ?, productStatus = ?, productDetail = ?, productDiscount =?, productPrime = ?,"
-			+ "productPoint = ?, productNumber = ? WHERE productSN = ?";
+	private static final String UPDATE_STMT = "UPDATE Product SET productClass = ?, productName = ?, productPrice = ?,"
+			+ "productQuantity = ?, productDetail = ?, productCreateTime = ?, productDiscount =?, productPrime = ? WHERE productSN = ?";
 
 	private static final String GET_ONE_BY_PRODUCTSN = "SELECT * FROM Product WHERE productSN = ?";
 
-	private static final String GET_ALL = "SELECT * FROM Product";
+	private static final String GET_ALL = "SELECT * FROM Product ORDER BY productSN";
 
+	private static DataSource ds = null;
 	static {
 		try {
-			Class.forName(DRIVER);
-		} catch (ClassNotFoundException e) {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/UnderWater");
+		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
@@ -40,13 +41,20 @@ public class ProductDAO implements ProductDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
-			
-			
-			
+
+			pstmt.setString(1, productVO.getProductClass());
+			pstmt.setString(2, productVO.getProductName());
+			pstmt.setInt(3, productVO.getProductPrice());
+			pstmt.setInt(4, productVO.getProductQuantity());
+			pstmt.setString(5, productVO.getProductStatus());
+			pstmt.setString(6, productVO.getProductDetail());
+			pstmt.setBoolean(7, productVO.getProductDiscount());
+			pstmt.setBoolean(8, productVO.getProductPrime());
+
 			pstmt.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -68,27 +76,198 @@ public class ProductDAO implements ProductDAO_interface {
 	}
 
 	@Override
-	public void offShelf(Integer productSN) {
-		// TODO Auto-generated method stub
+	public void offShelf(ProductVO productVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(OFFSHELF_STMT);
+
+			pstmt.setInt(1, productVO.getProductSN());
+
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 
 	}
 
 	@Override
 	public void update(ProductVO productVO) {
-		// TODO Auto-generated method stub
-
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE_STMT);
+			
+			pstmt.setString(1, productVO.getProductClass());
+			pstmt.setString(2, productVO.getProductName());
+			pstmt.setInt(3, productVO.getProductPrice());
+			pstmt.setInt(4, productVO.getProductQuantity());
+			pstmt.setString(5, productVO.getProductDetail());
+			pstmt.setTimestamp(6, productVO.getProductCreateTime());
+			pstmt.setBoolean(7, productVO.getProductDiscount());
+			pstmt.setBoolean(8, productVO.getProductPrime());
+			pstmt.setInt(9, productVO.getProductSN());
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	@Override
 	public ProductVO getOneByProductSN(Integer productSN) {
-		// TODO Auto-generated method stub
-		return null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ProductVO productVO = null;
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ONE_BY_PRODUCTSN);
+			
+			pstmt.setInt(1, productSN);
+			
+			rs =pstmt.executeQuery();
+			
+			while(rs.next()) {
+				productVO = new ProductVO();
+				int pSN = rs.getInt("productSN");	// 包裝資料一次回傳
+				productVO.setProductSN(pSN);
+				
+				productVO.setProductClass(rs.getString("productClass"));
+				productVO.setProductName(rs.getString("productName"));
+				productVO.setProductPrice(rs.getInt("productPrice"));
+				productVO.setProductQuantity(rs.getInt("productQuantity"));
+				productVO.setProductStatus(rs.getString("productStatus"));
+				productVO.setProductDetail(rs.getString("productDetail"));
+				productVO.setProductCreateTime(rs.getTimestamp("productCreateTime"));
+				productVO.setProductDiscount(rs.getBoolean("productDiscount"));
+				productVO.setProductPrime(rs.getBoolean("productPrime"));
+				productVO.setRatingPoint(rs.getInt("ratingPoint"));
+				productVO.setRatingNumber(rs.getInt("ratingNumber"));		
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}	
+		return productVO;
 	}
 
 	@Override
 	public List<ProductVO> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ProductVO productVO = null;
+		List<ProductVO> list = new ArrayList<ProductVO>();
+		
+		try {
+			con= ds.getConnection();
+			pstmt = con.prepareStatement(GET_ALL);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				productVO = new ProductVO();
+				productVO.setProductSN(rs.getInt("productSN"));
+				productVO.setProductClass(rs.getString("productClass"));
+				productVO.setProductName(rs.getString("productName"));
+				productVO.setProductPrice(rs.getInt("productPrice"));
+				productVO.setProductQuantity(rs.getInt("productQuantity"));
+				productVO.setProductStatus(rs.getString("productStatus"));
+				productVO.setProductDetail(rs.getString("productDetail"));
+				productVO.setProductCreateTime(rs.getTimestamp("productCreateTime"));
+				productVO.setProductDiscount(rs.getBoolean("productDiscount"));
+				productVO.setProductPrime(rs.getBoolean("productPrime"));
+				productVO.setRatingPoint(rs.getInt("ratingPoint"));
+				productVO.setRatingNumber(rs.getInt("ratingNumber"));
+				list.add(productVO);		
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			if(rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}		
+		return list;
 	}
 
 }

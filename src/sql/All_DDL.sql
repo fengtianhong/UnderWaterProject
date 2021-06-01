@@ -212,15 +212,15 @@ CREATE TABLE `Product` (
   `productCreateTime` timestamp NOT NULL DEFAULT NOW() COMMENT '上架時間',
   `productDiscount` tinyint(1) NOT NULL COMMENT '優惠品',
   `productPrime` tinyint(1) NOT NULL COMMENT '精選品',
-  `ratingPoint` int NOT NULL COMMENT '評價總分數',
-  `ratingNumber` int NOT NULL COMMENT '評價總人數',
+  `ratingPoint` int NOT NULL DEFAULT 0 COMMENT '評價總分數',
+  `ratingNumber` int NOT NULL DEFAULT 0 COMMENT '評價總人數',
   PRIMARY KEY (`productSN`),
   CONSTRAINT `product_chk_1` CHECK ((`productPrice` > 0))
 ) COMMENT='商品';
 
 INSERT INTO Product (productClass,productName,productPrice,productQuantity,productStatus,
 productDetail,productDiscount,productPrime,ratingPoint,ratingNumber)
-values("蛙鞋","power牌鞋鞋",2000,100,0,"買到賺到",false,true,10,2);
+values("蛙鞋","power牌鞋鞋",2000,100,1,"買到賺到好棒棒",false,true,8,1);
 
 
 CREATE TABLE `OrderForProduct` (
@@ -237,7 +237,7 @@ CREATE TABLE `OrderForProduct` (
 ) COMMENT='商品訂單';
 
 INSERT INTO OrderForProduct (userID,totalPrice,orderStatus)
-values(2,100000000,1);
+values(2,8000,1);
 
 
 CREATE TABLE `OrderList` (
@@ -256,7 +256,7 @@ CREATE TABLE `OrderList` (
 ) COMMENT='商品訂單明細';
 
 INSERT INTO OrderList (productSN,orderSN,purchaseQuantity,productPrice,rating)
-values(1,1,10,2000,8);
+values(1,1,4,2000,8);
 
 
 CREATE TABLE `ShoppingCar` (
@@ -276,7 +276,7 @@ CREATE TABLE `ShoppingCar` (
 ) COMMENT='購物車';
 
 INSERT INTO ShoppingCar (userID,productSN,purchaseQuantity,productPrice,totalPrice)
-values(1,1,3,2000,6000);
+values(1,1,1,2000,2000);
 
 
 CREATE TABLE `ProductPhoto` (

@@ -11,9 +11,9 @@ public class ProductVO implements Serializable {
 	private Integer productQuantity;
 	private String productStatus;
 	private String productDetail;
-	private Timestamp productCreate;
-	private Byte productDiscount;
-	private Byte productPrime;
+	private Timestamp productCreateTime;
+	private Boolean productDiscount;
+	private Boolean productPrime;
 	private Integer ratingPoint;
 	private Integer ratingNumber;
 
@@ -22,8 +22,8 @@ public class ProductVO implements Serializable {
 	}
 
 	public ProductVO(Integer productSN, String productClass, String productName, Integer productPrice,
-			Integer productQuantity, String productStatus, String productDetail, Timestamp productCreate,
-			Byte productDiscount, Byte productPrime, Integer ratingPoint, Integer ratingNumber) {
+			Integer productQuantity, String productStatus, String productDetail, Timestamp productCreateTime,
+			Boolean productDiscount, Boolean productPrime, Integer ratingPoint, Integer ratingNumber) {
 		super();
 		this.productSN = productSN;
 		this.productClass = productClass;
@@ -32,7 +32,7 @@ public class ProductVO implements Serializable {
 		this.productQuantity = productQuantity;
 		this.productStatus = productStatus;
 		this.productDetail = productDetail;
-		this.productCreate = productCreate;
+		this.productCreateTime = productCreateTime;
 		this.productDiscount = productDiscount;
 		this.productPrime = productPrime;
 		this.ratingPoint = ratingPoint;
@@ -95,27 +95,27 @@ public class ProductVO implements Serializable {
 		this.productDetail = productDetail;
 	}
 
-	public Timestamp getProductCreate() {
-		return productCreate;
+	public Timestamp getProductCreateTime() {
+		return productCreateTime;
 	}
 
-	public void setProductCreate(Timestamp productCreate) {
-		this.productCreate = productCreate;
+	public void setProductCreateTime(Timestamp productCreateTime) {
+		this.productCreateTime = productCreateTime;
 	}
 
-	public Byte getProductDiscount() {
+	public Boolean getProductDiscount() {
 		return productDiscount;
 	}
 
-	public void setProductDiscount(Byte productDiscount) {
+	public void setProductDiscount(Boolean productDiscount) {
 		this.productDiscount = productDiscount;
 	}
 
-	public Byte getProductPrime() {
+	public Boolean getProductPrime() {
 		return productPrime;
 	}
 
-	public void setProductPrime(Byte productPrime) {
+	public void setProductPrime(Boolean productPrime) {
 		this.productPrime = productPrime;
 	}
 
