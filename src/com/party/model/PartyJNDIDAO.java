@@ -42,11 +42,12 @@ public class PartyJNDIDAO implements PartyDAO_interface {
 	public int insert(PartyVO partyVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		int i = 0;
+		int key = 0;
 	
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(INSERT_STMT);
+			int gk = 1;
+			pstmt = con.prepareStatement(INSERT_STMT, gk);
 			
 			pstmt.setInt(1, partyVO.getPartyHost());
 			pstmt.setString(2, partyVO.getPartyTitle());
@@ -58,7 +59,12 @@ public class PartyJNDIDAO implements PartyDAO_interface {
 			pstmt.setInt(8, partyVO.getPartyLocation());
 			pstmt.setString(9, partyVO.getPartyDetail());
 			
-			i = pstmt.executeUpdate();
+			pstmt.executeUpdate();
+			
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if(rs.next()) {
+				key = rs.getInt(1);
+			}
 			
 		} catch (SQLException se) {
 			se.printStackTrace();
@@ -79,7 +85,7 @@ public class PartyJNDIDAO implements PartyDAO_interface {
 				}
 			}
 		}
-		return i;
+		return key;
 	}
 
 	@Override
