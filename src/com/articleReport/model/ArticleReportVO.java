@@ -2,16 +2,20 @@ package com.articleReport.model;
 
 public class ArticleReportVO implements java.io.Serializable{
 	
-	private Integer reportSN;
+	private Integer rptSN;
 	private Integer userID;
 	private Integer articleSN;
-	private String reportReason;
+	private String rptReason;
+	private Boolean rptResult;
+	private String reRptResult;
 	
-	public Integer getReportSN() {
-		return reportSN;
+	
+	
+	public Integer getRptSN() {
+		return rptSN;
 	}
-	public void setReportSN(Integer reportSN) {
-		this.reportSN = reportSN;
+	public void setRptSN(Integer rptSN) {
+		this.rptSN = rptSN;
 	}
 	public Integer getUserID() {
 		return userID;
@@ -25,12 +29,22 @@ public class ArticleReportVO implements java.io.Serializable{
 	public void setArticleSN(Integer articleSN) {
 		this.articleSN = articleSN;
 	}
-	public String getReportReason() {
-		return reportReason;
+	public String getRptReason() {
+		return rptReason;
 	}
-	public void setReportReason(String reportReason) {
-		this.reportReason = reportReason;
+	public void setRptReason(String rptReason) {
+		this.rptReason = rptReason;
 	}
-
-	
-}
+	public Boolean getRptResult() {
+		return rptResult;
+	}
+	public void setRptResult(Boolean rptResult) {
+		this.rptResult = rptResult;
+	}
+	public String getReRptResult() {
+		return reRptResult;
+	}
+	public void setReRptResult(String reRptResult) {
+		this.reRptResult = reRptResult;
+	}
+}	

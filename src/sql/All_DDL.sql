@@ -409,18 +409,20 @@ create table `ForumRate` (
 )AUTO_INCREMENT = 30000001 COMMENT='文章評價';
 
 create table `ArticleReport` (
-	`reportSN` int not null auto_increment comment '檢舉編號' primary key,
-	`reportReason` varchar(150) not null comment '檢舉原因',
+	`rptSN` int not null auto_increment comment '檢舉編號' primary key,
+	`rptReason` varchar(150) not null comment '檢舉原因',
 	`userID` int not null comment '會員編號',
 	`articleSN` int not null comment '文章編號',
+	`rptResult` char(1) comment '檢舉處理狀態',
+	`reRptResult` varchar(150) comment '檢舉處理回覆',
 	CONSTRAINT `ArticleReport_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`),
 	CONSTRAINT `ArticleReport_articleSN` FOREIGN KEY (`articleSN`) REFERENCES `ForumArticle` (`articleSN`)
 )AUTO_INCREMENT = 3001 COMMENT='文章檢舉';
 
 create table `ForumComment` (
-	`commentSN` int not null auto_increment comment '留言編號' primary key,
-	`commentDate` timestamp not null comment '留言時間',
-	`commentText` varchar(150)not null comment '留言內容',
+	`cmtSN` int not null auto_increment comment '留言編號' primary key,
+	`cmtDate` timestamp not null comment '留言時間',
+	`cmtText` varchar(150)not null comment '留言內容',
 	`userID` int not null comment '會員編號',
 	`articleSN` int not null comment '文章編號',
 	CONSTRAINT `ForumComment_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`),

@@ -4,17 +4,17 @@ import java.sql.Timestamp;
 
 public class ForumCommentVO implements java.io.Serializable{
 
-	private Integer commentSN;
+	private Integer cmtSN;
 	private Integer articleSN;
 	private Integer userID;
-	private Timestamp commentDate;
-	private String commentText;
+	private Timestamp cmtDate;
+	private String cmtText;
 	
-	public Integer getCommentSN() {
-		return commentSN;
+	public Integer getcmtSN() {
+		return cmtSN;
 	}
-	public void setCommentSN(Integer commentSN) {
-		this.commentSN = commentSN;
+	public void setcmtSN(Integer cmtSN) {
+		this.cmtSN = cmtSN;
 	}
 	public Integer getArticleSN() {
 		return articleSN;
@@ -28,17 +28,17 @@ public class ForumCommentVO implements java.io.Serializable{
 	public void setUserID(Integer userID) {
 		this.userID = userID;
 	}
-	public Timestamp getCommentDate() {
-		return commentDate;
+	public Timestamp getcmtDate() {
+		return cmtDate;
 	}
-	public void setCommentDate(Timestamp commentDate) {
-		this.commentDate = commentDate;
+	public void setcmtDate(Timestamp cmtDate) {
+		this.cmtDate = cmtDate;
 	}
-	public String getCommentText() {
-		return commentText;
+	public String getcmtText() {
+		return cmtText;
 	}
-	public void setCommentText(String commentText) {
-		this.commentText = commentText;
+	public void setcmtText(String cmtText) {
+		this.cmtText = cmtText;
 	}
 	
 	
