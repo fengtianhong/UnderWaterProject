@@ -125,21 +125,22 @@ public class Test_DataSource extends HttpServlet {
 
 //========================Party Test============================
 //			PartyVO t1 = new PartyVO();
-//			t1.setPartyHost(3);
-//			t1.setPartyTitle("好想出去玩~");
-//			t1.setRegDate(java.sql.Date.valueOf("2021-06-03"));
-//			t1.setCloseDate(java.sql.Date.valueOf("2011-06-21"));
-//			t1.setStartDate(java.sql.Date.valueOf("2011-09-15"));
-//			t1.setEndDate(java.sql.Date.valueOf("2011-09-18"));
-//			t1.setPartyMinSize(1);
-//			t1.setPartyLocation(200006);
-//			t1.setPartyDetail("testInsertByDS");
-			
+//			t1.setPartyHost(2);
+//			t1.setPartyTitle("新的一班開始上jsp了!!");
+//			t1.setRegDate(java.sql.Date.valueOf("2005-06-03"));
+//			t1.setCloseDate(java.sql.Date.valueOf("2005-06-21"));
+//			t1.setStartDate(java.sql.Date.valueOf("2005-09-15"));
+//			t1.setEndDate(java.sql.Date.valueOf("2005-09-18"));
+//			t1.setPartyMinSize(50);
+//			t1.setPartyLocation(200003);
+//			t1.setPartyDetail("測自增主鍵值");
+//			
 //			PartyJNDIDAO pDao = new PartyJNDIDAO();
 			
-			//test insert
-//			pDao.insert(t1);
-//			out.println("Testing: New Party data insert successfully. createTime = "); //not done yet
+			//test insert & Generated Keys & findByPartySN
+//			int gk1 = pDao.insert(t1);
+//			out.println("Testing: New Party data insert successfully. partySN = " 
+//						+ gk1 + ", createTime = " + pDao.findByPartySN(gk1).getCreateTime());
 			
 			// test updateStatus & findByPartySN
 //			pDao.updateStatus(400020, "2");
@@ -175,43 +176,44 @@ public class Test_DataSource extends HttpServlet {
 			
 //======================PartyMember TEST========================
 			
-			FileInputStream fis = null;
-			byte[] b = null;
+//			FileInputStream fis = null;
+//			byte[] b = null;
+//			
+//			try {
+//				fis = new FileInputStream("C:\\UnderWarter\\UnderWater\\src\\com\\partymember\\model\\3_6M.jpg");
+//				b = new byte[fis.available()];
+//				fis.read(b);
+//				fis.close();
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			} finally {
+//				if (fis != null) {
+//					try {
+//						fis.close();
+//					} catch (IOException ie) {
+//						ie.printStackTrace();
+//					}
+//				}
+//			}
 			
-			try {
-				fis = new FileInputStream("C:\\UnderWarter\\UnderWater\\src\\com\\partymember\\model\\3_6M.jpg");
-				b = new byte[fis.available()];
-				fis.read(b);
-				fis.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				if (fis != null) {
-					try {
-						fis.close();
-					} catch (IOException ie) {
-						ie.printStackTrace();
-					}
-				}
-			}
+//			PartyMemberVO pm1 = new PartyMemberVO();
+//			pm1.setPartySN(400004);
+//			pm1.setPartyMember(1);
+//			pm1.setGender("1");
+//			pm1.setEmail("tibame@bitema.com");
+//			pm1.setPhone("0988555555");
+//			pm1.setBirthDate(java.sql.Date.valueOf("2019-11-11"));
+//			pm1.setPersonID("F555566666");
+//			pm1.setCertification("21");
+//			pm1.setCertificationPic(b);
+//			pm1.setComment("nothing to comment~");
 			
-			PartyMemberVO pm1 = new PartyMemberVO();
-			pm1.setPartySN(400004);
-			pm1.setPartyMember(1);
-			pm1.setGender("1");
-			pm1.setEmail("tibame@bitema.com");
-			pm1.setPhone("0988555555");
-			pm1.setBirthDate(java.sql.Date.valueOf("2019-11-11"));
-			pm1.setPersonID("F555566666");
-			pm1.setCertification("21");
-			pm1.setCertificationPic(b);
-			pm1.setComment("nothing to comment~");
+//			PartyMemberJNDIDAO pmDao = new PartyMemberJNDIDAO();
 			
-			PartyMemberJNDIDAO pmDao = new PartyMemberJNDIDAO();
-			
-			// test insert
-//			pmDao.insert(pm1);
-//			out.println("Testing: New PartyMember data insert successfully. createTime = "); //not done yet
+			// test insert & generated keys
+//			int gk2 = pmDao.insert(pm1);
+//			out.println("Testing: New PartyMember data insert successfully. partyMemberSN = " 
+//						+ gk2 + ", createTime = " + pmDao.findByPartyMemberSN(gk2).getAppliedTime());
 			
 			// test updateStatus & findByPartyMemberSN
 //			pmDao.updateStatus(400001, "1");
@@ -251,15 +253,16 @@ public class Test_DataSource extends HttpServlet {
 //			MemberRateVO mr1 = new MemberRateVO();
 //			mr1.setPartySN(400003);
 //			mr1.setRateMaker(1);
-//			mr1.setRateRecipiant(2);
+//			mr1.setRateRecipiant(3);
 //			mr1.setRate(5);
-//			mr1.setRateDetail("參加Party五星好評");
+//			mr1.setRateDetail("大家都五星");
 			
-			MemberRateJNDIDAO mrDao = new MemberRateJNDIDAO();
+//			MemberRateJNDIDAO mrDao = new MemberRateJNDIDAO();
 			
-			// test insertPartyRate
-//			mrDao.insertPartyRate(mr1);
-//			out.println("Testing: New MemberRate(Party) data insert successfully. createTime = "); //not done yet
+			// test insertPartyRate & Generated Keys
+//			int gk3 = mrDao.insertPartyRate(mr1);
+//			out.println("Testing: New MemberRate(Party) data insert successfully. SN = "
+//					+ gk3 + ", RateDetail = " + mrDao.findByMemberRateSN(gk3).getRateDetail());
 			
 //			MemberRateVO mr2 = new MemberRateVO();
 //			mr2.setOrderSN(6002);
