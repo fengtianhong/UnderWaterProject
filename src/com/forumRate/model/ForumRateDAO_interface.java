@@ -5,7 +5,8 @@ import java.util.*;
 public interface ForumRateDAO_interface {
 	public void insert(ForumRateVO forumRateVO);
 	public void update(ForumRateVO forumRateVO);
-	public ForumRateVO findByPrimaryKey(Integer articleSN);
+    public void delete(Integer articleRateSN);
+	public ForumRateVO findByPrimaryKey(Integer articleRateSN);
 	public List<ForumRateVO> getAll();	
 //	查詢所有文章評價(1對多，回傳set)
 //	萬用複合查詢(傳入參數型態Map)(回傳 List)

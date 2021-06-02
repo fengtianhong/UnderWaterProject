@@ -1,4 +1,4 @@
-package com.articleReport.model;
+package com.forumRate.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,7 +12,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class ArticleReportDAO implements ArticleReportDAO_interface{
+public class ForumRateDAO implements ForumRateDAO_interface{
+	
 	private static DataSource ds = null;
 	static {
 		try {
@@ -24,19 +25,18 @@ public class ArticleReportDAO implements ArticleReportDAO_interface{
 	}
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO ArticleReport (userID, articleSN, rptReason, rptResult,reRptResult) VALUES (?, ?, ?, ?, ?)";
-	private static final String GET_ALL_STMT = 
-			"SELECT rptSN, userID, articleSN, rptReason, rptResult,reRptResult FROM ArticleReport order by rptSN";
-	private static final String GET_ONE_STMT = 
-			"SELECT rptSN, userID, articleSN, rptReason, rptResult,reRptResult FROM ArticleReport where rptSN = ?";
-	private static final String UPDATE = 
-			"UPDATE ArticleReport set userID = ?, articleSN = ?, rptReason = ?, rptResult = ?, reRptResult = ? where rptSN = ?";
-	
-	
+			"INSERT INTO ForumRate (userID, articleSN, articleRate) VALUES (?, ?, ?)";
+		private static final String GET_ALL_STMT = 
+			"SELECT articleRateSN, userID, articleSN, articleRate FROM ForumRate order by articleRateSN";
+		private static final String GET_ONE_STMT = 
+			"SELECT articleRateSN, userID, articleSN, articleRate FROM ForumRate FROM ForumRate where articleRateSN = ?";
+		private static final String DELETE = 
+			"DELETE FROM ForumRate where articleRateSN = ?";
+		private static final String UPDATE = 
+			"UPDATE ForumRate set userID = ?, articleSN = ?, articleRate = ? where articleRateSN = ?";
 
-//	新增檢舉文章
 	@Override
-	public void insert(ArticleReportVO articleReportVO) {
+	public void insert(ForumRateVO forumRateVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
@@ -44,11 +44,9 @@ public class ArticleReportDAO implements ArticleReportDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
-			pstmt.setInt(1, articleReportVO.getUserID());
-			pstmt.setInt(2, articleReportVO.getArticleSN());
-			pstmt.setString(3, articleReportVO.getRptReason());
-			pstmt.setString(4, articleReportVO.getRptResult());
-			pstmt.setString(5, articleReportVO.getReRptResult());
+			pstmt.setInt(1, forumRateVO.getUserID());
+			pstmt.setInt(2, forumRateVO.getArticleSN());
+			pstmt.setBoolean(3, forumRateVO.getArticleRate());
 			
 			pstmt.executeUpdate();
 			
@@ -71,10 +69,9 @@ public class ArticleReportDAO implements ArticleReportDAO_interface{
 			}
 		}
 	}
-	
-	
+
 	@Override
-	public void update(ArticleReportVO articleReportVO) {
+	public void update(ForumRateVO forumRateVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
@@ -82,14 +79,49 @@ public class ArticleReportDAO implements ArticleReportDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 			
-			pstmt.setInt(1, articleReportVO.getUserID());
-			pstmt.setInt(2, articleReportVO.getArticleSN());
-			pstmt.setString(3, articleReportVO.getRptReason());
-			pstmt.setString(4, articleReportVO.getRptResult());
-			pstmt.setString(5, articleReportVO.getReRptResult());
-			pstmt.setInt(7, articleReportVO.getRptSN());
+			pstmt.setInt(1, forumRateVO.getArticleRateSN());
+			pstmt.setInt(2, forumRateVO.getUserID());
+			pstmt.setInt(3, forumRateVO.getArticleSN());
+			pstmt.setBoolean(4, forumRateVO.getArticleRate());
 			
 			pstmt.executeUpdate();
+			
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+	
+//	評價收回
+	@Override
+	public void delete(Integer articleRateSN) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(DELETE);
+
+			pstmt.setInt(1, articleRateSN);
+
+			pstmt.executeUpdate();
+
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
@@ -109,11 +141,10 @@ public class ArticleReportDAO implements ArticleReportDAO_interface{
 			}
 		}
 	}
-	
-	
+
 	@Override
-	public ArticleReportVO findByPrimaryKey(Integer rptSN) {
-		ArticleReportVO articleReportVO = null;
+	public ForumRateVO findByPrimaryKey(Integer articleRateSN) {
+		ForumRateVO forumRateVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -121,21 +152,19 @@ public class ArticleReportDAO implements ArticleReportDAO_interface{
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
-
-			pstmt.setInt(1, rptSN);
-
+			
+			pstmt.setInt(1, articleRateSN);
+			
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
-				articleReportVO = new ArticleReportVO();
-				articleReportVO.setRptSN(rs.getInt("rptSN"));
-				articleReportVO.setUserID(rs.getInt("userID"));
-				articleReportVO.setArticleSN(rs.getInt("articleSN"));
-				articleReportVO.setRptReason(rs.getString("rptReason"));
-				articleReportVO.setRptResult(rs.getString("rptResult"));
-				articleReportVO.setReRptResult(rs.getString("reRptResult"));
+				forumRateVO = new ForumRateVO();
+				forumRateVO.setArticleRateSN(rs.getInt("articleRateSN"));
+				forumRateVO.setUserID(rs.getInt("userID"));
+				forumRateVO.setArticleSN(rs.getInt("articleSN"));
+				forumRateVO.setArticleRate(rs.getBoolean("articleRate"));				
 			}
-		} catch (SQLException se) {
+		}  catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			if (rs != null) {
@@ -160,15 +189,16 @@ public class ArticleReportDAO implements ArticleReportDAO_interface{
 				}
 			}
 		}
-		return articleReportVO;
+		return forumRateVO;
 	}
-		
-	
-	@Override
-	public List<ArticleReportVO> getAll() {
-		List<ArticleReportVO> list = new ArrayList<ArticleReportVO>();
-		ArticleReportVO articleReportVO = null;
 
+
+	@Override
+	public List<ForumRateVO> getAll() {
+		
+		List<ForumRateVO> list = new ArrayList<ForumRateVO>();
+		ForumRateVO forumRateVO =null;
+		
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -179,15 +209,13 @@ public class ArticleReportDAO implements ArticleReportDAO_interface{
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
-				articleReportVO = new ArticleReportVO();
-				articleReportVO.setRptSN(rs.getInt("rptSN"));
-				articleReportVO.setUserID(rs.getInt("userID"));
-				articleReportVO.setArticleSN(rs.getInt("articleSN"));
-				articleReportVO.setRptReason(rs.getString("rptReason"));
-				articleReportVO.setRptResult(rs.getString("rptResult"));
-				articleReportVO.setReRptResult(rs.getString("reRptResult"));
-				list.add(articleReportVO);
-			}
+				forumRateVO = new ForumRateVO();
+				forumRateVO.setArticleRateSN(rs.getInt("articleRateSN"));
+				forumRateVO.setUserID(rs.getInt("userID"));
+				forumRateVO.setArticleSN(rs.getInt("articleSN"));
+				forumRateVO.setArticleRate(rs.getBoolean("articleRate"));
+				list.add(forumRateVO);
+			}	
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {

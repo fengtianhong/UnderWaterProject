@@ -3,17 +3,17 @@ package com.forumComment.model;
 import java.sql.Timestamp;
 
 public class ForumCommentVO implements java.io.Serializable{
-
+	
 	private Integer cmtSN;
 	private Integer articleSN;
 	private Integer userID;
 	private Timestamp cmtDate;
 	private String cmtText;
-	
-	public Integer getcmtSN() {
+
+	public Integer getCmtSN() {
 		return cmtSN;
 	}
-	public void setcmtSN(Integer cmtSN) {
+	public void setCmtSN(Integer cmtSN) {
 		this.cmtSN = cmtSN;
 	}
 	public Integer getArticleSN() {
@@ -28,18 +28,16 @@ public class ForumCommentVO implements java.io.Serializable{
 	public void setUserID(Integer userID) {
 		this.userID = userID;
 	}
-	public Timestamp getcmtDate() {
+	public Timestamp getCmtDate() {
 		return cmtDate;
 	}
-	public void setcmtDate(Timestamp cmtDate) {
+	public void setCmtDate(Timestamp cmtDate) {
 		this.cmtDate = cmtDate;
 	}
-	public String getcmtText() {
+	public String getCmtText() {
 		return cmtText;
 	}
-	public void setcmtText(String cmtText) {
+	public void setCmtText(String cmtText) {
 		this.cmtText = cmtText;
-	}
-	
-	
+	}	
 }

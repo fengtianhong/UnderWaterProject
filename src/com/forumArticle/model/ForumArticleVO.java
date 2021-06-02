@@ -8,11 +8,11 @@ public class ForumArticleVO implements java.io.Serializable{
 	private String articleTitle;
 	private Timestamp publishedDate;
 	private String articleText;
-	private String articleStatus;
+	private Integer articleStatus;
 	private Integer userID;
 	private Integer articleTitleOptSN;
 	private Integer rateGCount;
-	private Integer rateGNCount;
+	private Integer rateNGCount;
 	
 	public Integer getArticleSN() {
 		return articleSN;
@@ -38,10 +38,10 @@ public class ForumArticleVO implements java.io.Serializable{
 	public void setArticleText(String articleText) {
 		this.articleText = articleText;
 	}
-	public String getArticleStatus() {
+	public Integer getArticleStatus() {
 		return articleStatus;
 	}
-	public void setArticleStatus(String articleStatus) {
+	public void setArticleStatus(Integer articleStatus) {
 		this.articleStatus = articleStatus;
 	}
 	public Integer getUserID() {
@@ -62,12 +62,14 @@ public class ForumArticleVO implements java.io.Serializable{
 	public void setRateGCount(Integer rateGCount) {
 		this.rateGCount = rateGCount;
 	}
-	public Integer getRateGNCount() {
-		return rateGNCount;
+	public Integer getRateNGCount() {
+		return rateNGCount;
 	}
-	public void setRateGNCount(Integer rateGNCount) {
-		this.rateGNCount = rateGNCount;
+	public void setRateNGCount(Integer rateNGCount) {
+		this.rateNGCount = rateNGCount;
 	}
+	
+	
 	
 }
 
