@@ -3,88 +3,28 @@ package com.partymember.model;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import util.Util;
+import javax.naming.Context;
+import javax.naming.NamingException;
+import javax.servlet.annotation.WebServlet;
+import javax.sql.DataSource;
 
-public class PartyMemberDAOImpl implements PartyMemberDAO_interface {
+public class PartyMemberJNDIDAO implements PartyMemberDAO_interface {
 	
-	public static void main(String[] args) {
-		
-		FileInputStream fis = null;
-		byte[] b = null;
-		
+	private static DataSource ds = null;
+	
+	static {
 		try {
-			fis = new FileInputStream("C:\\UnderWarter\\UnderWater\\src\\com\\partymember\\model\\3_6M.jpg");
-			b = new byte[fis.available()];
-			fis.read(b);
-			fis.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (fis != null) {
-				try {
-					fis.close();
-				} catch (IOException ie) {
-					ie.printStackTrace();
-				}
-			}
+			Context ctx = new javax.naming.InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/UnderWater");
+		} catch (NamingException ne) {
+			ne.printStackTrace();
 		}
-		
-		PartyMemberVO pm1 = new PartyMemberVO();
-		pm1.setPartySN(400003);
-		pm1.setPartyMember(1);
-		pm1.setGender("1");
-		pm1.setEmail("firsttest@firsttest.gmail.com");
-		pm1.setPhone("0988111222");
-		pm1.setBirthDate(java.sql.Date.valueOf("1997-07-07"));
-		pm1.setPersonID("V777788888");
-		pm1.setCertification("11");
-		pm1.setCertificationPic(b);
-		pm1.setComment("nothing to comment~");
-		
-		PartyMemberDAOImpl dao = new PartyMemberDAOImpl();
-		
-// test insert
-//		dao.insert(pm1);
-//		System.out.println("insert to DB!");
-		
-// test updateStatus
-//		dao.updateStatus(400004, "1");
-//		System.out.println("update status!");
-		
-// test findByPartyMemberSN
-//		PartyMemberVO pm2 = dao.findByPartyMemberSN(400002);
-//		System.out.println(pm2.getEmail());
-//		System.out.println(pm2.getBirthDate());
-		
-// test findByPartyMember
-//		List<PartyMemberVO> list_findByPartyMember = dao.findByPartyMember(2);
-//		for (PartyMemberVO i : list_findByPartyMember) {
-//			System.out.println(i.getAppliedTime());
-//		}
-		
-// test findByPartySN
-//		List<PartyMemberVO> list_findByPartySN = dao.findByPartySN(400003);
-//		for (PartyMemberVO i : list_findByPartySN) {
-//			System.out.println(i.getPartyMember());
-//		}
-		
-// test getAll
-//		List<PartyMemberVO> list_getAll = dao.getAll();
-//		for (PartyMemberVO i : list_getAll) {
-//			System.out.println(i.getPersonID());
-//		}
-		
-// test deleteByPartyMemberSN
-//		System.out.println(dao.deleteByPartyMemberSN(400005));
-		
 	}
-	
 	
 	private static final String INSERT_STMT = "insert into PartyMember (partySN, partyMember, gender, email," + 
 			" phone, birthDate, personID, certification, certificationPic, comment) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -95,14 +35,6 @@ public class PartyMemberDAOImpl implements PartyMemberDAO_interface {
 	private static final String FINDBYPARTYSN_STMT = "select * from partyMember where partySN = ?";
 	private static final String GETALL_STMT = "select * from partyMember";
 	private static final String DELETEBYPARTYMEMBERSN_STMT = "delete from partyMember where partyMemberSN = ?";
-	
-	static {
-		try {
-			Class.forName(Util.DRIVER);
-		} catch (ClassNotFoundException ce) {
-			ce.printStackTrace();
-		}
-	}
 
 	@Override
 	public int insert(PartyMemberVO partyMemberVO) {
@@ -111,7 +43,7 @@ public class PartyMemberDAOImpl implements PartyMemberDAO_interface {
 		int i = 0;
 		
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
 			pstmt.setInt(1, partyMemberVO.getPartySN());
@@ -162,7 +94,7 @@ public class PartyMemberDAOImpl implements PartyMemberDAO_interface {
 		int i = 0;
 	
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATESTATUS_STMT);
 			
 			pstmt.setString(1, status);
@@ -199,7 +131,7 @@ public class PartyMemberDAOImpl implements PartyMemberDAO_interface {
 		PartyMemberVO p1 = null;
 	
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(FINDBYPARTYMEMBERSN_STMT);
 			
 			pstmt.setInt(1, partyMemberSN);
@@ -253,7 +185,7 @@ public class PartyMemberDAOImpl implements PartyMemberDAO_interface {
 		List<PartyMemberVO> list1 = new ArrayList<>();
 	
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(FINDBYPARTYMEMBER_STMT);
 			
 			pstmt.setInt(1, partyMember);
@@ -308,7 +240,7 @@ public class PartyMemberDAOImpl implements PartyMemberDAO_interface {
 		List<PartyMemberVO> list1 = new ArrayList<>();
 	
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(FINDBYPARTYSN_STMT);
 			
 			pstmt.setInt(1, partySN);
@@ -363,7 +295,7 @@ public class PartyMemberDAOImpl implements PartyMemberDAO_interface {
 		List<PartyMemberVO> list1 = new ArrayList<>();
 	
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GETALL_STMT);
 			
 			rs = pstmt.executeQuery();
@@ -415,7 +347,7 @@ public class PartyMemberDAOImpl implements PartyMemberDAO_interface {
 		int i = 0;
 	
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETEBYPARTYMEMBERSN_STMT);
 			
 			pstmt.setInt(1, partyMemberSN);
@@ -442,8 +374,5 @@ public class PartyMemberDAOImpl implements PartyMemberDAO_interface {
 		}
 		return i;
 	}
-	
-	
-	
 
 }

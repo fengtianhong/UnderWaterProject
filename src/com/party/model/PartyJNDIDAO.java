@@ -1,68 +1,28 @@
 package com.party.model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.naming.Context;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
-import util.Util;
-
-public class PartyDAOImpl implements PartyDAO_interface{
+public class PartyJNDIDAO implements PartyDAO_interface {
 	
-	public static void main(String[] args) {
-		
-			PartyVO t1 = new PartyVO();
-			t1.setPartyHost(1);
-			t1.setPartyTitle("好想去台灣0528");
-			t1.setRegDate(java.sql.Date.valueOf("2010-01-02"));
-			t1.setCloseDate(java.sql.Date.valueOf("2010-01-31"));
-			t1.setStartDate(java.sql.Date.valueOf("2010-07-28"));
-			t1.setEndDate(java.sql.Date.valueOf("2010-08-02"));
-			t1.setPartyMinSize(6);
-			t1.setPartyLocation(200002);
-			t1.setPartyDetail("testInsertByDAOImpl");
-			
-			PartyDAOImpl dao = new PartyDAOImpl();
-			
-// test insert
-//			dao.insert(t1);
-//			System.out.println("insert data to DB!");
-		
-// test updateStatus
-//			dao.updateStatus(400010, "3");
-//			System.out.println("update data to DB!");
-			
-// test findByPartySN
-//			PartyVO party1 = dao.findByPartySN(400009);
-//			System.out.println("Host = " + party1.getPartyHost() + ", Title = " + party1.getPartyTitle());
-
-			
-// test findByPartyHost
-//			List<PartyVO> L1 = dao.findByPartyHost(1);
-//			for (PartyVO i : L1) {
-//				System.out.println(i.getPartyTitle());
-//			}
-			
-// test findByPartyLocation
-//			List<PartyVO> L3 = dao.findByPartyLocation(200002);
-//			for (PartyVO j : L3) {
-//				System.out.println(j.getPartyHost() + ", " + j.getPartyTitle() + ", " + j.getPartyLocation());
-//			}
-			
-// test getAll
-//			List<PartyVO> L2 = dao.getAll();
-//			for (PartyVO i : L2) {
-//				System.out.println(i.getPartyDetail());
-//			}
-			
-// test deleteByPartySN
-//			dao.deleteByPartySN(400007);
-			
+	private static DataSource ds = null;
+	
+	static {
+		try {
+			Context ctx = new javax.naming.InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/UnderWater");
+		} catch (NamingException ne) {
+			ne.printStackTrace();
 		}
-
+	}
+	
 	private static final String INSERT_STMT = 
 			"insert into party (partyHost, partyTitle, regDate, closeDate, startDate, endDate, partyMinSize," +
 			" partyLocation, partyDetail) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -77,24 +37,15 @@ public class PartyDAOImpl implements PartyDAO_interface{
 	private static final String GETALL_STMT = "select * from party";
 	private static final String DELETEBYPARTYSN_STMT = "delete from party where partySN = ?";
 	
-	
-	static {
-		try {
-			Class.forName(Util.DRIVER);
-		} catch (ClassNotFoundException ce) {
-			ce.printStackTrace();
-		}
-	}
 
-	
-	@Override	
+	@Override
 	public int insert(PartyVO partyVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		int i = 0;
 	
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
 			pstmt.setInt(1, partyVO.getPartyHost());
@@ -144,7 +95,7 @@ public class PartyDAOImpl implements PartyDAO_interface{
 		int i = 0;
 	
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATESTATUS_STMT);
 			
 			pstmt.setString(1, status);
@@ -173,7 +124,6 @@ public class PartyDAOImpl implements PartyDAO_interface{
 		return i;
 	}
 
-
 	@Override
 	public PartyVO findByPartySN(Integer partySN) {
 		Connection con = null;
@@ -182,7 +132,7 @@ public class PartyDAOImpl implements PartyDAO_interface{
 		PartyVO p1 = null;
 	
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(FINDBYPARTYSN_STMT);
 			
 			pstmt.setInt(1, partySN);
@@ -235,7 +185,7 @@ public class PartyDAOImpl implements PartyDAO_interface{
 		List<PartyVO> list1 = new ArrayList<>();
 	
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(FINDBYPARTYHOST_STMT);
 			
 			pstmt.setInt(1, partyHost);
@@ -289,7 +239,7 @@ public class PartyDAOImpl implements PartyDAO_interface{
 		List<PartyVO> list1 = new ArrayList<>();
 	
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(FINDBYPARTYLOCATION_STMT);
 			
 			pstmt.setInt(1, partyLocation);
@@ -343,7 +293,7 @@ public class PartyDAOImpl implements PartyDAO_interface{
 		List<PartyVO> list1 = new ArrayList<>();
 	
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GETALL_STMT);
 			
 			rs = pstmt.executeQuery();
@@ -394,7 +344,7 @@ public class PartyDAOImpl implements PartyDAO_interface{
 		int i = 0;
 		
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETEBYPARTYSN_STMT);
 
 			pstmt.setInt(1, partySN);
@@ -420,6 +370,8 @@ public class PartyDAOImpl implements PartyDAO_interface{
 		}
 		return i;
 	}
-	
 
+	
+	
+	
 }
