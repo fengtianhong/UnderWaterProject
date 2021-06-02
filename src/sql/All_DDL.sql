@@ -394,7 +394,7 @@ create table `ForumArticle` (
 	`userID` int not null comment '會員編號',
 	`articleTitleOptSN` int not null comment '發文選項編號',
 	`rateGCount` int not null comment '文章好評',
-	`rateGNCount` int not null comment '文章負評',
+	`rateNGCount` int not null comment '文章負評',
 	CONSTRAINT `ForumArticle_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`),
 	CONSTRAINT `ForumArticle_articleTitleOptSN` FOREIGN KEY (`articleTitleOptSN`) REFERENCES `ArticleTitleOpt` (`articleTitleOptSN`)
 )AUTO_INCREMENT = 30001 COMMENT='討論區文章';

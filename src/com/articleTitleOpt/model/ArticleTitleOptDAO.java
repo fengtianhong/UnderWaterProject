@@ -37,7 +37,7 @@ public class ArticleTitleOptDAO implements ArticleTitleOptDAO_interface{
 			pstmt.executeUpdate();
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured."+ se.getMessage());
-		}finally {
+		} finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -64,7 +64,7 @@ public class ArticleTitleOptDAO implements ArticleTitleOptDAO_interface{
 			pstmt.executeUpdate();
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured."+ se.getMessage());
-		}finally {
+		} finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -96,7 +96,7 @@ public class ArticleTitleOptDAO implements ArticleTitleOptDAO_interface{
 				articleTitleOptVO.setArticleTitleOptSN(rs.getInt("ArticleTitleOptSN"));
 				articleTitleOptVO.setArticleTitleOptText(rs.getString("ArticleTitleOptText"));
 			}
-		}catch(SQLException se) {
+		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			if (rs != null) {
@@ -145,7 +145,7 @@ public class ArticleTitleOptDAO implements ArticleTitleOptDAO_interface{
 				articleTitleOptVO.setArticleTitleOptText(rs.getString("ArticleTitleOptText"));
 				list.add(articleTitleOptVO);
 			}
-		}catch (SQLException se) {
+		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			if (rs != null) {
