@@ -1,4 +1,4 @@
-package com.orderforproduct.model;
+package com.shoppingcar.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,26 +12,27 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class OrderForProductDAO implements OrderForProductDAO_interface{
-	private static final String INSERT_STMT = "INSER INTO OrderForProduct (userID, totalPrice, orderStatus) VALUES (?, ?, ?)";
-	private static final String CHANGESTATUS_STMT = "UPDATE OrderForProduct SET productStatus = ? WHERE orderSN = ?";
-	private static final String UPDATE_STMT = "UPDATE OrderForProduct SET userID = ?, purchaseDate = ?, totalPrice = ?,"
-			+ "clearDate = ? WHERE orderSN = ?";
-	private static final String GET_ONE_BY_ORDERSN = "SELETE * FROM OderForProduct WHERE orderSN = ?";
-	private static final String GET_ALL = "SELETE * FROM OrderForProduct ORDER BY orderSN";
+public class ShoppingCarDAO implements ShoppingCarDAO_interface{
+	private static final String INSERT_STMT = "INSERT INTO ShoppingCar (userID, productSN, purchaseQuantity,"
+			+ "productPrice, totalPrice) VALUES (?, ?, ?, ?, ?)";
+	private static final String DELETE_STMT = "DELETE FROM ShoppingCar WHERE shoppingCarSN = ?";
+	private static final String UPDATE_STMT = "UPDATE ShoppingCar SET userID = ?, productSN = ?,"
+			+ "purchaseQuantity = ?, productPrice = ?, totalPrice = ? WHERE shoppingCarSN = ?";
+	private static final String GET_ONE_BY_SHOPPINGCARSN = "SELETE * FROM ShoppingCar WHERE shoppingCarSN = ?";
+	private static final String GET_ALL = "SELETE * FROM ShoppingCar ORDER BY shoppingCarSN";
 	
 	private static DataSource ds = null;
-	static {
+	static{
 		try {
-		Context	ctx = new InitialContext();
+			Context ctx = new InitialContext();
 			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
-	public void insert(OrderForProductVO orderForProductVO) {
+	public void insert(ShoppingCarVO shoppingCarVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
@@ -39,9 +40,11 @@ public class OrderForProductDAO implements OrderForProductDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
-			pstmt.setInt(1, orderForProductVO.getUserID());
-			pstmt.setInt(2, orderForProductVO.getTotalPrice());
-			pstmt.setString(3, orderForProductVO.getOrderStatus());
+			pstmt.setInt(1, shoppingCarVO.getUserID());
+			pstmt.setInt(2, shoppingCarVO.getProductSN());
+			pstmt.setInt(3, shoppingCarVO.getPurchaseQuantity());
+			pstmt.setInt(4, shoppingCarVO.getProductPrice());
+			pstmt.setInt(5, shoppingCarVO.getTotalPrice());
 			
 			pstmt.executeUpdate();
 			
@@ -62,23 +65,20 @@ public class OrderForProductDAO implements OrderForProductDAO_interface{
 					e.printStackTrace();
 				}
 			}
-			
 		}
-		
 		
 	}
 
 	@Override
-	public void changeStatus(OrderForProductVO orderForProductVO) {
+	public void delete(Integer shoppingCarSN) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(CHANGESTATUS_STMT);
+			pstmt = con.prepareStatement(DELETE_STMT);
 			
-			pstmt.setString(1, orderForProductVO.getOrderStatus());
-			pstmt.setInt(2, orderForProductVO.getOrderSN());
+			pstmt.setInt(1, shoppingCarSN);
 			
 			pstmt.executeUpdate();
 			
@@ -103,7 +103,7 @@ public class OrderForProductDAO implements OrderForProductDAO_interface{
 	}
 
 	@Override
-	public void update(OrderForProductVO orderForProductVO) {
+	public void update(ShoppingCarVO shoppingCarVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
@@ -111,13 +111,14 @@ public class OrderForProductDAO implements OrderForProductDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_STMT);
 			
-			pstmt.setInt(1, orderForProductVO.getUserID());
-			pstmt.setTimestamp(2, orderForProductVO.getPurchaseDate());
-			pstmt.setInt(3, orderForProductVO.getTotalPrice());
-			pstmt.setTimestamp(4, orderForProductVO.getClearDate());
-			pstmt.setInt(5, orderForProductVO.getOrderSN());
+			pstmt.setInt(1, shoppingCarVO.getUserID());
+			pstmt.setInt(2, shoppingCarVO.getProductSN());
+			pstmt.setInt(3, shoppingCarVO.getPurchaseQuantity());
+			pstmt.setInt(4, shoppingCarVO.getProductPrice());
+			pstmt.setInt(5, shoppingCarVO.getTotalPrice());
+			pstmt.setInt(6, shoppingCarVO.getShoppingCarSN());
 			
-			pstmt.executeUpdate();
+			pstmt.executeUpdate();			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -137,34 +138,31 @@ public class OrderForProductDAO implements OrderForProductDAO_interface{
 				}
 			}
 		}
-		
 	}
 
 	@Override
-	public OrderForProductVO getOneByOrderSN(Integer orderSN) {
+	public ShoppingCarVO getOneByShoppingCarSN(Integer shoppingCarSN) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		OrderForProductVO orderForProductVO = null;
+		ShoppingCarVO shoppingCarVO = null;
 		
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(GET_ONE_BY_ORDERSN);
+			pstmt = con.prepareStatement(GET_ONE_BY_SHOPPINGCARSN);
 			
-			pstmt.setInt(1, orderSN);
+			pstmt.setInt(1, shoppingCarSN);
 			
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				orderForProductVO = new OrderForProductVO();
-				int oSN = rs.getInt("orderSN");
-				orderForProductVO.setOrderSN(oSN);
-				
-				orderForProductVO.setUserID(rs.getInt("userID"));
-				orderForProductVO.setPurchaseDate(rs.getTimestamp("purchaseDate"));
-				orderForProductVO.setTotalPrice(rs.getInt("totalPrice"));
-				orderForProductVO.setOrderStatus(rs.getString("orderStatus"));
-				orderForProductVO.setClearDate(rs.getTimestamp("clearDate"));
+				shoppingCarVO = new ShoppingCarVO();
+				shoppingCarVO.setShoppingCarSN(rs.getInt("shoppingCarSN"));
+				shoppingCarVO.setUserID(rs.getInt("userID"));
+				shoppingCarVO.setProductSN(rs.getInt("productSN"));
+				shoppingCarVO.setPurchaseQuantity(rs.getInt("purchaseQuantity"));
+				shoppingCarVO.setProductPrice(rs.getInt("productPrice"));
+				shoppingCarVO.setTotalPrice(rs.getInt("totalPrice"));	
 			}
 			
 		} catch (SQLException e) {
@@ -192,16 +190,17 @@ public class OrderForProductDAO implements OrderForProductDAO_interface{
 				}
 			}
 		}
-		return orderForProductVO;
+		
+		return shoppingCarVO;
 	}
 
 	@Override
-	public List<OrderForProductVO> getAll() {
+	public List<ShoppingCarVO> getAll() {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		OrderForProductVO orderForProductVO = null;
-		List<OrderForProductVO> list = new ArrayList<OrderForProductVO>();
+		ShoppingCarVO shoppingCarVO = null;
+		List<ShoppingCarVO> list = new ArrayList<ShoppingCarVO>();
 		
 		try {
 			con = ds.getConnection();
@@ -210,14 +209,14 @@ public class OrderForProductDAO implements OrderForProductDAO_interface{
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				orderForProductVO = new OrderForProductVO();
-				orderForProductVO.setOrderSN(rs.getInt("orderSN"));
-				orderForProductVO.setUserID(rs.getInt("userID"));
-				orderForProductVO.setPurchaseDate(rs.getTimestamp("purchaseDate"));
-				orderForProductVO.setTotalPrice(rs.getInt("totalPrice"));
-				orderForProductVO.setOrderStatus(rs.getString("orderStatus"));
-				orderForProductVO.setClearDate(rs.getTimestamp("clearDate"));
-				list.add(orderForProductVO);
+				shoppingCarVO = new ShoppingCarVO();
+				shoppingCarVO.setShoppingCarSN(rs.getInt("shoppingCarSN"));
+				shoppingCarVO.setUserID(rs.getInt("userID"));
+				shoppingCarVO.setProductSN(rs.getInt("productSN"));
+				shoppingCarVO.setPurchaseQuantity(rs.getInt("purchaseQuantity"));
+				shoppingCarVO.setProductPrice(rs.getInt("productPrice"));
+				shoppingCarVO.setTotalPrice(rs.getInt("totalPrice"));
+				list.add(shoppingCarVO);
 			}
 			
 		} catch (SQLException e) {
@@ -244,7 +243,8 @@ public class OrderForProductDAO implements OrderForProductDAO_interface{
 					e.printStackTrace();
 				}
 			}
-		}	
+		}
+		
 		return list;
 	}
 

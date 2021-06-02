@@ -1,4 +1,4 @@
-package com.orderforproduct.model;
+package com.orderlist.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,18 +12,19 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class OrderForProductDAO implements OrderForProductDAO_interface{
-	private static final String INSERT_STMT = "INSER INTO OrderForProduct (userID, totalPrice, orderStatus) VALUES (?, ?, ?)";
-	private static final String CHANGESTATUS_STMT = "UPDATE OrderForProduct SET productStatus = ? WHERE orderSN = ?";
-	private static final String UPDATE_STMT = "UPDATE OrderForProduct SET userID = ?, purchaseDate = ?, totalPrice = ?,"
-			+ "clearDate = ? WHERE orderSN = ?";
-	private static final String GET_ONE_BY_ORDERSN = "SELETE * FROM OderForProduct WHERE orderSN = ?";
-	private static final String GET_ALL = "SELETE * FROM OrderForProduct ORDER BY orderSN";
+public class OrderListDAO implements OrderListDAO_interface{
+	private static final String INSERT_STMT = "INSERT INTO OrderList (productSN, orderSN, purchaseQuantity,"
+			+ "productPrice, rating) VALUES (?, ?, ?, ?, ?)";
+	private static final String DELETE_STMT = "DELETE FROM OrderList WHERE orderListSN = ?";
+	private static final String UPDATE_STMT = "UPDATE OderList SET productSN = ?, orderSN = ?,"
+			+ "purchaseQuantity = ?, productPrice = ? WHERE orderListSN = ?";
+	private static final String GET_ONE_BY_ORDERLISTSN = "SELECT * FROM OrderList WHERE orderListSN = ?";
+	private static final String GET_ALL = "SELECT * FROM OrderList ORDER BY orderListSN";
 	
 	private static DataSource ds = null;
 	static {
 		try {
-		Context	ctx = new InitialContext();
+			Context ctx = new InitialContext();
 			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
 		} catch (NamingException e) {
 			e.printStackTrace();
@@ -31,7 +32,7 @@ public class OrderForProductDAO implements OrderForProductDAO_interface{
 	}
 	
 	@Override
-	public void insert(OrderForProductVO orderForProductVO) {
+	public void insert(OrderListVO orderListVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
@@ -39,9 +40,11 @@ public class OrderForProductDAO implements OrderForProductDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
-			pstmt.setInt(1, orderForProductVO.getUserID());
-			pstmt.setInt(2, orderForProductVO.getTotalPrice());
-			pstmt.setString(3, orderForProductVO.getOrderStatus());
+			pstmt.setInt(1, orderListVO.getProductSN());
+			pstmt.setInt(2, orderListVO.getOrderSN());
+			pstmt.setInt(3, orderListVO.getPurchaseQuantity());
+			pstmt.setInt(4, orderListVO.getProductPrice());
+			pstmt.setInt(5, orderListVO.getRating());
 			
 			pstmt.executeUpdate();
 			
@@ -62,23 +65,19 @@ public class OrderForProductDAO implements OrderForProductDAO_interface{
 					e.printStackTrace();
 				}
 			}
-			
 		}
-		
-		
 	}
 
 	@Override
-	public void changeStatus(OrderForProductVO orderForProductVO) {
+	public void delete(Integer orderListSN) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(CHANGESTATUS_STMT);
+			pstmt = con.prepareStatement(DELETE_STMT);
 			
-			pstmt.setString(1, orderForProductVO.getOrderStatus());
-			pstmt.setInt(2, orderForProductVO.getOrderSN());
+			pstmt.setInt(1, orderListSN);
 			
 			pstmt.executeUpdate();
 			
@@ -103,7 +102,7 @@ public class OrderForProductDAO implements OrderForProductDAO_interface{
 	}
 
 	@Override
-	public void update(OrderForProductVO orderForProductVO) {
+	public void update(OrderListVO orderListVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
@@ -111,11 +110,11 @@ public class OrderForProductDAO implements OrderForProductDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_STMT);
 			
-			pstmt.setInt(1, orderForProductVO.getUserID());
-			pstmt.setTimestamp(2, orderForProductVO.getPurchaseDate());
-			pstmt.setInt(3, orderForProductVO.getTotalPrice());
-			pstmt.setTimestamp(4, orderForProductVO.getClearDate());
-			pstmt.setInt(5, orderForProductVO.getOrderSN());
+			pstmt.setInt(1, orderListVO.getProductSN());
+			pstmt.setInt(2, orderListVO.getOrderSN());
+			pstmt.setInt(3, orderListVO.getPurchaseQuantity());
+			pstmt.setInt(4, orderListVO.getProductPrice());
+			pstmt.setInt(5, orderListVO.getOrderListSN());
 			
 			pstmt.executeUpdate();
 			
@@ -137,34 +136,31 @@ public class OrderForProductDAO implements OrderForProductDAO_interface{
 				}
 			}
 		}
-		
 	}
 
 	@Override
-	public OrderForProductVO getOneByOrderSN(Integer orderSN) {
+	public OrderListVO getOneByOrderListSN(Integer orderListSN) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		OrderForProductVO orderForProductVO = null;
+		OrderListVO orderListVO = null;
 		
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(GET_ONE_BY_ORDERSN);
+			pstmt = con.prepareStatement(GET_ONE_BY_ORDERLISTSN);
 			
-			pstmt.setInt(1, orderSN);
+			pstmt.setInt(1, orderListSN);
 			
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				orderForProductVO = new OrderForProductVO();
-				int oSN = rs.getInt("orderSN");
-				orderForProductVO.setOrderSN(oSN);
-				
-				orderForProductVO.setUserID(rs.getInt("userID"));
-				orderForProductVO.setPurchaseDate(rs.getTimestamp("purchaseDate"));
-				orderForProductVO.setTotalPrice(rs.getInt("totalPrice"));
-				orderForProductVO.setOrderStatus(rs.getString("orderStatus"));
-				orderForProductVO.setClearDate(rs.getTimestamp("clearDate"));
+				orderListVO = new OrderListVO();
+				orderListVO.setOrderListSN(rs.getInt("orderListSN"));
+				orderListVO.setProductSN(rs.getInt("productSN"));
+				orderListVO.setOrderSN(rs.getInt("orderSN"));
+				orderListVO.setPurchaseQuantity(rs.getInt("purchaseQuantity"));
+				orderListVO.setProductPrice(rs.getInt("productPrice"));
+				orderListVO.setRating(rs.getInt("rating"));
 			}
 			
 		} catch (SQLException e) {
@@ -192,16 +188,17 @@ public class OrderForProductDAO implements OrderForProductDAO_interface{
 				}
 			}
 		}
-		return orderForProductVO;
+		
+		return orderListVO;
 	}
 
 	@Override
-	public List<OrderForProductVO> getAll() {
+	public List<OrderListVO> getAll() {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		OrderForProductVO orderForProductVO = null;
-		List<OrderForProductVO> list = new ArrayList<OrderForProductVO>();
+		OrderListVO orderListVO = null;
+		List<OrderListVO> list = new ArrayList<OrderListVO>();
 		
 		try {
 			con = ds.getConnection();
@@ -210,14 +207,14 @@ public class OrderForProductDAO implements OrderForProductDAO_interface{
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				orderForProductVO = new OrderForProductVO();
-				orderForProductVO.setOrderSN(rs.getInt("orderSN"));
-				orderForProductVO.setUserID(rs.getInt("userID"));
-				orderForProductVO.setPurchaseDate(rs.getTimestamp("purchaseDate"));
-				orderForProductVO.setTotalPrice(rs.getInt("totalPrice"));
-				orderForProductVO.setOrderStatus(rs.getString("orderStatus"));
-				orderForProductVO.setClearDate(rs.getTimestamp("clearDate"));
-				list.add(orderForProductVO);
+				orderListVO = new OrderListVO();
+				orderListVO.setOrderListSN(rs.getInt("orderListSN"));
+				orderListVO.setProductSN(rs.getInt("productSN"));
+				orderListVO.setOrderSN(rs.getInt("orderSN"));
+				orderListVO.setPurchaseQuantity(rs.getInt("purchaseQuantity"));
+				orderListVO.setProductPrice(rs.getInt("productPrice"));
+				orderListVO.setRating(rs.getInt("rating"));
+				list.add(orderListVO);
 			}
 			
 		} catch (SQLException e) {
@@ -244,7 +241,8 @@ public class OrderForProductDAO implements OrderForProductDAO_interface{
 					e.printStackTrace();
 				}
 			}
-		}	
+		}
+		
 		return list;
 	}
 
