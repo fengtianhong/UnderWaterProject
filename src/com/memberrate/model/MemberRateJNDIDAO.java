@@ -44,11 +44,12 @@ public class MemberRateJNDIDAO implements MemberRateDAO_interface {
 	public int insertPartyRate(MemberRateVO memberRateVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		int i = 0;
+		int keys = 0;
 	
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(INSERTPARTYRATE_STMT);
+			int gk = 1;
+			pstmt = con.prepareStatement(INSERTPARTYRATE_STMT, 1);
 			
 			pstmt.setInt(1, memberRateVO.getPartySN());
 			pstmt.setInt(2, memberRateVO.getRateMaker());
@@ -56,7 +57,13 @@ public class MemberRateJNDIDAO implements MemberRateDAO_interface {
 			pstmt.setInt(4, memberRateVO.getRate());
 			pstmt.setString(5, memberRateVO.getRateDetail());
 
-			i = pstmt.executeUpdate();
+			pstmt.executeUpdate();
+			
+			ResultSet rs = pstmt.getGeneratedKeys();
+			
+			if (rs.next()) {
+				keys = rs.getInt(1);
+			}
 			
 		} catch (SQLException se) {
 			se.printStackTrace();
@@ -77,7 +84,7 @@ public class MemberRateJNDIDAO implements MemberRateDAO_interface {
 				}
 			}
 		}
-		return i;
+		return keys;
 	}
 
 	@Override

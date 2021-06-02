@@ -13,9 +13,7 @@ import util.Util;
 public class PartyDAOImpl implements PartyDAO_interface{
 	
 	public static void main(String[] args) {
-			
 		
-// test insert	
 			PartyVO t1 = new PartyVO();
 			t1.setPartyHost(1);
 			t1.setPartyTitle("好想去台灣0528");
@@ -30,8 +28,8 @@ public class PartyDAOImpl implements PartyDAO_interface{
 			PartyDAOImpl dao = new PartyDAOImpl();
 			
 // test insert
-			dao.insert(t1);
-			System.out.println("insert data to DB!");
+//			dao.insert(t1);
+//			System.out.println("insert data to DB!");
 		
 // test updateStatus
 //			dao.updateStatus(400010, "3");

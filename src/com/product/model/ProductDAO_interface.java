@@ -5,7 +5,7 @@ import java.util.List;
 public interface ProductDAO_interface {
 	public void insert(ProductVO productVO);
 
-	public void offShelf(Integer productSN);
+	public void offShelf(ProductVO productVO); // 下架 : update 更新 productStatus
 
 	public void update(ProductVO productVO);
 

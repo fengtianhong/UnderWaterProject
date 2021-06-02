@@ -5,22 +5,24 @@ import java.io.Serializable;
 public class OrderListVO implements Serializable {
 	private Integer orderListSN;
 	private Integer productSN;
+	private Integer orderSN;
 	private Integer purchaseQuantity;
-	private Integer rating;
 	private Integer productPrice;
+	private Integer rating;
 
 	public OrderListVO() {
 		super();
 	}
 
-	public OrderListVO(Integer orderListSN, Integer productSN, Integer purchaseQuantity, Integer rating,
-			Integer productPrice) {
+	public OrderListVO(Integer orderListSN, Integer productSN, Integer orderSN, Integer purchaseQuantity,
+			Integer productPrice, Integer rating) {
 		super();
 		this.orderListSN = orderListSN;
 		this.productSN = productSN;
+		this.orderSN = orderSN;
 		this.purchaseQuantity = purchaseQuantity;
-		this.rating = rating;
 		this.productPrice = productPrice;
+		this.rating = rating;
 	}
 
 	public Integer getOrderListSN() {
@@ -39,6 +41,14 @@ public class OrderListVO implements Serializable {
 		this.productSN = productSN;
 	}
 
+	public Integer getOrderSN() {
+		return orderSN;
+	}
+
+	public void setOrderSN(Integer orderSN) {
+		this.orderSN = orderSN;
+	}
+
 	public Integer getPurchaseQuantity() {
 		return purchaseQuantity;
 	}
@@ -47,20 +57,20 @@ public class OrderListVO implements Serializable {
 		this.purchaseQuantity = purchaseQuantity;
 	}
 
-	public Integer getRating() {
-		return rating;
-	}
-
-	public void setRating(Integer rating) {
-		this.rating = rating;
-	}
-
 	public Integer getProductPrice() {
 		return productPrice;
 	}
 
 	public void setProductPrice(Integer productPrice) {
 		this.productPrice = productPrice;
+	}
+
+	public Integer getRating() {
+		return rating;
+	}
+
+	public void setRating(Integer rating) {
+		this.rating = rating;
 	}
 
 }
