@@ -9,6 +9,7 @@ public class MemberVO implements Serializable{
 	private String account;//帳號
 	private String pwd;//密碼
 	private String nickName;//暱稱
+	private String userName;//
 	private String gender;//性別 hello
 	private Date birthDate;//會員生日
 	private String phone;//聯絡電話
@@ -109,5 +110,11 @@ public class MemberVO implements Serializable{
 	}
 	public void setRatePoint(Integer ratePoint) {
 		this.ratePoint = ratePoint;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 }
