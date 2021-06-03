@@ -4,7 +4,11 @@ DROP TABLE IF EXISTS `News`;
 DROP TABLE IF EXISTS `Manager`;
 DROP TABLE IF EXISTS `QA`;
 
-DROP TABLE IF EXISTS `ArticleTitleOpt`; -- NOT YET
+DROP TABLE IF EXISTS `ForumComment`;
+DROP TABLE IF EXISTS `ArticleReport`;
+DROP TABLE IF EXISTS `ForumRate`;
+DROP TABLE IF EXISTS `ForumArticle`;
+DROP TABLE IF EXISTS `ArticleTitleOpt`;
 
 DROP TABLE IF EXISTS `AdPic`;
 DROP TABLE IF EXISTS `AdOrder`;
@@ -73,6 +77,11 @@ CREATE TABLE `Diveinfo` (
   PRIMARY KEY (`pointSN`)
 ) COMMENT='潛點資訊' AUTO_INCREMENT = 200001;
 
+insert into Diveinfo(pointName,latitude,longitude,`view`,introduction,season,
+`local`,pic,ratePoint,ratePeople,status)
+values("澎湖",23.249750, 119.674783,"測試文字",
+"澎湖南方四島國家公園海域遊憩區擁有美麗壯闊的珊瑚生態和魚群，歡迎民眾來親近海洋，雖然目前交通仍然不方便，但也因此保留了更多原始風貌",
+"春,夏,秋,冬","離島","",5,1,1);
 
 -- --------------------------------------套裝行程----------------------------------------
 
@@ -96,6 +105,8 @@ create table `GroupTour` (
 	PRIMARY KEY (`groupTourSN`)
 ) COMMENT='套裝行程' AUTO_INCREMENT=6001;
 
+INSERT INTO GroupTour (tourName, startTime, endTime, regTime, closeTime, pointSN, price, attendNumber, limitNumder, certificationLimit, `status`, content) VALUES ('墾丁獨立礁二日遊', '2021-07-09', '2021-07-10', '2021-06-01', '2021-07-02', 200001, 12000, 0, 10, '1', '1', 'content');
+
 
 create table `Collections` (
 	`userID` int not null comment '會員編號',
@@ -103,6 +114,8 @@ create table `Collections` (
     CONSTRAINT Collections_userID_FK FOREIGN KEY (userID) REFERENCES Member (userID),
     CONSTRAINT Collections_groupTourSN_FK FOREIGN KEY (groupTourSN) REFERENCES GroupTour (groupTourSN)
 ) COMMENT='套裝行程收藏';
+
+INSERT INTO Collections (userID, groupTourSN) VALUES (1, 6001);
 
 
 create table `OderForGroup` (
@@ -119,6 +132,8 @@ create table `OderForGroup` (
 	  PRIMARY KEY (`orderSN`)
 ) COMMENT='套裝行程訂單' AUTO_INCREMENT=6001;
 
+INSERT INTO OderForGroup (userID, groupTourSN, totalPrice, purchaseDate, phone, personID, birthdate) VALUES (1, 6001, 10000, '2021-06-01', '0912345678', 'A123456789', '1996-06-19');
+
 
 create table `LocationRate` (
 	`SN` int NOT NULL AUTO_INCREMENT COMMENT '潛點評價編號',
@@ -131,6 +146,8 @@ create table `LocationRate` (
 	CONSTRAINT LocationRate_userID_FK FOREIGN KEY (userID) REFERENCES Member (userID),
 	  PRIMARY KEY (`SN`)
 ) COMMENT='地點評價資料' AUTO_INCREMENT=6001;
+
+INSERT INTO LocationRate (pointSN, userID, rate, rateDetail) VALUES (200001, 1, 5, '超級好玩!中性浮力練好再去比較適合喔。');
 
 
 -- --------------------------------------揪團&會員評價----------------------------------------
@@ -146,14 +163,13 @@ CREATE TABLE `Party` (
   `partyMinSize` int NOT NULL COMMENT '揪團最低人數',
   `partyLocation` int NOT NULL COMMENT '揪團地點',
   `partyDetail` longtext NOT NULL COMMENT '揪團詳細內容',
-  `createTime` timestamp NOT NULL COMMENT '揪團發文時間',
-  `status` char(1) NOT NULL COMMENT '揪團狀態',
+  `createTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '揪團發文時間',
+  `status` char(1) NOT NULL DEFAULT '0' COMMENT '揪團狀態 0:熱烈報名中, 1:已額滿, 2:已結束, 3: 已取消, 4: 已成團(仍可收), 5: 被下架',
   PRIMARY KEY (`partySN`),
   KEY `FK_Party_partyHost` (`partyHost`),
   KEY `FK_Party_partyLocation` (`partyLocation`),
   CONSTRAINT `FK_Party_partyHost` FOREIGN KEY (`partyHost`) REFERENCES `Member` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_Party_partyLocation` FOREIGN KEY (`partyLocation`) REFERENCES `DiveInfo` (`pointSN`) ON DELETE CASCADE ON UPDATE CASCADE
-
 ) COMMENT='揪團列表' AUTO_INCREMENT=400001;
 
 insert into party (partyHost, partyTitle, regDate, closeDate, startDate, endDate, partyMinSize, partyLocation, partyDetail)
@@ -172,10 +188,8 @@ CREATE TABLE `PartyMember` (
   `personID` char(10) NOT NULL COMMENT '身份證字號',
   `certification` char(2) COMMENT '證照',
   `certificationPic` longblob COMMENT '證照圖片',
-  `appliedTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '報名時間',
   `comment` varchar(1000) DEFAULT NULL COMMENT '備註',
   `status` int NOT NULL DEFAULT '0' COMMENT '報名狀態 0:待審核 1:審核通過 2:審核未通過 3:不顯示',
-
   PRIMARY KEY (`partyMemberSN`),
   UNIQUE KEY `UK_PartyMember_partySN_partyMember` (`partySN`,`partyMember`),
   KEY `FK_PartyMember_partyMember` (`partyMember`),
@@ -195,7 +209,7 @@ CREATE TABLE `MemberRate` (
   `rateRecipiant` int NOT NULL COMMENT '被評論方',
   `rate` int NOT NULL COMMENT '評價',
   `rateDetail` varchar(3000) DEFAULT NULL COMMENT '評價詳細內容',
-  `createTime` timestamp NOT NULL COMMENT '評價時間',
+  `createTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '評價時間',
   PRIMARY KEY (`SN`),
   KEY `FK_MemberRate_partySN` (`partySN`),
   KEY `FK_MemberRate_orderSN` (`orderSN`),
@@ -208,7 +222,6 @@ CREATE TABLE `MemberRate` (
   UNIQUE KEY `UK_MemberRate_partySN_rateMaker_rateRecipiant` (`partySN`,`rateMaker`, `rateRecipiant`),
   UNIQUE KEY `UK_MemberRate_orderSN_rateMaker_rateRecipiant` (`orderSN`,`rateMaker`, `rateRecipiant`)
 ) COMMENT='會員評價';
-
 
 insert into MemberRate (partySN, rateMaker, rateRecipiant, rate, rateDetail)
 values ('400002', '1', '2', '5', '測試第一筆評價DDL');
@@ -307,15 +320,15 @@ CREATE TABLE `ProductPhoto` (
 -- --------------------------------------會員相關表格 CustomerReply Follow Chat----------------------------------------
 
 
-create table `CustomerReply` (
-	`customerReplySN` int not null AUTO_INCREMENT comment '訊息回覆編號',
-	`userID` int not null comment '會員編號',
-    `type` char(1) not null comment '類型',
-    `content` varchar(500) not null comment '回應內容',
-    `sendTime` timestamp not null comment '訊息傳送時間',
-     CONSTRAINT CustomerReply_userID_FK FOREIGN KEY (userID) REFERENCES Member (userID),
-	  PRIMARY KEY (`customerReplySN`)
-) COMMENT='即時客服回應' AUTO_INCREMENT=60001;
+-- create table `CustomerReply` (     -- USE REDIS, NOT MYSQL
+-- 	`customerReplySN` int not null AUTO_INCREMENT comment '訊息回覆編號',
+-- 	`userID` int not null comment '會員編號',
+--    `type` char(1) not null comment '類型',
+--    `content` varchar(500) not null comment '回應內容',
+--    `sendTime` timestamp not null comment '訊息傳送時間',
+--     CONSTRAINT CustomerReply_userID_FK FOREIGN KEY (userID) REFERENCES Member (userID),
+-- 	  PRIMARY KEY (`customerReplySN`)
+-- ) COMMENT='即時客服回應' AUTO_INCREMENT=60001;
 
 
 CREATE TABLE `Follow` (
@@ -326,6 +339,9 @@ CREATE TABLE `Follow` (
   CONSTRAINT `FK_Follow_followed` FOREIGN KEY (`followed`) REFERENCES `member` (`userID`),
   CONSTRAINT `FK_Follow_follower` FOREIGN KEY (`follower`) REFERENCES `member` (`userID`)
 ) COMMENT='追蹤';
+
+insert into Follow(follower,followed) values (1,2);
+insert into Follow(follower,followed) values (2,1);
 
 
 CREATE TABLE `Chat` (
@@ -341,6 +357,10 @@ CREATE TABLE `Chat` (
   CONSTRAINT `FK_Chat_toAccount` FOREIGN KEY (`toAccount`) REFERENCES `member` (`userID`)
 ) COMMENT='聊天紀錄' AUTO_INCREMENT=900001;
 
+insert into Chat(fromAccount, toAccount,content,dateTime)
+values (1,2,"啟源吃早餐",now());
+insert into Chat(fromAccount, toAccount,content,dateTime)
+values (2,1,"喔市喔",now()+INTERVAL 5 SECOND);
 
 -- --------------------------------------AD----------------------------------------
 
@@ -445,6 +465,9 @@ CREATE TABLE `QA` (
   PRIMARY KEY (`questionSN`)
 ) COMMENT='Q&A' AUTO_INCREMENT=6001;
 
+INSERT INTO QA (menu, submenu, `system`, question, answer, popularQuestion) VALUES (1, 1, 1, '套裝行程訂購流程說明', '1. 請先登入/註冊會員。2. 選擇您欲報名的行程，點選我要報名，系統會自動判斷您的會員及潛水證照資格。3. 填寫訂單資訊，結帳，完成訂單確認。', false);
+INSERT INTO QA (menu, submenu, `system`, question, answer, popularQuestion) VALUES (0, 0, 0, '就一句話！', '噁心！', true);
+
 
 CREATE TABLE `Manager` (
   `account` varchar(50) NOT NULL COMMENT '帳號',
@@ -464,23 +487,6 @@ CREATE TABLE `News` (
   PRIMARY KEY (`newsSN`)
 ) COMMENT='最新消息' AUTO_INCREMENT = 500001;
 
-
--- Diveinfo table 潛點資訊
-insert into Diveinfo(pointName,latitude,longitude,`view`,introduction,season,
-`local`,pic,ratePoint,ratePeople,status)
-values("澎湖",23.249750, 119.674783,"測試文字",
-"澎湖南方四島國家公園海域遊憩區擁有美麗壯闊的珊瑚生態和魚群，歡迎民眾來親近海洋，雖然目前交通仍然不方便，但也因此保留了更多原始風貌",
-"春,夏,秋,冬","離島","",5,1,1);
--- News table 新聞消息
 insert into News(title,content,image,newsdate,newsfrom,newstype)
 values("澎湖水母群聚感染COVID-19","澎湖近期發生人傳水母武漢肺炎之症狀，還請各位潛水客避免前往以免感染",1,"2000-12-12","唬爛嘴","0");
 
--- Follow table 互追好友1與2
-insert into Follow(follower,followed) values (1,2);
-insert into Follow(follower,followed) values (2,1);
-
--- chat 聊天訊息 
-insert into Chat(fromAccount, toAccount,content,dateTime)
-values (1,2,"啟源吃早餐",now());
-insert into Chat(fromAccount, toAccount,content,dateTime)
-values (2,1,"喔市喔",now()+5000);
