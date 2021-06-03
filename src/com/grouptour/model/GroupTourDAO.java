@@ -3,34 +3,25 @@ package com.grouptour.model;
 import java.sql.*;
 import java.util.*;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import util.Util;
 
 public class GroupTourDAO implements GroupTourDAO_interface{
 	
-//	public static void main(String[] args) {		// FOR TEST
-//		GroupTourDAO dao = new GroupTourDAO();
-//		GroupTourVO vo = new GroupTourVO();
-////		vo.setGroupTourSN(6001);	// auto_increment start 6001
-//		vo.setTourName("墾丁後壁湖出水口找海龜");
-//		vo.setStartTime(java.sql.Date.valueOf("2021-09-01"));
-//		vo.setEndTime(java.sql.Date.valueOf("2021-09-03"));
-//		vo.setRegTime(java.sql.Date.valueOf("2021-08-03"));
-//		vo.setCloseTime(java.sql.Date.valueOf("2001-08-28"));	// stop 3 days ago
-////		vo.setCreateTime(rs.getTimestamp("createTime"));	// default
-//		vo.setPointSN(200002);
-//		vo.setPrice(8000);
-//		vo.setAttendNumber(0);	//default 0? or insert 0?
-//		vo.setLimitNumder(6);
-//		vo.setCertificationLimit("0");
-//		vo.setStatus("0");
-//		vo.setContent("2233");
-//		System.out.println(vo.toString());
-//		dao.insert(vo);			// OK
-////		dao.update(vo);			// OK
-////		GroupTourVO testVO = dao.findByPrimaryKey(6001);
-////		System.out.println(testVO.getTourName());  	// OK
-//		System.out.println(dao.getAll()); 	// 
-//}
+	private static DataSource ds = null;
+	static {
+		Context ctx;
+		try {
+			ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/UnderWater");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 	private static final String INSERT_STMT = "INSERT INTO GroupTour (tourName, startTime, endTime, regTime, closeTime, pointSN, price, attendNumber, limitNumder, certificationLimit, status, content) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String UPDATE_STMT = "UPDATE GroupTour SET tourName=?, startTime=?, endTime=?, regTime=?, closeTime=?, pointSN=?, price=?, attendNumber=?, limitNumder=?, certificationLimit=?, status=?, content=? WHERE groupTourSN=?";
 	private static final String GET_ONE_STMT = "SELECT * FROM GroupTour WHERE groupTourSN=?";
@@ -42,8 +33,7 @@ public class GroupTourDAO implements GroupTourDAO_interface{
 		PreparedStatement ps = null;
 		
 		try {
-			Class.forName(Util.DRIVER);
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			ps = con.prepareStatement(INSERT_STMT);
 			ps.setString(1, groupTourVO.getTourName());			
 			ps.setDate(2, groupTourVO.getStartTime());			
@@ -59,8 +49,6 @@ public class GroupTourDAO implements GroupTourDAO_interface{
 			ps.setString(12, groupTourVO.getContent());						
 			ps.executeUpdate();
 			
-		} catch (ClassNotFoundException ce) {
-			throw new RuntimeException("Couldn't load database driver. " + ce.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
@@ -87,8 +75,7 @@ public class GroupTourDAO implements GroupTourDAO_interface{
 		PreparedStatement ps = null;
 		
 		try {
-			Class.forName(Util.DRIVER);
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			ps = con.prepareStatement(UPDATE_STMT);
 			ps.setString(1, groupTourVO.getTourName());			
 			ps.setDate(2, groupTourVO.getStartTime());		
@@ -105,8 +92,6 @@ public class GroupTourDAO implements GroupTourDAO_interface{
 			ps.setInt(13, groupTourVO.getGroupTourSN());						
 			ps.executeUpdate();
 			
-		} catch (ClassNotFoundException ce) {
-			throw new RuntimeException("Couldn't load database driver. " + ce.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
@@ -135,8 +120,7 @@ public class GroupTourDAO implements GroupTourDAO_interface{
 		ResultSet rs = null;
 		
 		try {
-			Class.forName(Util.DRIVER);
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			ps = con.prepareStatement(GET_ONE_STMT);
 			
 			ps.setInt(1, groupTourSN);
@@ -159,8 +143,6 @@ public class GroupTourDAO implements GroupTourDAO_interface{
 				groupTourVO.setStatus(rs.getString("status"));
 				groupTourVO.setContent(rs.getString("content"));
 			}
-		} catch (ClassNotFoundException ce) {
-			throw new RuntimeException("Couldn't load database driver. " + ce.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
@@ -200,8 +182,7 @@ public class GroupTourDAO implements GroupTourDAO_interface{
 		ResultSet rs = null;
 
 		try {
-			Class.forName(Util.DRIVER);
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			ps = con.prepareStatement(GET_All_LIST_STMT);
 			rs = ps.executeQuery();
 
@@ -223,8 +204,6 @@ public class GroupTourDAO implements GroupTourDAO_interface{
 //				groupTourVO.setContent(rs.getString("content"));	// 此方法僅為套裝行程商品列表用，因此不取內文部分
 				list.add(groupTourVO);
 			}
-		} catch (ClassNotFoundException ce) {
-			throw new RuntimeException("Couldn't load database driver. " + ce.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {

@@ -3,28 +3,25 @@ package com.oderforgroup.model;
 import java.sql.*;
 import java.util.*;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import util.Util;
 
 public class OderForGroupDAO implements OderForGroupDAO_interface{
-//	public static void main(String[] args) {		// FOR TEST
-//		OderForGroupDAO dao = new OderForGroupDAO();
-//		OderForGroupVO vo = new OderForGroupVO();
-//		vo.setOrderSN(6005); // use default
-//		vo.setUserID(2);	
-//		vo.setGroupTourSN(6001);
-//		vo.setTotalPrice(10000);
-//		vo.setPurchaseDate(java.sql.Date.valueOf("2021-04-28"));
-//		vo.setPhone("0918210612");
-//		vo.setPersonID("A9999999");
-//		vo.setBirthdate(java.sql.Date.valueOf("1996-07-19"));
-//		System.out.println(vo.toString());
-////		dao.insert(vo);			// OK
-////		dao.update(vo);			// OK
-//		System.out.println(dao.findByPrimaryKey(6003));  	// OK
-//		System.out.println(dao.getOrderByUserID(2)); 		// OK
-//}
 	
-	// 訂單結束時間的話吃 GroupTour 的行程結束時間 > 但要寫在DAO?
+	private static DataSource ds = null;
+	static {
+		Context ctx;
+		try {
+			ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/UnderWater");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 	private static final String INSERT_STMT = "INSERT INTO OderForGroup (userID, groupTourSN, totalPrice, purchaseDate, phone, personID, birthdate) VALUES (?, ?, ?, ?, ?, ?, ?)";
 	private static final String UPDATE_STMT = "UPDATE OderForGroup SET userID=?, groupTourSN=?, totalPrice=?, purchaseDate=?, phone=?, personID=?, birthdate=? WHERE orderSN = ?";
 	private static final String GET_ONE_STMT = "SELECT * FROM OderForGroup WHERE orderSN = ?";
@@ -36,8 +33,7 @@ public class OderForGroupDAO implements OderForGroupDAO_interface{
 		PreparedStatement ps = null;
 		
 		try {
-			Class.forName(Util.DRIVER);
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			ps = con.prepareStatement(INSERT_STMT);
 			ps.setInt(1, oderForGroupVO.getUserID());			
 			ps.setInt(2, oderForGroupVO.getGroupTourSN());			
@@ -48,8 +44,6 @@ public class OderForGroupDAO implements OderForGroupDAO_interface{
 			ps.setDate(7, oderForGroupVO.getBirthdate());											
 			ps.executeUpdate();
 			
-		} catch (ClassNotFoundException ce) {
-			throw new RuntimeException("Couldn't load database driver. " + ce.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
@@ -76,8 +70,7 @@ public class OderForGroupDAO implements OderForGroupDAO_interface{
 		PreparedStatement ps = null;
 		
 		try {
-			Class.forName(Util.DRIVER);
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			ps = con.prepareStatement(UPDATE_STMT);
 			ps.setInt(1, oderForGroupVO.getUserID());			
 			ps.setInt(2, oderForGroupVO.getGroupTourSN());		
@@ -89,8 +82,6 @@ public class OderForGroupDAO implements OderForGroupDAO_interface{
 			ps.setInt(8, oderForGroupVO.getOrderSN());						
 			ps.executeUpdate();
 			
-		} catch (ClassNotFoundException ce) {
-			throw new RuntimeException("Couldn't load database driver. " + ce.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
@@ -119,8 +110,7 @@ public class OderForGroupDAO implements OderForGroupDAO_interface{
 		ResultSet rs = null;
 		
 		try {
-			Class.forName(Util.DRIVER);
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			ps = con.prepareStatement(GET_ONE_STMT);
 			
 			ps.setInt(1, orderSN);
@@ -137,8 +127,6 @@ public class OderForGroupDAO implements OderForGroupDAO_interface{
 				oderForGroupVO.setPersonID(rs.getString("personID"));
 				oderForGroupVO.setBirthdate(rs.getDate("birthdate"));
 			}
-		} catch (ClassNotFoundException ce) {
-			throw new RuntimeException("Couldn't load database driver. " + ce.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
@@ -176,8 +164,7 @@ public class OderForGroupDAO implements OderForGroupDAO_interface{
 		ResultSet rs = null;
 
 			try {
-				Class.forName(Util.DRIVER);
-				con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+				con = ds.getConnection();
 				ps = con.prepareStatement(GET_ByUSERID_STMT);
 				ps.setInt(1, userID);
 				rs = ps.executeQuery();
@@ -194,8 +181,6 @@ public class OderForGroupDAO implements OderForGroupDAO_interface{
 					oderForGroupVO.setBirthdate(rs.getDate("birthdate"));
 					list.add(oderForGroupVO);
 				}
-			} catch (ClassNotFoundException ce) {
-				throw new RuntimeException("Couldn't load database driver. " + ce.getMessage());
 			} catch (SQLException se) {
 				throw new RuntimeException("A database error occured. " + se.getMessage());
 			} finally {
