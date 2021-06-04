@@ -8,7 +8,7 @@ import util.Util;
 public class MemberDAO implements MemberDAO_interface{
 	
 	private static final String INSERT_STMT = "INSERT INTO Member (userID, account, pwd,nickName, userName, gender, birthDate, phone, certification, certificationPic, personID, address, createTime, status, upDateTime, ratePeople, ratePoint) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?)";
-//	private static final String UPDATE_STMT = "UPDATE Member set account=?, pwd=?, NickName=?, userName=?, gender=?, birthDate=?, phone=?, Certification=?, CertificationPic=?, personID=?, address=?, createTime=?,  status=?, updateTime=?, ratePeople=?, ratePoint=?, where userID = ?";
+	private static final String UPDATE_STMT = "UPDATE Member set pwd=?, NickName=?, userName=?, gender=?, birthDate=?, phone=?, Certification=?, CertificationPic=?, personID=?, address=?, createTime=?,  status=?, updateTime=?, ratePeople=?, ratePoint=?, where userID = ?";
 //	private static final String findBYPrimaryKey = "SELECT * FROM Member where userid=?";
 //	private static final String GET_ALL_STMT = "SELECT * FROM Member ";
 	
@@ -28,7 +28,7 @@ public class MemberDAO implements MemberDAO_interface{
 //		vo.setPersonID("F123456788");
 //		vo.setAddress("花蓮縣壽豐鄉中山路6X號");
 //		vo.setCreateTime(new Timestamp(System.currentTimeMillis()));
-//		vo.setStatus("0");
+//		vo.setStatus(0);
 //		vo.setUpDateTime(new Timestamp(System.currentTimeMillis()));
 //		vo.setRatePeople(0);
 //		vo.setRatePoint(0);
@@ -75,7 +75,7 @@ public class MemberDAO implements MemberDAO_interface{
 			pstmt.setString(11, MemberVO.getPersonID());
 			pstmt.setString(12, MemberVO.getAddress());
 			pstmt.setTimestamp(13, MemberVO.getCreateTime());
-			pstmt.setString(14, MemberVO.getStatus());
+			pstmt.setInt(14, MemberVO.getStatus());
 			pstmt.setTimestamp(15, MemberVO.getUpDateTime());
 			pstmt.setInt(16, MemberVO.getRatePeople());
 			pstmt.setInt(17, MemberVO.getRatePoint());
@@ -101,36 +101,40 @@ public class MemberDAO implements MemberDAO_interface{
 				}
 			}
 		}
-		
 	}
-//	@Override
-//	public void update(MemberVO MemberVO) {//未做完
-//		Connection con = null;
-//		PreparedStatement pstmt = null;
-//		try {
-//			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-//			pstmt = con.prepareStatement(UPDATE_STMT);
-//			
-//			
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			if (pstmt != null) {
-//				try {
-//					pstmt.close();
-//				} catch (SQLException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//			if (con != null) {
-//				try {
-//					con.close();
-//				} catch (SQLException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-//	}
+	
+	
+	@Override
+	public void update(MemberVO MemberVO) {//未做完
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			pstmt = con.prepareStatement(UPDATE_STMT);
+			
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	
 //	@Override
 //	public MemberVO findBYPrimaryKey(Integer userID) {
 //
