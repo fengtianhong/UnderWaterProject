@@ -5,23 +5,25 @@ import java.util.*;
 import javax.naming.*;
 import javax.sql.*;
 
+import util.Util;
+
 public class ArticleTitleOptDAO implements ArticleTitleOptDAO_interface{
 
 	private static DataSource ds = null;
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/UnderWater");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	private static final String INSERT_STMT = "INSERT INTO ArticleTitleOpt(articleTitleOptText) VALUES (?)";
-	private static final String UPDATE = "UPDATE ArticleTitleOpt set articleTitleOptText=? where articleTitleOptSN = ?";
-	private static final String GET_ALL_STMT = "SELECT articleTitleOptSN, articleTitleOptText FROM ArticleTitleOpt order by articleTitleOptSN";
-	private static final String GET_ONE_STMT = "SELECT articleTitleOptSN, articleTitleOptText FROM ArticleTitleOpt where articleTitleOptSN = ?";
-
+	private static final String UPDATE_STMT = "UPDATE ArticleTitleOpt set articleTitleOptText= ? where articleTitleOptSN = ?";
+	private static final String GET_ALL_STMT = "SELECT * FROM ArticleTitleOpt order by articleTitleOptSN";
+	private static final String GET_ONE_STMT = "SELECT * FROM ArticleTitleOpt where articleTitleOptSN = ?";
+	
 //	新增文章標題欄位
 	@Override
 	public void insert(ArticleTitleOptVO articleTitleOptVO) {
@@ -57,11 +59,12 @@ public class ArticleTitleOptDAO implements ArticleTitleOptDAO_interface{
 		
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(UPDATE);
+			pstmt = con.prepareStatement(UPDATE_STMT);
 			
 			pstmt.setString(1, articleTitleOptVO.getArticleTitleOptText());
-			
+			pstmt.setInt(2, articleTitleOptVO.getArticleTitleOptSN());
 			pstmt.executeUpdate();
+			
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured."+ se.getMessage());
 		} finally {
@@ -70,6 +73,13 @@ public class ArticleTitleOptDAO implements ArticleTitleOptDAO_interface{
 					pstmt.close();
 				}catch(Exception e) {
 					e.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e){
+					e.printStackTrace();
 				}
 			}
 		}

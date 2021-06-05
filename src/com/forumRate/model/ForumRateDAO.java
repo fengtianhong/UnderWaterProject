@@ -18,7 +18,7 @@ public class ForumRateDAO implements ForumRateDAO_interface{
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/UnderWater");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}		
@@ -35,6 +35,16 @@ public class ForumRateDAO implements ForumRateDAO_interface{
 		private static final String UPDATE = 
 			"UPDATE ForumRate set userID = ?, articleSN = ?, articleRate = ? where articleRateSN = ?";
 
+		
+//	public static void main(String[] args) {
+//		ForumRateDAO frdao = new ForumRateDAO();
+//		ForumRateVO frvo = new ForumRateVO();
+//		frvo = new ForumRateVO();
+//		frvo.setUserID(3);
+//		frvo.setArticleSN(30001);
+//		frvo.setArticleRate(true);
+//	}
+		
 	@Override
 	public void insert(ForumRateVO forumRateVO) {
 		Connection con = null;

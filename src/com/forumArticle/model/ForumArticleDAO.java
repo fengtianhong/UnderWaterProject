@@ -20,7 +20,7 @@ public class ForumArticleDAO implements ForumArticleDAO_interface{
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/UnderWater");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}		
@@ -32,11 +32,17 @@ public class ForumArticleDAO implements ForumArticleDAO_interface{
 			"SELECT articlesN, articleTitle, publishedDate, articleText, articleStatus, userID, articleTitleOptSN, rateGCount, rateNGCount FROM ForumArticle order by articleSN";
 		private static final String GET_ONE_STMT = 
 			"SELECT articlesN, articleTitle, publishedDate, articleText, articleStatus, userID, articleTitleOptSN, rateGCount, rateNGCount FROM ForumArticle where articleSN = ?";
-		private static final String DELETE = 
-			"DELETE FROM ForumArticle where articleSN = ?";
 		private static final String UPDATE = 
 			"UPDATE ForumArticle set (articleTitle = ?, publishedDate = ?, articleText = ?, articleStatus = ?, userID = ?, articleTitleOptSN = ?, rateGCount = ?, rateNGCount = ? where articleSN = ?";
 
+//	public static void main(String[] args) {
+//		ForumArticleDAO fadao = new ForumArticleDAO();
+//		ForumArticleVO favo = new ForumArticleVO();
+//		favo = new ForumArticleVO();
+//		favo.setArticleTitle();
+//	}
+		
+		
 //	新增文章
 	@Override
 	public void insert(ForumArticleVO forumArticleVO) {
@@ -88,15 +94,15 @@ public class ForumArticleDAO implements ForumArticleDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 			
-			pstmt.setInt(1, forumArticleVO.getArticleSN());
-			pstmt.setString(2, forumArticleVO.getArticleTitle());
-			pstmt.setTimestamp(3, forumArticleVO.getPublishedDate());
-			pstmt.setString(4, forumArticleVO.getArticleText());
-			pstmt.setInt(5, forumArticleVO.getArticleStatus());
-			pstmt.setInt(6, forumArticleVO.getUserID());
-			pstmt.setInt(7, forumArticleVO.getArticleTitleOptSN());
-			pstmt.setInt(8, forumArticleVO.getRateGCount());
-			pstmt.setInt(9, forumArticleVO.getRateNGCount());
+			pstmt.setString(1, forumArticleVO.getArticleTitle());
+			pstmt.setTimestamp(2, forumArticleVO.getPublishedDate());
+			pstmt.setString(3, forumArticleVO.getArticleText());
+			pstmt.setInt(4, forumArticleVO.getArticleStatus());
+			pstmt.setInt(5, forumArticleVO.getUserID());
+			pstmt.setInt(6, forumArticleVO.getArticleTitleOptSN());
+			pstmt.setInt(7, forumArticleVO.getRateGCount());
+			pstmt.setInt(8, forumArticleVO.getRateNGCount());
+			pstmt.setInt(9, forumArticleVO.getArticleSN());
 			
 			pstmt.executeUpdate();
 			

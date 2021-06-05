@@ -20,8 +20,12 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
+import com.articleTitleOpt.model.ArticleTitleOptDAO;
+import com.articleTitleOpt.model.ArticleTitleOptVO;
 import com.chat.model.*;
 import com.diveinfo.model.*;
+import com.forumArticle.model.ForumArticleDAO;
+import com.forumArticle.model.ForumArticleVO;
 import com.memberrate.model.MemberRateDAO;
 import com.memberrate.model.MemberRateJNDIDAO;
 import com.memberrate.model.MemberRateVO;
@@ -70,7 +74,7 @@ public class Test_DataSource extends HttpServlet {
 //			out.println(newsDAO.findByPrimaryKey(500002).getTitle());
 			
 //==============================================================	
-			
+
 //======================DiveInfoDAO Test========================			
 
 //			DiveInfoDAO diveinfoDAO = new DiveInfoDAO();
@@ -339,7 +343,34 @@ public class Test_DataSource extends HttpServlet {
 //			out.println("Testing: SN 9 has been deleted.");
 			
 //==============================================================
-          
+//===========================ArticleTitleOpt Test===================================
+			ArticleTitleOptDAO atodao = new ArticleTitleOptDAO();
+			ArticleTitleOptVO atovo = new ArticleTitleOptVO();
+//			//	新增done
+//			atovo.setArticleTitleOptText("新增成功");
+//			atodao.insert(atovo);
+//			//	修改done
+//			atovo.setArticleTitleOptText("二三四五");
+//			atovo.setArticleTitleOptSN(31);
+//			atodao.update(atovo);
+//			//	查詢一個done
+//			out.println(atodao.findByPrimaryKey(32).getArticleTitleOptText());
+//			//	查詢全部
+//			out.println(atodao.getAll());
+			
+//===========================ForumArticle Test===================================
+			ForumArticleDAO fadao = new ForumArticleDAO();
+			ForumArticleVO favo = new ForumArticleVO();
+			favo.setArticleTitle("為什麼不讓我改標題呢？");
+			favo.setPublishedDate(new Timestamp(System.currentTimeMillis()));
+			favo.setArticleText("為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？");
+			favo.setArticleStatus(1);
+			favo.setUserID(1);
+			favo.setArticleTitleOptSN(32);
+			favo.setRateGCount(0);
+			favo.setRateNGCount(0);
+			fadao.insert(favo);
+			
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
