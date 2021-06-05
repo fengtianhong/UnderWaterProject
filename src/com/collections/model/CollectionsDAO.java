@@ -26,7 +26,7 @@ public class CollectionsDAO implements CollectionsDAO_interface {
 	private static final String INSERT_STMT = "INSERT INTO Collections (userID, groupTourSN) VALUES (?, ?)";
 	private static final String DELETE_STMT = "DELETE FROM Collections where userID = ? and groupTourSN = ?";
 	private static final String GET_ALLGP_STMT = "SELECT userID, groupTourSN FROM Collections WHERE userID = ?";
-//	private static final String GET_ONE_STMT = "SELECT userID FROM Collections WHERE groupTourSN = ?";	// 不確定需不需要
+//	private static final String GET_ONE_STMT = "SELECT * FROM Collections WHERE groupTourSN = ?";	// 不確定需不需要
 
 	@Override
 	public void insert(CollectionsVO collectionsVO) {	
