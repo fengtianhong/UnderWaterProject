@@ -1,4 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
+<%@page import="com.diveinfo.model.*"%>
+
+<%
+	DiveInfoService diveinfoSvc = new DiveInfoService();
+	List<DiveInfoVO> list = diveinfoSvc.getAll();
+	pageContext.setAttribute("list", list);
+%>
 
 <html>
 <head>
@@ -21,30 +30,33 @@ html, body {
 	height: 100%
 }
 </style>
+
+
+
 <body>
+	<c:if test="${not empty errorMsgs}">
+		<script>alert("請修正以下錯誤:");
+			<c:forEach var="message" items="${errorMsgs}">
+				alert("${message}");
+			</c:forEach>
+		</script>
+	</c:if>
+
 	<div id="map-canvas"></div>
 	<script
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9aDE1YUHyODX3w3Wcv7Kttdtf9eyxhBw&v=3.exp"></script>
 	<script>
-	 	var a=-1;
+		var a = -1;
+		var total = 0;
 		var markers = [];
-		var position = [ {
-			label : 'myhome',
-			lat : 23.847150167622253,
-			lng : 121.49852176037554,
-			label : "我家底家啦"
-		}, {
-			label : 'yushan',
-
-			lat : 23.470747286685828,
-			lng : 120.9578841031984,
-			label : "玉山在這裡"
-		}, {
-			label : 'tibame',
-			lat : 25.05747075024689,
-			lng : 121.54703497305502,
-			label : "提拔一下"
-		} ];
+		var position=[];
+		<c:forEach var="diveinfoVO" items="${list}">
+		position.push({
+			label: "${diveinfoVO.introduction}",
+			lat: ${diveinfoVO.latitude},
+			lng: ${diveinfoVO.longitude}
+		});
+		</c:forEach>
 		var map;
 
 		function initialize() {
@@ -75,38 +87,38 @@ html, body {
 					lat : position[e].lat,
 					lng : position[e].lng
 				},
-				map : map
-				                ,icon: {
-				                    url: 'images/flag.png',
-				                    // url:"https://img.lovepik.com/element/45004/4317.png_860.png",
-				                    scaledSize: new google.maps.Size(30, 50)
-				                }
-				                , Animation: google.maps.Animation.BOUNCE
+				map : map,
+				icon : {
+					url : 'images/flag.png',
+					// url:"https://img.lovepik.com/element/45004/4317.png_860.png",
+					scaledSize : new google.maps.Size(30, 50)
+				},
+				Animation : google.maps.Animation.BOUNCE
 			});
-				            var show = new google.maps.InfoWindow({
-				                content: position[e].label
-				            });
-				            markers[e].addListener('click', function () {
-				                a = a * -1;
-				                if (a > 0) {
-				                    show.open(map, markers[e]);
-				                } else {
-				                    show.close();
-				                }
-				                if (markers[e].getAnimation() == null) {
-				                    markers[e].setAnimation(google.maps.Animation.BOUNCE);
-				                } else {
-				                    markers[e].setAnimation(null);
-				                }
-				            });
-				            google.maps.event.addListener(show, 'closeclick', function () {
-				                a = a * -1;
-				                if (markers[e].getAnimation() == null) {
-				                    markers[e].setAnimation(google.maps.Animation.BOUNCE);
-				                } else {
-				                    markers[e].setAnimation(null);
-				                }
-				            });
+			var show = new google.maps.InfoWindow({
+				content : position[e].label
+			});
+			markers[e].addListener('click', function() {
+				a = a * -1;
+				if (a > 0) {
+					show.open(map, markers[e]);
+				} else {
+					show.close();
+				}
+				if (markers[e].getAnimation() == null) {
+					markers[e].setAnimation(google.maps.Animation.BOUNCE);
+				} else {
+					markers[e].setAnimation(null);
+				}
+			});
+			google.maps.event.addListener(show, 'closeclick', function() {
+				a = a * -1;
+				if (markers[e].getAnimation() == null) {
+					markers[e].setAnimation(google.maps.Animation.BOUNCE);
+				} else {
+					markers[e].setAnimation(null);
+				}
+			});
 		}
 		google.maps.event.addDomListener(window, 'load', initialize);
 	</script>
