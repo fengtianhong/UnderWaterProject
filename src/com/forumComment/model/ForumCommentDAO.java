@@ -25,7 +25,7 @@ public class ForumCommentDAO implements ForumCommentDAO_interface{
 	}
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO ForumComment (cmtDate, cmtText, userID, articleSN) VALUES (?, ?, ?, ?, ?)";
+			"INSERT INTO ForumComment (cmtDate, cmtText, userID, articleSN) VALUES (?, ?, ?, ?)";
 		private static final String GET_ALL_STMT = 
 			"SELECT cmtSN, cmtDate, cmtText, userID, articleSN FROM ForumComment order by cmtSN";
 		private static final String GET_ONE_STMT = 
@@ -34,7 +34,7 @@ public class ForumCommentDAO implements ForumCommentDAO_interface{
 			"DELETE FROM ForumComment where cmtSN = ?";
 		private static final String UPDATE = 
 			"UPDATE ForumComment set cmtDate = ?, cmtText = ? , userID = ?, articleSN = ?  where cmtSN = ?";
-
+			//更新應該是更新編輯時間與文字內容，其餘不會變動較為合理...？
 		
 	@Override
 	public void insert(ForumCommentVO forumCommentVO) {
@@ -84,11 +84,11 @@ public class ForumCommentDAO implements ForumCommentDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 	
-			pstmt.setInt(1, forumCommentVO.getCmtSN());
-			pstmt.setTimestamp(2, forumCommentVO.getCmtDate());
-			pstmt.setString(3, forumCommentVO.getCmtText());
-			pstmt.setInt(4, forumCommentVO.getUserID());
-			pstmt.setDouble(5, forumCommentVO.getArticleSN());
+			pstmt.setTimestamp(1, forumCommentVO.getCmtDate());
+			pstmt.setString(2, forumCommentVO.getCmtText());
+			pstmt.setInt(3, forumCommentVO.getUserID());
+			pstmt.setDouble(4, forumCommentVO.getArticleSN());
+			pstmt.setInt(5, forumCommentVO.getCmtSN());
 			
 			pstmt.executeUpdate();
 			

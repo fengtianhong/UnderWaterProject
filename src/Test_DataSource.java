@@ -344,8 +344,8 @@ public class Test_DataSource extends HttpServlet {
 			
 //==============================================================
 //===========================ArticleTitleOpt Test===================================
-			ArticleTitleOptDAO atodao = new ArticleTitleOptDAO();
-			ArticleTitleOptVO atovo = new ArticleTitleOptVO();
+//			ArticleTitleOptDAO atodao = new ArticleTitleOptDAO();
+//			ArticleTitleOptVO atovo = new ArticleTitleOptVO();
 //			//	新增done
 //			atovo.setArticleTitleOptText("新增成功");
 //			atodao.insert(atovo);
@@ -359,17 +359,18 @@ public class Test_DataSource extends HttpServlet {
 //			out.println(atodao.getAll());
 			
 //===========================ForumArticle Test===================================
-			ForumArticleDAO fadao = new ForumArticleDAO();
-			ForumArticleVO favo = new ForumArticleVO();
-			favo.setArticleTitle("為什麼不讓我改標題呢？");
-			favo.setPublishedDate(new Timestamp(System.currentTimeMillis()));
-			favo.setArticleText("為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？");
-			favo.setArticleStatus(1);
-			favo.setUserID(1);
-			favo.setArticleTitleOptSN(32);
-			favo.setRateGCount(0);
-			favo.setRateNGCount(0);
-			fadao.insert(favo);
+//			ForumArticleDAO fadao = new ForumArticleDAO();
+//			ForumArticleVO favo = new ForumArticleVO();
+//			//	新增成功
+//			favo.setArticleTitle("為什麼不讓我改標題呢？");
+//			favo.setPublishedDate(new Timestamp(System.currentTimeMillis()));
+//			favo.setArticleText("為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？為什麼不讓我改標題呢？");
+//			favo.setArticleStatus(1);
+//			favo.setUserID(1);
+//			favo.setArticleTitleOptSN(31);
+//			favo.setRateGCount(0);
+//			favo.setRateNGCount(0);
+//			fadao.insert(favo);
 			
 		} 
 		catch (Exception e) {
