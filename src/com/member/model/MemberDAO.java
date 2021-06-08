@@ -11,7 +11,7 @@ public class MemberDAO implements MemberDAO_interface{
 	private static final String INSERT_STMT = "INSERT INTO Member (userID, account, pwd,nickName, userName, gender, birthDate, phone, certification, certificationPic, personID, address, createTime, status, upDateTime, ratePeople, ratePoint) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?)";
 	private static final String UPDATE_STMT = "UPDATE Member SET pwd=?, NickName=?, userName=?, gender=?, birthDate=?, phone=?, Certification=?, CertificationPic=?, personID=?, address=?, status=?, updateTime=?, ratePeople=?, ratePoint=? WHERE userID = ?";
 	private static final String GET_ONE_STMT = "SELECT * FROM Member where userid=?";
-	private static final String FINBYACCOUNT_STMT = "SELECT * FROM Member where account=?";
+	private static final String FINDBYACCOUNT_STMT = "SELECT * FROM Member where account=?";
 	private static final String GET_ALL_STMT = "SELECT * FROM Member ORDER BY userID";
 	
 	public static void main(String[] args) {
@@ -68,11 +68,11 @@ public class MemberDAO implements MemberDAO_interface{
 		//測試 findByPrimaryKey ok
 		
 		//測試  findaccount ok
-//		MemberDAO dao = new MemberDAO();
-//		List<MemberVO> L1 = dao.findByAccount("uuuu");
-//		for(MemberVO xx : L1) {
-//			System.out.println(xx.getUserID());
-//		}
+		MemberDAO dao = new MemberDAO();
+		List<MemberVO> L1 = dao.findByAccount("Feng");
+		for(MemberVO xx : L1) {
+			System.out.println(xx.getUserID());
+		}
 		//測試  findaccount ok
 		
 		//測試getall ok
@@ -98,8 +98,7 @@ public class MemberDAO implements MemberDAO_interface{
 	public void insert(MemberVO MemberVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		
-		
+
 		try {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
 			System.out.println("連線成功");
@@ -196,7 +195,7 @@ public class MemberDAO implements MemberDAO_interface{
 	
 //	@Override
 	public MemberVO findByPrimaryKey(Integer userID) {
-		MemberVO VO = null;
+		MemberVO vo = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -209,24 +208,24 @@ public class MemberDAO implements MemberDAO_interface{
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				VO = new MemberVO();
-				VO.setUserID(rs.getInt("userId"));
-				VO.setAccount(rs.getString("account"));
-				VO.setPwd(rs.getString("pwd"));
-				VO.setNickName(rs.getString("nickName"));
-				VO.setUserName(rs.getString("userName"));
-				VO.setGender(rs.getString("gender"));
-				VO.setBirthDate(rs.getDate("birthDate"));
-				VO.setPhone(rs.getString("phone"));
-				VO.setCertification(rs.getString("certification"));
-				VO.setCertificationPic(rs.getBytes("certificationPic"));
-				VO.setPersonID(rs.getString("personID"));
-				VO.setAddress(rs.getString("address"));
-				VO.setCreateTime(rs.getTimestamp("createTime"));
-				VO.setStatus(rs.getInt("status"));
-				VO.setUpDateTime(rs.getTimestamp("upDateTime"));
-				VO.setRatePeople(rs.getInt("ratePeople"));
-				VO.setRatePoint(rs.getInt("ratePoint"));
+				vo = new MemberVO();
+				vo.setUserID(rs.getInt("userId"));
+				vo.setAccount(rs.getString("account"));
+				vo.setPwd(rs.getString("pwd"));
+				vo.setNickName(rs.getString("nickName"));
+				vo.setUserName(rs.getString("userName"));
+				vo.setGender(rs.getString("gender"));
+				vo.setBirthDate(rs.getDate("birthDate"));
+				vo.setPhone(rs.getString("phone"));
+				vo.setCertification(rs.getString("certification"));
+				vo.setCertificationPic(rs.getBytes("certificationPic"));
+				vo.setPersonID(rs.getString("personID"));
+				vo.setAddress(rs.getString("address"));
+				vo.setCreateTime(rs.getTimestamp("createTime"));
+				vo.setStatus(rs.getInt("status"));
+				vo.setUpDateTime(rs.getTimestamp("upDateTime"));
+				vo.setRatePeople(rs.getInt("ratePeople"));
+				vo.setRatePoint(rs.getInt("ratePoint"));
 				
 			}
 			
@@ -248,7 +247,7 @@ public class MemberDAO implements MemberDAO_interface{
 				}
 			}
 		}
-		return VO;
+		return vo;
 	}
 	
 	
@@ -262,7 +261,7 @@ public class MemberDAO implements MemberDAO_interface{
 		
 		try {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-			pstmt = con.prepareStatement(FINBYACCOUNT_STMT);
+			pstmt = con.prepareStatement(FINDBYACCOUNT_STMT);
 			
 			pstmt.setString(1, account);
 			rs = pstmt.executeQuery();
