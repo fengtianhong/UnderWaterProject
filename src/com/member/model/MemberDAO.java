@@ -1,6 +1,7 @@
 package com.member.model;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import util.Util;
@@ -8,9 +9,10 @@ import util.Util;
 public class MemberDAO implements MemberDAO_interface{
 	
 	private static final String INSERT_STMT = "INSERT INTO Member (userID, account, pwd,nickName, userName, gender, birthDate, phone, certification, certificationPic, personID, address, createTime, status, upDateTime, ratePeople, ratePoint) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?)";
-	private static final String UPDATE_STMT = "UPDATE Member set pwd=?, NickName=?, userName=?, gender=?, birthDate=?, phone=?, Certification=?, CertificationPic=?, personID=?, address=?, createTime=?,  status=?, updateTime=?, ratePeople=?, ratePoint=?, where userID = ?";
-//	private static final String findBYPrimaryKey = "SELECT * FROM Member where userid=?";
-//	private static final String GET_ALL_STMT = "SELECT * FROM Member ";
+	private static final String UPDATE_STMT = "UPDATE Member SET pwd=?, NickName=?, userName=?, gender=?, birthDate=?, phone=?, Certification=?, CertificationPic=?, personID=?, address=?, status=?, updateTime=?, ratePeople=?, ratePoint=? WHERE userID = ?";
+	private static final String GET_ONE_STMT = "SELECT * FROM Member where userid=?";
+	private static final String FINBYACCOUNT_STMT = "SELECT * FROM Member where account=?";
+	private static final String GET_ALL_STMT = "SELECT * FROM Member ORDER BY userID";
 	
 	public static void main(String[] args) {
 //		測試insert
@@ -38,9 +40,49 @@ public class MemberDAO implements MemberDAO_interface{
 //		System.out.println("已加入成功");
 //		//測試insert
 		
-//		//測試update
+//		//測試update ok
+//		MemberVO vo = new MemberVO();
+//		vo.setPwd("55677");
+//		vo.setNickName("紀穎JJ");
+//		vo.setUserName("黃紀穎");
+//		vo.setGender("女");
+//		vo.setBirthDate(Date.valueOf("2000-10-10"));
+//		vo.setPhone("0912345678");
+//		vo.setCertification("1");
+//		vo.setCertificationPic(null);
+//		vo.setPersonID("F220123456");
+//		vo.setAddress("新北市");
+//		vo.setStatus(1);
+//		vo.setUpDateTime(new Timestamp(System.currentTimeMillis()));
+//		vo.setRatePeople(10);
+//		vo.setRatePoint(50);
+//		vo.setUserID(1);
+//		dao.update(vo);
+//		System.out.println("更新成功");
+//		//測試update ok
 		
-//		//測試update
+		//測試 findByPrimaryKey ok
+//		MemberDAO dao = new MemberDAO();
+//		MemberVO M1 = dao.findByPrimaryKey(2);
+//		System.out.println(M1.getAccount());
+		//測試 findByPrimaryKey ok
+		
+		//測試  findaccount ok
+//		MemberDAO dao = new MemberDAO();
+//		List<MemberVO> L1 = dao.findByAccount("uuuu");
+//		for(MemberVO xx : L1) {
+//			System.out.println(xx.getUserID());
+//		}
+		//測試  findaccount ok
+		
+		//測試getall ok
+//		MemberDAO dao = new MemberDAO();
+//		List<MemberVO> la = dao.getAll();
+//		for(MemberVO xx:la) {
+//			System.out.println(xx.getAccount());
+//		}
+		//測試getall ok
+		
 	}	
 	static {
 		try {
@@ -103,16 +145,33 @@ public class MemberDAO implements MemberDAO_interface{
 		}
 	}
 	
-	
+
 	@Override
-	public void update(MemberVO MemberVO) {//未做完
+	public void update(MemberVO MemberVO) {//ok
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		
 		try {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
 			pstmt = con.prepareStatement(UPDATE_STMT);
+		
+			pstmt.setString(1, MemberVO.getPwd());
+			pstmt.setString(2, MemberVO.getNickName());
+			pstmt.setString(3, MemberVO.getUserName());
+			pstmt.setString(4, MemberVO.getGender());
+			pstmt.setDate(5, MemberVO.getBirthDate());
+			pstmt.setString(6, MemberVO.getPhone());
+			pstmt.setString(7, MemberVO.getCertification());
+			pstmt.setBytes(8, MemberVO.getCertificationPic());
+			pstmt.setString(9, MemberVO.getPersonID());
+			pstmt.setString(10, MemberVO.getAddress());
+			pstmt.setInt(11, MemberVO.getStatus());
+			pstmt.setTimestamp(12, MemberVO.getUpDateTime());
+			pstmt.setInt(13, MemberVO.getRatePeople());
+			pstmt.setInt(14, MemberVO.getRatePoint());
+			pstmt.setInt(15, MemberVO.getUserID());
 			
-			
+			pstmt.executeUpdate();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -136,42 +195,181 @@ public class MemberDAO implements MemberDAO_interface{
 	
 	
 //	@Override
-//	public MemberVO findBYPrimaryKey(Integer userID) {
-//
-//		Connection con = null;
-//		PreparedStatement pstmt = null;
-//		try {
-//			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-//			pstmt = con.prepareStatement(UPDATE_STMT);
-//			
-//			
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			if (pstmt != null) {
-//				try {
-//					pstmt.close();
-//				} catch (SQLException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//			if (con != null) {
-//				try {
-//					con.close();
-//				} catch (SQLException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-//		return null;
-//	}
+	public MemberVO findByPrimaryKey(Integer userID) {
+		MemberVO VO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			pstmt = con.prepareStatement(GET_ONE_STMT);
+			
+			pstmt.setInt(1, userID);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				VO = new MemberVO();
+				VO.setUserID(rs.getInt("userId"));
+				VO.setAccount(rs.getString("account"));
+				VO.setPwd(rs.getString("pwd"));
+				VO.setNickName(rs.getString("nickName"));
+				VO.setUserName(rs.getString("userName"));
+				VO.setGender(rs.getString("gender"));
+				VO.setBirthDate(rs.getDate("birthDate"));
+				VO.setPhone(rs.getString("phone"));
+				VO.setCertification(rs.getString("certification"));
+				VO.setCertificationPic(rs.getBytes("certificationPic"));
+				VO.setPersonID(rs.getString("personID"));
+				VO.setAddress(rs.getString("address"));
+				VO.setCreateTime(rs.getTimestamp("createTime"));
+				VO.setStatus(rs.getInt("status"));
+				VO.setUpDateTime(rs.getTimestamp("upDateTime"));
+				VO.setRatePeople(rs.getInt("ratePeople"));
+				VO.setRatePoint(rs.getInt("ratePoint"));
+				
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return VO;
+	}
+	
+	
 //	@Override
-//	public List<MemberVO> getAll() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//	
+	public List<MemberVO> findByAccount(String account) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		MemberVO a1 = null;
+		List<MemberVO> list1 = new ArrayList<>();
+		
+		try {
+			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			pstmt = con.prepareStatement(FINBYACCOUNT_STMT);
+			
+			pstmt.setString(1, account);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				a1 = new MemberVO();
+				a1.setUserID(rs.getInt("userId"));
+				a1.setPwd(rs.getString("pwd"));
+				a1.setNickName(rs.getString("nickName"));
+				a1.setUserName(rs.getString("userName"));
+				a1.setGender(rs.getString("gender"));
+				a1.setBirthDate(rs.getDate("birthDate"));
+				a1.setPhone(rs.getString("phone"));
+				a1.setCertification(rs.getString("Certification"));
+				a1.setCertificationPic(rs.getBytes("CertificationPic"));
+				a1.setPersonID(rs.getString("personID"));
+				a1.setAddress(rs.getString("address"));
+				a1.setCreateTime(rs.getTimestamp("CreateTime"));
+				a1.setStatus(rs.getInt("Status"));
+				a1.setUpDateTime(rs.getTimestamp("UpDateTime"));
+				a1.setRatePeople(rs.getInt("RatePeople"));
+				a1.setRatePoint(rs.getInt("RatePoint"));
+				list1.add(a1);
+			}
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace();
+				}
+			}
+			
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return list1;
+	}
+	
+//	@Override
+	public List<MemberVO> getAll() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		List<MemberVO> list = new ArrayList<>();
+		MemberVO vo = null;
+		ResultSet rs = null; 
+		try {
+			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			pstmt = con.prepareStatement(GET_ALL_STMT);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				vo = new MemberVO();
+				vo.setUserID(rs.getInt("userId"));
+				vo.setAccount(rs.getString("account"));
+				vo.setPwd(rs.getString("pwd"));
+				vo.setNickName(rs.getString("nickName"));
+				vo.setUserName(rs.getString("userName"));
+				vo.setGender(rs.getString("gender"));
+				vo.setBirthDate(rs.getDate("birthDate"));
+				vo.setPhone(rs.getString("phone"));
+				vo.setCertification(rs.getString("Certification"));
+				vo.setCertificationPic(rs.getBytes("CertificationPic"));
+				vo.setPersonID(rs.getString("personID"));
+				vo.setAddress(rs.getString("address"));
+				vo.setCreateTime(rs.getTimestamp("CreateTime"));
+				vo.setStatus(rs.getInt("Status"));
+				vo.setUpDateTime(rs.getTimestamp("UpDateTime"));
+				vo.setRatePeople(rs.getInt("RatePeople"));
+				vo.setRatePoint(rs.getInt("RatePoint"));
+				list.add(vo);
+			}
+			
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if(rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if(con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+}
 
 	
-	
-}
