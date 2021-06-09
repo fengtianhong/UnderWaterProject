@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 
 import util.Util;
 
-public class adMemberDAO implements adMemberDAO_interface {
+public class AdMemberDAO implements AdMemberDAO_interface {
 
 	private static final String INSERT_STMT = "INSERT INTO adMember (AdUserID, Account, Pwd, CreateTime, Status) VALUES (?, ?, ?, ?, ? )";
 	private static final String UPDATE_STMT = "UPDATE adMember set Pwd=?, status=? where account = ?";
@@ -48,13 +48,13 @@ public class adMemberDAO implements adMemberDAO_interface {
 		//update 測試OK
 		
 		//find account 怎麼佐證有查到?
-		adMemberDAO dao = new adMemberDAO();
-		adMemberVO vo = dao.findBYaccount(4125252);
+		AdMemberDAO dao = new AdMemberDAO();
+		AdMemberVO vo = dao.findBYaccount(4125252);
 		//find account
 	}
 
 	@Override
-	public void insert(adMemberVO adMemberVO) {
+	public void insert(AdMemberVO AdMemberVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -62,11 +62,11 @@ public class adMemberDAO implements adMemberDAO_interface {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
 			System.out.println("連線成功");
 			pstmt = con.prepareStatement(INSERT_STMT);
-			pstmt.setInt(1, adMemberVO.getAdUserID());
-			pstmt.setString(2, adMemberVO.getAccount());
-			pstmt.setString(3, adMemberVO.getPwd());
-			pstmt.setTimestamp(4, adMemberVO.getCreateTime());
-			pstmt.setInt(5, adMemberVO.getStatus());
+			pstmt.setInt(1, AdMemberVO.getAdUserID());
+			pstmt.setString(2, AdMemberVO.getAccount());
+			pstmt.setString(3, AdMemberVO.getPwd());
+			pstmt.setTimestamp(4, AdMemberVO.getCreateTime());
+			pstmt.setInt(5, AdMemberVO.getStatus());
 
 			pstmt.executeUpdate();
 		} catch (SQLException se) {
@@ -130,11 +130,11 @@ public class adMemberDAO implements adMemberDAO_interface {
 	
 
 	@Override
-	public adMemberVO findBYaccount(Integer account) {
+	public AdMemberVO findBYaccount(Integer account) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		adMemberVO vo = null;
+		AdMemberVO vo = null;
 		
 		try {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
@@ -145,7 +145,7 @@ public class adMemberDAO implements adMemberDAO_interface {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				vo = new adMemberVO();
+				vo = new AdMemberVO();
 				vo.setAccount(rs.getString("account"));
 				vo.setCreateTime(rs.getTimestamp("createTime"));
 				vo.setStatus(rs.getInt("status"));
