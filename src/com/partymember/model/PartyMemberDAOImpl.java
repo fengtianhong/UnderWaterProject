@@ -22,7 +22,6 @@ public class PartyMemberDAOImpl implements PartyMemberDAO_interface {
 			fis = new FileInputStream("C:\\UnderWarter\\UnderWater\\src\\com\\partymember\\model\\3_6M.jpg");
 			b = new byte[fis.available()];
 			fis.read(b);
-			fis.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
