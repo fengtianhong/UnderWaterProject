@@ -37,37 +37,42 @@
 				<td>經度:</td>
 				<td><input type="TEXT" name="longitude" size="45"
 					placeholder="請輸入經度座標"
-					value="<%=(diveinfoVO == null) ? "" : diveinfoVO.getPointName()%>"></td>
+					value="<%=(diveinfoVO == null) ? "" : diveinfoVO.getLongitude()%>"></td>
 			</tr>
 			<tr>
 				<td>簡介:</td>
 				<td><input type="TEXT" name="view" size="45"
 					placeholder="請輸入潛點簡介"
-					value="<%=(diveinfoVO == null) ? "" : diveinfoVO.getPointName()%>"></td>
+					value="<%=(diveinfoVO == null) ? "" : diveinfoVO.getView()%>"></td>
 			</tr>
 			<tr>
 				<td>介紹:</td>
 				<td><input type="TEXT" name="introduction" size="45"
 					placeholder="請輸入潛點詳細介紹"
-					value="<%=(diveinfoVO == null) ? "" : diveinfoVO.getPointName()%>"></td>
+					value="<%=(diveinfoVO == null) ? "" : diveinfoVO.getIntroduction()%>"></td>
 			</tr>
 			<tr>
 				<td>季節:</td>
 				<td><input type="checkbox" id="season1" name="season1"
-					value="春"> <label for="season1">春</label> <input
-					type="checkbox" id="season1" name="season2" value="夏"> <label
-					for="season2">夏</label> <input type="checkbox" id="season3"
-					name="season3" value="秋"> <label for="season3">秋</label> <input
-					type="checkbox" id="season4" name="season4" value="東"> <label
-					for="season4">東</label></td>
+					value="春"
+					<%=(diveinfoVO == null) ? "" : (diveinfoVO.getSeason().contains("春")) ? "checked" : ""%>>
+					春 <input type="checkbox" id="season1" name="season2" value="夏"
+					<%=(diveinfoVO == null) ? "" : (diveinfoVO.getSeason().contains("夏")) ? "checked" : ""%>>夏
+					<input type="checkbox" id="season3" name="season3" value="秋"
+					<%=(diveinfoVO == null) ? "" : (diveinfoVO.getSeason().contains("秋")) ? "checked" : ""%>>
+					秋<input type="checkbox" id="season4" name="season4" value="冬"
+					<%=(diveinfoVO == null) ? "" : (diveinfoVO.getSeason().contains("冬")) ? "checked" : ""%>>冬</td>
 
 			</tr>
 			<tr>
 				<td>地區:</td>
-				<td><select name ="local">
-						<option value="北部">北部</option>
-						<option value="南部">南部</option>
-						<option value="離島">離島</option>
+				<td><select name="local">
+						<option value="北部"
+							<%=(diveinfoVO == null) ? "" : (diveinfoVO.getSeason().contains("北部")) ? "selected" : ""%>>北部</option>
+						<option value="南部"
+							<%=(diveinfoVO == null) ? "" : (diveinfoVO.getSeason().contains("南部")) ? "selected" : ""%>>南部</option>
+						<option value="離島"
+							<%=(diveinfoVO == null) ? "" : (diveinfoVO.getSeason().contains("離島")) ? "selected" : ""%>>離島</option>
 				</select></td>
 			</tr>
 			<tr>
