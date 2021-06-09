@@ -17,7 +17,7 @@ public class JedisPoolUtil {
 					config.setMaxTotal(8);	// 連線數可以改大一點
 					config.setMaxIdle(8);
 					config.setMaxWaitMillis(10000);
-					pool = new JedisPool(config, "localhost", 6379);
+					pool = new JedisPool(config, "katyjava.mooo.com", 6379);
 				}
 			}
 		}
