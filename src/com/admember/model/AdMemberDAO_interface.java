@@ -1,6 +1,6 @@
 package com.admember.model;
 
-public interface adMemberDAO_interface {
+public interface AdMemberDAO_interface {
 	
 	public void insert(adMemberVO adMemberVO);
 	
