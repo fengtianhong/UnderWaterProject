@@ -34,7 +34,7 @@ public class ForumRateDAO implements ForumRateDAO_interface{
 			"DELETE FROM ForumRate where articleRateSN = ?";
 		private static final String UPDATE = 
 			"UPDATE ForumRate set userID = ?, articleSN = ?, articleRate = ? where articleRateSN = ?";
-
+//			更新應該是對評價更新，不會動到其他資料？
 		
 //	public static void main(String[] args) {
 //		ForumRateDAO frdao = new ForumRateDAO();
@@ -89,10 +89,10 @@ public class ForumRateDAO implements ForumRateDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 			
-			pstmt.setInt(1, forumRateVO.getArticleRateSN());
-			pstmt.setInt(2, forumRateVO.getUserID());
-			pstmt.setInt(3, forumRateVO.getArticleSN());
-			pstmt.setBoolean(4, forumRateVO.getArticleRate());
+			pstmt.setInt(1, forumRateVO.getUserID());
+			pstmt.setInt(2, forumRateVO.getArticleSN());
+			pstmt.setBoolean(3, forumRateVO.getArticleRate());
+			pstmt.setInt(4, forumRateVO.getArticleRateSN());
 			
 			pstmt.executeUpdate();
 			

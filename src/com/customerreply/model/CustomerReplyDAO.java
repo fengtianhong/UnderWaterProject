@@ -14,7 +14,7 @@ public class CustomerReplyDAO implements CustomerReplyDAO_interface {
 		Jedis jedis = null;
 		try {
 			jedis = pool.getResource();
-			jedis.auth("123456");
+//			jedis.auth("123456");
 			// LINKED LIST  Q. 不確定聊天訊息要分左右的話應如何儲存 由C判斷?
 			String key = userID.toString();
 			List<String> historyMsg = jedis.lrange(key, 0, -1);
@@ -29,7 +29,7 @@ public class CustomerReplyDAO implements CustomerReplyDAO_interface {
 		Jedis jedis = null;
 		try {
 			jedis = pool.getResource();
-			jedis.auth("123456");
+//			jedis.auth("123456");
 			jedis.rpush(userID.toString(), Msg);
 		}finally {
 			jedis.close();
