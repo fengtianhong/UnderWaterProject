@@ -2,7 +2,7 @@ package com.admember.model;
 
 import java.sql.Timestamp;
 
-public class adMemberVO {
+public class AdMemberVO {
 	
 	private Integer adUserID;//會員流水編號
 	private String account;//帳號
