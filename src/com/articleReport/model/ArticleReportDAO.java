@@ -24,13 +24,14 @@ public class ArticleReportDAO implements ArticleReportDAO_interface{
 	}
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO ArticleReport (userID, articleSN, rptReason, rptResult,reRptResult) VALUES (?, ?, ?, ?, ?)";
+			"INSERT INTO ArticleReport (userID, articleSN, rptReason, rptResult, reRptResult) VALUES (?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
 			"SELECT rptSN, userID, articleSN, rptReason, rptResult,reRptResult FROM ArticleReport order by rptSN";
 	private static final String GET_ONE_STMT = 
 			"SELECT rptSN, userID, articleSN, rptReason, rptResult,reRptResult FROM ArticleReport where rptSN = ?";
 	private static final String UPDATE = 
-			"UPDATE ArticleReport set userID = ?, articleSN = ?, rptReason = ?, rptResult = ?, reRptResult = ? where rptSN = ?";
+			"UPDATE ArticleReport set rptResult = ?, reRptResult = ? where rptSN = ?";
+							//	更新僅會更新檢舉狀態，以及檢舉處理結果說明，應該不更動其他資料。
 	
 	
 
@@ -82,12 +83,9 @@ public class ArticleReportDAO implements ArticleReportDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 			
-			pstmt.setInt(1, articleReportVO.getUserID());
-			pstmt.setInt(2, articleReportVO.getArticleSN());
-			pstmt.setString(3, articleReportVO.getRptReason());
-			pstmt.setString(4, articleReportVO.getRptResult());
-			pstmt.setString(5, articleReportVO.getReRptResult());
-			pstmt.setInt(7, articleReportVO.getRptSN());
+			pstmt.setString(1, articleReportVO.getRptResult());
+			pstmt.setString(2, articleReportVO.getReRptResult());
+			pstmt.setInt(3, articleReportVO.getRptSN());
 			
 			pstmt.executeUpdate();
 		} catch (SQLException se) {

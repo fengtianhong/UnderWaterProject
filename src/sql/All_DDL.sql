@@ -415,7 +415,7 @@ CREATE TABLE `AdPic` (
   CONSTRAINT `AdPic_adPicSN_FK` FOREIGN KEY (`adPicSN`) REFERENCES `AdOrder` (`orderSN`)
 ) COMMENT='廣告圖片';
 
--- --------------------------------------FORUM----------------------------------------
+----------------------------------------FORUM----------------------------------------
 
 
 create table `ArticleTitleOpt` (
