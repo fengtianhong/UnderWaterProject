@@ -24,4 +24,15 @@
 	<servlet-name>DiveinfoServlet</servlet-name>
 	<url-pattern>/diveinfo/diveinfo.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>PartyServlet</servlet-name>
+		<servlet-class>com.party.controller.PartyServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>PartyServlet</servlet-name>
+		<url-pattern>/party/party.do</url-pattern>
+	</servlet-mapping>
+	
 </web-app>
