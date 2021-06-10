@@ -63,17 +63,17 @@ CREATE TABLE `Member` (
 
 CREATE TABLE `Diveinfo` (
   `pointSN` int NOT NULL AUTO_INCREMENT COMMENT '潛點編號',
-  `pointName` varchar(20) DEFAULT NULL,
+  `pointName` varchar(20)  NOT NULL,
   `latitude` double NOT NULL COMMENT '緯度',
   `longitude` double NOT NULL COMMENT '經度',
-  `view` varchar(20) DEFAULT NULL,
+  `view` varchar(20) DEFAULT "",
   `introduction` longtext NOT NULL COMMENT '潛點圖文',
   `season` varchar(20) NOT NULL COMMENT '季節',
-  `local` varchar(20) DEFAULT NULL,
+  `local` varchar(20) DEFAULT "",
   `pic` longblob NOT NULL COMMENT '預覽圖',
-  `ratePoint` int NOT NULL COMMENT '評價總分',
-  `ratePeople` int NOT NULL COMMENT '評價人數',
-  `status` varchar(20) NOT NULL,
+  `ratePoint` int NOT NULL COMMENT '評價總分' DEFAULT 0,
+  `ratePeople` int NOT NULL COMMENT '評價人數' DEFAULT 0,
+  `status` varchar(20) NOT NULL DEFAULT 0,
   PRIMARY KEY (`pointSN`)
 ) COMMENT='潛點資訊' AUTO_INCREMENT = 200001;
 
