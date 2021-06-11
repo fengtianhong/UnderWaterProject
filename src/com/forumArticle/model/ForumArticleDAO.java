@@ -34,14 +34,6 @@ public class ForumArticleDAO implements ForumArticleDAO_interface{
 			"SELECT articlesN, articleTitle, publishedDate, articleText, articleStatus, userID, articleTitleOptSN, rateGCount, rateNGCount FROM ForumArticle where articleSN = ?";
 		private static final String UPDATE = 
 			"UPDATE ForumArticle set (articleTitle = ?, publishedDate = ?, articleText = ?, articleStatus = ?, userID = ?, articleTitleOptSN = ?, rateGCount = ?, rateNGCount = ? where articleSN = ?";
-
-//	public static void main(String[] args) {
-//		ForumArticleDAO fadao = new ForumArticleDAO();
-//		ForumArticleVO favo = new ForumArticleVO();
-//		favo = new ForumArticleVO();
-//		favo.setArticleTitle();
-//	}
-		
 		
 //	新增文章
 	@Override
