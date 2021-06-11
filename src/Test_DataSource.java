@@ -347,10 +347,10 @@ public class Test_DataSource extends HttpServlet {
 //			ArticleTitleOptDAO atodao = new ArticleTitleOptDAO();
 //			ArticleTitleOptVO atovo = new ArticleTitleOptVO();
 //			//	新增done
-//			atovo.setArticleTitleOptText("新增成功");
+//			atovo.setArticleTitleOptText("潛水時事");
 //			atodao.insert(atovo);
 //			//	修改done
-//			atovo.setArticleTitleOptText("二三四五");
+//			atovo.setArticleTitleOptText("專欄文章");
 //			atovo.setArticleTitleOptSN(31);
 //			atodao.update(atovo);
 //			//	查詢一個done

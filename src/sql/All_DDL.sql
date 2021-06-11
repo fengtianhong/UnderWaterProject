@@ -50,16 +50,28 @@ CREATE TABLE `Member` (
   `certificationPic` blob COMMENT '證照圖片',
   `personID` char(10) DEFAULT NULL COMMENT '身份證字號',
   `address` varchar(100) DEFAULT NULL COMMENT '地址',
-  `createTime` timestamp NOT NULL COMMENT '帳號建立時間',
+-- 註解是原本的，下一行是因為要在DDL塞假資料改動的，到時候如果有問題請注意這邊
+  -- `createTime` timestamp NOT NULL COMMENT '帳號建立時間',
+  `createTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '帳號建立時間',
   `status` int NOT NULL COMMENT '帳號狀態',
-  `upDateTime` timestamp NOT NULL COMMENT '帳號更新時間',
+-- 註解是原本的，下一行是因為要在DDL塞假資料改動的，到時候如果有問題請注意這邊
+  -- `upDateTime` timestamp NOT NULL COMMENT '帳號更新時間',
+  `upDateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '帳號更新時間',
   `ratePeople` int NOT NULL COMMENT '被評價總人數',
   `ratePoint` int NOT NULL COMMENT '被評價總分',
   PRIMARY KEY (`userID`),
   UNIQUE KEY `UK_MEMBER_account` (`account`)
 ) COMMENT='會員';
-
-
+insert into Member (account, pwd, nickName,userName,address, status, ratePeople, ratePoint) 
+value("PeterWu", "123456", "Tomcat代言人", "吳永志", "104台北市中山區南京東路三段219號5樓", 1, 999, 9999 );
+insert into Member (account, pwd, nickName,userName, address, status, ratePeople, ratePoint) 
+value("DavidWu", "123456", "Java代言人", "吳冠宏", "104台北市中山區南京東路三段219號5樓", 1, 999, 9999 );
+insert into Member (account, pwd, nickName,userName, address, status, ratePeople, ratePoint) 
+value("TomcatWu", "123456", "外號超多湯姆貓本貓來了", "湯姆貓","104台北市中山區南京東路三段219號5樓", 1, 99, 999 );
+insert into Member (account, pwd, nickName,userName, address, status, ratePeople, ratePoint) 
+value("JSKiller", "123456", "JS殺手", "許尚媛", "104台北市中山區南京東路三段219號5樓", 2, 99, 999 );
+insert into Member (account, pwd, nickName,userName, address, status, ratePeople, ratePoint) 
+value("JustAskMe", "123456", "問我就對了", "李偉銘", "104台北市中山區南京東路三段219號5樓", 1, 999, 9999 );
 
 CREATE TABLE `Diveinfo` (
   `pointSN` int NOT NULL AUTO_INCREMENT COMMENT '潛點編號',
@@ -415,7 +427,7 @@ CREATE TABLE `AdPic` (
   CONSTRAINT `AdPic_adPicSN_FK` FOREIGN KEY (`adPicSN`) REFERENCES `AdOrder` (`orderSN`)
 ) COMMENT='廣告圖片';
 
-----------------------------------------FORUM----------------------------------------
+-- --------------------------------------FORUM----------------------------------------
 
 
 create table `ArticleTitleOpt` (
@@ -423,11 +435,17 @@ create table `ArticleTitleOpt` (
 	`articleTitleOptText` char(12) not null comment '選項內容'
 )AUTO_INCREMENT = 31 COMMENT='發文標題選項';
 
+INSERT INTO ArticleTitleOpt(articleTitleOptText) VALUES ("關於潛水");
+INSERT INTO ArticleTitleOpt(articleTitleOptText) VALUES ("新手須知");
+INSERT INTO ArticleTitleOpt(articleTitleOptText) VALUES ("潛水心得");
+
 
 create table `ForumArticle` (
 	`articleSN` int not null auto_increment comment '文章編號' primary key,
 	`articleTitle` varchar(60) not null comment '文章標題',
-	`publishedDate` timestamp not null comment '發文時間',
+	-- 註解是原本的，下一行是因為要在DDL塞假資料改動的，到時候如果有問題請注意這邊
+	-- `publishedDate` timestamp not null comment '發文時間',
+	`publishedDate` timestamp not null default current_timestamp comment '發文時間',
 	`articleText` longText not null comment '發文內容',
 	`articleStatus` int not null comment '文章狀態',
 	`userID` int not null comment '會員編號',
@@ -438,6 +456,10 @@ create table `ForumArticle` (
 	CONSTRAINT `ForumArticle_articleTitleOptSN` FOREIGN KEY (`articleTitleOptSN`) REFERENCES `ArticleTitleOpt` (`articleTitleOptSN`)
 )AUTO_INCREMENT = 30001 COMMENT='討論區文章';
 
+INSERT INTO ForumArticle (articleTitle, articleText, articleStatus, userID, articleTitleOptSN, rateGCount, rateNGCount) VALUES ("關於浮潛", '浮潛 Snorkeling	為熱帶度假海域或海島極為普及的水上休閒活動，使用呼吸管在水面上游泳，不需要複雜的裝備，也不需要像水肺潛水那樣複雜訓練就可以在自然環境中觀賞水下生物，且不會受呼氣出來的氣泡干擾視線，但僅限深度約10公尺以內、生物豐富的海域，較能以浮潛欣賞海底之美。', 1, 1, 31, 87, 2);
+INSERT INTO ForumArticle (articleTitle, articleText, articleStatus, userID, articleTitleOptSN, rateGCount, rateNGCount) VALUES ("新手須知的小事", '下水前請確保身心健康，感冒、鼻塞都不能下水。 潛水後24小時內不得搭飛機，空中低壓會導致低氧，可能會引發潛水伕病（減壓症），潛水前後一天也不建議飲酒。', 1, 2, 32, 20, 1);
+INSERT INTO ForumArticle (articleTitle, articleText, articleStatus, userID, articleTitleOptSN, rateGCount, rateNGCount) VALUES ("福澤深厚湯姆貓可以潛水嗎？", 'as title', 3, 2, 33, 0, 99);
+
 create table `ForumRate` (
 	`articleRateSN` int not null auto_increment comment '文章評價編號' primary key,
 	`userID` int not null comment '會員編號',
@@ -446,6 +468,10 @@ create table `ForumRate` (
 	CONSTRAINT `ForumRate_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`),
 	CONSTRAINT `ForumRate_articleSN` FOREIGN KEY (`articleSN`) REFERENCES `ForumArticle` (`articleSN`)
 )AUTO_INCREMENT = 30000001 COMMENT='文章評價';
+
+INSERT INTO ForumRate (userID, articleSN, articleRate) VALUES (3, 30001, 1);
+INSERT INTO ForumRate (userID, articleSN, articleRate) VALUES (3, 30002, 0);
+
 
 create table `ArticleReport` (
 	`rptSN` int not null auto_increment comment '檢舉編號' primary key,
@@ -458,15 +484,28 @@ create table `ArticleReport` (
 	CONSTRAINT `ArticleReport_articleSN` FOREIGN KEY (`articleSN`) REFERENCES `ForumArticle` (`articleSN`)
 )AUTO_INCREMENT = 3001 COMMENT='文章檢舉';
 
+INSERT INTO ArticleReport (userID, articleSN, rptReason) 
+VALUES (4, 30003, "這來洗文章的吧？回去寫Java啦");
+INSERT INTO ArticleReport (userID, articleSN, rptReason) 
+VALUES (5, 30003, "根本沒內容的東西，佔版面");
+
+
 create table `ForumComment` (
 	`cmtSN` int not null auto_increment comment '留言編號' primary key,
-	`cmtDate` timestamp not null comment '留言時間',
+	-- 註解是原本的，下一行是因為要在DDL塞假資料改動的，到時候如果有問題請注意這邊
+	-- `cmtDate` timestamp not null comment '留言時間',
+	`cmtDate` timestamp not null default current_timestamp comment '留言時間',
 	`cmtText` varchar(150)not null comment '留言內容',
 	`userID` int not null comment '會員編號',
 	`articleSN` int not null comment '文章編號',
 	CONSTRAINT `ForumComment_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`),
 	CONSTRAINT `ForumComment_articleSN` FOREIGN KEY (`articleSN`) REFERENCES `ForumArticle` (`articleSN`)
 )AUTO_INCREMENT = 300001 COMMENT='討論區留言';
+
+INSERT INTO ForumComment (cmtText, userID, articleSN) 
+VALUES ("還是快回去寫Java吧！", 1, 30003);
+INSERT INTO ForumComment (cmtText, userID, articleSN) 
+VALUES ("沒看過會潛水的Tomcat...嫌自己命大嗎！高能", 2, 30003);
 
 
 -- --------------------------------------孤兒們 QA MANAGER NEWS----------------------------------------
