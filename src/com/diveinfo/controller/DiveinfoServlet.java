@@ -32,7 +32,7 @@ public class DiveinfoServlet extends HttpServlet {
 				}
 				Double latitude = null;
 				try {
-					latitude = new Double(req.getParameter("latitue").trim());
+					latitude = new Double(req.getParameter("latitude").trim());
 				} catch (Exception e) {
 					latitude = 23.24975;
 					errorMsgs.add("請輸入緯度");
@@ -84,8 +84,8 @@ public class DiveinfoServlet extends HttpServlet {
 				}
 				//檢查完畢
 				DiveInfoService diveinfoSvc = new DiveInfoService();
-				diveinfoVO=diveinfoSvc.addDiveInfo(pointname, latitude, longitude, view, introduction, season.toString(), local, pic, 0, 0, "0");
-				RequestDispatcher failureView = req.getRequestDispatcher("/diveinfo/Diveinfo.jsp");
+				diveinfoVO=diveinfoSvc.addDiveInfo(pointname, latitude, longitude, view, introduction, season.toString(), local,null, 0, 0, "0");
+				RequestDispatcher failureView = req.getRequestDispatcher("/diveinfo/diveinfo.jsp");
 				failureView.forward(req, res);
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
