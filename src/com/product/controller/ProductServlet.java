@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.product.model.ProductService;
 import com.product.model.ProductVO;
 
-@WebServlet("ProductServlet")
+@WebServlet("/ProductServlet")
 public class ProductServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -34,7 +34,7 @@ public class ProductServlet extends HttpServlet {
 			try {
 				String str = request.getParameter("productSN");
 				if (str.trim().length() == 0) {
-					errorMsgs.add("½Ð¿é¤J°Ó«~½s¸¹");
+					errorMsgs.add("ï¿½Ð¿ï¿½Jï¿½Ó«~ï¿½sï¿½ï¿½");
 				}
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failView = request.getRequestDispatcher("/product/product_select.jsp");
@@ -47,7 +47,7 @@ public class ProductServlet extends HttpServlet {
 				try {
 					productSN = new Integer(str);
 				} catch (NumberFormatException e) {
-					errorMsgs.add("®æ¦¡¿é¤J¤£¥¿½T");
+					errorMsgs.add("ï¿½æ¦¡ï¿½ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½T");
 				}
 
 				if (!errorMsgs.isEmpty()) {
@@ -59,7 +59,7 @@ public class ProductServlet extends HttpServlet {
 				ProductService productSvc = new ProductService();
 				ProductVO productVO = productSvc.getOneProduct(productSN);
 				if (productVO == null) {
-					errorMsgs.add("¬dµL¸ê®Æ");
+					errorMsgs.add("ï¿½dï¿½Lï¿½ï¿½ï¿½");
 				}
 				if(!errorMsgs.isEmpty()) {
 					RequestDispatcher failView = request.getRequestDispatcher("/product/product_select.jsp");
@@ -73,7 +73,7 @@ public class ProductServlet extends HttpServlet {
 				successView.forward(request, response);			
 
 			} catch (Exception e) {
-				errorMsgs.add("µLªk¨ú±o¸ê®Æ" + e.getMessage());
+				errorMsgs.add("ï¿½Lï¿½kï¿½ï¿½ï¿½oï¿½ï¿½ï¿½" + e.getMessage());
 				RequestDispatcher failView = request.getRequestDispatcher("/product/product_select.jsp");
 				failView.forward(request, response);				
 			} 
