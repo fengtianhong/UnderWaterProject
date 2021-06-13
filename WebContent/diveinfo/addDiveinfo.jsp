@@ -19,7 +19,7 @@
 			</c:forEach>
 		</script>
 	</c:if>
-	<FORM METHOD="post" ACTION="diveinfo.do">
+	<FORM METHOD="post" ACTION="diveinfo.do" enctype="multipart/form-data">
 		<table>
 			<tr>
 				<td>潛點名稱:</td>
@@ -77,9 +77,7 @@
 			</tr>
 			<tr>
 				<td>照片:</td>
-				<td><input type="file" name="pic" size="45"
-					placeholder="請輸入潛點名稱"
-					value="<%=(diveinfoVO == null) ? "" : diveinfoVO.getPointName()%>"></td>
+				<td><input type="file" name="pic"></td>
 			</tr>
 		</table>
 		<br>
