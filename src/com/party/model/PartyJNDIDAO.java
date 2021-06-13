@@ -36,10 +36,10 @@ public class PartyJNDIDAO implements PartyDAO_interface {
 	private static final String FINDBYPARTYLOCATION_STMT = "select * from party where partyLocation = ?";
 	private static final String GETALL_STMT = "select * from party";
 	private static final String DELETEBYPARTYSN_STMT = "delete from party where partySN = ?";
-	
+	private static final String FINDBYSEARCH_STMT = "select * from party where partyTitle like ? and partyLocation like ? and partyMinSize > ?";
 
 	@Override
-	public int insert(PartyVO partyVO) {
+	public PartyVO insert(PartyVO partyVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		int key = 0;
@@ -61,10 +61,10 @@ public class PartyJNDIDAO implements PartyDAO_interface {
 			
 			pstmt.executeUpdate();
 			
-			ResultSet rs = pstmt.getGeneratedKeys();
-			if(rs.next()) {
-				key = rs.getInt(1);
-			}
+//			ResultSet rs = pstmt.getGeneratedKeys();
+//			if(rs.next()) {
+//				key = rs.getInt(1);
+//			}
 			
 		} catch (SQLException se) {
 			se.printStackTrace();
@@ -85,7 +85,7 @@ public class PartyJNDIDAO implements PartyDAO_interface {
 				}
 			}
 		}
-		return key;
+		return partyVO;
 	}
 
 	@Override
@@ -95,18 +95,17 @@ public class PartyJNDIDAO implements PartyDAO_interface {
 	}
 
 	@Override
-	public int updateStatus(Integer partySN, String status) {
+	public PartyVO updateStatus(Integer partySN, String status) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		int i = 0;
-	
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATESTATUS_STMT);
 			
 			pstmt.setString(1, status);
 			pstmt.setInt(2, partySN);
-			i = pstmt.executeUpdate();
+			pstmt.executeUpdate();
+
 			
 		} catch (SQLException se) {
 			se.printStackTrace();
@@ -127,7 +126,9 @@ public class PartyJNDIDAO implements PartyDAO_interface {
 				}
 			}
 		}
-		return i;
+		
+		PartyJNDIDAO dao = new PartyJNDIDAO();
+		return dao.findByPartySN(partySN);
 	}
 
 	@Override
@@ -375,6 +376,62 @@ public class PartyJNDIDAO implements PartyDAO_interface {
 			}
 		}
 		return i;
+	}
+
+	@Override  // 0606 updated
+	public List<PartyVO> findBySearch(String keyword, Integer pointSN, Integer partyMinSize) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		PartyVO p1 = null;
+		List<PartyVO> list1 = new ArrayList<>();
+	
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(FINDBYSEARCH_STMT);
+			
+			pstmt.setString(1, "%" + keyword + "%");
+			pstmt.setString(2, "%" + pointSN + "%");
+			pstmt.setInt(3, partyMinSize);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				p1 = new PartyVO();
+				p1.setPartySN(rs.getInt("partySN"));
+				p1.setPartyHost(rs.getInt("partyHost"));
+				p1.setPartyTitle(rs.getString("partyTitle"));
+				p1.setRegDate(rs.getDate("regDate"));
+				p1.setCloseDate(rs.getDate("closeDate"));
+				p1.setStartDate(rs.getDate("startDate"));
+				p1.setEndDate(rs.getDate("endDate"));
+				p1.setPartyMinSize(rs.getInt("partyMinSize"));
+				p1.setPartyLocation(rs.getInt("partyLocation"));
+				p1.setPartyDetail(rs.getString("partyDetail"));
+				p1.setCreateTime(rs.getTimestamp("createTime"));
+				p1.setStatus(rs.getString("status"));
+				list1.add(p1);
+			}
+			
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace();
+				}
+			}
+			
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return list1;
 	}
 
 	

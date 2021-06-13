@@ -34,7 +34,7 @@ public class ForumCommentDAO implements ForumCommentDAO_interface{
 			"DELETE FROM ForumComment where cmtSN = ?";
 		private static final String UPDATE = 
 			"UPDATE ForumComment set cmtDate = ?, cmtText = ? , userID = ?, articleSN = ?  where cmtSN = ?";
-			//更新應該是更新編輯時間與文字內容，其餘不會變動較為合理...？
+
 		
 	@Override
 	public void insert(ForumCommentVO forumCommentVO) {

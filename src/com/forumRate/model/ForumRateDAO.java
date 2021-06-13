@@ -34,16 +34,6 @@ public class ForumRateDAO implements ForumRateDAO_interface{
 			"DELETE FROM ForumRate where articleRateSN = ?";
 		private static final String UPDATE = 
 			"UPDATE ForumRate set userID = ?, articleSN = ?, articleRate = ? where articleRateSN = ?";
-//			更新應該是對評價更新，不會動到其他資料？
-		
-//	public static void main(String[] args) {
-//		ForumRateDAO frdao = new ForumRateDAO();
-//		ForumRateVO frvo = new ForumRateVO();
-//		frvo = new ForumRateVO();
-//		frvo.setUserID(3);
-//		frvo.setArticleSN(30001);
-//		frvo.setArticleRate(true);
-//	}
 		
 	@Override
 	public void insert(ForumRateVO forumRateVO) {
