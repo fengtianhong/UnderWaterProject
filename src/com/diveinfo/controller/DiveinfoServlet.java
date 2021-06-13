@@ -5,10 +5,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.*;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.*;
 
 import com.diveinfo.model.*;
-
+@MultipartConfig
 public class DiveinfoServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -27,7 +28,7 @@ public class DiveinfoServlet extends HttpServlet {
 			try {
 				String pointname = req.getParameter("pointname");
 				if (pointname == null || (pointname.trim().length() == 0)) {
-					pointname="";
+					pointname = "";
 					errorMsgs.add("請輸入潛點名稱");
 				}
 				Double latitude = null;
@@ -48,22 +49,38 @@ public class DiveinfoServlet extends HttpServlet {
 				String introduction = req.getParameter("introduction");
 				if (introduction == null || (pointname.trim().length() == 0)) {
 					errorMsgs.add("請輸入詳細介紹");
-					
+
 				}
-			
+
 				StringBuilder season = new StringBuilder();
+
+				if (req.getParameterValues("season") != null) {
+					for (String s : req.getParameterValues("season")) {
+						season.append(s);
+					}
+				}
+
 				
-				if(req.getParameterValues("season")!=null) {
-				for(String s:req.getParameterValues("season")){
-					season.append(s);
-				}
-				}
 				
 				if (season == null || (season.toString().trim().length() == 0)) {
 					errorMsgs.add("請選填季節");
 				}
 				String local = req.getParameter("local");
+
 				byte[] pic = null;
+				Part FileToPic = req.getPart("pic");
+				String check = FileToPic.getContentType();
+				String checktype = check.substring(0, check.lastIndexOf("/"));
+				if ("image".equals(checktype)) {
+					InputStream in = FileToPic.getInputStream();
+					pic = new byte[in.available()];
+					in.read(pic);
+					in.close();
+				} else {
+					errorMsgs.add("請傳送圖片類型");
+				}
+
+				
 				
 				
 				DiveInfoVO diveinfoVO = new DiveInfoVO();
@@ -75,16 +92,17 @@ public class DiveinfoServlet extends HttpServlet {
 				diveinfoVO.setSeason(season.toString());
 				diveinfoVO.setPic(pic);
 				diveinfoVO.setLocal(local);
-				
+
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("diveinfoVO", diveinfoVO);
 					RequestDispatcher failureView = req.getRequestDispatcher("/diveinfo/addDiveinfo.jsp");
 					failureView.forward(req, res);
 					return;
 				}
-				//檢查完畢
+				// 檢查完畢
 				DiveInfoService diveinfoSvc = new DiveInfoService();
-				diveinfoVO=diveinfoSvc.addDiveInfo(pointname, latitude, longitude, view, introduction, season.toString(), local,null, 0, 0, "0");
+				diveinfoVO = diveinfoSvc.addDiveInfo(pointname, latitude, longitude, view, introduction,
+						season.toString(), local, pic, 0, 0, "0");
 				RequestDispatcher failureView = req.getRequestDispatcher("/diveinfo/diveinfo.jsp");
 				failureView.forward(req, res);
 			} catch (Exception e) {
@@ -92,7 +110,6 @@ public class DiveinfoServlet extends HttpServlet {
 				RequestDispatcher failureView = req.getRequestDispatcher("/diveinfo/addDiveinfo.jsp");
 				failureView.forward(req, res);
 			}
-			
 
 		}
 
