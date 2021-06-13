@@ -22,6 +22,7 @@ public class MemberVO implements Serializable{
 	private Timestamp upDateTime;//更新時間ˇ
 	private Integer ratePeople;//被評價總人數ˇ
 	private Integer ratePoint;//被評價總分ˇ
+	
 	public Integer getUserID() {
 		return userID;
 	}
