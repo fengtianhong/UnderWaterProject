@@ -16,41 +16,40 @@ import util.Util;
 
 public class AdPicDAO implements AdPicDAO_interface{
 	
-	private static final String INSERT_STMT = "INSERT INTO AdPic (adPicSN, orderSN, pic) VALUES(?, ?, ?)";
+	private static final String INSERT_STMT = "INSERT INTO AdPic (orderSN, pic) VALUES(?, ?)";
 	private static final String UPDATE_STMT = "UPDATE AdPic SET  pic=? WHERE AdpicSN=? ";
 	private static final String GET_ONE_STMT = "SELECT * FROM Adpic WHERE adPicSN=?";
 	private static final String GET_ALL_STMT = "SELECT * FROM AdPic ORDER BY adPicSN";
 	
 	public static void main(String[] args) {
 		//insert 測試ok
-//		FileInputStream fis = null;
-//		byte[] b = null;
-//		
-//		try {
-//			fis = new FileInputStream("C:\\TFA101_WebApp\\eclipse_TFA101_workspace\\UnderWaterProject\\src\\com\\adpic\\model\\01.jpg");
-//			b = new  byte[fis.available()];
-//			fis.read(b);
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//		}finally {
-//			if(fis != null) {
-//				try {
-//					fis.close();
-//				}catch(IOException ie){
-//					ie.printStackTrace();
-//				}
-//			}
-//		}
-//		
-//		
-//		AdPicVO vo = new AdPicVO();
-//		vo.setAdPicSN(1);
-//		vo.setOrderSN(1);
-//		vo.setPic(b);
-//		
-//		AdPicDAO dao = new AdPicDAO();
-//		dao.insert(vo);
-//		System.out.println("加入成功");
+		FileInputStream fis = null;
+		byte[] b = null;
+		
+		try {
+			fis = new FileInputStream("C:\\TFA101_WebApp\\eclipse_TFA101_workspace\\UnderWaterProject\\src\\com\\adpic\\model\\01.jpg");
+			b = new  byte[fis.available()];
+			fis.read(b);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(fis != null) {
+				try {
+					fis.close();
+				}catch(IOException ie){
+					ie.printStackTrace();
+				}
+			}
+		}
+		
+		
+		AdPicVO vo = new AdPicVO();
+		vo.setOrderSN(1);
+		vo.setPic(b);
+		
+		AdPicDAO dao = new AdPicDAO();
+		dao.insert(vo);
+		System.out.println("加入成功");
 		//insert 測試ok
 		
 		//測試findByorderSN OK
@@ -62,11 +61,11 @@ public class AdPicDAO implements AdPicDAO_interface{
 		//測試findByorderSN OK
 		
 		//測試getAll OK
-		AdPicDAO dao = new AdPicDAO();
-		List<AdPicVO> L1 = dao.getAll();
-		for(AdPicVO xx:L1) {
-			System.out.println(xx.getAdPicSN());
-		}
+//		AdPicDAO dao = new AdPicDAO();
+//		List<AdPicVO> L1 = dao.getAll();
+//		for(AdPicVO xx:L1) {
+//			System.out.println(xx.getAdPicSN());
+//		}
 		//測試getAll OK
 		
 	}
@@ -91,9 +90,8 @@ public class AdPicDAO implements AdPicDAO_interface{
 			System.out.println("連線成功");
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
-			pstmt.setInt(1, AdPicVO.getAdPicSN());
-			pstmt.setInt(2, AdPicVO.getOrderSN());
-			pstmt.setBytes(3, AdPicVO.getPic());
+			pstmt.setInt(1, AdPicVO.getOrderSN());
+			pstmt.setBytes(2, AdPicVO.getPic());
 			
 			i = pstmt.executeUpdate();
 			
