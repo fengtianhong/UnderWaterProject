@@ -5,7 +5,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 public class MemberVO implements Serializable{
-	private Integer userID;//會員編號
+	private Integer userID;//會員編號X
 	private String account;//帳號
 	private String pwd;//密碼ˇ
 	private String nickName;//暱稱ˇ
@@ -17,9 +17,9 @@ public class MemberVO implements Serializable{
 	private byte[] certificationPic;//證照圖片ˇ
 	private String personID;//身分證字號
 	private String address;//地址ˇ
-	private Timestamp createTime;//帳號建立時間
+	private Timestamp createTime;//帳號建立時間X
 	private Integer status;//帳號狀態ˇ
-	private Timestamp upDateTime;//更新時間ˇ
+	private Timestamp upDateTime;//更新時間ˇX
 	private Integer ratePeople;//被評價總人數ˇ
 	private Integer ratePoint;//被評價總分ˇ
 	

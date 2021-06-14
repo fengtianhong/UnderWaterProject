@@ -421,7 +421,7 @@ CREATE TABLE `AdPic` (
   `orderSN` int NOT NULL COMMENT '訂單流水編號',
   `pic` blob NOT NULL COMMENT '廣告圖片',
   PRIMARY KEY (`adPicSN`),
-  CONSTRAINT `AdPic_adPicSN_FK` FOREIGN KEY (`adPicSN`) REFERENCES `AdOrder` (`orderSN`)
+  CONSTRAINT `AdPic_adPicSN_FK` FOREIGN KEY (`orderSN`) REFERENCES `AdOrder` (`orderSN`)
 ) COMMENT='廣告圖片';
 
 -- --------------------------------------FORUM----------------------------------------

@@ -15,7 +15,7 @@ import util.Util;
 
 public class AdOrderDAO implements AdOrderDAO_interface{
 	
-	private static final String INSERT_STMT = "INSERT INTO adOrder (orderSN, adUserID, block, time, showTime, expiredTime, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_STMT = "INSERT INTO adOrder (adUserID, block, showTime, expiredTime, status) VALUES (?, ?, ?, ?, ?)";
 	private static final String UPDATE_STMT = "UPDATE Member SET block=?, showTime=?, expiredTime=?, status=? WHERE adOrderID = ?";
 	private static final String FINDBYACCOUNT_STMT = "SELECT * FROM adOrder where  adUserID = ?";
 	private static final String GET_ALL_STMT = "SELECT * FROM AdOrder ORDER BY orderSN";
@@ -26,15 +26,13 @@ public class AdOrderDAO implements AdOrderDAO_interface{
 		AdOrderDAO dao = new AdOrderDAO();
 		
 		//insert測試ok
-//		vo.setOrderSN(2);
-//		vo.setAdUserID(1);
-//		vo.setBlock(2);
-//		vo.setTime(new Timestamp(System.currentTimeMillis()));
-//		vo.setShowTime(Timestamp.valueOf("2021-06-10 11:04:45"));
-//		vo.setExpiredTime(Timestamp.valueOf("2021-06-13 11:04:45"));
-//		vo.setStatus(1);
-//		dao.insert(vo);
-//		System.out.println("已新增一筆");
+		vo.setAdUserID(1);
+		vo.setBlock(2);
+		vo.setShowTime(Timestamp.valueOf("2021-06-10 11:04:45"));
+		vo.setExpiredTime(Timestamp.valueOf("2021-06-13 11:04:45"));
+		vo.setStatus(1);
+		dao.insert(vo);
+		System.out.println("已新增一筆");
 		//insert測試ok
 		
 		//update測試
@@ -53,10 +51,10 @@ public class AdOrderDAO implements AdOrderDAO_interface{
 		//findByadUserID測試
 		
 		//getAll測試
-		List<AdOrderVO> L1 = dao.getAll();
-		for(AdOrderVO xx:L1) {
-			System.out.println(xx.getAdUserID());
-		}
+//		List<AdOrderVO> L1 = dao.getAll();
+//		for(AdOrderVO xx:L1) {
+//			System.out.println(xx.getAdUserID());
+//		}
 		//getAll測試
 	}
 	
@@ -79,13 +77,11 @@ public class AdOrderDAO implements AdOrderDAO_interface{
 			System.out.println("連線成功");
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
-			pstmt.setInt(1, AdOrderVO.getOrderSN());
-			pstmt.setInt(2, AdOrderVO.getAdUserID());
-			pstmt.setInt(3, AdOrderVO.getBlock());
-			pstmt.setTimestamp(4, AdOrderVO.getTime());
-			pstmt.setTimestamp(5, AdOrderVO.getShowTime());
-			pstmt.setTimestamp(6, AdOrderVO.getExpiredTime());
-			pstmt.setInt(7, AdOrderVO.getStatus());
+			pstmt.setInt(1, AdOrderVO.getAdUserID());
+			pstmt.setInt(2, AdOrderVO.getBlock());
+			pstmt.setTimestamp(3, AdOrderVO.getShowTime());
+			pstmt.setTimestamp(4, AdOrderVO.getExpiredTime());
+			pstmt.setInt(5, AdOrderVO.getStatus());
 			
 			pstmt.executeUpdate();
 			

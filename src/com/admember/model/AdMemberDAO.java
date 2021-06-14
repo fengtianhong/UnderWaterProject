@@ -11,7 +11,7 @@ import util.Util;
 
 public class AdMemberDAO implements AdMemberDAO_interface {
 
-	private static final String INSERT_STMT = "INSERT INTO adMember (AdUserID, Account, Pwd, CreateTime, Status) VALUES (?, ?, ?, ?, ? )";
+	private static final String INSERT_STMT = "INSERT INTO adMember (Account, Pwd,Status) VALUES (?, ?, ? )";
 	private static final String UPDATE_STMT = "UPDATE adMember set Pwd=?, status=? where account = ?";
 	private static final String FINDBYACCOUNT_STMT = "select * from adMember where account = ?";
 	
@@ -29,16 +29,14 @@ public class AdMemberDAO implements AdMemberDAO_interface {
 	public static void main(String[] args) {
 
 //		//insert 測試OK
-//		adMemberVO vo = new adMemberVO();
-//		vo.setAdUserID(00000002);
-//		vo.setAccount("4125252");
-//		vo.setPwd("123456");
-//		vo.setCreateTime(new Timestamp(System.currentTimeMillis()));
-//		vo.setStatus(0);
+		AdMemberVO vo = new AdMemberVO();
+		vo.setAccount("4125252");
+		vo.setPwd("123456");
+		vo.setStatus(0);
 //		
-//		adMemberDAO dao = new adMemberDAO();
-//		dao.insert(vo);
-//		System.out.println("已加入成功");
+		AdMemberDAO dao = new AdMemberDAO();
+		dao.insert(vo);
+		System.out.println("已加入成功");
 //		//insert 測試OK
 		
 		//update 測試OK
@@ -48,8 +46,8 @@ public class AdMemberDAO implements AdMemberDAO_interface {
 		//update 測試OK
 		
 		//find account 怎麼佐證有查到?
-		AdMemberDAO dao = new AdMemberDAO();
-		AdMemberVO vo = dao.findBYaccount(4125252);
+//		AdMemberDAO dao = new AdMemberDAO();
+//		AdMemberVO vo = dao.findBYaccount(4125252);
 		//find account
 	}
 
@@ -62,11 +60,9 @@ public class AdMemberDAO implements AdMemberDAO_interface {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
 			System.out.println("連線成功");
 			pstmt = con.prepareStatement(INSERT_STMT);
-			pstmt.setInt(1, AdMemberVO.getAdUserID());
-			pstmt.setString(2, AdMemberVO.getAccount());
-			pstmt.setString(3, AdMemberVO.getPwd());
-			pstmt.setTimestamp(4, AdMemberVO.getCreateTime());
-			pstmt.setInt(5, AdMemberVO.getStatus());
+			pstmt.setString(1, AdMemberVO.getAccount());
+			pstmt.setString(2, AdMemberVO.getPwd());
+			pstmt.setInt(3, AdMemberVO.getStatus());
 
 			pstmt.executeUpdate();
 		} catch (SQLException se) {
