@@ -27,6 +27,16 @@ public class Test_DataSource_Katy extends HttpServlet {
 		PrintWriter out = res.getWriter();
 
 		try {
+//=============================== GroupTour equals ===============================
+			GroupTourService svc = new GroupTourService();
+
+			GroupTourVO vo1 = svc.getOne(6001);
+			
+			GroupTourVO vo2 = svc.getOne(6001);
+			System.out.println(vo1);
+			System.out.println(vo2);
+			System.out.println(vo1 == vo2);
+			System.out.println(vo1.equals(vo2));
 		
 //=============================== GroupTourDAO ===============================
 //			GroupTourDAO dao = new GroupTourDAO();
@@ -51,6 +61,7 @@ public class Test_DataSource_Katy extends HttpServlet {
 ////			GroupTourVO testVO = dao.findByPrimaryKey(6001);
 ////			out.println(testVO.getTourName());  	// OK
 //			out.println(dao.getAll()); 	// OK
+
 			
 //=============================== CollectionsDAO ===============================
 //			insert, delete, findByUserID 已確認可以在 DB 執行 (會卡FK)	

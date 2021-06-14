@@ -22,6 +22,7 @@ public class QaDAO implements QaDAO_interface{
 			e.printStackTrace();
 		}
 	}
+
 	private static final String INSERT_STMT = "INSERT INTO QA (menu, submenu, `system`, question, answer, popularQuestion) VALUES (?, ?, ?, ?, ?, ?)";
 	private static final String UPDATE_STMT = "UPDATE QA set menu=?, submenu=?, `system`=?, question=?, answer=?, clicks=?, popularQuestion=?, popularQuestionSort=? where questionSN = ?";
 	private static final String DELETE_STMT = "DELETE FROM QA where questionSN = ?";
