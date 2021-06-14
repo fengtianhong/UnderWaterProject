@@ -33,9 +33,8 @@ public class CollectionsServlet extends HttpServlet {
 		if ("favorite".equals(action)) {
 			
 			// 傳入 UserID, GroupTourSN
-			Integer userID = new Integer(req.getParameter("userID"));
-			Integer groupTourSN = new Integer(req.getParameter("GroupTourSN"));
-// 請求參數CHECK?
+			Integer userID = new Integer(req.getParameter("userID").trim());
+			Integer groupTourSN = new Integer(req.getParameter("GroupTourSN").trim());
 			
 			// 查詢資料
 			CollectionsService colSvc = new CollectionsService();

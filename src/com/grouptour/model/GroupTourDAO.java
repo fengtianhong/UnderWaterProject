@@ -22,7 +22,7 @@ public class GroupTourDAO implements GroupTourDAO_interface{
 			e.printStackTrace();
 		}
 	}
-	private static final String INSERT_STMT = "INSERT INTO GroupTour (tourName, startTime, endTime, regTime, closeTime, pointSN, price, attendNumber, limitNumder, certificationLimit, status, content) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_STMT = "INSERT INTO GroupTour (tourName, startTime, endTime, regTime, closeTime, pointSN, price, limitNumder, certificationLimit, status, content) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String UPDATE_STMT = "UPDATE GroupTour SET tourName=?, startTime=?, endTime=?, regTime=?, closeTime=?, pointSN=?, price=?, attendNumber=?, limitNumder=?, certificationLimit=?, status=?, content=? WHERE groupTourSN=?";
 	private static final String GET_ONE_STMT = "SELECT * FROM GroupTour WHERE groupTourSN=?";
 	private static final String GET_All_LIST_STMT = "SELECT * FROM GroupTour ORDER BY status, startTime";
@@ -41,12 +41,11 @@ public class GroupTourDAO implements GroupTourDAO_interface{
 			ps.setDate(4, groupTourVO.getRegTime());			
 			ps.setDate(5, groupTourVO.getCloseTime());						
 			ps.setInt(6, groupTourVO.getPointSN());						
-			ps.setInt(7, groupTourVO.getPrice());						
-			ps.setInt(8, groupTourVO.getAttendNumber());						
-			ps.setInt(9, groupTourVO.getLimitNumder());						
-			ps.setString(10, groupTourVO.getCertificationLimit());						
-			ps.setString(11, groupTourVO.getStatus());						
-			ps.setString(12, groupTourVO.getContent());						
+			ps.setInt(7, groupTourVO.getPrice());											
+			ps.setInt(8, groupTourVO.getLimitNumder());						
+			ps.setString(9, groupTourVO.getCertificationLimit());						
+			ps.setString(10, groupTourVO.getStatus());						
+			ps.setString(11, groupTourVO.getContent());						
 			ps.executeUpdate();
 			
 		} catch (SQLException se) {

@@ -13,18 +13,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Add Group Tour</title>
+<title>Update Group Tour</title>
 <style>
 
-	.ckeditor{
- 		width: 45%; 
-	}
+
 
 </style>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
-<script src="<%=request.getContextPath()%>/ckeditor5/build/ckeditor.js"></script>
 </head>
 <body>
 
@@ -66,7 +60,7 @@
 	</tr>
 	<tr>
 		<td>人數限制</td>
-		<td>
+		<td><span>${groupTourVO.attendNumber} / </span>
 			<select name="limitNumder" size="1">
 				<option value="1" ${(groupTourVO.limitNumder==1)? 'selected':'' }>1
 				<option value="2" ${(groupTourVO.limitNumder==2)? 'selected':'' }>2
@@ -92,48 +86,38 @@
 
 </table>
 		<p>行程內容</p>
-<!-- 		<div class="ckeditor" id="editor"> -->
-<!-- 		<textarea name="content"><%-- (groupTourVO==null)?"":groupTourVO.getContent()--%></textarea> -->
-<!-- 		</div> -->
-		<textarea id="editor" name="content"></textarea>
+		<textarea name="content"><%=(groupTourVO==null)?"":groupTourVO.getContent()%></textarea>
 
-<input type="hidden" name="action" value="insert">
-<input type="submit" value="新增">
+
+<input type="hidden" name="groupTourSN" value="<%=(groupTourVO==null)?"":groupTourVO.getGroupTourSN()%>">
+<input type="hidden" name="attendNumber" value="<%=(groupTourVO==null)?"":groupTourVO.getAttendNumber()%>">
+<input type="hidden" name="action" value="update">
+<input type="submit" value="修改">
 </form>
+
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errMsg}">
-	<font style="color:red">請修正以下錯誤:</font>
-	<ul>
-		<c:forEach var="message" items="${errMsg}">
-			<li style="color:red">${message}</li>
-		</c:forEach>
-	</ul>
+	<script>
+		alert("請修正以下錯誤: "+ "${errMsg}");
+	</script>
 </c:if>
-<p>${Msg}</p>
+
+<%-- <c:if test="${not empty errMsg}"> --%>
+<!-- 	<font style="color:red">請修正以下錯誤:</font> -->
+<!-- 	<ul> -->
+<%-- 		<c:forEach var="message" items="${errMsg}"> --%>
+<%-- 			<li style="color:red">${message}</li> --%>
+<%-- 		</c:forEach> --%>
+<!-- 	</ul> -->
+<%-- </c:if> --%>
 
 
 </body>
-
-
-
-<style>
-  .xdsoft_datetimepicker .xdsoft_datepicker {
-           width:  300px;   /* width:  300px; */
-  }
-  .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
-           height: 151px;   /* height:  151px; */
-  }
-</style>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
+<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
+<script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
 <script>
-	// ckEditor
-    ClassicEditor
-        .create( document.querySelector( '#editor' ) )
-        .catch( error => {
-            console.error( error );
-        } );
-	
-	
-	
+
 	// dateTimePicker
 	$.datetimepicker.setLocale('zh');
      var today = new Date();
