@@ -32,7 +32,7 @@
 
     <table id = "addtitle">
         <tr>
-            <td>請在輸入要新增的標題文字</td>
+            <td>請在此輸入要新增的標題文字</td>
         </tr>
         <tr>
             <td><input type="text" name="TitleText" size="45" placeholder="以中文四字為限。"></td>
