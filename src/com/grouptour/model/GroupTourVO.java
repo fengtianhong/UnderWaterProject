@@ -19,6 +19,15 @@ public class GroupTourVO implements java.io.Serializable{
 	private String certificationLimit;
 	private String status;
 	private String content;
+	
+	@Override
+	public String toString() {
+		return "GroupTourVO [groupTourSN=" + groupTourSN + ", tourName=" + tourName + ", startTime=" + startTime
+				+ ", endTime=" + endTime + ", regTime=" + regTime + ", closeTime=" + closeTime + ", createTime="
+				+ createTime + ", pointSN=" + pointSN + ", price=" + price + ", attendNumber=" + attendNumber
+				+ ", limitNumder=" + limitNumder + ", certificationLimit=" + certificationLimit + ", status=" + status
+				+ ", content=" + content + "]";
+	}
 	public Integer getGroupTourSN() {
 		return groupTourSN;
 	}
@@ -103,5 +112,30 @@ public class GroupTourVO implements java.io.Serializable{
 	public void setContent(String content) {
 		this.content = content;
 	}
-
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj != null && getClass() == obj.getClass()) {	// 同 class
+			if (obj instanceof GroupTourVO) {
+				GroupTourVO e = (GroupTourVO) obj;
+				if (groupTourSN.equals(e.groupTourSN)&& tourName.equals(e.tourName)
+				 && startTime.equals(e.startTime) && endTime.equals(e.endTime)
+				 && regTime.equals(e.regTime) && closeTime.equals(e.closeTime)
+				 && pointSN.equals(e.pointSN) && price.equals(e.price)
+				 && attendNumber.equals(e.attendNumber) && limitNumder.equals(e.limitNumder)
+				 && certificationLimit.equals(e.certificationLimit) && status.equals(e.status)
+				 && content.equals(e.content)						
+					) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+//    @Override
+//    public int hashCode() {
+//        return 41 * (41 + groupTourSN) + groupTourSN;
+//    }
 }

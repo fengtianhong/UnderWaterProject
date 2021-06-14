@@ -6,7 +6,7 @@ import java.util.List;
 import com.collections.model.CollectionsDAO_interface;
 
 public class GroupTourService {
-	
+
 	private GroupTourDAO_interface dao;
 	
 	public GroupTourService() {
@@ -14,7 +14,7 @@ public class GroupTourService {
 	}
 	public GroupTourVO insertGroupTour(String tourName, Date startTime, Date endTime, 
 									   Date regTime, Date closeTime, Integer pointSN, 
-									   Integer price, Integer attendNumber, Integer limitNumder, 
+									   Integer price, Integer limitNumder, 
 									   String certificationLimit, String status, String content) {
 		
 		GroupTourVO vo = new GroupTourVO();
@@ -25,11 +25,11 @@ public class GroupTourService {
 		vo.setCloseTime(closeTime);
 		vo.setPointSN(pointSN);
 		vo.setPrice(price);
-		vo.setAttendNumber(attendNumber);
 		vo.setLimitNumder(limitNumder);
 		vo.setCertificationLimit(certificationLimit);
 		vo.setStatus(status);
 		vo.setContent(content);
+		dao.insert(vo);
 		
 		return vo;
 	}
@@ -52,6 +52,7 @@ public class GroupTourService {
 		vo.setCertificationLimit(certificationLimit);
 		vo.setStatus(status);
 		vo.setContent(content);
+		dao.update(vo);
 		
 		return vo;
 	}
