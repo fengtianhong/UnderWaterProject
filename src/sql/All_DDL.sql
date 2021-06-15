@@ -82,7 +82,7 @@ CREATE TABLE `Diveinfo` (
   `introduction` longtext NOT NULL COMMENT '潛點圖文',
   `season` varchar(20) NOT NULL COMMENT '季節',
   `local` varchar(20) DEFAULT "",
-  `pic` longblob NOT NULL COMMENT '預覽圖',
+  `pic` longblob COMMENT '預覽圖',
   `ratePoint` int NOT NULL COMMENT '評價總分' DEFAULT 0,
   `ratePeople` int NOT NULL COMMENT '評價人數' DEFAULT 0,
   `status` varchar(20) NOT NULL DEFAULT 0,
@@ -278,7 +278,32 @@ CREATE TABLE `Product` (
 
 INSERT INTO Product (productClass,productName,productPrice,productQuantity,productStatus,
 productDetail,productDiscount,productPrime,ratingPoint,ratingNumber)
-values("蛙鞋","power牌鞋鞋",2000,100,0,"買到賺到",false,true,10,2);
+values
+("蛙鞋","穿脫超省力power牌鞋鞋",799,60,1,
+"話不要那麼多啦，趕快買，買到賺到。",false,true,22,3),
+("呼吸器","大章魚浮潛三寶呼吸器",999,50,1,
+"吸入後，空氣直接從兩側進入，不會停留在視野內。
+呼氣時，排氣會從中間的排氣門排出，以防止產生霧氣。",true,false,15,2),
+("面鏡","超值防霧潛水面鏡",699,70,1,
+"強化防霧耐磨鏡片，超高清晰度。
+3D建模製造，符合亞洲人臉型，舒適防滲水。
+一體式鏡片，無中柱遮擋，視野擴增至180度。
+日本進口高級食品級矽膠材質，壓力實驗耐30萬次拉扯。
+呼吸管排水閥設計，不易進水輕鬆悠遊。",false,false,21,3),
+("防寒衣","TRUDIVE 防寒衣【Siren 海妖系列】半身滑面",3300,40,1,
+"針對亞洲女性身材調整版型，展現出每位女性的自信。Siren不僅帶給妳水下的舒適度，更期待妳成為海中那位迷人的海妖。
+防寒衣採用YAMATO 或 JAKO MSL 等高彈性的氯丁橡膠製作，內層採用高彈性布料，外層則以TRUDIVE 的專利鈦塗層專利技術上色。
+鈦塗層滑面加上超彈內裡布，不僅好穿，拍照也有型。",false,true,15,2),
+("氣瓶","DEEP Pro迷你SCUBA潛水罐",3800,10,1,
+"品牌：Catalina
+尺寸：S80
+鋁合金材質
+含SHERWOOD DIN/YOKE 兩用氣瓶閥、氣瓶底座
+填充容積:80CUFT/11.1L
+工作壓力:200BAR/3000PSI
+氣瓶直徑:18.5CM
+氣瓶高度:66CM
+氣瓶重量:15公斤",true,true,6,1);
 
 
 CREATE TABLE `OrderForProduct` (
@@ -295,7 +320,12 @@ CREATE TABLE `OrderForProduct` (
 ) COMMENT='商品訂單';
 
 INSERT INTO OrderForProduct (userID,totalPrice,orderStatus)
-values(2,100000000,1);
+values
+(1,1798,0),
+(2,4499,1),
+(3,5797,0),
+(4,11997,1),
+(5,3196,0);
 
 
 CREATE TABLE `OrderList` (
@@ -314,7 +344,18 @@ CREATE TABLE `OrderList` (
 ) COMMENT='商品訂單明細';
 
 INSERT INTO OrderList (productSN,orderSN,purchaseQuantity,productPrice,rating)
-values(1,1,10,2000,8);
+values
+(1,1,1,799,8),
+(2,1,1,999,7),
+(3,2,1,699,7),
+(5,2,1,3800,6),
+(1,3,1,799,8),
+(2,3,1,999,8),
+(3,3,1,699,7),
+(4,3,1,3300,6),
+(3,4,3,699,7),
+(4,4,3,3300,9),
+(1,5,4,799,6);
 
 
 CREATE TABLE `ShoppingCar` (
@@ -334,7 +375,14 @@ CREATE TABLE `ShoppingCar` (
 ) COMMENT='購物車';
 
 INSERT INTO ShoppingCar (userID,productSN,purchaseQuantity,productPrice,totalPrice)
-values(1,1,3,2000,6000);
+values
+(1,2,2,999,1998),
+(1,3,2,699,1398),
+(1,4,2,3300,6600),
+(2,5,1,3800,3800),
+(3,2,1,999,999),
+(3,4,1,3300,3300),
+(4,1,6,799,4794);
 
 
 CREATE TABLE `ProductPhoto` (
