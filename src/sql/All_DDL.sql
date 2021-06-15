@@ -38,7 +38,7 @@ DROP TABLE IF EXISTS `Member`;
 
 
 CREATE TABLE `Member` (
-  `userID` int NOT NULL AUTO_INCREMENT COMMENT '會員編號',
+    `userID` int NOT NULL AUTO_INCREMENT COMMENT '會員編號',
   `account` varchar(50) NOT NULL COMMENT '帳號',
   `pwd` varchar(20) NOT NULL COMMENT '密碼',
   `nickName` varchar(30) NOT NULL COMMENT '暱稱',
@@ -53,12 +53,12 @@ CREATE TABLE `Member` (
 -- 註解是原本的，下一行是因為要在DDL塞假資料改動的，到時候如果有問題請注意這邊
   -- `createTime` timestamp NOT NULL COMMENT '帳號建立時間',
   `createTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '帳號建立時間',
-  `status` int NOT NULL COMMENT '帳號狀態',
+  `status` int NOT NULL DEFAULT '2' COMMENT '帳號狀態',
 -- 註解是原本的，下一行是因為要在DDL塞假資料改動的，到時候如果有問題請注意這邊
   -- `upDateTime` timestamp NOT NULL COMMENT '帳號更新時間',
   `upDateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '帳號更新時間',
-  `ratePeople` int NOT NULL COMMENT '被評價總人數',
-  `ratePoint` int NOT NULL COMMENT '被評價總分',
+  `ratePeople` int NOT NULL DEFAULT '0' COMMENT '被評價總人數',
+  `ratePoint` int NOT NULL DEFAULT '0' COMMENT '被評價總分',
   PRIMARY KEY (`userID`),
   UNIQUE KEY `UK_MEMBER_account` (`account`)
 ) COMMENT='會員';
@@ -399,19 +399,21 @@ CREATE TABLE `AdMember` (
   `adUserID` int NOT NULL AUTO_INCREMENT COMMENT '會員流水編號',
   `account` varchar(50) NOT NULL COMMENT '帳號',
   `pwd` varchar(20) NOT NULL COMMENT '密碼',
-  `createTime` timestamp NOT NULL COMMENT '帳號建立時間',
+  `createTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '帳號建立時間',
+  `status` int NOT NULL,
   PRIMARY KEY (`adUserID`),
   UNIQUE KEY `UK_AdMember_account` (`account`)
 ) COMMENT='廣告會員';
 
 
 CREATE TABLE `AdOrder` (
-  `orderSN` int NOT NULL AUTO_INCREMENT COMMENT '訂單流水編號',
+    `orderSN` int NOT NULL AUTO_INCREMENT COMMENT '訂單流水編號',
   `adUserID` int NOT NULL COMMENT '會員流水編號',
   `block` int NOT NULL COMMENT '版位',
-  `time` timestamp NOT NULL COMMENT '成立時間',
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '成立時間',
   `showTime` timestamp NOT NULL COMMENT '開始時間',
   `expiredTime` timestamp NOT NULL COMMENT '結束時間',
+  `status` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`orderSN`),
   KEY `AdOrder_adUerID_FK` (`adUserID`),
   CONSTRAINT `AdOrder_adUerID_FK` FOREIGN KEY (`adUserID`) REFERENCES `admember` (`adUserID`)
