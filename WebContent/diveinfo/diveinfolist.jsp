@@ -45,7 +45,7 @@
 
 <html>
 <head>
-<meta charset="BIG5">
+<meta charset="UTF-8">
 <title>潛點資訊列表</title>
 </head>
 <body>
@@ -83,20 +83,20 @@
 				<td>${diveinfoVO.status}</td>
 				<td>
 					<FORM METHOD="post"
-						ACTION="<%=request.getContextPath()%>/emp/emp.do"
+						ACTION="<%=request.getContextPath()%>/diveinfo/diveinfo.do"
 						style="margin-bottom: 0px;">
 						<input type="submit" value="修改"> <input type="hidden"
-							name="empno" value="${diveinfoVO.pointSN}"> <input type="hidden"
+							name="pointSN" value="${diveinfoVO.pointSN}"> <input type="hidden"
 							name="action" value="getOne_For_Update">
 					</FORM>
 				</td>
 				<td>
 					<FORM METHOD="post"
-						ACTION="<%=request.getContextPath()%>/emp/emp.do"
+						ACTION="<%=request.getContextPath()%>/diveinfo/diveinfo.do"
 						style="margin-bottom: 0px;">
-						<input type="submit" value="刪除"> <input type="hidden"
-							name="empno" value="${diveinfoVO.pointSN}"> <input type="hidden"
-							name="action" value="delete">
+						<input type="submit" value="上/下架"> <input type="hidden"
+							name="pointSN" value="${diveinfoVO.pointSN}"> <input type="hidden"
+							name="action" value="changeStatus">
 					</FORM>
 				</td>
 			</tr>

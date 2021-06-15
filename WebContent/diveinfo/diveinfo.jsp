@@ -52,9 +52,17 @@ html, body {
 		var position=[];
 		<c:forEach var="diveinfoVO" items="${list}">
 		position.push({
-			label: "${diveinfoVO.introduction}",
+			status: ${diveinfoVO.status},
 			lat: ${diveinfoVO.latitude},
-			lng: ${diveinfoVO.longitude}
+			lng: ${diveinfoVO.longitude},
+			content:'<h2>${diveinfoVO.pointName}</h2>'+
+		    '<span>${diveinfoVO.view}</span><br/>'+
+		    '<img src="<%=request.getContextPath()%>/diveinfo/ShowPic?pointSN=${diveinfoVO.pointSN}"><br>'+
+			((${diveinfoVO.pic==null})?'<i>找不到圖片</i>':'<i>圖片取自網路</i>')+
+			'<br><span>${diveinfoVO.introduction}</span><br>'+
+			'<span>適合季節:${diveinfoVO.season}</sapn><br>'+
+			'<span>評價平均分數:'+(isNaN(${diveinfoVO.ratePoint/diveinfoVO.ratePeople})?0:${diveinfoVO.ratePoint/diveinfoVO.ratePeople})+'</span>'
+	
 		});
 		</c:forEach>
 		var map;
@@ -76,7 +84,8 @@ html, body {
 				mapTypeId : "hybrid"
 			});
 			for (var i = 0; i < position.length; i++) {
-				addMarker(i);
+				if (position[i].status!=0){addMarker(i);}
+				
 			}
 			;
 
@@ -96,7 +105,7 @@ html, body {
 				Animation : google.maps.Animation.BOUNCE
 			});
 			var show = new google.maps.InfoWindow({
-				content : position[e].label
+				content : position[e].content
 			});
 			markers[e].addListener('click', function() {
 				a = a * -1;

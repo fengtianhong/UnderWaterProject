@@ -9,6 +9,7 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.*;
 
 import com.diveinfo.model.*;
+
 @MultipartConfig
 public class DiveinfoServlet extends HttpServlet {
 
@@ -60,17 +61,15 @@ public class DiveinfoServlet extends HttpServlet {
 					}
 				}
 
-				
-				
 				if (season == null || (season.toString().trim().length() == 0)) {
 					errorMsgs.add("請選填季節");
 				}
 				String local = req.getParameter("local");
-
 				byte[] pic = null;
 				Part FileToPic = req.getPart("pic");
 				String check = FileToPic.getContentType();
 				String checktype = check.substring(0, check.lastIndexOf("/"));
+
 				if ("image".equals(checktype)) {
 					InputStream in = FileToPic.getInputStream();
 					pic = new byte[in.available()];
@@ -80,9 +79,6 @@ public class DiveinfoServlet extends HttpServlet {
 					errorMsgs.add("請傳送圖片類型");
 				}
 
-				
-				
-				
 				DiveInfoVO diveinfoVO = new DiveInfoVO();
 				diveinfoVO.setPointName(pointname);
 				diveinfoVO.setLatitude(latitude);
@@ -102,7 +98,7 @@ public class DiveinfoServlet extends HttpServlet {
 				// 檢查完畢
 				DiveInfoService diveinfoSvc = new DiveInfoService();
 				diveinfoVO = diveinfoSvc.addDiveInfo(pointname, latitude, longitude, view, introduction,
-						season.toString(), local, pic, 0, 0, "0");
+						season.toString(), local, pic, 0, 0, "1");
 				RequestDispatcher failureView = req.getRequestDispatcher("/diveinfo/diveinfo.jsp");
 				failureView.forward(req, res);
 			} catch (Exception e) {
@@ -111,6 +107,40 @@ public class DiveinfoServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 
+		}
+
+		if ("changeStatus".equals(action)) {
+
+		}
+		if ("update".equals(action)) {
+
+		}
+
+		if ("getOne_For_Update".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/*************************** 1.接收請求參數 ****************************************/
+				Integer pointSN = new Integer(req.getParameter("pointSN"));
+
+				/*************************** 2.開始查詢資料 ****************************************/
+				DiveInfoService diveinfoSvc = new DiveInfoService();
+				DiveInfoVO diveinfoVO = diveinfoSvc.getOneDiveInfo(pointSN);
+
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+				req.setAttribute("diveinfoVO", diveinfoVO); // 資料庫取出的empVO物件,存入req
+				String url = "/diveinfo/updateDiveinfo.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 **********************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/diveinfo/diveinfolist.jsp");
+				failureView.forward(req, res);
+			}
 		}
 
 	}
