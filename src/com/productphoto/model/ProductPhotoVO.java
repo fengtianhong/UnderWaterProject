@@ -3,10 +3,11 @@ package com.productphoto.model;
 import java.io.Serializable;
 
 public class ProductPhotoVO implements Serializable {
+
 	private Integer PhotoSN;
 	private Integer ProductSN;
-	private byte[] productimages;
-	
+	private byte[] productImages;
+
 	public ProductPhotoVO() {
 		super();
 	}
@@ -27,12 +28,12 @@ public class ProductPhotoVO implements Serializable {
 		ProductSN = productSN;
 	}
 
-	public byte[] getProductimages() {
-		return productimages;
+	public byte[] getProductImages() {
+		return productImages;
 	}
 
-	public void setProductimages(byte[] productimages) {
-		this.productimages = productimages;
+	public void setProductImages(byte[] productimages) {
+		this.productImages = productimages;
 	}
-	
+
 }

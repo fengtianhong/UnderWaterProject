@@ -3,6 +3,7 @@ package com.shoppingcar.model;
 import java.io.Serializable;
 
 public class ShoppingCarVO implements Serializable {
+
 	private Integer shoppingCarSN;
 	private Integer userID;
 	private Integer productSN;
@@ -12,17 +13,6 @@ public class ShoppingCarVO implements Serializable {
 
 	public ShoppingCarVO() {
 		super();
-	}
-
-	public ShoppingCarVO(Integer shoppingCarSN, Integer userID, Integer productSN, Integer purchaseQuantity,
-			Integer productPrice, Integer totalPrice) {
-		super();
-		this.shoppingCarSN = shoppingCarSN;
-		this.userID = userID;
-		this.productSN = productSN;
-		this.purchaseQuantity = purchaseQuantity;
-		this.productPrice = productPrice;
-		this.totalPrice = totalPrice;
 	}
 
 	public Integer getShoppingCarSN() {

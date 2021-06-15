@@ -3,6 +3,7 @@ package com.orderlist.model;
 import java.io.Serializable;
 
 public class OrderListVO implements Serializable {
+
 	private Integer orderListSN;
 	private Integer productSN;
 	private Integer orderSN;
@@ -12,17 +13,6 @@ public class OrderListVO implements Serializable {
 
 	public OrderListVO() {
 		super();
-	}
-
-	public OrderListVO(Integer orderListSN, Integer productSN, Integer orderSN, Integer purchaseQuantity,
-			Integer productPrice, Integer rating) {
-		super();
-		this.orderListSN = orderListSN;
-		this.productSN = productSN;
-		this.orderSN = orderSN;
-		this.purchaseQuantity = purchaseQuantity;
-		this.productPrice = productPrice;
-		this.rating = rating;
 	}
 
 	public Integer getOrderListSN() {
