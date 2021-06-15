@@ -117,6 +117,7 @@ values
 create table `GroupTour` (
 	`groupTourSN` int NOT NULL AUTO_INCREMENT COMMENT '套裝行程編號',
     `tourName` varchar(30) not null comment '行程名稱',
+    `tourPic` longblob comment '行程圖片',
     `startTime` date not null comment '行程起始日期',
     `endTime` date not null comment '行程結束日期',
     `regTime` date not null comment '報名開始日期',
@@ -124,7 +125,7 @@ create table `GroupTour` (
     `createTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP comment '行程建立日期',
     `pointSN` int not null comment '潛點編號',
     `price` int not null comment '行程價格',
-    `attendNumber` int not null comment '參加人數',
+    `attendNumber` int not null DEFAULT '0' comment '參加人數',
     `limitNumder` int not null comment '限制人數',
     `certificationLimit` char(2) comment '資格限制',
     `status` char(1) not null comment '出團狀態',
