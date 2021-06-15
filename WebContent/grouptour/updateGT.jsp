@@ -15,18 +15,38 @@
 <meta charset="UTF-8">
 <title>Update Group Tour</title>
 <style>
-
+	img{
+		Width: 100%;
+	}
+	.picture{
+		width: 400px;
+	}
 
 
 </style>
 </head>
 <body>
 
-<form method="post" action="grouptour.do">
+<form method="post" action="grouptour.do" enctype="multipart/form-data">
 <table>
 	<tr>
 		<td>套裝行程名稱</td>
 		<td><input type="TEXT" name="tourName" size="45" value="<%= (groupTourVO==null)?"":groupTourVO.getTourName()%>" /></td>
+	</tr>
+	<tr>
+<!-- 		<td>套裝行程圖片 NOT YET(IO)</td> -->
+<!-- 		<td> -->
+<!-- 			<input type="file" id="the_file" name="tourPic" accept="image/*"> -->
+<!-- 			<div class="picture"></div> -->
+<!-- 		</td> -->
+		
+	</tr>
+	<tr>
+		<td>套裝行程圖片 NOT YET(IO & OUT)</td>
+		<td>
+			<input type="file" id="the_file" name="tourPic" accept="image/*">
+			<div class="picture"><img class='preview' src=""></div>
+		</td>
 	</tr>
 	<tr>
 		<td>行程開始時間</td>
@@ -113,6 +133,7 @@
 
 
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
@@ -146,5 +167,31 @@
 	          }
 	          return [true, ""];
   		}});
+     
+     window.addEventListener("DOMContentLoaded", function(){
+    	 console.log(<%=groupTourVO.getTourPic() %>);
+   	  
+
+    	// 顯示上傳圖片
+
+	var the_file = document.getElementById("the_file");
+		the_file.addEventListener("change", function(e) {
+
+			var picture = document.getElementsByClassName("picture")[0];
+			picture.innerHTML = ""; // 清空東西 
+
+			let reader = new FileReader();
+			reader.readAsDataURL(this.files[0]);
+			reader.addEventListener("load",
+					function() {
+
+						var pic_src = reader.result; // 取得圖片編碼
+						picture.innerHTML = "<img class='preview'>";
+						document.querySelector(".preview").setAttribute('src',
+								pic_src);
+					})
+		});
+
+	});
 </script>
 </html>

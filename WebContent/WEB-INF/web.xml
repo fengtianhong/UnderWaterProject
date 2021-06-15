@@ -39,5 +39,15 @@
 		<servlet-name>PartyServlet</servlet-name>
 		<url-pattern>/party/party.do</url-pattern>
 	</servlet-mapping>
+	
+		<servlet>
+		<servlet-name>GroupTourServlet</servlet-name>
+		<servlet-class>com.grouptour.controller.GroupTourServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>GroupTourServlet</servlet-name>
+		<url-pattern>/grouptour/grouptour.do</url-pattern>
+	</servlet-mapping>
 
 </web-app>
