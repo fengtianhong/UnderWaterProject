@@ -38,7 +38,7 @@
 </head>
 <body>
 
-	<h3>建立新行程 <a href='updateGT.jsp'> +</a></h3>
+	<h3>建立新行程 <a href='addGT.jsp'> +</a></h3>
 	
 	<h3>套裝行程列表</h3>
 	<input type="search" class="light-table-filter" data-table="order-table" placeholder="請輸入關鍵字">

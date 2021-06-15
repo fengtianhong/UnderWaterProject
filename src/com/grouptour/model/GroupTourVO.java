@@ -7,6 +7,7 @@ public class GroupTourVO implements java.io.Serializable{
 	
 	private Integer groupTourSN;
 	private String tourName;
+	private byte[] tourPic;
 	private Date startTime;
 	private Date endTime;
 	private Date regTime;
@@ -39,6 +40,12 @@ public class GroupTourVO implements java.io.Serializable{
 	}
 	public void setTourName(String tourName) {
 		this.tourName = tourName;
+	}
+	public byte[] getTourPic() {
+		return tourPic;
+	}
+	public void setTourPic(byte[] tourPic) {
+		this.tourPic = tourPic;
 	}
 	public Date getStartTime() {
 		return startTime;
@@ -120,7 +127,7 @@ public class GroupTourVO implements java.io.Serializable{
 		if (obj != null && getClass() == obj.getClass()) {	// 同 class
 			if (obj instanceof GroupTourVO) {
 				GroupTourVO e = (GroupTourVO) obj;
-				if (groupTourSN.equals(e.groupTourSN)&& tourName.equals(e.tourName)
+				if (groupTourSN.equals(e.groupTourSN) && tourName.equals(e.tourName)
 				 && startTime.equals(e.startTime) && endTime.equals(e.endTime)
 				 && regTime.equals(e.regTime) && closeTime.equals(e.closeTime)
 				 && pointSN.equals(e.pointSN) && price.equals(e.price)

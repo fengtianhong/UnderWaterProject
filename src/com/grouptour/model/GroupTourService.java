@@ -12,13 +12,14 @@ public class GroupTourService {
 	public GroupTourService() {
 		dao = new GroupTourDAO();
 	}
-	public GroupTourVO insertGroupTour(String tourName, Date startTime, Date endTime, 
+	public GroupTourVO insertGroupTour(String tourName, byte[] tourPic, Date startTime, Date endTime, 
 									   Date regTime, Date closeTime, Integer pointSN, 
 									   Integer price, Integer limitNumder, 
 									   String certificationLimit, String status, String content) {
 		
 		GroupTourVO vo = new GroupTourVO();
 		vo.setTourName(tourName);
+		vo.setTourPic(tourPic);
 		vo.setStartTime(startTime);
 		vo.setEndTime(endTime);
 		vo.setRegTime(regTime);
@@ -33,7 +34,7 @@ public class GroupTourService {
 		
 		return vo;
 	}
-	public GroupTourVO updateGroupTour(Integer groupTourSN, String tourName, Date startTime, Date endTime, 
+	public GroupTourVO updateGroupTour(Integer groupTourSN, String tourName, byte[] tourPic, Date startTime, Date endTime, 
 									   Date regTime, Date closeTime, Integer pointSN, 
 									   Integer price, Integer attendNumber, Integer limitNumder, 
 									   String certificationLimit, String status, String content) {
@@ -41,6 +42,7 @@ public class GroupTourService {
 		GroupTourVO vo = new GroupTourVO();
 		vo.setGroupTourSN(groupTourSN);
 		vo.setTourName(tourName);
+		vo.setTourPic(tourPic);
 		vo.setStartTime(startTime);
 		vo.setEndTime(endTime);
 		vo.setRegTime(regTime);
