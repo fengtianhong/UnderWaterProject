@@ -22,8 +22,8 @@ public class GroupTourDAO implements GroupTourDAO_interface{
 			e.printStackTrace();
 		}
 	}
-	private static final String INSERT_STMT = "INSERT INTO GroupTour (tourName, startTime, endTime, regTime, closeTime, pointSN, price, limitNumder, certificationLimit, status, content) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	private static final String UPDATE_STMT = "UPDATE GroupTour SET tourName=?, startTime=?, endTime=?, regTime=?, closeTime=?, pointSN=?, price=?, attendNumber=?, limitNumder=?, certificationLimit=?, status=?, content=? WHERE groupTourSN=?";
+	private static final String INSERT_STMT = "INSERT INTO GroupTour (tourName, tourPic, startTime, endTime, regTime, closeTime, pointSN, price, limitNumder, certificationLimit, status, content) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String UPDATE_STMT = "UPDATE GroupTour SET tourName=?, tourPic=?, startTime=?, endTime=?, regTime=?, closeTime=?, pointSN=?, price=?, attendNumber=?, limitNumder=?, certificationLimit=?, status=?, content=? WHERE groupTourSN=?";
 	private static final String GET_ONE_STMT = "SELECT * FROM GroupTour WHERE groupTourSN=?";
 	private static final String GET_All_LIST_STMT = "SELECT * FROM GroupTour ORDER BY status, startTime";
 
@@ -36,16 +36,17 @@ public class GroupTourDAO implements GroupTourDAO_interface{
 			con = ds.getConnection();
 			ps = con.prepareStatement(INSERT_STMT);
 			ps.setString(1, groupTourVO.getTourName());			
-			ps.setDate(2, groupTourVO.getStartTime());			
-			ps.setDate(3, groupTourVO.getEndTime());			
-			ps.setDate(4, groupTourVO.getRegTime());			
-			ps.setDate(5, groupTourVO.getCloseTime());						
-			ps.setInt(6, groupTourVO.getPointSN());						
-			ps.setInt(7, groupTourVO.getPrice());											
-			ps.setInt(8, groupTourVO.getLimitNumder());						
-			ps.setString(9, groupTourVO.getCertificationLimit());						
-			ps.setString(10, groupTourVO.getStatus());						
-			ps.setString(11, groupTourVO.getContent());						
+			ps.setBytes(2, groupTourVO.getTourPic());			
+			ps.setDate(3, groupTourVO.getStartTime());			
+			ps.setDate(4, groupTourVO.getEndTime());			
+			ps.setDate(5, groupTourVO.getRegTime());			
+			ps.setDate(6, groupTourVO.getCloseTime());						
+			ps.setInt(7, groupTourVO.getPointSN());						
+			ps.setInt(8, groupTourVO.getPrice());											
+			ps.setInt(9, groupTourVO.getLimitNumder());						
+			ps.setString(10, groupTourVO.getCertificationLimit());						
+			ps.setString(11, groupTourVO.getStatus());						
+			ps.setString(12, groupTourVO.getContent());						
 			ps.executeUpdate();
 			
 		} catch (SQLException se) {
@@ -77,18 +78,19 @@ public class GroupTourDAO implements GroupTourDAO_interface{
 			con = ds.getConnection();
 			ps = con.prepareStatement(UPDATE_STMT);
 			ps.setString(1, groupTourVO.getTourName());			
-			ps.setDate(2, groupTourVO.getStartTime());		
-			ps.setDate(3, groupTourVO.getEndTime());			
-			ps.setDate(4, groupTourVO.getRegTime());			
-			ps.setDate(5, groupTourVO.getCloseTime());						
-			ps.setInt(6, groupTourVO.getPointSN());						
-			ps.setInt(7, groupTourVO.getPrice());						
-			ps.setInt(8, groupTourVO.getAttendNumber());						
-			ps.setInt(9, groupTourVO.getLimitNumder());						
-			ps.setString(10, groupTourVO.getCertificationLimit());						
-			ps.setString(11, groupTourVO.getStatus());						
-			ps.setString(12, groupTourVO.getContent());						
-			ps.setInt(13, groupTourVO.getGroupTourSN());						
+			ps.setBytes(2, groupTourVO.getTourPic());			
+			ps.setDate(3, groupTourVO.getStartTime());		
+			ps.setDate(4, groupTourVO.getEndTime());			
+			ps.setDate(5, groupTourVO.getRegTime());			
+			ps.setDate(6, groupTourVO.getCloseTime());						
+			ps.setInt(7, groupTourVO.getPointSN());						
+			ps.setInt(8, groupTourVO.getPrice());						
+			ps.setInt(9, groupTourVO.getAttendNumber());						
+			ps.setInt(10, groupTourVO.getLimitNumder());						
+			ps.setString(11, groupTourVO.getCertificationLimit());						
+			ps.setString(12, groupTourVO.getStatus());						
+			ps.setString(13, groupTourVO.getContent());						
+			ps.setInt(14, groupTourVO.getGroupTourSN());						
 			ps.executeUpdate();
 			
 		} catch (SQLException se) {
@@ -129,6 +131,7 @@ public class GroupTourDAO implements GroupTourDAO_interface{
 				groupTourVO = new GroupTourVO();
 				groupTourVO.setGroupTourSN(rs.getInt("groupTourSN"));
 				groupTourVO.setTourName(rs.getString("tourName"));
+				groupTourVO.setTourPic(rs.getBytes("tourPic"));
 				groupTourVO.setStartTime(rs.getDate("startTime"));
 				groupTourVO.setEndTime(rs.getDate("endTime"));
 				groupTourVO.setRegTime(rs.getDate("regTime"));
@@ -189,6 +192,7 @@ public class GroupTourDAO implements GroupTourDAO_interface{
 				groupTourVO = new GroupTourVO();
 				groupTourVO.setGroupTourSN(rs.getInt("groupTourSN"));
 				groupTourVO.setTourName(rs.getString("tourName"));
+				groupTourVO.setTourPic(rs.getBytes("tourPic"));
 				groupTourVO.setStartTime(rs.getDate("startTime"));
 				groupTourVO.setEndTime(rs.getDate("endTime"));
 				groupTourVO.setRegTime(rs.getDate("regTime"));
