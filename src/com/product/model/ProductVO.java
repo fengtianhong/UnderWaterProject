@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 public class ProductVO implements Serializable {
+
 	private Integer productSN;
 	private String productClass;
 	private String productName;
@@ -19,24 +20,6 @@ public class ProductVO implements Serializable {
 
 	public ProductVO() {
 		super();
-	}
-
-	public ProductVO(Integer productSN, String productClass, String productName, Integer productPrice,
-			Integer productQuantity, String productStatus, String productDetail, Timestamp productCreateTime,
-			Boolean productDiscount, Boolean productPrime, Integer ratingPoint, Integer ratingNumber) {
-		super();
-		this.productSN = productSN;
-		this.productClass = productClass;
-		this.productName = productName;
-		this.productPrice = productPrice;
-		this.productQuantity = productQuantity;
-		this.productStatus = productStatus;
-		this.productDetail = productDetail;
-		this.productCreateTime = productCreateTime;
-		this.productDiscount = productDiscount;
-		this.productPrime = productPrime;
-		this.ratingPoint = ratingPoint;
-		this.ratingNumber = ratingNumber;
 	}
 
 	public Integer getProductSN() {

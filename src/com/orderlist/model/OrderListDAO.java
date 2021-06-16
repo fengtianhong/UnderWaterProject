@@ -12,7 +12,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class OrderListDAO implements OrderListDAO_interface{
+public class OrderListDAO implements OrderListDAO_interface {
+
 	private static final String INSERT_STMT = "INSERT INTO OrderList (productSN, orderSN, purchaseQuantity,"
 			+ "productPrice, rating) VALUES (?, ?, ?, ?, ?)";
 	private static final String DELETE_STMT = "DELETE FROM OrderList WHERE orderListSN = ?";
@@ -20,7 +21,7 @@ public class OrderListDAO implements OrderListDAO_interface{
 			+ "purchaseQuantity = ?, productPrice = ? WHERE orderListSN = ?";
 	private static final String GET_ONE_BY_ORDERLISTSN = "SELECT * FROM OrderList WHERE orderListSN = ?";
 	private static final String GET_ALL = "SELECT * FROM OrderList ORDER BY orderListSN";
-	
+
 	private static DataSource ds = null;
 	static {
 		try {
@@ -30,35 +31,35 @@ public class OrderListDAO implements OrderListDAO_interface{
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public void insert(OrderListVO orderListVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		
+
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
-			
+
 			pstmt.setInt(1, orderListVO.getProductSN());
 			pstmt.setInt(2, orderListVO.getOrderSN());
 			pstmt.setInt(3, orderListVO.getPurchaseQuantity());
 			pstmt.setInt(4, orderListVO.getProductPrice());
 			pstmt.setInt(5, orderListVO.getRating());
-			
+
 			pstmt.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null) {
+		} finally {
+			if (pstmt != null) {
 				try {
 					pstmt.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 			}
-			if(con != null) {
+			if (con != null) {
 				try {
 					con.close();
 				} catch (SQLException e) {
@@ -72,26 +73,26 @@ public class OrderListDAO implements OrderListDAO_interface{
 	public void delete(Integer orderListSN) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		
+
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE_STMT);
-			
+
 			pstmt.setInt(1, orderListSN);
-			
+
 			pstmt.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null) {
+		} finally {
+			if (pstmt != null) {
 				try {
 					pstmt.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 			}
-			if(con != null) {
+			if (con != null) {
 				try {
 					con.close();
 				} catch (SQLException e) {
@@ -105,30 +106,30 @@ public class OrderListDAO implements OrderListDAO_interface{
 	public void update(OrderListVO orderListVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		
+
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_STMT);
-			
+
 			pstmt.setInt(1, orderListVO.getProductSN());
 			pstmt.setInt(2, orderListVO.getOrderSN());
 			pstmt.setInt(3, orderListVO.getPurchaseQuantity());
 			pstmt.setInt(4, orderListVO.getProductPrice());
 			pstmt.setInt(5, orderListVO.getOrderListSN());
-			
+
 			pstmt.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
-			if(pstmt != null) {
+		} finally {
+			if (pstmt != null) {
 				try {
 					pstmt.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 			}
-			if(con != null) {
+			if (con != null) {
 				try {
 					con.close();
 				} catch (SQLException e) {
@@ -144,16 +145,16 @@ public class OrderListDAO implements OrderListDAO_interface{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		OrderListVO orderListVO = null;
-		
+
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_BY_ORDERLISTSN);
-			
+
 			pstmt.setInt(1, orderListSN);
-			
+
 			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				orderListVO = new OrderListVO();
 				orderListVO.setOrderListSN(rs.getInt("orderListSN"));
 				orderListVO.setProductSN(rs.getInt("productSN"));
@@ -162,25 +163,25 @@ public class OrderListDAO implements OrderListDAO_interface{
 				orderListVO.setProductPrice(rs.getInt("productPrice"));
 				orderListVO.setRating(rs.getInt("rating"));
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
-			if(rs != null) {
+		} finally {
+			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 			}
-			if(pstmt != null) {
+			if (pstmt != null) {
 				try {
 					pstmt.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 			}
-			if(con != null) {
+			if (con != null) {
 				try {
 					con.close();
 				} catch (SQLException e) {
@@ -188,7 +189,7 @@ public class OrderListDAO implements OrderListDAO_interface{
 				}
 			}
 		}
-		
+
 		return orderListVO;
 	}
 
@@ -199,14 +200,14 @@ public class OrderListDAO implements OrderListDAO_interface{
 		ResultSet rs = null;
 		OrderListVO orderListVO = null;
 		List<OrderListVO> list = new ArrayList<OrderListVO>();
-		
+
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL);
-			
+
 			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				orderListVO = new OrderListVO();
 				orderListVO.setOrderListSN(rs.getInt("orderListSN"));
 				orderListVO.setProductSN(rs.getInt("productSN"));
@@ -216,25 +217,25 @@ public class OrderListDAO implements OrderListDAO_interface{
 				orderListVO.setRating(rs.getInt("rating"));
 				list.add(orderListVO);
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
-			if(rs != null) {
+		} finally {
+			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 			}
-			if(pstmt != null) {
+			if (pstmt != null) {
 				try {
 					pstmt.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 			}
-			if(con != null) {
+			if (con != null) {
 				try {
 					con.close();
 				} catch (SQLException e) {
@@ -242,7 +243,7 @@ public class OrderListDAO implements OrderListDAO_interface{
 				}
 			}
 		}
-		
+
 		return list;
 	}
 

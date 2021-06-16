@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 public class OrderForProductVO implements Serializable {
+
 	private Integer orderSN;
 	private Integer userID;
 	private Timestamp purchaseDate;
@@ -13,17 +14,6 @@ public class OrderForProductVO implements Serializable {
 
 	public OrderForProductVO() {
 		super();
-	}
-
-	public OrderForProductVO(Integer orderSN, Integer userID, Timestamp purchaseDate, Integer totalPrice,
-			String orderStatus, Timestamp clearDate) {
-		super();
-		this.orderSN = orderSN;
-		this.userID = userID;
-		this.purchaseDate = purchaseDate;
-		this.totalPrice = totalPrice;
-		this.orderStatus = orderStatus;
-		this.clearDate = clearDate;
 	}
 
 	public Integer getOrderSN() {
