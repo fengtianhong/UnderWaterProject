@@ -35,12 +35,11 @@ public class ShowPic extends HttpServlet {
 			 	
 			out.write(pic);
 		}catch(Exception e){
-			InputStream in = getServletContext().getResourceAsStream("/diveinfo/images/flag.png");
+			InputStream in = getServletContext().getResourceAsStream("/diveinfo/images/404.jpg");
 			byte[] b = new byte[in.available()];
 			in.read(b);
 			out.write(b);
 			in.close();
-			System.out.println("找不到圖片");
 		}finally {
 			out.close();
 		}

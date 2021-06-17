@@ -5,20 +5,20 @@
 <%
 	DiveInfoVO diveinfoVO = (DiveInfoVO) request.getAttribute("diveinfoVO");
 %>
-<%= diveinfoVO==null %>
+<%=diveinfoVO == null%>
 <html>
 <head>
 <title>新增潛點</title>
 </head>
 <body>
-	<c:if test="${not empty errorMsgs}">
-		<script>
-			alert("請修正以下錯誤:");
-			<c:forEach var="message" items="${errorMsgs}">
-			alert("${message}");
-			</c:forEach>
-		</script>
-	</c:if>
+<c:if test="${not empty errorMsgs}">
+	<font style="color:red">請修正以下錯誤:</font>
+	<ul>
+		<c:forEach var="message" items="${errorMsgs}">
+			<li style="color:red">${message}</li>
+		</c:forEach>
+	</ul>
+</c:if>
 	<FORM METHOD="post" ACTION="diveinfo.do" enctype="multipart/form-data">
 		<table>
 			<tr>
@@ -53,8 +53,7 @@
 			</tr>
 			<tr>
 				<td>季節:</td>
-				<td><input type="checkbox" id="season1" name="season"
-					value="春"
+				<td><input type="checkbox" id="season1" name="season" value="春"
 					<%=(diveinfoVO == null) ? "" : (diveinfoVO.getSeason().contains("春")) ? "checked" : ""%>>
 					春 <input type="checkbox" id="season1" name="season" value="夏"
 					<%=(diveinfoVO == null) ? "" : (diveinfoVO.getSeason().contains("夏")) ? "checked" : ""%>>夏
@@ -67,23 +66,49 @@
 			<tr>
 				<td>地區:</td>
 				<td><select name="local">
-						<option value="北部" 
+						<option value="北部"
 							<%=(diveinfoVO == null) ? "" : ("北部".equals(diveinfoVO.getLocal())) ? "selected" : ""%>>北部</option>
-						<option value="南部" 
+						<option value="南部"
 							<%=(diveinfoVO == null) ? "" : ("南部".equals(diveinfoVO.getLocal())) ? "selected" : ""%>>南部</option>
 						<option value="離島"
 							<%=(diveinfoVO == null) ? "" : ("離島".equals(diveinfoVO.getLocal())) ? "selected" : ""%>>離島</option>
 				</select></td>
 			</tr>
 			<tr>
-				<td>照片:</td>
-				<td><input type="file" name="pic"></td>
+				<td>圖片:</td>
+				<td>
+				<div class="picture"></div>
+				<input type="file" name="pic" id="the_file" accept="image/*">
+				</td>
 			</tr>
 		</table>
-		<br>
-		<input type="hidden" name="action" value="insert">
-		<input type="submit" value="送出新增">
-		
+		<br> <input type="hidden" name="action" value="insert"> <input
+			type="submit" value="送出新增">
+
 	</FORM>
+	<script>
+		window.addEventListener("DOMContentLoaded", function() {
+
+			// 顯示圖片
+			var the_file = document.getElementById("the_file");
+			the_file.addEventListener("change", function(e) {
+
+				var picture = document.getElementsByClassName("picture")[0];
+				picture.innerHTML = ""; // 清空東西 
+
+				let reader = new FileReader();
+				reader.readAsDataURL(this.files[0]);
+				reader.addEventListener("load", function() {
+
+					var pic_src = reader.result; // 取得圖片編碼
+					picture.innerHTML = "<img class='preview'>";
+					document.querySelector(".preview").setAttribute('src',
+							pic_src);
+				})
+			});
+
+		});
+	</script>
+
 </body>
 </html>

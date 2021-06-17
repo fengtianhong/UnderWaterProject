@@ -29,6 +29,14 @@ html, body {
 #map-canvas {
 	height: 100%
 }
+
+.show_pic{
+	width:400px
+}
+img {
+	
+	width: 100%;
+}
 </style>
 
 
@@ -57,7 +65,7 @@ html, body {
 			lng: ${diveinfoVO.longitude},
 			content:'<h2>${diveinfoVO.pointName}</h2>'+
 		    '<span>${diveinfoVO.view}</span><br/>'+
-		    '<img src="<%=request.getContextPath()%>/diveinfo/ShowPic?pointSN=${diveinfoVO.pointSN}"><br>'+
+		    '<div class="show_pic"><img src="<%=request.getContextPath()%>/diveinfo/ShowPic?pointSN=${diveinfoVO.pointSN}"><br></div>'+
 			((${diveinfoVO.pic==null})?'<i>找不到圖片</i>':'<i>圖片取自網路</i>')+
 			'<br><span>${diveinfoVO.introduction}</span><br>'+
 			'<span>適合季節:${diveinfoVO.season}</sapn><br>'+
