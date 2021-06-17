@@ -8,33 +8,31 @@ import util.Util;
 
 public class MemberDAO implements MemberDAO_interface{
 	
-	private static final String INSERT_STMT = "INSERT INTO Member (account, pwd,nickName, userName, gender, birthDate, phone, certification, certificationPic, personID, address, status, ratePeople, ratePoint) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?)";
+	private static final String INSERT_STMT = "INSERT INTO Member (account, pwd,nickName, userName, gender, birthDate, phone, certification, certificationPic, personID, address) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String UPDATE_STMT = "UPDATE Member SET pwd=?, NickName=?, userName=?, gender=?, birthDate=?, phone=?, Certification=?, CertificationPic=?, personID=?, address=?, status=?, updateTime=?, ratePeople=?, ratePoint=? WHERE userID = ?";
 	private static final String GET_ONE_STMT = "SELECT * FROM Member where userid=?";
 	private static final String FINDBYACCOUNT_STMT = "SELECT * FROM Member where account=?";
 	private static final String GET_ALL_STMT = "SELECT * FROM Member ORDER BY userID";
 	
-	public static void main(String[] args) {
+//	public static void main(String[] args) {
 //		測試insert
-		MemberVO vo = new MemberVO();
-		vo.setAccount("tibame2");
-		vo.setPwd("12345678");
-		vo.setNickName("阿宏");
-		vo.setUserName("馮天宏4帥哥");
-		vo.setGender("男");
-		vo.setBirthDate(Date.valueOf("2010-10-10"));
-		vo.setPhone("0912345678");
-		vo.setCertification(null);
-		vo.setCertificationPic(null);
-		vo.setPersonID("F123456788");
-		vo.setAddress("花蓮縣壽豐鄉中山路6X號");
-		vo.setStatus(0);
-		vo.setRatePeople(0);
-		vo.setRatePoint(0);
+//		MemberVO vo = new MemberVO();
+//		vo.setAccount("tibame2");
+//		vo.setPwd("12345678");
+//		vo.setNickName("阿宏");
+//		vo.setUserName("馮天宏4帥哥");
+//		vo.setGender("男");
+//		vo.setBirthDate(Date.valueOf("2010-10-10"));
+//		vo.setPhone("0912345678");
+//		vo.setCertification(null);
+//		vo.setCertificationPic(null);
+//		vo.setPersonID("F123456788");
+//		vo.setAddress("花蓮縣壽豐鄉中山路6X號");
+
 //		
-		MemberDAO dao = new MemberDAO();
-		dao.insert(vo);
-		System.out.println("已加入成功");
+//		MemberDAO dao = new MemberDAO();
+//		dao.insert(vo);
+//		System.out.println("已加入成功");
 //		//測試insert
 		
 //		//測試update ok
@@ -80,7 +78,7 @@ public class MemberDAO implements MemberDAO_interface{
 //		}
 		//測試getall ok
 		
-	}	
+//	}	
 	static {
 		try {
 			Class.forName(Util.DRIVER);
@@ -111,9 +109,7 @@ public class MemberDAO implements MemberDAO_interface{
 			pstmt.setBytes(9, MemberVO.getCertificationPic());
 			pstmt.setString(10, MemberVO.getPersonID());
 			pstmt.setString(11, MemberVO.getAddress());
-			pstmt.setInt(12, MemberVO.getStatus());
-			pstmt.setInt(13, MemberVO.getRatePeople());
-			pstmt.setInt(14, MemberVO.getRatePoint());
+//			pstmt.setInt(12, MemberVO.getStatus());
 			
 			pstmt.executeUpdate();
 			

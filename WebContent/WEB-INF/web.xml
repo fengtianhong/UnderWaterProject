@@ -19,12 +19,12 @@
 		<res-type>javax.sql.DataSource</res-type>
 		<res-auth>Container</res-auth>
 	</resource-ref>
-	
+
 	<servlet>
 		<servlet-name>DiveInfoServlet</servlet-name>
 		<servlet-class>com.diveinfo.controller.DiveinfoServlet</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>DiveInfoServlet</servlet-name>
 		<url-pattern>/diveinfo/diveinfo.do</url-pattern>
@@ -39,15 +39,25 @@
 		<servlet-name>PartyServlet</servlet-name>
 		<url-pattern>/party/party.do</url-pattern>
 	</servlet-mapping>
-	
-		<servlet>
+
+	<servlet>
 		<servlet-name>GroupTourServlet</servlet-name>
 		<servlet-class>com.grouptour.controller.GroupTourServlet</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>GroupTourServlet</servlet-name>
 		<url-pattern>/grouptour/grouptour.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>MemberServlet</servlet-name>
+		<servlet-class>com.member.controller.MemberServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>MemberServlet</servlet-name>
+		<url-pattern>/member/member.do</url-pattern>
 	</servlet-mapping>
 
 </web-app>
