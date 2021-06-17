@@ -31,9 +31,10 @@ public class MemberServlet extends HttpServlet{
 			String gender = req.getParameter("gender").trim();
 			
 			Date birthDate = null;
+			String certification = null;
 			birthDate = Date.valueOf(req.getParameter("birthDate").trim());
 			String phone = req.getParameter("phone").trim();
-			String certification = req.getParameter("certification").trim();
+			certification = req.getParameter("certification").trim();
 			Part part = req.getPart("certificationPic");
 			
 			byte[] certificationPic = null;

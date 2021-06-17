@@ -13,8 +13,9 @@ public class MemberDAO implements MemberDAO_interface{
 	private static final String GET_ONE_STMT = "SELECT * FROM Member where userid=?";
 	private static final String FINDBYACCOUNT_STMT = "SELECT * FROM Member where account=?";
 	private static final String GET_ALL_STMT = "SELECT * FROM Member ORDER BY userID";
+	private static final String LOGIN_STMT = "SELECT * FROM MEMBER WHERE ACCOUNT=? AND PWD=?";
 	
-//	public static void main(String[] args) {
+	public static void main(String[] args) {
 //		測試insert
 //		MemberVO vo = new MemberVO();
 //		vo.setAccount("tibame2");
@@ -78,7 +79,15 @@ public class MemberDAO implements MemberDAO_interface{
 //		}
 		//測試getall ok
 		
-//	}	
+		//測試login
+		MemberVO vo = new MemberVO();
+		MemberDAO dao = new MemberDAO();
+		vo.setAccount("12312");
+		vo.setPwd("qweqwe");
+		dao.login(vo);
+		//測試login
+	}	
+	
 	static {
 		try {
 			Class.forName(Util.DRIVER);
@@ -359,6 +368,65 @@ public class MemberDAO implements MemberDAO_interface{
 		}
 		return list;
 	}
+
+
+@Override
+public boolean login(MemberVO MemberVO) {
+	
+	Connection con = null;
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+	MemberVO vo =null;
+	try {
+		con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+		pstmt = con.prepareStatement(LOGIN_STMT);
+		pstmt.setString(1, MemberVO.getAccount());
+		pstmt.setString(2, MemberVO.getPwd());
+		
+		rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			vo = new MemberVO();
+			vo.setAccount(rs.getString("account"));
+			vo.setPwd(rs.getString("pwd"));
+			System.out.println("登入成功");
+			return true;
+		}else {
+			System.out.println("使用者帳號或密碼錯誤");
+			return false;
+		}
+	}catch(Exception e) {
+		e.printStackTrace();
+	}finally {
+		
+		if(pstmt != null) {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace(System.err);
+			}
+		}
+		
+		if(con != null) {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace(System.err);
+			}
+		}
+		
+	}
+//	return vo;
+	return false;
+}
+	
+		
+	
+	
+	
+	
+	
+	
 }
 
 	

@@ -59,5 +59,15 @@
 		<servlet-name>MemberServlet</servlet-name>
 		<url-pattern>/member/member.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>LoginServlet</servlet-name>
+		<servlet-class>com.login.controller.LoginServlet</servlet-class>
+	</servlet>
 
+	<servlet-mapping>
+		<servlet-name>LoginServlet</servlet-name>
+		<url-pattern>/member/login.do</url-pattern>
+	</servlet-mapping>
+	
 </web-app>

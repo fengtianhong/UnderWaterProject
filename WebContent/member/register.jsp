@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.member.model.*"%>
+<%@ page import = "com.member.model.*"%>
 
 
 <%
@@ -24,7 +24,7 @@
 </head>
 <body>
 
-	<form method="post" action="member.do" enctype="multipart/form-data">>
+	<form method="post" action="member.do" enctype="multipart/form-data">
 		<table>
 			<tr>
 				<td>帳號:</td>
@@ -87,6 +87,7 @@
 			<tr>
 				<td>淺水證照:</td>
 				<td><select name="certification" size="2">
+						<option value="" ${(memberVO.limitNumder==null)? 'selected':'' }>無
 						<option value="A1" ${(memberVO.limitNumder==1)? 'selected':'' }>PADI
 							OW
 						<option value="A2" ${(memberVO.limitNumder==2)? 'selected':'' }>PADI
@@ -115,6 +116,7 @@
 		<input type="hidden" name="action" value="insert"> <input
 			type="submit" value="重填"><input type="submit" value="註冊">
 	</form>
+	<a href = "login.jsp"></a>
 </body>
 
 
