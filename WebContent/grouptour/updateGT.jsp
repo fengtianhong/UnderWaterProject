@@ -16,7 +16,7 @@
 <title>Update Group Tour</title>
 <style>
 	img{
-		Width: 100%;
+		width: 100%;
 	}
 	.picture{
 		width: 400px;
@@ -34,18 +34,12 @@
 		<td><input type="TEXT" name="tourName" size="45" value="<%= (groupTourVO==null)?"":groupTourVO.getTourName()%>" /></td>
 	</tr>
 	<tr>
-<!-- 		<td>套裝行程圖片 NOT YET(IO)</td> -->
-<!-- 		<td> -->
-<!-- 			<input type="file" id="the_file" name="tourPic" accept="image/*"> -->
-<!-- 			<div class="picture"></div> -->
-<!-- 		</td> -->
-		
 	</tr>
 	<tr>
 		<td>套裝行程圖片 NOT YET(IO & OUT)</td>
 		<td>
 			<input type="file" id="the_file" name="tourPic" accept="image/*">
-			<div class="picture"><img class='preview' src=""></div>
+			<div class="picture"><img class='preview' src="GetImage.do?id=${groupTourVO.groupTourSN}"></div>
 		</td>
 	</tr>
 	<tr>
@@ -106,13 +100,15 @@
 
 </table>
 		<p>行程內容</p>
-		<textarea name="content"><%=(groupTourVO==null)?"":groupTourVO.getContent()%></textarea>
+		<div><textarea name="content"><%=(groupTourVO==null)?"":groupTourVO.getContent()%></textarea></div>
 
 
 <input type="hidden" name="groupTourSN" value="<%=(groupTourVO==null)?"":groupTourVO.getGroupTourSN()%>">
 <input type="hidden" name="attendNumber" value="<%=(groupTourVO==null)?"":groupTourVO.getAttendNumber()%>">
 <input type="hidden" name="action" value="update">
 <input type="submit" value="修改">
+<input type ="button" onclick="window.location.href='<%=request.getContextPath()%>/grouptour/backendListGT.jsp'" value="上一頁">
+
 </form>
 
 <%-- 錯誤表列 --%>
@@ -169,8 +165,6 @@
   		}});
      
      window.addEventListener("DOMContentLoaded", function(){
-    	 console.log(<%=groupTourVO.getTourPic() %>);
-   	  
 
     	// 顯示上傳圖片
 
@@ -186,8 +180,8 @@
 					function() {
 
 						var pic_src = reader.result; // 取得圖片編碼
-						picture.innerHTML = "<img class='preview'>";
-						document.querySelector(".preview").setAttribute('src',
+						picture.innerHTML = "<img class='review'>";
+						document.querySelector(".review").setAttribute('src',
 								pic_src);
 					})
 		});

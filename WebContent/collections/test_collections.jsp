@@ -24,7 +24,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Collections Test (Simple Group Tour Page)</title>
+<title>Simple Group Tour Page</title>
 
 <style>
 	.GPimg{
@@ -47,11 +47,11 @@
 </head>
 <body>
 
-	<h3>This is for Collections Test.</h3>
+	<h3>This is for Collections Test.userID, GroupTourSN 暫時寫死</h3>
 	<br>
-	<img class="GPimg" alt="" src="kenting_isolation.jpg">
+	<img class="GPimg" alt="" src="<%=request.getContextPath()%>/collections/kenting_isolation.jpg">
 	
-	<FORM NAME="heartForm" METHOD="post" ACTION="collections.do" >
+	<FORM NAME="heartForm" METHOD="post" ACTION="<%=request.getContextPath()%>/collections/collections.do" >
 		<h2> 我是套裝行程 </h2>
 <!-- 		抓資料讓愛心一開始就顯示對 > DONE -->
 
@@ -61,13 +61,23 @@
 			<i class="fas fa-heart"></i>
 			<input type="hidden" name="action" value="favorite">
 			<input type="hidden" name="userID" value="1">
-			<input type="hidden" name="GroupTourSN" value="6001">
+			<input type="hidden" name="groupTourSN" value="6001">
 		</span>
 		<c:if test="${not empty Msg}">
 			<i style="color: red">${Msg}</i>
 		</c:if>
 	</FORM>
 	
+	
+	
+	<h3>報名導至 addOderForGroup 用，userID, GroupTourSN 暫時寫死</h3>
+	
+	<FORM NAME="orderForm" METHOD="post" ACTION="<%=request.getContextPath()%>/orderforgroup/orderforgroup.do" >
+	<input type="hidden" name="userID" value="1">
+	<input type="hidden" name="groupTourSN" value="6001">
+	<input type="hidden" name="action" value="getOne_ForOrder">
+	<input type="submit" value="我要報名">
+	</FORM>
 
     
 

@@ -1,6 +1,5 @@
 package com.grouptour.controller;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
@@ -9,15 +8,13 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import com.grouptour.model.GroupTourService;
-import com.grouptour.model.GroupTourVO;
+import com.grouptour.model.*;
 
 @MultipartConfig
 public class GroupTourServlet extends HttpServlet {
@@ -30,7 +27,7 @@ public class GroupTourServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		
-		// GP listAll.jsp (For 商品列表跟後台)
+		// GP BackEndlistAll.jsp (For 商品列表跟後台) > 這個好像不用
 		
 		// 套裝行程頁面 顯示單一商品
 		if ("getOne_ForDisplay".equals(action)) {
@@ -70,7 +67,6 @@ public class GroupTourServlet extends HttpServlet {
 					tourPic = new byte[in.available()];
 					in.read(tourPic);
 					in.close();
-					System.out.println(tourPic);
 					
 				}catch(Exception e) {
 					e.printStackTrace();
@@ -193,7 +189,7 @@ public class GroupTourServlet extends HttpServlet {
 				GroupTourService groupTourSvc = new GroupTourService();
 				groupTourVO = groupTourSvc.insertGroupTour(tourName, tourPic, startTime, endTime, regTime, closeTime, pointSN, price, limitNumder, certificationLimit, status, content);
 				req.setAttribute("Msg", "新增成功");
-				System.out.println(groupTourVO);
+//				System.out.println(groupTourVO);
 
 				RequestDispatcher successView = req.getRequestDispatcher("/grouptour/addGT.jsp");
 				successView.forward(req, res);
@@ -205,9 +201,9 @@ public class GroupTourServlet extends HttpServlet {
 				RequestDispatcher failureView = req.getRequestDispatcher("/grouptour/addGT.jsp");
 				failureView.forward(req, res);
 			}
-			
-			
 		}
+		
+		
 		
 		// 後台更新頁面的請求     1. 來自 backendListGT  2. 轉至 updateGT
 		if ("getOne_ForUpdate".equals(action)) {
@@ -218,12 +214,6 @@ public class GroupTourServlet extends HttpServlet {
 				GroupTourService groupTourSvc = new GroupTourService();
 				GroupTourVO groupTourVO = groupTourSvc.getOne(groupTourSN);
 				
-//				res.setContentType("image/gif");
-//				ServletOutputStream out = res.getOutputStream();
-//				byte[] tourPic = groupTourVO.getTourPic();
-//				out.write(tourPic);
-				
-				
 				req.setAttribute("groupTourVO", groupTourVO);
 				RequestDispatcher successView = req.getRequestDispatcher("/grouptour/updateGT.jsp");
 				successView.forward(req, res);
@@ -233,6 +223,7 @@ public class GroupTourServlet extends HttpServlet {
 				System.out.println("update failure");
 				errMsg.add("取得資料失敗，"+e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/grouptour/backendListGT.jsp");
+				failureView.forward(req, res);
 			}
 		}
 		
@@ -248,18 +239,26 @@ public class GroupTourServlet extends HttpServlet {
 					errMsg.add("請輸入行程名稱");
 				}
 				
-// 少O				
+			
 				byte[] tourPic = null;
+				InputStream in = null;
 				try {
-					Part part = req.getPart("tourPic");
-					InputStream in = part.getInputStream();
+					Part part = req.getPart("tourPic");	// 讀取新圖
+					in = part.getInputStream();
 					tourPic = new byte[in.available()];
 					in.read(tourPic);
-					in.close();
+					
+					if(tourPic.length == 0) {			// 未修正圖片則存取原圖
+						GroupTourService groupTourSvc = new GroupTourService();
+						GroupTourVO originalVO = groupTourSvc.getOne(groupTourSN);
+						tourPic = originalVO.getTourPic();
+					}
 					
 				}catch(Exception e) {
 					e.printStackTrace();
 					errMsg.add("圖片讀取錯誤"+e.getMessage());
+				}finally {
+					in.close();
 				}
 			
 				Date startTime = null;
@@ -386,8 +385,8 @@ public class GroupTourServlet extends HttpServlet {
 				}
 				
 				GroupTourService groupTourSvc = new GroupTourService();
-				GroupTourVO originVO = groupTourSvc.getOne(groupTourSN);	
-				if(groupTourVO.equals(originVO)) {
+				GroupTourVO originalVO = groupTourSvc.getOne(groupTourSN);	
+				if(groupTourVO.equals(originalVO)) {
 					errMsg.add("未修改任何內容，請再確認");
 				}
 				
@@ -402,7 +401,6 @@ public class GroupTourServlet extends HttpServlet {
 				
 				groupTourVO = groupTourSvc.updateGroupTour(groupTourSN, tourName, tourPic, startTime, endTime, regTime, closeTime, pointSN, price, attendNumber, limitNumder, certificationLimit, status, content);
 				req.setAttribute("Msg", "修改成功");
-
 				RequestDispatcher successView = req.getRequestDispatcher("/grouptour/backendListGT.jsp");
 				successView.forward(req, res);
 				

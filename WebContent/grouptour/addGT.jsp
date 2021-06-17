@@ -33,7 +33,7 @@
 <table>
 	<tr>
 		<td>套裝行程名稱</td>	
-		<td><input type="TEXT" name="tourName" size="45" value="<%= (groupTourVO==null)?"":groupTourVO.getTourName()%>" /></td>
+		<td><input type="TEXT" name="tourName" size="45" value="<%=(groupTourVO==null)?"":groupTourVO.getTourName()%>" /></td>
 	</tr>
 	<tr>
 		<td>套裝行程圖片 NOT YET(IO)</td>
@@ -45,19 +45,19 @@
 	</tr>
 	<tr>
 		<td>行程開始時間</td>
-		<td><input type="TEXT" class="startDate" name="startTime" value="<%= (groupTourVO==null)?"":groupTourVO.getStartTime()%>" /></td>
+		<td><input type="TEXT" class="startDate" name="startTime" autocomplete="off" value="<%= (groupTourVO==null)?"":groupTourVO.getStartTime()%>" /></td>
 	</tr>
 	<tr>
 		<td>行程結束時間</td>
-		<td><input type="TEXT" class="endDate" name="endTime" value="<%= (groupTourVO==null)?"":groupTourVO.getEndTime()%>" /></td>
+		<td><input type="TEXT" class="endDate" name="endTime" autocomplete="off" value="<%= (groupTourVO==null)?"":groupTourVO.getEndTime()%>" /></td>
 	</tr>
 	<tr>
 		<td>報名開始時間</td>
-		<td><input type="TEXT" class="startDate" name="regTime" value="<%= (groupTourVO==null)?"":groupTourVO.getRegTime()%>" /></td>
+		<td><input type="TEXT" class="startDate" name="regTime" autocomplete="off" value="<%= (groupTourVO==null)?"":groupTourVO.getRegTime()%>" /></td>
 	</tr>
 	<tr>
 		<td>報名結束時間</td>
-		<td><input type="TEXT" class="endDate" name="closeTime" value="<%= (groupTourVO==null)?"":groupTourVO.getCloseTime()%>" /></td>
+		<td><input type="TEXT" class="endDate" name="closeTime" autocomplete="off" value="<%= (groupTourVO==null)?"":groupTourVO.getCloseTime()%>" /></td>
 	</tr>
 	
 	<jsp:useBean id="diveInfoSvc" scope="page" class="com.diveinfo.model.DiveInfoService"></jsp:useBean>
@@ -104,10 +104,14 @@
 <!-- 		<div class="ckeditor" id="editor"> -->
 <!-- 		<textarea name="content"><%-- (groupTourVO==null)?"":groupTourVO.getContent()--%></textarea> -->
 <!-- 		</div> -->
-		<textarea id="editor" name="content"></textarea>
-
+		<div><textarea id="editor" name="content"></textarea></div>
+		
+		
 <input type="hidden" name="action" value="insert">
 <input type="submit" value="新增">
+<input type ="button" onclick="window.location.href='<%=request.getContextPath()%>/grouptour/backendListGT.jsp'" value="上一頁">
+
+
 </form>
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errMsg}">
@@ -118,7 +122,10 @@
 		</c:forEach>
 	</ul>
 </c:if>
-<p>${Msg}</p>
+<%-- 成功Alert --%>
+<c:if test="${not empty Msg}">
+	<script>alert("${Msg}");</script>
+</c:if>
 
 
 </body>
