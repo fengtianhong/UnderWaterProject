@@ -70,4 +70,14 @@
 		<url-pattern>/member/login.do</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>IdentityServlet</servlet-name>
+		<servlet-class>com.member.controller.IdentityServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>IdentityServlet</servlet-name>
+		<url-pattern>/servlet/IdentityServlet</url-pattern>
+	</servlet-mapping>
+	
 </web-app>
