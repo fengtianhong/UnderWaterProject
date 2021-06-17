@@ -34,7 +34,7 @@ public class CollectionsServlet extends HttpServlet {
 			
 			// 傳入 UserID, GroupTourSN
 			Integer userID = new Integer(req.getParameter("userID").trim());
-			Integer groupTourSN = new Integer(req.getParameter("GroupTourSN").trim());
+			Integer groupTourSN = new Integer(req.getParameter("groupTourSN").trim());
 			
 			// 查詢資料
 			CollectionsService colSvc = new CollectionsService();

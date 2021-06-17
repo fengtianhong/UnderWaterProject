@@ -29,6 +29,14 @@ html, body {
 #map-canvas {
 	height: 100%
 }
+
+.show_pic{
+	width:400px
+}
+img {
+	
+	width: 100%;
+}
 </style>
 
 
@@ -52,12 +60,12 @@ html, body {
 		var position=[];
 		<c:forEach var="diveinfoVO" items="${list}">
 		position.push({
-			status: ${diveinfoVO.status},
+			status: "${diveinfoVO.status}",
 			lat: ${diveinfoVO.latitude},
 			lng: ${diveinfoVO.longitude},
 			content:'<h2>${diveinfoVO.pointName}</h2>'+
 		    '<span>${diveinfoVO.view}</span><br/>'+
-		    '<img src="<%=request.getContextPath()%>/diveinfo/ShowPic?pointSN=${diveinfoVO.pointSN}"><br>'+
+		    '<div class="show_pic"><img src="<%=request.getContextPath()%>/diveinfo/ShowPic?pointSN=${diveinfoVO.pointSN}"><br></div>'+
 			((${diveinfoVO.pic==null})?'<i>找不到圖片</i>':'<i>圖片取自網路</i>')+
 			'<br><span>${diveinfoVO.introduction}</span><br>'+
 			'<span>適合季節:${diveinfoVO.season}</sapn><br>'+
@@ -84,7 +92,7 @@ html, body {
 				mapTypeId : "hybrid"
 			});
 			for (var i = 0; i < position.length; i++) {
-				if (position[i].status!=0){addMarker(i);}
+				if (position[i].status=="上架"){addMarker(i);}
 				
 			}
 			;

@@ -12,8 +12,8 @@ import com.grouptour.model.*;
 import com.locationrate.model.LocationRateDAO;
 import com.locationrate.model.LocationRateVO;
 import com.news.model.*;
-import com.oderforgroup.model.OderForGroupDAO;
-import com.oderforgroup.model.OderForGroupVO;
+import com.orderforgroup.model.OderForGroupDAO;
+import com.orderforgroup.model.OderForGroupVO;
 import com.qa.model.QaDAO;
 import com.qa.model.QaVO;
 

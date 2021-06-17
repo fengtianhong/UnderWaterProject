@@ -11,35 +11,42 @@
 	pageContext.setAttribute("list", list);
 %>
 <style>
-  table#table-1 {
+table#table-1 {
 	background-color: #CCCCFF;
-    border: 2px solid black;
-/*     text-align: center; */
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
-  h4 {
-    color: blue;
-    display: inline;
-  }
-</style>
+	border: 2px solid black;
+	/*     text-align: center; */
+}
 
-<style>
-  table {
+table#table-1 h4 {
+	color: red;
+	display: block;
+	margin-bottom: 1px;
+}
+
+h4 {
+	color: blue;
+	display: inline;
+}
+
+table {
 	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
-  }
-  table, th, td {
-    border: 1px solid #CCCCFF;
-  }
-  th, td {
-    padding: 5px;
-/*     text-align: center; */
-  }
+}
+
+table, th, td {
+	border: 1px solid #CCCCFF;
+}
+
+.show_pic {
+	width: 200px;
+}
+img{
+width:100%;}
+th, td {
+	padding: 5px;
+	/*     text-align: center; */
+}
 </style>
 
 
@@ -49,6 +56,14 @@
 <title>潛點資訊列表</title>
 </head>
 <body>
+<c:if test="${not empty errorMsgs}">
+	<font style="color:red">請修正以下錯誤:</font>
+	<ul>
+		<c:forEach var="message" items="${errorMsgs}">
+			<li style="color:red">${message}</li>
+		</c:forEach>
+	</ul>
+</c:if>
 	<table>
 		<tr>
 			<th>潛點編號</th>
@@ -77,7 +92,10 @@
 				<td>${diveinfoVO.introduction}</td>
 				<td>${diveinfoVO.season}</td>
 				<td>${diveinfoVO.local}</td>
-				<td><img src="<%=request.getContextPath()%>/diveinfo/ShowPic?pointSN=${diveinfoVO.pointSN}"></td>
+				<td><div class="show_pic">
+						<img
+							src="<%=request.getContextPath()%>/diveinfo/ShowPic?pointSN=${diveinfoVO.pointSN}">
+					</div></td>
 				<td>${diveinfoVO.ratePoint}</td>
 				<td>${diveinfoVO.ratePeople}</td>
 				<td>${diveinfoVO.status}</td>
@@ -86,8 +104,8 @@
 						ACTION="<%=request.getContextPath()%>/diveinfo/diveinfo.do"
 						style="margin-bottom: 0px;">
 						<input type="submit" value="修改"> <input type="hidden"
-							name="pointSN" value="${diveinfoVO.pointSN}"> <input type="hidden"
-							name="action" value="getOne_For_Update">
+							name="pointSN" value="${diveinfoVO.pointSN}"> <input
+							type="hidden" name="action" value="getOne_For_Update">
 					</FORM>
 				</td>
 				<td>
@@ -95,8 +113,8 @@
 						ACTION="<%=request.getContextPath()%>/diveinfo/diveinfo.do"
 						style="margin-bottom: 0px;">
 						<input type="submit" value="上/下架"> <input type="hidden"
-							name="pointSN" value="${diveinfoVO.pointSN}"> <input type="hidden"
-							name="action" value="changeStatus">
+							name="pointSN" value="${diveinfoVO.pointSN}"> <input
+							type="hidden" name="action" value="changeStatus">
 					</FORM>
 				</td>
 			</tr>

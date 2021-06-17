@@ -1,4 +1,4 @@
-package com.oderforgroup.model;
+package com.orderforgroup.model;
 
 import java.sql.Date;
 

@@ -23,12 +23,12 @@
 	  border: solid 1px black;
 	  border-collapse: collapse;
 	  border-radius: 20%;
-	  width: 100%;
+	  width: 80%;
 	}
 	.tourlist{
 		margin: 20px;
 		
-		weight: 80%;
+		weight: 60%;
 	}
 	.title{
 		border-bottom: 2px solid #000;
@@ -67,6 +67,7 @@
 	<c:if test="${not empty Msg}">
 		<script>alert("${Msg}");</script>
 	</c:if>
+
 </body>
 <script>
 	// 輕量關鍵字搜索列表

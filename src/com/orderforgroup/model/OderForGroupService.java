@@ -1,4 +1,4 @@
-package com.oderforgroup.model;
+package com.orderforgroup.model;
 
 import java.sql.Date;
 import java.util.List;
@@ -19,6 +19,7 @@ public class OderForGroupService {
 		vo.setPhone(phone);
 		vo.setPersonID(personID);
 		vo.setBirthdate(birthdate);
+		dao.insert(vo);
 		return vo;
 	}
 	public OderForGroupVO updateOderForGroup(Integer orderSN, Integer userID, Integer groupTourSN, Integer totalPrice, Date purchaseDate, String phone, String personID, Date birthdate) {
@@ -32,6 +33,7 @@ public class OderForGroupService {
 		vo.setPhone(phone);
 		vo.setPersonID(personID);
 		vo.setBirthdate(birthdate);
+		dao.update(vo);
 		return vo;
 		
 	}
@@ -40,6 +42,9 @@ public class OderForGroupService {
 	}
 	public List<OderForGroupVO> getOrderByUserID(Integer userID) {
 		return dao.getOrderByUserID(userID);
+	}
+	public List<OderForGroupVO> getAll() {
+		return dao.getAll();
 	}
 
 }

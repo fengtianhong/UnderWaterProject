@@ -11,4 +11,5 @@ public interface MemberDAO_interface {
 	public MemberVO findByPrimaryKey(Integer userID);
 	public List<MemberVO> findByAccount(String account);
 	public List<MemberVO> getAll();
+	public boolean login(MemberVO MemberVO);
 }

@@ -13,8 +13,7 @@ public class MemberService {
 	}
 	
 	public MemberVO insertMember(String account, String pwd, String nickName, String userName, String gender, Date birthDate, String phone, 
-					String certification, byte[] certificationPic, String personID, String address, Integer status, Integer ratePeople, 
-					Integer ratePoint ) {
+					String certification, byte[] certificationPic, String personID, String address) {
 		MemberVO vo = new MemberVO();
 		vo.setAccount(account);
 		vo.setPwd(pwd);
@@ -27,10 +26,7 @@ public class MemberService {
 		vo.setCertificationPic(certificationPic);
 		vo.setPersonID(personID);
 		vo.setAddress(address);
-		vo.setStatus(status);
-		vo.setRatePeople(ratePeople);
-		vo.setRatePoint(ratePoint);
-		
+		dao.insert(vo);
 		return vo;
 	}
 	
@@ -68,5 +64,14 @@ public class MemberService {
 	
 	public List<MemberVO> getAll(){
 		return dao.getAll();
+	}
+	
+	public boolean loginMember(String account, String pwd) {
+		MemberVO vo = new MemberVO();
+		vo.setAccount(account);
+		vo.setPwd(pwd);
+//		dao.login(vo);
+//		return vo;
+		return dao.login(vo);
 	}
 }
