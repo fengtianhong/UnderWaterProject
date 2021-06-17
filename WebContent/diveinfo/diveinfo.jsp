@@ -60,7 +60,7 @@ img {
 		var position=[];
 		<c:forEach var="diveinfoVO" items="${list}">
 		position.push({
-			status: ${diveinfoVO.status},
+			status: "${diveinfoVO.status}",
 			lat: ${diveinfoVO.latitude},
 			lng: ${diveinfoVO.longitude},
 			content:'<h2>${diveinfoVO.pointName}</h2>'+
@@ -92,7 +92,7 @@ img {
 				mapTypeId : "hybrid"
 			});
 			for (var i = 0; i < position.length; i++) {
-				if (position[i].status!=0){addMarker(i);}
+				if (position[i].status=="上架"){addMarker(i);}
 				
 			}
 			;

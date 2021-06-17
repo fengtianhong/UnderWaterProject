@@ -41,6 +41,16 @@
 			<h2>發文標題選項管理頁</h2>
 			<h4>此頁提供查詢功能，若需新增或更新請點下方連結前往</h4>
 		</div>
+		<%-- 錯誤表列 --%>
+		<c:if test="${not empty errorMsgs}">
+			<font style="color:red">請修正以下錯誤:</font>
+			<ul>
+	    		<c:forEach var="message" items="${errorMsgs}">
+				<li style="color:red">${message}</li>
+				</c:forEach>
+			</ul>
+		</c:if>
+		
 		<div id="linkbutton">
 		<input type="button" value="前往新增標題選項" onclick="location.href='addArticleTitleOpt.jsp'">
 		<input type="button" value="前往更新標題選項" onclick="location.href='updateArticleTitleOpt.jsp'">
