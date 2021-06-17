@@ -16,8 +16,7 @@
 		<style>
 			div#titlepg {
 				border: 2px solid;
-				margin-left: auto;
-				margin-right: auto;
+				margin: 0 auto;
 				text-align: center;
 				width: 400px;
 				line-height: 20px;

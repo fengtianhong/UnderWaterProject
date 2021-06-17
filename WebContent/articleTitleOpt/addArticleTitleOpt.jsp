@@ -53,7 +53,7 @@
             <td><input type="submit" name="submit" value="送出新增"></td>
         </tr>
     </table>
-  </FORM>>  
+  </FORM>
 </body>
 
 </html>
