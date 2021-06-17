@@ -49,5 +49,34 @@
 		<servlet-name>GroupTourServlet</servlet-name>
 		<url-pattern>/grouptour/grouptour.do</url-pattern>
 	</servlet-mapping>
+	
+			<servlet>
+		<servlet-name>GetImage</servlet-name>
+		<servlet-class>com.grouptour.controller.GetImage</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>GetImage</servlet-name>
+		<url-pattern>/grouptour/GetImage.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>OrderForGroupServlet</servlet-name>
+		<servlet-class>com.orderforgroup.controller.OrderForGroupServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>OrderForGroupServlet</servlet-name>
+		<url-pattern>/orderforgroup/orderforgroup.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>CollectionsServlet</servlet-name>
+		<servlet-class>com.collections.controller.CollectionsServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>CollectionsServlet</servlet-name>
+		<url-pattern>/collections/collections.do</url-pattern>
+	</servlet-mapping>
 
 </web-app>

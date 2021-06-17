@@ -153,7 +153,7 @@ create table `OderForGroup` (
     `groupTourSN` int not null comment '套裝行程編號',
     `totalPrice` int not null comment '訂單總額',
 	`purchaseDate`  date not null comment '購買日期',
-    `phone` varchar(10) not null comment '手機',
+    `phone` varchar(20) not null comment '手機',
     `personID` char(10) not null comment '身分證號',
     `birthdate` date not null comment '會員生日',
      CONSTRAINT OderForGroup_userID_FK FOREIGN KEY (userID) REFERENCES Member (userID),

@@ -1,4 +1,4 @@
-package com.oderforgroup.model;
+package com.orderforgroup.model;
 
 import java.sql.*;
 import java.util.*;
@@ -26,6 +26,7 @@ public class OderForGroupDAO implements OderForGroupDAO_interface{
 	private static final String UPDATE_STMT = "UPDATE OderForGroup SET userID=?, groupTourSN=?, totalPrice=?, purchaseDate=?, phone=?, personID=?, birthdate=? WHERE orderSN = ?";
 	private static final String GET_ONE_STMT = "SELECT * FROM OderForGroup WHERE orderSN = ?";
 	private static final String GET_ByUSERID_STMT = "SELECT * FROM OderForGroup WHERE userID = ? ORDER BY purchaseDate";
+	private static final String GET_ALL_STMT = "SELECT * FROM OderForGroup ORDER BY purchaseDate";
 
 	@Override
 	public void insert(OderForGroupVO oderForGroupVO) {
@@ -199,6 +200,53 @@ public class OderForGroupDAO implements OderForGroupDAO_interface{
 					}
 				}
 			}	
+		return list;
+	}
+
+	@Override
+	public List<OderForGroupVO> getAll() {
+		List<OderForGroupVO> list = new ArrayList<OderForGroupVO>();
+		OderForGroupVO oderForGroupVO = null;
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+			try {
+				con = ds.getConnection();
+				ps = con.prepareStatement(GET_ALL_STMT);
+				rs = ps.executeQuery();
+				
+				while(rs.next()) {
+					oderForGroupVO = new OderForGroupVO();
+					oderForGroupVO.setOrderSN(rs.getInt("orderSN"));
+					oderForGroupVO.setUserID(rs.getInt("userID"));
+					oderForGroupVO.setGroupTourSN(rs.getInt("groupTourSN"));
+					oderForGroupVO.setTotalPrice(rs.getInt("totalPrice"));
+					oderForGroupVO.setPurchaseDate(rs.getDate("purchaseDate"));
+					oderForGroupVO.setPhone(rs.getString("phone"));
+					oderForGroupVO.setPersonID(rs.getString("personID"));
+					oderForGroupVO.setBirthdate(rs.getDate("birthdate"));
+					list.add(oderForGroupVO);
+				}
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. " + se.getMessage());
+			} finally {
+				if(ps != null) {
+					try {
+						ps.close();
+					} catch (SQLException e) {
+						e.printStackTrace(System.err);
+					}
+				}
+				if(con != null) {
+					try {
+						con.close();
+					} catch (SQLException e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}	
+		
 		return list;
 	}
 
