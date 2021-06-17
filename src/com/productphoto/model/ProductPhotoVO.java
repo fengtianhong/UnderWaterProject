@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public class ProductPhotoVO implements Serializable {
 
-	private Integer PhotoSN;
-	private Integer ProductSN;
+	private Integer photoSN;
+	private Integer productSN;
 	private byte[] productImages;
 
 	public ProductPhotoVO() {
@@ -13,27 +13,27 @@ public class ProductPhotoVO implements Serializable {
 	}
 
 	public Integer getPhotoSN() {
-		return PhotoSN;
+		return photoSN;
 	}
 
 	public void setPhotoSN(Integer photoSN) {
-		PhotoSN = photoSN;
+		this.photoSN = photoSN;
 	}
 
 	public Integer getProductSN() {
-		return ProductSN;
+		return productSN;
 	}
 
 	public void setProductSN(Integer productSN) {
-		ProductSN = productSN;
+		this.productSN = productSN;
 	}
 
 	public byte[] getProductImages() {
 		return productImages;
 	}
 
-	public void setProductImages(byte[] productimages) {
-		this.productImages = productimages;
+	public void setProductImages(byte[] productImages) {
+		this.productImages = productImages;
 	}
 
 }

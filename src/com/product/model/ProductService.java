@@ -11,7 +11,7 @@ public class ProductService {
 		dao = new ProductDAO();
 	}
 
-	public ProductVO addProduct(String productClass, String productName, Integer productPrice, Integer productQuantity,
+	public ProductVO insertProduct(String productClass, String productName, Integer productPrice, Integer productQuantity,
 			String productStatus, String productDetail, Timestamp productCreateTime, Boolean productDiscount,
 			Boolean productPrime, Integer ratingPoint, Integer ratingNumber) {
 
@@ -34,7 +34,7 @@ public class ProductService {
 		return productVO;
 	}
 
-	public ProductVO offShelf(Integer productSN, String productClass, String productName, Integer productPrice,
+	public ProductVO offShelfProduct(Integer productSN, String productClass, String productName, Integer productPrice,
 			Integer productQuantity, String productStatus, String productDetail, Timestamp productCreateTime,
 			Boolean productDiscount, Boolean productPrime, Integer ratingPoint, Integer ratingNumber) {
 
@@ -82,6 +82,18 @@ public class ProductService {
 
 	public ProductVO getOneProduct(Integer productSN) {
 		return dao.getOneByProductSN(productSN);
+	}
+	
+	public List<ProductVO> getOneClassProduct(String productClass){
+		return dao.getProductByClass(productClass);
+	}
+	
+	public List<ProductVO> getDiscountProduct(Boolean productDiscount){
+		return dao.getProductByDiscount(productDiscount);
+	}
+	
+	public List<ProductVO> getPrimeProduct(Boolean productPrime){
+		return dao.getProductByPrime(productPrime);
 	}
 
 	public List<ProductVO> getAll() {

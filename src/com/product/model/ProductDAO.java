@@ -24,11 +24,11 @@ public class ProductDAO implements ProductDAO_interface {
 
 	private static final String GET_ONE_BY_PRODUCTSN = "SELECT * FROM Product pdt JOIN ProductPhoto ppto ON pdt.productSN = ppto.productSN WHERE productSN = ?";
 
-	private static final String GET_CLASS_PRODUCT = "SELECT * FROM Product pdt JOIN ProductPhoto ppto ON pdt.productSN = ppto.productSN WHERE productClass = ? ORDER BY productSN";
+	private static final String GET_PRODUCT_BY_CLASS = "SELECT * FROM Product pdt JOIN ProductPhoto ppto ON pdt.productSN = ppto.productSN WHERE productClass = ? ORDER BY productSN";
 
-	private static final String GET_DISCOUNT_PRODUCT = "SELECT * FROM Product pdt JOIN ProductPhoto ppto ON pdt.productSN = ppto.productSN WHERE productDiscount = ? ORDER BY productPrice";
+	private static final String GET_PRODUCT_BY_DISCOUNT = "SELECT * FROM Product pdt JOIN ProductPhoto ppto ON pdt.productSN = ppto.productSN WHERE productDiscount = ? ORDER BY productPrice";
 
-	private static final String GET_PRIME_PRODUCT = "SELECT * FROM Product pdt JOIN ProductPhoto ppto ON pdt.productSN = ppto.productSN WHERE productPrime = ? ORDER BY productPrice";
+	private static final String GET_PRODUCT_BY_PRIME = "SELECT * FROM Product pdt JOIN ProductPhoto ppto ON pdt.productSN = ppto.productSN WHERE productPrime = ? ORDER BY productPrice";
 
 	private static final String GET_ALL = "SELECT * FROM Product pdt JOIN ProductPhoto ppto ON pdt.productSN = ppto.productSN ORDER BY productSN";
 
@@ -219,7 +219,7 @@ public class ProductDAO implements ProductDAO_interface {
 	}
 
 	@Override
-	public List<ProductVO> getProductClass(String productClass) {
+	public List<ProductVO> getProductByClass(String productClass) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -228,7 +228,7 @@ public class ProductDAO implements ProductDAO_interface {
 
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(GET_CLASS_PRODUCT);
+			pstmt = con.prepareStatement(GET_PRODUCT_BY_CLASS);
 
 			pstmt.setString(1, productClass);
 
@@ -280,7 +280,7 @@ public class ProductDAO implements ProductDAO_interface {
 	}
 
 	@Override
-	public List<ProductVO> getDiscountProduct(Boolean productDiscount) {
+	public List<ProductVO> getProductByDiscount(Boolean productDiscount) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -289,7 +289,7 @@ public class ProductDAO implements ProductDAO_interface {
 
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(GET_DISCOUNT_PRODUCT);
+			pstmt = con.prepareStatement(GET_PRODUCT_BY_DISCOUNT);
 
 			pstmt.setBoolean(1, productDiscount);
 
@@ -341,7 +341,7 @@ public class ProductDAO implements ProductDAO_interface {
 	}
 
 	@Override
-	public List<ProductVO> getPrimeProduct(Boolean productPrime) {
+	public List<ProductVO> getProductByPrime(Boolean productPrime) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -350,7 +350,7 @@ public class ProductDAO implements ProductDAO_interface {
 
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(GET_PRIME_PRODUCT);
+			pstmt = con.prepareStatement(GET_PRODUCT_BY_PRIME);
 
 			pstmt.setBoolean(1, productPrime);
 

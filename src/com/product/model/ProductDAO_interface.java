@@ -12,11 +12,11 @@ public interface ProductDAO_interface {
 
 	public ProductVO getOneByProductSN(Integer productSN);
 
-	public List<ProductVO> getProductClass(String productClass); // 依商品類別查詢
+	public List<ProductVO> getProductByClass(String productClass); // 依商品類別查詢
 
-	public List<ProductVO> getDiscountProduct(Boolean productDiscount); // 找優惠商品
+	public List<ProductVO> getProductByDiscount(Boolean productDiscount); // 找優惠商品
 
-	public List<ProductVO> getPrimeProduct(Boolean productPrime); // 找精選商品
+	public List<ProductVO> getProductByPrime(Boolean productPrime); // 找精選商品
 
 	public List<ProductVO> getAll();
 
