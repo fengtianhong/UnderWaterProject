@@ -97,4 +97,14 @@
 		<servlet-name>CollectionsServlet</servlet-name>
 		<url-pattern>/collections/collections.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>IdentityServlet</servlet-name>
+		<servlet-class>com.member.controller.IdentityServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>IdentityServlet</servlet-name>
+		<url-pattern>/member/IdentityServlet</url-pattern>
+	</servlet-mapping>
 </web-app>

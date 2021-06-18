@@ -29,6 +29,7 @@ public class IdentityServlet extends HttpServlet{
 		for(int i = 0;i < 6; i++) {
 			buffer.append(CHARS[random.nextInt(CHARS.length)]);
 		}
+		System.out.println(buffer.toString());
 		return buffer.toString();
 	}
 	
@@ -44,10 +45,8 @@ public class IdentityServlet extends HttpServlet{
 		res.setContentType("image/jpeg");
 		String randomString = getRandomString();
 		req.getSession(true).setAttribute("randomString", randomString);
-		
 		int width = 100;
 		int height = 30;
-		
 		Color color = getRandomColor();
 		Color reverse = getReverseColor(color);
 		
