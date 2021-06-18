@@ -1,6 +1,7 @@
 package com.shoppingcar.model;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +13,14 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class ShoppingCarDAO implements ShoppingCarDAO_interface {
+import com.orderlist.model.OrderListJDBCDAO;
+
+public class ShoppingCarJDBCDAO implements ShoppingCarDAO_interface {
+
+	String driver = util.Util.DRIVER;
+	String url = util.Util.URL;
+	String userid = "robert";
+	String passwd = "55688";
 
 	private static final String INSERT_STMT = "INSERT INTO ShoppingCar (userID, productSN, purchaseQuantity,"
 			+ "productPrice, totalPrice) VALUES (?, ?, ?, ?, ?)";
@@ -22,13 +30,52 @@ public class ShoppingCarDAO implements ShoppingCarDAO_interface {
 	private static final String GET_ONE_BY_SHOPPINGCARSN = "SELECT * FROM ShoppingCar WHERE shoppingCarSN = ?";
 	private static final String GET_ALL = "SELECT * FROM ShoppingCar ORDER BY shoppingCarSN";
 
-	private static DataSource ds = null;
-	static {
-		try {
-			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
-		} catch (NamingException e) {
-			e.printStackTrace();
+	public static void main(String[] args) {
+
+		ShoppingCarJDBCDAO dao = new ShoppingCarJDBCDAO();
+
+		// 新增
+//		ShoppingCarVO o1 = new ShoppingCarVO();
+//		o1.setUserID(4);
+//		o1.setProductSN(1);
+//		o1.setPurchaseQuantity(50);
+//		o1.setProductPrice(1000);
+//		o1.setTotalPrice(50000);
+//		dao.insert(o1);
+
+		// 移除
+//		dao.delete(8);
+
+		// 修改
+//		ShoppingCarVO o1 = new ShoppingCarVO();
+//		o1.setUserID(1);
+//		o1.setProductSN(4);
+//		o1.setPurchaseQuantity(20);
+//		o1.setProductPrice(400);
+//		o1.setTotalPrice(4000);
+//		o1.setShoppingCarSN(9);
+//		dao.update(o1);
+
+		// 功能查詢
+//		ShoppingCarVO o2 = dao.getOneByShoppingCarSN(1);
+//		System.out.print(o2.getShoppingCarSN());
+//		System.out.print(o2.getUserID());
+//		System.out.print(o2.getProductSN());
+//		System.out.print(o2.getPurchaseQuantity());
+//		System.out.print(o2.getProductPrice());
+//		System.out.print(o2.getTotalPrice());
+//		
+//		System.out.println("---------------------");
+
+		// 查詢全部
+		List<ShoppingCarVO> list = dao.getAll();
+		for (ShoppingCarVO o1 : list) {
+			System.out.print(o1.getShoppingCarSN());
+			System.out.print(o1.getUserID());
+			System.out.print(o1.getProductSN());
+			System.out.print(o1.getPurchaseQuantity());
+			System.out.print(o1.getProductPrice());
+			System.out.print(o1.getTotalPrice());
 		}
 	}
 
@@ -38,7 +85,7 @@ public class ShoppingCarDAO implements ShoppingCarDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-			con = ds.getConnection();
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setInt(1, shoppingCarVO.getUserID());
@@ -76,7 +123,7 @@ public class ShoppingCarDAO implements ShoppingCarDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-			con = ds.getConnection();
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(DELETE_STMT);
 
 			pstmt.setInt(1, shoppingCarSN);
@@ -109,7 +156,7 @@ public class ShoppingCarDAO implements ShoppingCarDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-			con = ds.getConnection();
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(UPDATE_STMT);
 
 			pstmt.setInt(1, shoppingCarVO.getUserID());
@@ -149,7 +196,7 @@ public class ShoppingCarDAO implements ShoppingCarDAO_interface {
 		ShoppingCarVO shoppingCarVO = null;
 
 		try {
-			con = ds.getConnection();
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ONE_BY_SHOPPINGCARSN);
 
 			pstmt.setInt(1, shoppingCarSN);
@@ -204,7 +251,7 @@ public class ShoppingCarDAO implements ShoppingCarDAO_interface {
 		List<ShoppingCarVO> list = new ArrayList<ShoppingCarVO>();
 
 		try {
-			con = ds.getConnection();
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ALL);
 
 			rs = pstmt.executeQuery();

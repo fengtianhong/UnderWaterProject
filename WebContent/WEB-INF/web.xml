@@ -127,4 +127,45 @@
 		<servlet-name>IdentityServlet</servlet-name>
 		<url-pattern>/member/IdentityServlet</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ProductServlet</servlet-name>
+		<servlet-class>com.product.controller.ProductServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>ProductServlet</servlet-name>
+		<url-pattern>/product/product.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>OrderForProductServlet</servlet-name>
+		<servlet-class>com.orderforproduct.controller.OrderForProductServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>OrderForProductServlet</servlet-name>
+		<url-pattern>/orderforproduct/orderforproduct.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>OrderListServlet</servlet-name>
+		<servlet-class>com.orderlist.controller.OrderListServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>OrderListServlet</servlet-name>
+		<url-pattern>/orderlist/orderlist.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ShoppingCarServlet</servlet-name>
+		<servlet-class>com.shoppingcar.controller.ShoppingCarServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>ShoppingCarServlet</servlet-name>
+		<url-pattern>/shoppingcar/shoppingcar.do</url-pattern>
+	</servlet-mapping>
+	
 </web-app>
