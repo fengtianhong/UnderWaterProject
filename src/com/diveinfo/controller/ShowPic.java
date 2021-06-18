@@ -35,7 +35,7 @@ public class ShowPic extends HttpServlet {
 			 	
 			out.write(pic);
 		}catch(Exception e){
-			InputStream in = getServletContext().getResourceAsStream("/diveinfo/images/404.jpg");
+			InputStream in = getServletContext().getResourceAsStream("/diveinfo/images/404_urchin&reef.PNG");
 			byte[] b = new byte[in.available()];
 			in.read(b);
 			out.write(b);
