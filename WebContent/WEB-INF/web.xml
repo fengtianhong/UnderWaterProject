@@ -49,6 +49,16 @@
 		<servlet-name>GroupTourServlet</servlet-name>
 		<url-pattern>/grouptour/grouptour.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ArticleTitleOptServlet</servlet-name>
+		<servlet-class>com.articleTitleOpt.controller.ArticleTitleOptServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ArticleTitleOptServlet</servlet-name>
+		<url-pattern>/articleTitleOpt/articleTitleOpt.do</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>MemberServlet</servlet-name>
