@@ -76,8 +76,8 @@
 					<td>
 						<form method="post" action="<%=request.getContextPath()%>/articleTitleOpt/articleTitleOpt.do" style="margin-bottom: 0px;">
 							<input type="submit" value="修改">
-							<input type="hidden" value="articleTitleOptSN" value="${articleTitleOptVO.articleTitleOptSN}}">
-							<input type="hidden" value="action" value="getOne_For_Update">
+							<input type="hidden" name="articleTitleOptSN" value="${articleTitleOptVO.articleTitleOptSN}">
+							<input type="hidden" name="action" value="getOne_For_Update">
 						</form>
 					</td>
 				</tr>

@@ -52,7 +52,7 @@
 	
 	<servlet>
 		<servlet-name>ArticleTitleOptServlet</servlet-name>
-		<servlet-class>com.party.controller.ArticleTitleOptServlet</servlet-class>
+		<servlet-class>com.articleTitleOpt.controller.ArticleTitleOptServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
