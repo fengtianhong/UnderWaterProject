@@ -106,7 +106,7 @@ public class ArticleTitleOptServlet extends HttpServlet{
 		}
 		
 		
-		if ("update".equals(action)) {
+		if ("update".equals(action)) {		//update.jsp
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			
@@ -115,7 +115,7 @@ public class ArticleTitleOptServlet extends HttpServlet{
 				Integer articleTitleOptSN = new Integer(req.getParameter("articleTitleOptSN").trim());
 				
 				String articleTitleOptText = req.getParameter("articleTitleOptText");
-				String articleTitleOptTextReg = "^(\u4e00-\u9fa5){4}$";
+				String articleTitleOptTextReg = "^[\u4e00-\u9fa5]{4}$";
 				
 				if (articleTitleOptText == null || articleTitleOptText.trim().length() == 0) {
 					errorMsgs.add("文章選項：請勿空白");
@@ -158,7 +158,7 @@ public class ArticleTitleOptServlet extends HttpServlet{
 			try {
 				//	接收
 				String articleTitleOptText = req.getParameter("articleTitleOptText");
-				String articleTitleOptTextReg = "^(\u4e00-\u9fa5){4}$";
+				String articleTitleOptTextReg = "^[\u4e00-\u9fa5]{4}$";
 				
 				if (articleTitleOptText == null || articleTitleOptText.trim().length() == 0) {
 					errorMsgs.add("文章選項請勿空白");
