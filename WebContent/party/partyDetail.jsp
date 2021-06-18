@@ -1,41 +1,74 @@
-<%@page import="com.party.model.PartyVO"%>
+<%@ page import="com.party.model.PartyVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.partymember.model.*"%>
-<%@ page import="com.party.model.*" %>
+<%@ page import="com.party.model.*"%>
+<jsp:useBean id="diveInfoSvc" scope="page" class="com.diveinfo.model.DiveInfoService" />
+
+<%
+// Integer partySN = (Integer) request.getAttribute("partySN");
+// PartyService partySvc = new PartyService();
+// PartyVO partyVO1 = partySvc.findByPartySN(partySN);
+// pageContext.setAttribute("partyVO1", partyVO1);
+%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>揪團詳細內容</title>
 </head>
 <body>
+
+<h2>揪團詳細內容</h2>
 	
 	<form method="post" action="<%=request.getContextPath()%>/party/party.do">
-		<input type="hidden" name="action" value="goBack">
-		<input type="submit" value="回上頁">
-	</form>
-	
-	<form method="post" action="<%=request.getContextPath()%>/party/party.do">
-		<input type="hidden" name="action" value="goRegister">
 		<input type="hidden" name="partySN" value="${partyVO.partySN}">
-		<input type="submit" value="報名去">
+		<button type="submit" name="action" value="goBackToList">回上頁</button>
+		<button type="submit" name="action" value="goRegister">報名去</button>
 	</form>
 	
-	<div class="partyShort">
-		<div class="partyHost">揪團編號： ${partyVO.partySN}</div>
-		<div class="partyHost">主揪人： ${partyVO.partyHost}</div>
-		<div class="partyTitle">揪團主旨: ${partyVO.partyTitle}</div>
-		<div class="date">活動日期: ${partyVO.startDate}至 ${partyVO.endDate}</div>
-		<div class="closeDate">報名截止日期: ${partyVO.closeDate}</div>
-		<div class="partyLocation">揪團潛點(待替換): ${partyVO.partyLocation}</div>
-		<!--   需補: 等DiveInfoService -->
-		<%-- 		<div class="location">${DiveInfoSvc.findByPrimaryKey(partyVO.partyLocation()).getPointName}</div> --%>
-		<div class="size">最低成團人數: ${partyVO.partyMinSize}</div>
-		<div class="sizenow">目前報名人數: ${partyMemberList.size()}</div>
-		<div class="partyDetail">詳細內容: ${partyVO.partyDetail}</div>
-		<div>${test}</div>
-	</div>
+	<table>
+	<tr>
+		<td class="partyHost">揪團編號： </td>
+		<td>${partyVO.partySN}</td>
+<%-- 		<td>${partyVO.partySN == null? "partyVO1.getPartySN": "partyVO.partySN"}</td> --%>
+	</tr>
+	<tr>
+		<td class="partyHost">主揪人： </td>
+		<td>${partyVO.partyHost}</td>
+	</tr>
+	<tr>
+		<td class="partyTitle">揪團主旨: </td>
+		<td>${partyVO.partyTitle}</td>
+	</tr>
+	<tr>
+		<td class="date">活動日期: </td>
+		<td>${partyVO.startDate}至 ${partyVO.endDate}</td>
+	</tr>
+	<tr>
+		<td class="closeDate">報名截止日期: </td>
+		<td>${partyVO.closeDate}</td>
+	</tr>
+	<tr>
+		<td class="partyLocation">揪團潛點: </td>
+		<td>${diveInfoSvc.getOneDiveInfo(partyVO.partyLocation).pointName}</td>
+	</tr>
+	<tr>
+		<td class="size">最低成團人數: </td>
+		<td>${partyVO.partyMinSize}</td>
+	</tr>
+	<tr>
+		<td class="sizenow">目前報名人數: </td>
+		<td>${partyMemberList.size()}</td>
+	</tr>
+	<tr>
+		<td class="partyDetail">詳細內容: </td>
+		<td>(CKEditor還沒測)${partyVO.partyDetail}</td>
+	</tr>
+	</table>
+	
+<!-- 如果是返回上頁來的(有資料)	 -->
+<%-- 		<h2>hello~~${partySN}</h2> --%>
 
 </body>
 </html>

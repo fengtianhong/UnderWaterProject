@@ -5,11 +5,10 @@ import java.util.List;
 public interface PartyDAO_interface {
 	
 	// Functions including PARTYDETAIL(CLOB) need to be updated.
-	// Function UPDATE is pending.
 	
 	public PartyVO insert(PartyVO partyVO);  //done
 	
-	public void update(PartyVO partyVO);  //pending
+	public PartyVO update(PartyVO partyVO);  //0617 done
 	
 	public PartyVO updateStatus(Integer partySN, String status);  //done
 	
@@ -25,4 +24,7 @@ public interface PartyDAO_interface {
 
 	// 0606 updated
 	public List<PartyVO> findBySearch(String keyword, Integer pointSN, Integer partyMinSize);
+	
+	// 0617 updated
+	public List<PartyVO> findByPartySNLike(Integer partySN);
 }

@@ -10,6 +10,10 @@ public class PartyMemberService {
 		dao = new PartyMemberJNDIDAO();
 	}
 	
+	public int insert(PartyMemberVO partyMemberVO) {
+		return dao.insert(partyMemberVO);
+	}
+	
 	public List<PartyMemberVO> findByPartySN(Integer partySN) {
 		return dao.findByPartySN(partySN);
 	}

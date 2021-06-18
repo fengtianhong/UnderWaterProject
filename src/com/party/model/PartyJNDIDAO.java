@@ -29,7 +29,7 @@ public class PartyJNDIDAO implements PartyDAO_interface {
 	private static final String UPDATESTATUS_STMT = 
 			"update Party set status = ? where partySN = ?";
 	private static final String UPDATE_STMT = 
-			"update Party set partyHost = ?, partyTitle = ?, regDate = ?, closeDate = ?, startDate = ?," +
+			"update Party set partyTitle = ?, regDate = ?, closeDate = ?, startDate = ?," +
 			" endDate = ?, partyMinSize = ?, partyLocation = ?, partyDetail = ?, status = ? where partySN = ?";
 	private static final String FINDBYPARTYSN_STMT = "select * from party where partySN = ?";
 	private static final String FINDBYPARTYHOST_STMT = "select * from party where partyHost = ?";
@@ -37,6 +37,7 @@ public class PartyJNDIDAO implements PartyDAO_interface {
 	private static final String GETALL_STMT = "select * from party";
 	private static final String DELETEBYPARTYSN_STMT = "delete from party where partySN = ?";
 	private static final String FINDBYSEARCH_STMT = "select * from party where partyTitle like ? and partyLocation like ? and partyMinSize > ?";
+	private static final String FINDBYPARTYSNLIKE_STMT = "select * from party where partySN like ?";
 
 	@Override
 	public PartyVO insert(PartyVO partyVO) {
@@ -89,9 +90,48 @@ public class PartyJNDIDAO implements PartyDAO_interface {
 	}
 
 	@Override
-	public void update(PartyVO partyVO) {
-		// TODO Auto-generated method stub
-		
+	public PartyVO update(PartyVO partyVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+	
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE_STMT);
+			
+			pstmt.setString(1, partyVO.getPartyTitle());
+			pstmt.setDate(2, partyVO.getRegDate());
+			pstmt.setDate(3, partyVO.getCloseDate());
+			pstmt.setDate(4, partyVO.getStartDate());
+			pstmt.setDate(5, partyVO.getEndDate());
+			pstmt.setInt(6, partyVO.getPartyMinSize());
+			pstmt.setInt(7, partyVO.getPartyLocation());
+			pstmt.setString(8, partyVO.getPartyDetail());
+			pstmt.setString(9, partyVO.getStatus());
+			pstmt.setInt(10, partyVO.getPartySN());
+			
+			pstmt.executeUpdate();
+			
+			
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace();
+				}
+			}
+			
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return partyVO;
 	}
 
 	@Override
@@ -434,7 +474,58 @@ public class PartyJNDIDAO implements PartyDAO_interface {
 		return list1;
 	}
 
+	@Override //0617 updated
+	public List<PartyVO> findByPartySNLike(Integer partySN) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		PartyVO p1 = null;
+		List<PartyVO> list1 = new ArrayList<>();
 	
-	
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(FINDBYPARTYSNLIKE_STMT);
+			
+			pstmt.setString(1, "%" + partySN + "%");
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				p1 = new PartyVO();
+				p1.setPartySN(rs.getInt("partySN"));
+				p1.setPartyHost(rs.getInt("partyHost"));
+				p1.setPartyTitle(rs.getString("partyTitle"));
+				p1.setRegDate(rs.getDate("regDate"));
+				p1.setCloseDate(rs.getDate("closeDate"));
+				p1.setStartDate(rs.getDate("startDate"));
+				p1.setEndDate(rs.getDate("endDate"));
+				p1.setPartyMinSize(rs.getInt("partyMinSize"));
+				p1.setPartyLocation(rs.getInt("partyLocation"));
+				p1.setPartyDetail(rs.getString("partyDetail"));
+				p1.setCreateTime(rs.getTimestamp("createTime"));
+				p1.setStatus(rs.getString("status"));
+				list1.add(p1);
+			}
+			
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace();
+				}
+			}
+			
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return list1;
+	}
 	
 }

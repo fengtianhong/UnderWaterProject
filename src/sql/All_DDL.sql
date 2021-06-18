@@ -202,9 +202,11 @@ CREATE TABLE `Party` (
 ) COMMENT='揪團列表' AUTO_INCREMENT=400001;
 
 insert into party (partyHost, partyTitle, regDate, closeDate, startDate, endDate, partyMinSize, partyLocation, partyDetail)
-values ('1', '要不要一起去找山迪', '2000-01-01', '2000-01-31', '2000-03-03', '2000-03-04', '5', '200001', '這是測試DDL'), 
-('1', '或者去追逐派大興', '2001-09-09', '2001-10-10', '2001-12-20', '2001-12-23', '2', '200001', '這也是測試DDL');
-
+values 
+('1', '要不要一起去找珊迪', '2021-01-01', '2021-01-31', '2021-03-03', '2021-03-04', '2', '200001', '很久沒有去找珊迪玩耍了! 大家有沒有興趣來約一下啊!'), 
+('1', '之前是不是也說要去追逐派大星', '2020-09-09', '2020-10-10', '2020-12-20', '2020-12-23', '2', '200002', '不過派大星可能在冬眠惹...'),
+('2', '有人想去很酷的外星海嗎?!', '2021-06-18', '2021-09-18', '2021-12-31', '2022-01-01', '10', '200003', '聽說克卜勒22b也有海洋，要不要一起去玩玩看呀?'),
+('3', '開一團教你如何宅在家裡也能享受潛水樂趣', '2020-01-01', '2020-01-31', '2020-02-01', '2020-02-28', '3', '200004', '這可厲害了沒聽說過吧!');
 
 CREATE TABLE `PartyMember` (
   `partyMemberSN` int NOT NULL AUTO_INCREMENT COMMENT '揪團團員名單流水號',
@@ -228,8 +230,11 @@ CREATE TABLE `PartyMember` (
 ) COMMENT='揪團團員名單' AUTO_INCREMENT=400001;
 
 insert into PartyMember (partySN, partyMember, gender, email, phone, birthDate, personID, comment)
-values ('400002', '1', '2', 'thisisSpongeBob@test.com', '0988888888', '1998-02-02', 'B555555555', '這是測試DDL'), 
-('400002', '2', '2', 'thisisSomeone@test.com', '0911222333', '1900-02-02', 'C777777777', '這是測試DDL');
+values 
+('400001', '2', '1', 'KingOfJava@tibame.com', '0988888888', '1998-02-02', 'B888888888', '大吳老師我也想參加'), 
+('400001', '3', '2', 'IAmTomCat@tibame.com', '0977777777', '1900-01-01', 'C777777777', '大吳老師帶我走'),
+('400003', '4', '2', 'JSPrincessIsMe@tibame.com', '0966666666', '1995-07-04', 'B666666666', '現在是什麼情況?只有我參加嗎?'),
+('400003', '5', '1', 'MySQLConqueror@tibame.com', '0955555555', '1990-11-12', 'B555555555', '還有我, 我也想跟小吳老師一起去玩!');
 
 CREATE TABLE `MemberRate` (
   `SN` int NOT NULL AUTO_INCREMENT COMMENT '會員評價流水編號',
@@ -254,10 +259,15 @@ CREATE TABLE `MemberRate` (
 ) COMMENT='會員評價';
 
 insert into MemberRate (partySN, rateMaker, rateRecipiant, rate, rateDetail)
-values ('400002', '1', '2', '5', '測試第一筆評價DDL');
+values 
+('400001', '1', '3', '5', '雖然臭貓常常死掉但還是要給你很高分!要乖乖的喔!'),
+('400001', '2', '3', '1', '請向九命怪貓多多看齊好嗎'),
+('400001', '1', '2', '5', '冠宏老師一定都有教過，你們有沒有聽我就不知道了^_^'),
+('400003', '5', '4', '3', '上元你是不是報錯揪團了??'),
+('400003', '2', '4', '3', '我也有同感(點頭)'),
+('400003', '4', '2', '4', '有可能喔~但是我覺得很好玩啊!!!');
 
 -- --------------------------------------商城相關表格----------------------------------------
-
 
 CREATE TABLE `Product` (
   `productSN` int NOT NULL AUTO_INCREMENT COMMENT '商品編號',
