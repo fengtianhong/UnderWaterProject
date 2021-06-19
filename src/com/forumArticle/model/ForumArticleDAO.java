@@ -33,7 +33,8 @@ public class ForumArticleDAO implements ForumArticleDAO_interface{
 		private static final String GET_ONE_STMT = 
 			"SELECT articlesN, articleTitle, publishedDate, articleText, articleStatus, userID, articleTitleOptSN, rateGCount, rateNGCount FROM ForumArticle where articleSN = ?";
 		private static final String UPDATE = 
-			"UPDATE ForumArticle set (articleTitle = ?, publishedDate = ?, articleText = ?, articleStatus = ?, userID = ?, articleTitleOptSN = ?, rateGCount = ?, rateNGCount = ? where articleSN = ?";
+//			"UPDATE ForumArticle set (articleTitle = ?, publishedDate = ?, articleText = ?, articleStatus = ?, userID = ?, articleTitleOptSN = ?, rateGCount = ?, rateNGCount = ? where articleSN = ?";
+			"UPDATE ForumArticle set (articleTitle = ?, articleText = ?, articleStatus = ?, userID = ?, articleTitleOptSN = ?, rateGCount = ?, rateNGCount = ? where articleSN = ?";
 		
 //	新增文章
 	@Override
@@ -87,14 +88,14 @@ public class ForumArticleDAO implements ForumArticleDAO_interface{
 			pstmt = con.prepareStatement(UPDATE);
 			
 			pstmt.setString(1, forumArticleVO.getArticleTitle());
-			pstmt.setTimestamp(2, forumArticleVO.getPublishedDate());
-			pstmt.setString(3, forumArticleVO.getArticleText());
-			pstmt.setInt(4, forumArticleVO.getArticleStatus());
-			pstmt.setInt(5, forumArticleVO.getUserID());
-			pstmt.setInt(6, forumArticleVO.getArticleTitleOptSN());
-			pstmt.setInt(7, forumArticleVO.getRateGCount());
-			pstmt.setInt(8, forumArticleVO.getRateNGCount());
-			pstmt.setInt(9, forumArticleVO.getArticleSN());
+//			pstmt.setTimestamp(2, forumArticleVO.getPublishedDate());修改應該不會動到原本發布的日期才對
+			pstmt.setString(2, forumArticleVO.getArticleText());
+			pstmt.setInt(3, forumArticleVO.getArticleStatus());
+			pstmt.setInt(4, forumArticleVO.getUserID());
+			pstmt.setInt(5, forumArticleVO.getArticleTitleOptSN());
+			pstmt.setInt(6, forumArticleVO.getRateGCount());
+			pstmt.setInt(7, forumArticleVO.getRateNGCount());
+			pstmt.setInt(8, forumArticleVO.getArticleSN());
 			
 			pstmt.executeUpdate();
 			
