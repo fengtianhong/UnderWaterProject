@@ -9,8 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>商品新增頁面</title>
-
+<title>商品資料變更</title>
 
 </head>
 
@@ -19,18 +18,17 @@
 	<table id="table-1">
 		<tr>
 			<td>
-				<h3>商品資料新增</h3>
-			</td>
-			<td>
+				<h3>商品資料修改</h3>
 				<h4>
-					<a href="selectProduct.jsp">回到selectProduct</a>
+					<a href="select_Product.jsp">回首頁</a>
 				</h4>
 			</td>
 		</tr>
 	</table>
 
-	<h3>商品新增:</h3>
+	<h3>資料修改:</h3>
 
+	<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
 		<font style="color: red">請修正以下錯誤:</font>
 		<ul>
@@ -45,68 +43,70 @@
 			<tr>
 				<td>商品類別:</td>
 				<td><input type="TEXT" name="class" size="45"
-					value="<%=(productVO == null) ? "吳永志" : productVO.getProductClass()%>" /></td>
+					value="<%=productVO.getProductClass()%>" /></td>
 			</tr>
 			<tr>
 				<td>商品名稱:</td>
 				<td><input type="TEXT" name="name" size="45"
-					value="<%=(productVO == null) ? "MANAGER" : productVO.getProductName()%>" /></td>
+					value="<%=productVO.getProductName()%>" /></td>
 			</tr>
 			<tr>
 				<td>商品單價:</td>
 				<td><input type="TEXT" name="price" size="45"
-					value="<%=(productVO == null) ? "10000" : productVO.getProductPrice()%>" /></td>
+					value="<%=productVO.getProductPrice()%>" /></td>
 			</tr>
 			<tr>
 				<td>商品數量:</td>
 				<td><input type="TEXT" name="quantity" size="45"
-					value="<%=(productVO == null) ? "10000" : productVO.getProductQuantity()%>" /></td>
+					value="<%=productVO.getProductQuantity()%>" /></td>
 			</tr>
 			<tr>
 				<td>商品狀態:</td>
 				<td><input type="TEXT" name="status" size="45"
-					value="<%=(productVO == null) ? "100" : productVO.getProductStatus()%>" /></td>
+					value="<%=productVO.getProductStatus()%>" /></td>
 			</tr>
 			<tr>
 				<td>商品說明:</td>
 				<td><input type="TEXT" name="detail" size="45"
-					value="<%=(productVO == null) ? "100" : productVO.getProductDetail()%>" /></td>
+					value="<%=productVO.getProductDetail()%>" /></td>
 			</tr>
 			<tr>
 				<td>優惠品:</td>
 				<td><input type="TEXT" name="discount" size="45"
-					value="<%=(productVO == null) ? "100" : productVO.getProductDiscount()%>" /></td>
+					value="<%=productVO.getProductDiscount()%>" /></td>
 			</tr>
 			<tr>
 				<td>精選品:</td>
 				<td><input type="TEXT" name="prime" size="45"
-					value="<%=(productVO == null) ? "100" : productVO.getProductPrime()%>" /></td>
+					value="<%=productVO.getProductPrime()%>" /></td>
 			</tr>
 			<tr>
 				<td>評價總分數:</td>
 				<td><input type="TEXT" name="ratingpoint" size="45"
-					value="<%=(productVO == null) ? "100" : productVO.getRatingPoint()%>" /></td>
+					value="<%=productVO.getRatingPoint()%>" /></td>
 			</tr>
 			<tr>
 				<td>評價總人數:</td>
 				<td><input type="TEXT" name="ratingnumber" size="45"
-					value="<%=(productVO == null) ? "100" : productVO.getRatingNumber()%>" /></td>
+					value="<%=productVO.getRatingNumber()%>" /></td>
 			</tr>
 
-			<jsp:useBean id="productSvc" scope="page" class="com.product.model.ProductService" />
-<!-- 			<tr> -->
+			<jsp:useBean id="productSvc" scope="page"
+				class="com.product.model.ProductService" />
+			<tr>
 <!-- 				<td><font color=red><b>*</b></font></td> -->
 <!-- 				<td><select size="1" name="productSN"> -->
 <%-- 						<c:forEach var="productVO" items="${productSvc.all}"> --%>
 <%-- 							<option value="${productVO.productSN}" --%>
-<%-- 								${(productVO.producySN== productVO.producySN)? 'selected':'' }>${productVO.productSN} --%>
+<%-- 								${(productVO.productSN==productVO.productSN)?'selected':'' }>${productVO.productName} --%>
 <%-- 						</c:forEach> --%>
 <!-- 				</select></td> -->
-<!-- 			</tr> -->
+			</tr>
 
 		</table>
-		<br> <input type="hidden" name="action" value="insert"> <input
-			type="submit" value="確認送出">
+		<br> <input type="hidden" name="action" value="update"> <input
+			type="hidden" name="productSN" value="<%=productVO.getProductSN()%>"> <input
+			type="submit" value="送出修改">
 	</FORM>
 
 </body>
