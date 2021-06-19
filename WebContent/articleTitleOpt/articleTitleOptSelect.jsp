@@ -77,13 +77,13 @@
 		<div id="search">
 			<h3>發文選項查詢</h3>
 			<ul>
-				<li><b>查詢全部標題選項：</b><a href="listAllArticleTitleOpt.jsp">按此查詢或修改</a></li>
+				<li><b>查詢全部標題選項/修改：</b><a href="listAllArticleTitleOpt.jsp">按此查詢或修改</a></li>
 				<li>
-					<FORM METHOD="post" ACTION="articleTitleOpt.do" enctype="multipart/form-data">
+					<FORM METHOD="post" ACTION="articleTitleOpt.do">
 						<b>輸入發文標題選項編號(如：31):</b>
-						<input type="text" name="articleTitleOptSN">
-						<input type="hidden" name="action" value="getOne_For_display">
-						<input type="submit" value="送出">
+						    <input type="text" name="articleTitleOptSN">
+					        <input type="hidden" name="action" value="getOne_For_Display">
+					        <input type="submit" value="送出">
 					</FORM>
 				</li>
 			</ul>

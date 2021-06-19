@@ -6,7 +6,7 @@
 <%
 	ArticleTitleOptVO articleTitleOptVO = (ArticleTitleOptVO) request.getAttribute("articleTitleOptVO");
 %>
-
+<%= articleTitleOptVO == null%>
 
 <!DOCTYPE html>
 <html>
@@ -44,7 +44,7 @@
 				</c:forEach>
 			</ul>
 		</c:if>
-		<form method="post" action="articleTitleOpt.do" name="form1" enctype="multipart/form-data">
+		<form method="post" action="articleTitleOpt.do" name="form1">
 			<table id="update-2">
 				<tr>
 					<td>標題選項編號:<font color=red><b>*</b></font></td>
@@ -56,7 +56,7 @@
 				</tr>
 			</table>
 			<input type="hidden" name="action" value="update">
-			<input type="hidden" name="empno" value="<%=articleTitleOptVO.getArticleTitleOptSN()%>">
+			<input type="hidden" name="articleTitleOptSN" value="<%=articleTitleOptVO.getArticleTitleOptSN()%>">
 			<input type="submit" value="送出修改">
 		</form>
 	</body>
