@@ -596,7 +596,7 @@ CREATE TABLE `Manager` (
 CREATE TABLE `News` (
   `newsSN` int NOT NULL AUTO_INCREMENT COMMENT '新聞編號',
   `title` varchar(20) NOT NULL COMMENT '標題',
-  `content` text NOT NULL COMMENT '內文',
+  `content` longtext NOT NULL COMMENT '內文',
   `image` longblob NOT NULL COMMENT '照片',
   `newsDate` date NOT NULL COMMENT '新聞日期',
   `newsFrom` varchar(20) NOT NULL COMMENT '新聞來源',
