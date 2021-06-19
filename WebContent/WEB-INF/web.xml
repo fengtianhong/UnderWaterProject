@@ -107,4 +107,14 @@
 		<servlet-name>IdentityServlet</servlet-name>
 		<url-pattern>/member/IdentityServlet</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>CheckAccountServlet</servlet-name>
+		<servlet-class>com.member.controller.CheckAccountServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>CheckAccountServlet</servlet-name>
+		<url-pattern>/member/CheckAccountServlet</url-pattern>
+	</servlet-mapping>
 </web-app>

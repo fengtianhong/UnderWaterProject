@@ -14,6 +14,7 @@ public class MemberDAO implements MemberDAO_interface{
 	private static final String FINDBYACCOUNT_STMT = "SELECT * FROM Member where account=?";
 	private static final String GET_ALL_STMT = "SELECT * FROM Member ORDER BY userID";
 	private static final String LOGIN_STMT = "SELECT * FROM MEMBER WHERE ACCOUNT=? AND PWD=?";
+	private static final String CHECK_ACCOUNT = "SELECT * FROM Member where account=?";
 	
 	public static void main(String[] args) {
 //		測試insert
@@ -371,7 +372,7 @@ public class MemberDAO implements MemberDAO_interface{
 
 
 @Override
-public boolean login(MemberVO MemberVO) {
+public Boolean login(MemberVO MemberVO) {
 	
 	Connection con = null;
 	PreparedStatement pstmt = null;
@@ -388,7 +389,7 @@ public boolean login(MemberVO MemberVO) {
 		if(rs.next()) {
 			vo = new MemberVO();
 			vo.setAccount(rs.getString("account"));
-			vo.setPwd(rs.getString("pwd"));
+//			vo.setPwd(rs.getString("pwd"));
 			System.out.println("登入成功");
 			return true;
 		}else {
@@ -417,6 +418,52 @@ public boolean login(MemberVO MemberVO) {
 		
 	}
 //	return vo;
+	return false;
+}
+
+
+@Override
+public Boolean checkAccount(MemberVO MemberVO) {
+	Connection con = null;
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+	MemberVO vo = null;
+	
+	try {
+		con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+		pstmt = con.prepareCall(CHECK_ACCOUNT);
+		pstmt.setString(1, vo.getAccount());
+		rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			System.out.println("沒有重複");
+			return true;
+		}else {
+			System.out.println("重複了");
+			return false;
+		}
+	}catch(Exception e) {
+		e.printStackTrace();
+	}finally {
+		
+		if(pstmt != null) {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace(System.err);
+			}
+		}
+		
+		if(con != null) {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace(System.err);
+			}
+		}
+		
+	}
+	System.out.println("走到最後");
 	return false;
 }
 	
