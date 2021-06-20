@@ -32,20 +32,18 @@ public class CheckAccountServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html;charset=UTF-8");
-		String btn_account = req.getParameter("btn_account");
+		String btn_account = req.getParameter("account");
 		MemberService membersvc = new MemberService();
 		Boolean vo = membersvc.checkAccountMember(btn_account);
-		String canuse = "可以使用";
-		String used = "已經註冊過";
+//		String canuse = "可以使用";
+//		String used = "已經註冊過";
 		System.out.println("到檢查驗證碼這裡");
 		if(vo == true) {
-			System.out.println("上");
-			req.setAttribute("used", used);
-			req.getRequestDispatcher("login.jsp").forward(req, res);
+			req.setAttribute("used", "已經註冊過");
+			req.getRequestDispatcher("register.jsp").forward(req, res);
 		}else {
-			System.out.println("下");
-			req.setAttribute("canuse", canuse);
-			req.getRequestDispatcher("login.jsp").forward(req, res);
+			req.setAttribute("used", "可以使用");
+			req.getRequestDispatcher("register.jsp").forward(req, res);
 		}
 		
 	}

@@ -432,7 +432,7 @@ public Boolean checkAccount(MemberVO MemberVO) {
 	try {
 		con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
 		pstmt = con.prepareCall(CHECK_ACCOUNT);
-		pstmt.setString(1, vo.getAccount());
+		pstmt.setString(1, MemberVO.getAccount());
 		rs = pstmt.executeQuery();
 		
 		if(rs.next()) {

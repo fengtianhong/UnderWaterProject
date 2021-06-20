@@ -135,6 +135,6 @@
 	
 	<servlet-mapping>
 		<servlet-name>CheckAccountServlet</servlet-name>
-		<url-pattern>/member/CheckAccountServlet</url-pattern>
+		<url-pattern>/member/CheckAccountServlet.do</url-pattern>
 	</servlet-mapping>
 </web-app>
