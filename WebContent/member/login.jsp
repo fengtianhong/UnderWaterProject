@@ -33,7 +33,7 @@
 				</tr>
 				<tr>
 					<td>帳號：<input type="text" name="account" onblur="Email(this.value)" size="40"></td>
-					<td><input type="button" name="btn_account" value="檢查帳號可用性" size="30" id="btn_account"></td>
+					
 					
 				
 				</tr>
@@ -47,6 +47,7 @@
 						type="button" value=" 換個圖片 " id="btn" onclick="reloadImage()">
 						
 					</td>
+					<td>${msg}</td>
 				</tr>
 				<tr align="center">
 					<td><input type="submit" value="登入" /> <input type="reset" /></td>

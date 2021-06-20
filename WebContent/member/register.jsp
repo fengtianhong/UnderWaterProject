@@ -24,13 +24,14 @@
 </head>
 <body>
 	<div align="center">
-		<form  method="post" action="member.do"
+		<form  method="post" action="CheckAccountServlet.do"
 			enctype="multipart/form-data" onsubmit="return checkform(this)">
 			<table>
 				<tr>
 					<td>帳號:</td>
 					<td><input type="email" name="account" size="45"
 						value="<%=(memberVO == null) ? "" : memberVO.getAccount()%>" /></td>
+					<td><input type="submit" name="btn_account" value="檢查帳號可用性" size="30" id="btn_account"><p>${used}</td>
 				</tr>
 				<tr>
 					<td>密碼:</td>
@@ -113,7 +114,8 @@
 			</table>
 
 
-			<input type="hidden" name="action" value="insert"> <input
+			<input type="hidden" name="action" value="insert"> 
+			<input
 				type="reset" value="重填"><input type="submit" value="註冊">
 		</form>
 		<a href="login.jsp"></a>
