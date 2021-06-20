@@ -14,12 +14,12 @@ import javax.sql.DataSource;
 
 public class OrderForProductDAO implements OrderForProductDAO_interface {
 
-	private static final String INSERT_STMT = "INSER INTO OrderForProduct (userID, totalPrice, orderStatus) VALUES (?, ?, ?)";
-	private static final String CHANGESTATUS_STMT = "UPDATE OrderForProduct SET productStatus = ? WHERE orderSN = ?";
+	private static final String INSERT_STMT = "INSERT INTO OrderForProduct (userID, totalPrice, orderStatus) VALUES (?, ?, ?)";
+	private static final String CHANGESTATUS_STMT = "UPDATE OrderForProduct SET orderStatus = ? WHERE orderSN = ?";
 	private static final String UPDATE_STMT = "UPDATE OrderForProduct SET userID = ?, purchaseDate = ?, totalPrice = ?,"
 			+ "clearDate = ? WHERE orderSN = ?";
-	private static final String GET_ONE_BY_ORDERSN = "SELETE * FROM OderForProduct WHERE orderSN = ?";
-	private static final String GET_ALL = "SELETE * FROM OrderForProduct ORDER BY orderSN";
+	private static final String GET_ONE_BY_ORDERSN = "SELECT * FROM OrderForProduct WHERE orderSN = ?";
+	private static final String GET_ALL = "SELECT * FROM OrderForProduct ORDER BY orderSN";
 
 	private static DataSource ds = null;
 	static {

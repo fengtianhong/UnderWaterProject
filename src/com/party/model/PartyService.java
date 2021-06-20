@@ -26,7 +26,7 @@ public class PartyService {
 	// 0606 updated
 	public List<PartyVO> findBySearch(String keyword, Integer pointSN, Integer partyMinSize) {
 		return dao.findBySearch(keyword, pointSN, partyMinSize);
-	};
+	}
 	
 	// 0617 updated
 	public List<PartyVO> findByPartySNLike(Integer partySN) {
@@ -37,4 +37,14 @@ public class PartyService {
 	public PartyVO update(PartyVO partyVO) {
 		return dao.update(partyVO);
 	}
+	
+	// 0618 updated
+	public List<PartyVO> findByPartyHost(Integer partyHost) {
+		return dao.findByPartyHost(partyHost);
+	}
+	
+	public PartyVO insert(PartyVO partyVO) {
+		return dao.insert(partyVO);
+	}
+	
 }

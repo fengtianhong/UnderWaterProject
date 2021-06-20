@@ -36,11 +36,11 @@
 	</tr>
 	<tr>
 		<td>E-mail: </td>
-		<td><input type="text" name="email" placeholder="待補"></td>
+		<td><input type="text" name="email" placeholder="待補" maxlength="50"></td>
 	</tr>
 	<tr>
 		<td>手機號碼: </td>
-		<td><input type="text" name="phone" placeholder="待補"></td>
+		<td><input type="text" name="phone" placeholder="待補" maxlength="10"></td>
 	</tr>
 	<tr>
 		<td>出生年月日(投保用): </td>
@@ -48,7 +48,7 @@
 	</tr>
 	<tr>
 		<td>身份證字號(投保用): </td>
-		<td><input type="text" name="personID" placeholder="待補"></td>
+		<td><input type="text" name="personID" placeholder="待補" maxlength="10"></td>
 	</tr>
 	<tr>
 		<td>最高證照: </td>
@@ -71,7 +71,7 @@
 	</tr>
 	<tr>
 		<td>其他備註</td>
-		<td><textarea style="width:300px;height:100px;" placeholder="其他備註" name="comment"></textarea></td>
+		<td><textarea style="width:300px;height:100px;" placeholder="其他備註" name="comment" maxlength="100"></textarea></td>
 	</tr>
 	</table>
 	

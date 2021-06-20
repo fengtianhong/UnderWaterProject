@@ -50,6 +50,7 @@
 		<input type="hidden" name="action" value="getAllBy">
 		<input type="submit" value="送出">
 		<input type="reset" value="清空">
+		<input type="button" onclick="location.href='<%=request.getContextPath()%>/party/HostParty.jsp'" value="發起揪團">
 	</form>
 	
 	<c:if test="${listBySearch.size() == 0}">
@@ -119,7 +120,7 @@
 	<c:forEach var="partyVO" items="${listBySearch}">
 		<div class="partyShort">
 		<form method="post" action="<%=request.getContextPath()%>/party/party.do">
-			<div class="partyHost">揪團編號： ${partyVO.partySN}</div>
+			<div class="partySN">揪團編號： ${partyVO.partySN}</div>
 			<div class="partyHost">主揪人： ${partyVO.partyHost}</div>
 			<div class="partyTitle">揪團主旨: ${partyVO.partyTitle}</div>
 			<div class="date">活動日期: ${partyVO.startDate}至 ${partyVO.endDate}</div>

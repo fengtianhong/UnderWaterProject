@@ -15,22 +15,22 @@ import javax.sql.DataSource;
 public class ProductDAO implements ProductDAO_interface {
 
 	private static final String INSERT_STMT = "INSERT INTO Product (productClass, productName, productPrice,"
-			+ "productQuantity, productStatus, productDetail, productDiscount, productPrime) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+			+ "productQuantity, productStatus, productDetail, productDiscount, productPrime, ratingPoint, ratingNumber) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 	private static final String OFFSHELF_STMT = "UPDATE Product SET productStatus = 0 WHERE productSN = ?";
 
 	private static final String UPDATE_STMT = "UPDATE Product SET productClass = ?, productName = ?, productPrice = ?,"
-			+ "productQuantity = ?, productDetail = ?, productCreateTime = ?, productDiscount =?, productPrime = ? WHERE productSN = ?";
+			+ "productQuantity = ?, productDetail = ?, productCreateTime = ?, productDiscount =?, productPrime = ?, ratingPoint = ?, ratingNumber = ? WHERE productSN = ?";
 
-	private static final String GET_ONE_BY_PRODUCTSN = "SELECT * FROM Product pdt JOIN ProductPhoto ppto ON pdt.productSN = ppto.productSN WHERE productSN = ?";
+	private static final String GET_ONE_BY_PRODUCTSN = "SELECT * FROM Product WHERE productSN = ?";
 
-	private static final String GET_PRODUCT_BY_CLASS = "SELECT * FROM Product pdt JOIN ProductPhoto ppto ON pdt.productSN = ppto.productSN WHERE productClass = ? ORDER BY productSN";
+	private static final String GET_PRODUCT_BY_CLASS = "SELECT * FROM Product WHERE productClass = ? ORDER BY productSN";
 
-	private static final String GET_PRODUCT_BY_DISCOUNT = "SELECT * FROM Product pdt JOIN ProductPhoto ppto ON pdt.productSN = ppto.productSN WHERE productDiscount = ? ORDER BY productPrice";
+	private static final String GET_PRODUCT_BY_DISCOUNT = "SELECT * FROM Product WHERE productDiscount = ? ORDER BY productPrice";
 
-	private static final String GET_PRODUCT_BY_PRIME = "SELECT * FROM Product pdt JOIN ProductPhoto ppto ON pdt.productSN = ppto.productSN WHERE productPrime = ? ORDER BY productPrice";
+	private static final String GET_PRODUCT_BY_PRIME = "SELECT * FROM Product WHERE productPrime = ? ORDER BY productPrice";
 
-	private static final String GET_ALL = "SELECT * FROM Product pdt JOIN ProductPhoto ppto ON pdt.productSN = ppto.productSN ORDER BY productSN";
+	private static final String GET_ALL = "SELECT * FROM Product ORDER BY productSN";
 
 	private static DataSource ds = null;
 	static {
@@ -59,6 +59,8 @@ public class ProductDAO implements ProductDAO_interface {
 			pstmt.setString(6, productVO.getProductDetail());
 			pstmt.setBoolean(7, productVO.getProductDiscount());
 			pstmt.setBoolean(8, productVO.getProductPrime());
+			pstmt.setInt(9, productVO.getRatingPoint());
+			pstmt.setInt(10, productVO.getRatingNumber());
 
 			pstmt.executeUpdate();
 
@@ -133,7 +135,9 @@ public class ProductDAO implements ProductDAO_interface {
 			pstmt.setTimestamp(6, productVO.getProductCreateTime());
 			pstmt.setBoolean(7, productVO.getProductDiscount());
 			pstmt.setBoolean(8, productVO.getProductPrime());
-			pstmt.setInt(9, productVO.getProductSN());
+			pstmt.setInt(9, productVO.getRatingPoint());
+			pstmt.setInt(10, productVO.getRatingNumber());
+			pstmt.setInt(11, productVO.getProductSN());
 
 			pstmt.executeUpdate();
 

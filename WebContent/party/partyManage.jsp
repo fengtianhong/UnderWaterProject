@@ -26,14 +26,12 @@
 	<button type="submit" name="action" value="findByPartySN">送出</button>
 	<button type="reset">清空</button>
 </form>
-
-	<c:if test="${not empty errorMsgs}">
-		<c:forEach var="message" items="${errorMsgs}">
-			<div style="color:red">${message}</div>
-		</c:forEach>
-	</c:if>
-	
-	<table>
+<c:if test="${not empty errorMsgs}">
+	<c:forEach var="message" items="${errorMsgs}">
+		<div style="color:red">${message}</div>
+	</c:forEach>
+</c:if>
+<table>
 		<tr>
 			<th>揪團編號</th>
 			<th>主揪</th>
@@ -43,7 +41,6 @@
 			<th>揪團狀態</th>
 			<th>點選修改內容</th>
 		</tr>
-		
 <!-- ======================== 原始清單 =========================== -->
 		<c:if test="${!not empty findByPartySNLike}">
 		<c:forEach var="partyVO" items="${listAll}">

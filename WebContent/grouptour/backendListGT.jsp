@@ -64,6 +64,7 @@
 			</tr>
 		</table>
 	</c:forEach>
+<!-- 成功新增Msg -->
 	<c:if test="${not empty Msg}">
 		<script>alert("${Msg}");</script>
 	</c:if>

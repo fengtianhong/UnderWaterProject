@@ -29,6 +29,8 @@
 </head>
 <body>
 
+<div class="container" style="margin: 0 auto; width: 800px;">
+
 <form method="post" action="grouptour.do" enctype="multipart/form-data">
 <table>
 	<tr>
@@ -122,6 +124,10 @@
 		</c:forEach>
 	</ul>
 </c:if>
+
+</div>
+
+
 <%-- 成功Alert --%>
 <c:if test="${not empty Msg}">
 	<script>alert("${Msg}");</script>

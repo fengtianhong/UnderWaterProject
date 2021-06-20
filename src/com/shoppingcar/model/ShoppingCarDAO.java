@@ -19,8 +19,8 @@ public class ShoppingCarDAO implements ShoppingCarDAO_interface {
 	private static final String DELETE_STMT = "DELETE FROM ShoppingCar WHERE shoppingCarSN = ?";
 	private static final String UPDATE_STMT = "UPDATE ShoppingCar SET userID = ?, productSN = ?,"
 			+ "purchaseQuantity = ?, productPrice = ?, totalPrice = ? WHERE shoppingCarSN = ?";
-	private static final String GET_ONE_BY_SHOPPINGCARSN = "SELETE * FROM ShoppingCar WHERE shoppingCarSN = ?";
-	private static final String GET_ALL = "SELETE * FROM ShoppingCar ORDER BY shoppingCarSN";
+	private static final String GET_ONE_BY_SHOPPINGCARSN = "SELECT * FROM ShoppingCar WHERE shoppingCarSN = ?";
+	private static final String GET_ALL = "SELECT * FROM ShoppingCar ORDER BY shoppingCarSN";
 
 	private static DataSource ds = null;
 	static {

@@ -147,8 +147,40 @@ public class PartyServlet extends HttpServlet {
 			out.println("<h2>***待做*** 重複報名抓不住例外</h2>");
 		}
 		
+		// 使用者(會員) 發起揪團
+		if ("readyToHost".equals(action)) {
+			Integer partyHost = Integer.parseInt(req.getParameter("partyHost"));
+			String partyTitle = req.getParameter("partyTitle");
+			Date regDate = Date.valueOf(req.getParameter("regDate"));
+			Date closeDate = Date.valueOf(req.getParameter("closeDate"));
+			Date startDate = Date.valueOf(req.getParameter("startDate"));
+			Date endDate = Date.valueOf(req.getParameter("endDate"));
+			Integer partyLocation = Integer.parseInt(req.getParameter("partyLocation"));
+			Integer partyMinSize = Integer.parseInt(req.getParameter("partyMinSize"));
+			String partyDetail = req.getParameter("partyDetail");
+			String status = "0";
+			
+			PartyVO pv1 = new PartyVO();
+			pv1.setPartyHost(partyHost);
+			pv1.setPartyTitle(partyTitle);
+			pv1.setRegDate(regDate);
+			pv1.setCloseDate(closeDate);
+			pv1.setStartDate(startDate);
+			pv1.setEndDate(endDate);
+			pv1.setPartyLocation(partyLocation);
+			pv1.setPartyMinSize(partyMinSize);
+			pv1.setPartyDetail(partyDetail);
+			pv1.setStatus(status);
+			
+			partySvc.insert(pv1);
+			
+			RequestDispatcher successView = req.getRequestDispatcher("/party/partyList.jsp");
+			successView.forward(req, res);
+		}
 		
-		// 跳出Party相關記得把session.invalidate();
+		
+		
+// 跳出Party相關記得把session.invalidate();
 		
 		
 // ================================= 管理者後台 ==================================
@@ -194,7 +226,7 @@ public class PartyServlet extends HttpServlet {
 			
 		}
 		
-		//管理者 確認修改
+//未完成     //管理者 確認修改
 		if ("submitUpdate".equals(action)) {
 			Integer partySN = Integer.parseInt(req.getParameter("partySN").trim());
 			Integer partyHost = Integer.parseInt(req.getParameter("partyHost").trim());
@@ -223,12 +255,34 @@ public class PartyServlet extends HttpServlet {
 			
 			partySvc.update(pv1);
 			
-			out.println("修改成功!");
+			out.println("修改成功!(待完善頁面，並導回前頁)");
 		}
 		
 		//管理者 放棄修改 返回前頁
-		if ("goBackToManager".equals(action)) {
+		if ("goBackToManage".equals(action)) {
 			RequestDispatcher successView = req.getRequestDispatcher("/party/partyManage.jsp");
+			successView.forward(req, res);
+		}
+		
+		
+// ================================= 使用者(會員)後台 ==================================
+		
+		//使用者 查詢自己主揪的團 細節/更改/審核參加資格
+		if ("partyIHostDetail".equals(action)) {
+			Integer partySN = Integer.parseInt(req.getParameter("partySN"));
+			PartyVO partyVO = partySvc.findByPartySN(partySN);
+			req.setAttribute("partyVO", partyVO);
+			
+			List<PartyMemberVO> partyMembers = partyMemberSvc.findByPartySN(partySN);
+			req.setAttribute("partyMembers", partyMembers);
+			
+			RequestDispatcher successView = req.getRequestDispatcher("/party/partyIHostDetail.jsp");
+			successView.forward(req, res);
+		}
+		
+//未完成     //使用者 查詢自己主揪的團
+		if ("goBackToPartyIHost".equals(action)) {
+			RequestDispatcher successView = req.getRequestDispatcher("/party/partyIHost.jsp");
 			successView.forward(req, res);
 		}
 		

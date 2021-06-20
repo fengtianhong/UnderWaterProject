@@ -19,7 +19,7 @@ public class QaService {
 		dao.insert(vo);
 		return vo;
 	}
-	public QaVO updateQa(Integer questionSN, String menu, String submenu, String system, String question, String answer, Boolean popularQuestion, Integer popularQuestionSort) {
+	public QaVO updateQa(Integer questionSN, String menu, String submenu, String system, String question, String answer, Integer clicks, Boolean popularQuestion, Integer popularQuestionSort) {
 		QaVO vo = new QaVO();
 		vo.setQuestionSN(questionSN);
 		vo.setMenu(menu);
@@ -27,6 +27,7 @@ public class QaService {
 		vo.setSystem(system);
 		vo.setQuestion(question);
 		vo.setAnswer(answer);
+		vo.setClicks(clicks);
 		vo.setPopularQuestion(popularQuestion);
 		vo.setPopularQuestionSort(popularQuestionSort);
 		dao.update(vo);
@@ -36,14 +37,20 @@ public class QaService {
 	public void deleteQa(Integer questionSN) {
 		dao.delete(questionSN);
 	}
-	public List<QaVO> getByMenu(String menu, String submenu) {
+	public QaVO getOne(Integer questionSN) {
+		return dao.findByPrimaryKey(questionSN);
+	}
+	public List<QaVO> getByMenu(String menu, String submenu) {	// abandon
 		return dao.getByMenu(menu, submenu);
 	}
-	public List<QaVO> getBySystem(String system) {
+	public List<QaVO> getBySystem(String system) {		
 		return dao.getBySystem(system);
 	}
 	public List<QaVO> getPopularQuestion() {
 		return dao.getPopularQuestion();
+	}
+	public List<QaVO> getAll() {
+		return dao.getAll();
 	}
 	
 
