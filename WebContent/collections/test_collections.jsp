@@ -60,8 +60,8 @@
 		<span class="heart btn" onclick="heartForm.submit()">
 			<i class="fas fa-heart"></i>
 			<input type="hidden" name="action" value="favorite">
-			<input type="hidden" name="userID" value="1">
-			<input type="hidden" name="groupTourSN" value="6001">
+			<input type="hidden" name="userID" value="2">
+			<input type="hidden" name="groupTourSN" value="6002">
 		</span>
 		<c:if test="${not empty Msg}">
 			<i style="color: red">${Msg}</i>
@@ -73,14 +73,16 @@
 	<h3>報名導至 addOderForGroup 用，userID, GroupTourSN 暫時寫死</h3>
 	
 	<FORM NAME="orderForm" METHOD="post" ACTION="<%=request.getContextPath()%>/orderforgroup/orderforgroup.do" >
-	<input type="hidden" name="userID" value="1">
-	<input type="hidden" name="groupTourSN" value="6001">
+	<input type="hidden" name="userID" value="3">
+	<input type="hidden" name="groupTourSN" value="6003">
 	<input type="hidden" name="action" value="getOne_ForOrder">
 	<input type="submit" value="我要報名">
 	</FORM>
 
-    
-
+<!-- 成功新增Msg -->   
+<c:if test="${not empty Msg}">
+	<script>alert("${Msg}");</script>
+</c:if>
 
 <script src="https://kit.fontawesome.com/d3e24e4d81.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

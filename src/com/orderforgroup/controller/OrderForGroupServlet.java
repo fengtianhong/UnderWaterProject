@@ -20,7 +20,7 @@ import com.member.model.MemberVO;
 import com.orderforgroup.model.OderForGroupService;
 import com.orderforgroup.model.OderForGroupVO;
 
-// @WebServlet("/OrderForGroupServlet")
+@WebServlet("/orderforgroup/orderforgroup.do")
 public class OrderForGroupServlet extends HttpServlet {
        
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -109,7 +109,7 @@ public class OrderForGroupServlet extends HttpServlet {
 				oderForGroupSvc.insertOderForGroup(userID, groupTourSN, totalPrice, purchaseDate, phone, personID, birthdate);
 // 這邊要讓套裝行程的報名人數加一
 				
-				
+				req.setAttribute("Msg", "新增成功");
 				RequestDispatcher successView = req.getRequestDispatcher("/collections/test_collections.jsp");	// 訂單成功頁面 待確認
 				successView.forward(req, res);
 				
@@ -230,7 +230,7 @@ public class OrderForGroupServlet extends HttpServlet {
 				e.printStackTrace();   //
 				System.out.println("update failure");
 				errMsg.add("取得資料失敗，"+e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/orderforgroup/listAllForBackend");	// 回到選擇訂單頁面
+				RequestDispatcher failureView = req.getRequestDispatcher("/orderforgroup/backendListAll");	// 回到選擇訂單頁面
 				failureView.forward(req, res);
 			}
 		}

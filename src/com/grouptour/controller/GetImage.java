@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.grouptour.model.GroupTourService;
 import com.grouptour.model.GroupTourVO;
 
-//@WebServlet("/GetImage")
+@WebServlet("/grouptour/GetImage.do")
 public class GetImage extends HttpServlet {
        
     public GetImage() {
