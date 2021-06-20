@@ -35,7 +35,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="closeDate">報名開放日期: </td>
+			<td class="regDate">報名開放日期: </td>
 			<td><input type="date" name="regDate" value="${partyVO.regDate}"></td>
 		</tr>
 		<tr>
@@ -53,11 +53,11 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="partyMinSize">最低成團人數: </td>
+			<td class="partyMinSize">最低成團人數(待修改): </td>
 			<td><input type="number" min="${partyMemberSvc.findByPartySN(partyVO.partySN).size()}" max="20" name="partyMinSize" value="${partyVO.partyMinSize}"></td>
 		</tr>
 		<tr>
-			<td class="sizenow">目前報名人數: </td>
+			<td class="sizenow">目前報名人數(待修改): </td>
 			<td>${partyMemberSvc.findByPartySN(partyVO.partySN).size()}</td>
 		</tr>
 		<tr>
@@ -78,11 +78,9 @@
 			<td><textarea name="partyDetail" maxlength=100>${partyVO.partyDetail}</textarea></td>
 		</tr>
 	</table>
-<!-- </form> -->
 	
-<%-- <form method="post" action="<%=request.getContextPath()%>/party/party.do"> --%>
 	<button type="submit" name="action" value="submitUpdate">確認修改</button>
-	<button type="submit" name="action" value="goBackToManager">放棄修改(返回)</button>
+	<button type="submit" name="action" value="goBackToManage">放棄修改(返回)</button>
 <!-- 待更新goBack功能 -->
 </form>
 
