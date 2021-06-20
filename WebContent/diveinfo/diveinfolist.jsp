@@ -52,7 +52,6 @@ th, td {
 
 <html>
 <head>
-<meta charset="UTF-8">
 <title>潛點資訊列表</title>
 </head>
 <body>
