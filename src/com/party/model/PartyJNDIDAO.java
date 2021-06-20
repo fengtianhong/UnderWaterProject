@@ -31,13 +31,13 @@ public class PartyJNDIDAO implements PartyDAO_interface {
 	private static final String UPDATE_STMT = 
 			"update Party set partyTitle = ?, regDate = ?, closeDate = ?, startDate = ?," +
 			" endDate = ?, partyMinSize = ?, partyLocation = ?, partyDetail = ?, status = ? where partySN = ?";
-	private static final String FINDBYPARTYSN_STMT = "select * from party where partySN = ?";
-	private static final String FINDBYPARTYHOST_STMT = "select * from party where partyHost = ?";
+	private static final String FINDBYPARTYSN_STMT = "select * from party where partySN = ? order by partySN desc";
+	private static final String FINDBYPARTYHOST_STMT = "select * from party where partyHost = ? order by partySN desc";
 	private static final String FINDBYPARTYLOCATION_STMT = "select * from party where partyLocation = ?";
-	private static final String GETALL_STMT = "select * from party";
+	private static final String GETALL_STMT = "select * from party order by partySN desc";
 	private static final String DELETEBYPARTYSN_STMT = "delete from party where partySN = ?";
-	private static final String FINDBYSEARCH_STMT = "select * from party where partyTitle like ? and partyLocation like ? and partyMinSize > ?";
-	private static final String FINDBYPARTYSNLIKE_STMT = "select * from party where partySN like ?";
+	private static final String FINDBYSEARCH_STMT = "select * from party where partyTitle like ? and partyLocation like ? and partyMinSize > ? order by partySN desc";
+	private static final String FINDBYPARTYSNLIKE_STMT = "select * from party where partySN like ? order by partySN desc";
 
 	@Override
 	public PartyVO insert(PartyVO partyVO) {
