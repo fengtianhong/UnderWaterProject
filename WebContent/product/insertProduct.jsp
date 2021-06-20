@@ -17,19 +17,12 @@
 <body>
 
 	<table id="table-1">
-		<tr>
-			<td>
-				<h3>商品資料新增</h3>
-			</td>
-			<td>
-				<h4>
-					<a href="selectProduct.jsp">回到selectProduct</a>
-				</h4>
-			</td>
-		</tr>
+		<h3>
+			<a href="selectProduct.jsp">回查詢首頁</a>
+		</h3>
 	</table>
 
-	<h3>商品新增:</h3>
+	<h3>新增商品:</h3>
 
 	<c:if test="${not empty errorMsgs}">
 		<font style="color: red">請修正以下錯誤:</font>
@@ -42,71 +35,67 @@
 
 	<FORM METHOD="post" ACTION="product.do" name="form1">
 		<table>
-			<tr>
-				<td>商品類別:</td>
-				<td><input type="TEXT" name="class" size="45"
-					value="<%=(productVO == null) ? "吳永志" : productVO.getProductClass()%>" /></td>
-			</tr>
-			<tr>
-				<td>商品名稱:</td>
-				<td><input type="TEXT" name="name" size="45"
-					value="<%=(productVO == null) ? "MANAGER" : productVO.getProductName()%>" /></td>
-			</tr>
-			<tr>
-				<td>商品單價:</td>
-				<td><input type="TEXT" name="price" size="45"
-					value="<%=(productVO == null) ? "10000" : productVO.getProductPrice()%>" /></td>
-			</tr>
-			<tr>
-				<td>商品數量:</td>
-				<td><input type="TEXT" name="quantity" size="45"
-					value="<%=(productVO == null) ? "10000" : productVO.getProductQuantity()%>" /></td>
-			</tr>
-			<tr>
-				<td>商品狀態:</td>
-				<td><input type="TEXT" name="status" size="45"
-					value="<%=(productVO == null) ? "100" : productVO.getProductStatus()%>" /></td>
-			</tr>
-			<tr>
-				<td>商品說明:</td>
-				<td><input type="TEXT" name="detail" size="45"
-					value="<%=(productVO == null) ? "100" : productVO.getProductDetail()%>" /></td>
-			</tr>
-			<tr>
-				<td>優惠品:</td>
-				<td><input type="TEXT" name="discount" size="45"
-					value="<%=(productVO == null) ? "100" : productVO.getProductDiscount()%>" /></td>
-			</tr>
-			<tr>
-				<td>精選品:</td>
-				<td><input type="TEXT" name="prime" size="45"
-					value="<%=(productVO == null) ? "100" : productVO.getProductPrime()%>" /></td>
-			</tr>
-			<tr>
-				<td>評價總分數:</td>
-				<td><input type="TEXT" name="ratingpoint" size="45"
-					value="<%=(productVO == null) ? "100" : productVO.getRatingPoint()%>" /></td>
-			</tr>
-			<tr>
-				<td>評價總人數:</td>
-				<td><input type="TEXT" name="ratingnumber" size="45"
-					value="<%=(productVO == null) ? "100" : productVO.getRatingNumber()%>" /></td>
-			</tr>
-
+			商品類別:
+			<select name="productClass">
+				<option value=""></option>
+				<option value="蛙鞋">蛙鞋</option>
+				<option value="呼吸器">呼吸器</option>
+				<option value="面鏡">面鏡</option>
+				<option value="防寒衣">防寒衣</option>
+				<option value="氣瓶">氣瓶</option>
+				
+<%-- 			<%=(productVO == null) ? "" : productVO.getProductClass()%>	 --%>
+			</select><br> 
+			
+			商品名稱:
+			<input type="TEXT" name="productName"
+				value="<%=(productVO == null) ? "名稱" : productVO.getProductName()%>" /><br> 
+			
+			商品單價:
+			<input type="TEXT" name="productPrice"
+				value="<%=(productVO == null) ? "單價" : productVO.getProductPrice()%>" /><br> 
+			
+			商品數量:
+			<input type="TEXT" name="productQuantity"
+				value="<%=(productVO == null) ? "數量" : productVO.getProductQuantity()%>" /><br> 
+			
+			商品狀態:
+			<input type="radio" name="productStatus" id="st1" value="1" />
+			<label for="st1">上架</label>
+			<input type="radio" name="productStatus" id="st2" value="0" checked/>
+			<label for="st2">下架</label><br>
+						
+			商品說明:
+			<br>
+			<textarea></textarea><br>
+			
+<%-- 		<input type="TEXT" name="productDetail"	value="<%=(productVO == null) ? "說明" : productVO.getProductDetail()%>" /><br>  --%>		
+			是否為優惠商品:
+			<input type="radio" name="productDiscount" id="op1" value="true" />
+			<label for="op1">是</label>
+			<input type="radio" name="productDiscount" id="op2" value="false" />
+			<label for="op2">否</label><br>
+			
+			是否為精選商品:
+			<input type="radio" name="productPrime" id="op3" value="true" />
+			<label for="op3">是</label>
+			<input type="radio" name="productPrime" id="op4" value="false" />
+			<label for="op4">否</label><br>
+			
+			評價總分數:
+			<input type="TEXT" name="ratingPoint"
+				value="<%=(productVO == null) ? "多少分" : productVO.getRatingPoint()%>" /><br>
+			
+			評價總人數:
+			<input type="TEXT" name="ratingNumber"
+				value="<%=(productVO == null) ? "幾個人" : productVO.getRatingNumber()%>" /><br>
+			
 			<jsp:useBean id="productSvc" scope="page" class="com.product.model.ProductService" />
-<!-- 			<tr> -->
-<!-- 				<td><font color=red><b>*</b></font></td> -->
-<!-- 				<td><select size="1" name="productSN"> -->
-<%-- 						<c:forEach var="productVO" items="${productSvc.all}"> --%>
-<%-- 							<option value="${productVO.productSN}" --%>
-<%-- 								${(productVO.producySN== productVO.producySN)? 'selected':'' }>${productVO.productSN} --%>
-<%-- 						</c:forEach> --%>
-<!-- 				</select></td> -->
-<!-- 			</tr> -->
+		</table><br>
+		
+		<input type="hidden" name="action" value="insertProduct">
+		<input type="submit" value="確認送出">
 
-		</table>
-		<br> <input type="hidden" name="action" value="insert"> <input
-			type="submit" value="確認送出">
 	</FORM>
 
 </body>

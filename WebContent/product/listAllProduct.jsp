@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>All Product</title>
+<title>顯示所有商品</title>
 
 </head>
 
@@ -21,9 +21,9 @@
 	<table id="table-1">
 		<tr>
 			<td>
-				<h3>所有商品</h3>
+				<h3>所有商品資料</h3>
 				<h4>
-					<a href="selectProduct.jsp">回selectProduct</a>
+					<a href="selectProduct.jsp">回查詢首頁</a>
 				</h4>
 			</td>
 		</tr>
@@ -73,16 +73,16 @@
 				<td>${productVO.ratingNumber}</td>
 				<td>
 					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/product.do">
-						<input type="submit" value="上下架變更"> 
+						<input type="submit" value="變更上下架狀態"> 
 						<input type="hidden" name="productSN" value="${productVO.productSN}">
-						<input type="hidden" name="action" value="getOne_To_OffShelf">
+						<input type="hidden" name="action" value="OffShelfProduct">
 					</FORM>
 				</td>
 				<td>
 					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/product/product.do">
 						<input type="submit" value="變更商品資料">
 						<input type="hidden" name="productSN" value="${productVO.productSN}">
-						<input type="hidden" name="action" value="getOne_To_Update">
+						<input type="hidden" name="action" value="UpdateProduct">
 					</FORM>
 				</td>
 			</tr>

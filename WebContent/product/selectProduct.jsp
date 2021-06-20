@@ -4,13 +4,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>UnderWaterShop</title>
+<title>商品查詢首頁</title>
 
 </head>
 
 <body>
 
-	<h3>資料查詢</h3>
+	<h3>商品查詢首頁</h3>
 
 	<c:if test="${not empty errorMsgs}">
 		<font style="color: red">請修正以下錯誤:</font>
@@ -34,13 +34,13 @@
 			   
 	<li>
 	    <FORM METHOD="post" ACTION="product.do">
-	       <b>選擇商品類別:</b>
-	       <select size="1" name="empno">
-	         <c:forEach var="productVO" items="${dao.all}"> 
+	       <b>依商品類別查詢:</b>
+	       <select size="1" name="productSN">
+	         <c:forEach var="productVO" items="${dao.all}"> <%-- 試試productClass --%>
 	          	<option value="${productVO.productSN}">${productVO.productClass}
 	         </c:forEach>   
 	       </select>
-	       <input type="hidden" name="action" value="getOne_For_Display">
+	       <input type="hidden" name="action" value="getOneProduct">
 	       <input type="submit" value="送出">
 	    </FORM>
 	</li>
@@ -48,13 +48,13 @@
 		  
 	<li>
 	    <FORM METHOD="post" ACTION="product.do">
-	       <b></b>
-	       <select size="1" name="empno">
+	       <b>查詢優惠商品</b>
+	       <select size="1" name="productSN">
 	         <c:forEach var="productVO" items="${dao.all}"> 
 	          	<option value="${productVO.productSN}">${productVO.productDiscount}
 	         </c:forEach>   
 	       </select>
-	       <input type="hidden" name="action" value="getOne_For_Display">
+	       <input type="hidden" name="action" value="getOneProduct">
 	       <input type="submit" value="送出">
 	    </FORM>
 	</li>
