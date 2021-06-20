@@ -1,6 +1,7 @@
 package com.forumArticle.controller;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -101,7 +102,8 @@ public class ForumArticleServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
-		//	****************************** 3.更新 (update)******************************
+		//	****************************** 3.(管理員)更新 (update)******************************
+		//	想法：管理員的更新，應該不是要去更改使用者發表的內容
 		//	fAUpdate.jsp的請求
 		if ("update".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
@@ -109,14 +111,28 @@ public class ForumArticleServlet extends HttpServlet {
 			//	接收參數+錯誤處理
 			Integer articleSN = new Integer(req.getParameter("articleSN").trim());
 			
-			String articleTitle = req.getParameter("articleTitle");
-			String articleTitleReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,15}$";
+//			String articleTitle = req.getParameter("articleTitle");
+//			String articleTitleReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,15}$";
+//			
+//			if (articleTitle == null || articleTitle.trim().length() == 0) {
+//				errorMsgs.add("文章標題: 請勿空白");
+//			} else if(!articleTitle.trim().matches(articleTitleReg)) { //以下練習正則(規)表示式(regular-expression)
+//				errorMsgs.add("文章標題: 只能是中、英文字母、數字和_ , 且長度必需在2到15之間");
+//            }
+//			
+////			Timestamp publishedDate = new Timestamp(req.getParameter("publishedDate"));
+//			
+//			String articleText = req.getParameter("articleText").trim();
+//			if (articleText == null || articleText.trim().length() == 0) {
+//				errorMsgs.add("文章內容請勿空白");
+//			}
 			
-			if (articleTitle == null || articleTitle.trim().length() == 0) {
-				errorMsgs.add("文章標題: 請勿空白");
-			} else if(!articleTitle.trim().matches(articleTitleReg)) { //以下練習正則(規)表示式(regular-expression)
-				errorMsgs.add("文章標題: 只能是中、英文字母、數字和_ , 且長度必需在2到15之間");
-            }
+
+			
+			
+			
+			
+			
 			
 			
 			
