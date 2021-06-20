@@ -14,10 +14,13 @@
 		<meta charset="UTF-8">
 		<title>發文標題選項管理</title>
 		<style>
+			*{
+				list-style-type:none
+			}
+			
 			div#titlepg {
 				border: 2px solid;
-				margin-left: auto;
-				margin-right: auto;
+				margin: 0 auto;
 				text-align: center;
 				width: 400px;
 				line-height: 20px;
@@ -33,6 +36,16 @@
 				text-align: center;
 			}
 		
+			div#search {
+				margin: 0 auto;
+				margin-top: 3px;
+				border: 1px solid;
+				text-align: left;
+				width: 500px;
+			}
+			
+			
+			
 		</style>
 	</head>
 
@@ -52,20 +65,25 @@
 		</c:if>
 		
 		<div id="linkbutton">
-		<input type="button" value="前往新增標題選項" onclick="location.href='addArticleTitleOpt.jsp'">
-		<input type="button" value="前往更新標題選項" onclick="location.href='updateArticleTitleOpt.jsp'">
+			<input type="button" value="前往新增標題選項" onclick="location.href='addArticleTitleOpt.jsp'">
 		</div>
 
-		<div>
+		<!-- <input type="button" value="前往更新標題選項" onclick="location.href='updateArticleTitleOpt.jsp'">  -->
+<%-- 		<form action="<%= request.getContextPath()%>/articleTitleOpt/articleTitleOpt.do">		
+			<input type="button" value="getOne_For_Update" name="action">
+			<input type="hidden" value="${articleTitleOptVO.articleTitleOptSN}" name="articleTitleOptSN">
+		</form> --%>
+
+		<div id="search">
 			<h3>發文選項查詢</h3>
 			<ul>
-				<li><a href="listAllArticleTitleOpt.jsp">查詢全部標題選項</a></li>
+				<li><b>查詢全部標題選項：</b><a href="listAllArticleTitleOpt.jsp">按此查詢或修改</a></li>
 				<li>
 					<FORM METHOD="post" ACTION="articleTitleOpt.do" enctype="multipart/form-data">
-						<b>輸入發文標題選項編號(如：31)</b>
+						<b>輸入發文標題選項編號(如：31):</b>
 						<input type="text" name="articleTitleOptSN">
 						<input type="hidden" name="action" value="getOne_For_display">
-						<input type="submit" value="sent">
+						<input type="submit" value="送出">
 					</FORM>
 				</li>
 			</ul>

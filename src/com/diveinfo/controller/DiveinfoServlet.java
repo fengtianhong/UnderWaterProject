@@ -49,7 +49,7 @@ public class DiveinfoServlet extends HttpServlet {
 				}
 				String view = req.getParameter("view");
 				String introduction = req.getParameter("introduction");
-				if (introduction == null || (pointname.trim().length() == 0)) {
+				if (introduction == null || (introduction.trim().length() == 0)) {
 					errorMsgs.add("請輸入詳細介紹");
 
 				}
