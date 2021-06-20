@@ -137,6 +137,7 @@
 		<servlet-name>CheckAccountServlet</servlet-name>
 		<url-pattern>/member/CheckAccountServlet</url-pattern>
 	</servlet-mapping>
+	<servlet>
 		<servlet-name>ProductServlet</servlet-name>
 		<servlet-class>com.product.controller.ProductServlet</servlet-class>
 	</servlet>
