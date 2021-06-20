@@ -1,18 +1,24 @@
 package com.orderforproduct.model;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
+import com.product.model.ProductJDBCDAO;
 
-public class OrderForProductDAO implements OrderForProductDAO_interface {
+import util.Util;
+
+public class OrderForProductJDBCDAO implements OrderForProductDAO_interface {
+
+	String driver = util.Util.DRIVER;
+	String url = util.Util.URL;
+	String userid = "robert";
+	String passwd = "55688";
 
 	private static final String INSERT_STMT = "INSERT INTO OrderForProduct (userID, totalPrice, orderStatus) VALUES (?, ?, ?)";
 	private static final String CHANGESTATUS_STMT = "UPDATE OrderForProduct SET orderStatus = ? WHERE orderSN = ?";
@@ -21,13 +27,62 @@ public class OrderForProductDAO implements OrderForProductDAO_interface {
 	private static final String GET_ONE_BY_ORDERSN = "SELECT * FROM OrderForProduct WHERE orderSN = ?";
 	private static final String GET_ALL = "SELECT * FROM OrderForProduct ORDER BY orderSN";
 
-	private static DataSource ds = null;
 	static {
 		try {
-			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
-		} catch (NamingException e) {
-			e.printStackTrace();
+			Class.forName(Util.DRIVER);
+		} catch (ClassNotFoundException ce) {
+			ce.printStackTrace();
+		}
+	}
+
+	public static void main(String[] args) {
+
+		OrderForProductJDBCDAO dao = new OrderForProductJDBCDAO();
+
+		// 新增
+//		OrderForProductVO o1 = new OrderForProductVO();
+//		o1.setUserID(1);
+//		o1.setPurchaseDate(Timestamp.valueOf("2021-06-06 12:21:12"));
+//		o1.setTotalPrice(5000);
+//		o1.setOrderStatus("1");
+//		dao.insert(o1);
+
+		// 更新狀態
+//		OrderForProductVO o2 = new OrderForProductVO();
+//		o2.setOrderStatus("1");
+//		o2.setOrderSN(6);
+//		dao.changeStatus(o2);
+
+		// 修改
+//		OrderForProductVO o3 = new OrderForProductVO();
+//		o3.setUserID(5);
+//		o3.setPurchaseDate(Timestamp.valueOf("2021-07-07 12:21:12"));
+//		o3.setTotalPrice(4000);
+//		o3.setClearDate(Timestamp.valueOf("2021-08-08 12:21:12"));
+//		o3.setOrderSN(6);
+//		dao.update(o3);
+
+		// 功能查詢
+//		OrderForProductVO os = dao.getOneByOrderSN(1);
+//		System.out.print(os.getOrderSN());
+//		System.out.print(os.getUserID());
+//		System.out.print(os.getPurchaseDate());
+//		System.out.print(os.getTotalPrice());
+//		System.out.print(os.getOrderStatus());
+//		System.out.print(os.getClearDate());
+//		
+//		System.out.println("---------------------");
+
+		// 查詢全部
+		List<OrderForProductVO> list = dao.getAll();
+		for (OrderForProductVO oo : list) {
+			System.out.print(oo.getOrderSN());
+			System.out.print(oo.getUserID());
+			System.out.print(oo.getPurchaseDate());
+			System.out.print(oo.getTotalPrice());
+			System.out.print(oo.getOrderStatus());
+			System.out.print(oo.getClearDate());
+			System.out.println();
 		}
 	}
 
@@ -37,7 +92,7 @@ public class OrderForProductDAO implements OrderForProductDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-			con = ds.getConnection();
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setInt(1, orderForProductVO.getUserID());
@@ -74,7 +129,7 @@ public class OrderForProductDAO implements OrderForProductDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-			con = ds.getConnection();
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(CHANGESTATUS_STMT);
 
 			pstmt.setString(1, orderForProductVO.getOrderStatus());
@@ -108,7 +163,7 @@ public class OrderForProductDAO implements OrderForProductDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-			con = ds.getConnection();
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(UPDATE_STMT);
 
 			pstmt.setInt(1, orderForProductVO.getUserID());
@@ -148,7 +203,7 @@ public class OrderForProductDAO implements OrderForProductDAO_interface {
 		OrderForProductVO orderForProductVO = null;
 
 		try {
-			con = ds.getConnection();
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ONE_BY_ORDERSN);
 
 			pstmt.setInt(1, orderSN);
@@ -204,7 +259,7 @@ public class OrderForProductDAO implements OrderForProductDAO_interface {
 		List<OrderForProductVO> list = new ArrayList<OrderForProductVO>();
 
 		try {
-			con = ds.getConnection();
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ALL);
 
 			rs = pstmt.executeQuery();

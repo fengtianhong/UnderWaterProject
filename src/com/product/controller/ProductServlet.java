@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.product.model.ProductService;
 import com.product.model.ProductVO;
 
-@WebServlet("/ProductServlet")
 public class ProductServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -24,20 +23,23 @@ public class ProductServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
+		response.setContentType("text/html; charset=UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
 
-		if ("getOne_For_DisPlay".equals(action)) {
+if ("getOneProduct".equals(action)) {
+
 			List<String> errorMsgs = new LinkedList<String>();
 			request.setAttribute("errorMsgs", errorMsgs);
 
 			try {
 				String str = request.getParameter("productSN");
-				if (str.trim().length() == 0) {
-					errorMsgs.add("�п�J�ӫ~�s��");
+				if (str == null || str.trim().length() == 0) {
+					errorMsgs.add("請輸入商品編號");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failView = request.getRequestDispatcher("/product/product_select.jsp");
+					RequestDispatcher failView = request.getRequestDispatcher("/product/selectProduct.jsp");
 					failView.forward(request, response);
 					return;
 				}
@@ -47,11 +49,11 @@ public class ProductServlet extends HttpServlet {
 				try {
 					productSN = new Integer(str);
 				} catch (NumberFormatException e) {
-					errorMsgs.add("�榡��J�����T");
+					errorMsgs.add("格式輸入錯誤");
 				}
 
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failView = request.getRequestDispatcher("/product/product_select.jsp");
+					RequestDispatcher failView = request.getRequestDispatcher("/product/selectProduct.jsp");
 					failView.forward(request, response);
 					return;
 				}
@@ -59,24 +61,24 @@ public class ProductServlet extends HttpServlet {
 				ProductService productSvc = new ProductService();
 				ProductVO productVO = productSvc.getOneProduct(productSN);
 				if (productVO == null) {
-					errorMsgs.add("�d�L���");
+					errorMsgs.add("查無資料");
 				}
-				if(!errorMsgs.isEmpty()) {
-					RequestDispatcher failView = request.getRequestDispatcher("/product/product_select.jsp");
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failView = request.getRequestDispatcher("/product/selectProduct.jsp");
 					failView.forward(request, response);
 					return;
 				}
-				
+
 				request.setAttribute("productVO", productVO);
 				String url = "/product/listOneProduct.jsp";
 				RequestDispatcher successView = request.getRequestDispatcher(url);
-				successView.forward(request, response);			
+				successView.forward(request, response);
 
 			} catch (Exception e) {
-				errorMsgs.add("�L�k���o���" + e.getMessage());
-				RequestDispatcher failView = request.getRequestDispatcher("/product/product_select.jsp");
-				failView.forward(request, response);				
-			} 
+				errorMsgs.add("查無資料" + e.getMessage());
+				RequestDispatcher failView = request.getRequestDispatcher("/product/selectProduct.jsp");
+				failView.forward(request, response);
+			}
 		}
 	}
 

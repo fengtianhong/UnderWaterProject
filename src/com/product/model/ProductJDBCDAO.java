@@ -1,18 +1,21 @@
 package com.product.model;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import util.Util;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
+public class ProductJDBCDAO implements ProductDAO_interface {
 
-public class ProductDAO implements ProductDAO_interface {
+	String driver = util.Util.DRIVER;
+	String url = util.Util.URL;
+	String userid = "robert";
+	String passwd = "55688";
 
 	private static final String INSERT_STMT = "INSERT INTO Product (productClass, productName, productPrice,"
 			+ "productQuantity, productStatus, productDetail, productDiscount, productPrime, ratingPoint, ratingNumber) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -32,14 +35,90 @@ public class ProductDAO implements ProductDAO_interface {
 
 	private static final String GET_ALL = "SELECT * FROM Product ORDER BY productSN";
 
-	private static DataSource ds = null;
 	static {
 		try {
-			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/UnderWater");
-		} catch (NamingException e) {
-			e.printStackTrace();
+			Class.forName(Util.DRIVER);
+		} catch (ClassNotFoundException ce) {
+			ce.printStackTrace();
 		}
+	}
+
+	public static void main(String[] args) {
+
+		ProductJDBCDAO dao = new ProductJDBCDAO();
+
+		// 新增
+//		ProductVO p1 = new ProductVO();
+//		p1.setProductClass("氧氣瓶");
+//		p1.setProductName("氧氣瓶TEST");
+//		p1.setProductPrice(1000);
+//		p1.setProductQuantity(10);
+//		p1.setProductStatus("1");
+//		p1.setProductDetail("便宜啦");
+//		p1.setProductDiscount(true);
+//		p1.setProductPrime(true);
+//		p1.setRatingPoint(22);
+//		p1.setRatingNumber(2);
+//		dao.insert(p1);
+
+		// 上下架
+		ProductVO p2 = new ProductVO();
+		p2.setProductStatus("0");
+		p2.setProductSN(8);
+		dao.offShelf(p2);
+
+		// 修改
+//		ProductVO p2 = new ProductVO();
+//		p2.setProductClass("泳鏡");
+//		p2.setProductName("2000度泳鏡");
+//		p2.setProductPrice(1500);
+//		p2.setProductQuantity(35);
+//		p2.setProductDetail("跟你說不是還買");
+//		p2.setProductCreateTime(Timestamp.valueOf("2021-07-01 12:21:12"));
+//		p2.setProductDiscount(false);
+//		p2.setProductPrime(false);
+//		p2.setRatingPoint(10);
+//		p2.setRatingNumber(4);
+//		p2.setProductSN(8);
+//		dao.update(p2);
+
+		// 單一查詢
+//		ProductVO p = dao.getOneByProductSN(2);
+//		System.out.print(p.getProductSN());
+//		System.out.print(p.getProductClass());
+//		System.out.print(p.getProductName());
+//		System.out.print(p.getProductPrice());
+//		System.out.print(p.getProductQuantity());
+//		System.out.print(p.getProductStatus());
+//		System.out.print(p.getProductDetail());
+//		System.out.print(p.getProductCreateTime());
+//		System.out.print(p.getProductDiscount());
+//		System.out.print(p.getProductPrime());
+//		System.out.print(p.getRatingPoint());
+//		System.out.print(p.getRatingNumber());
+//		
+//		System.out.println("---------------------");
+
+		// 功能查詢複數商品
+//		List<ProductVO> list = dao.getAll();
+//		List<ProductVO> list = dao.getProductByClass("防寒衣");
+//		List<ProductVO> list = dao.getProductByDiscount(true);
+//		List<ProductVO> list = dao.getProductByPrime(false);
+//		for (ProductVO pa : list) {
+//			System.out.print(pa.getProductSN());
+//			System.out.print(pa.getProductClass());
+//			System.out.print(pa.getProductName());
+//			System.out.print(pa.getProductPrice());
+//			System.out.print(pa.getProductQuantity());
+//			System.out.print(pa.getProductStatus());
+//			System.out.print(pa.getProductDetail());
+//			System.out.print(pa.getProductCreateTime());
+//			System.out.print(pa.getProductDiscount());
+//			System.out.print(pa.getProductPrime());
+//			System.out.print(pa.getRatingPoint());
+//			System.out.print(pa.getRatingNumber());
+//			System.out.println();
+//		}
 	}
 
 	@Override
@@ -48,9 +127,8 @@ public class ProductDAO implements ProductDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-			con = ds.getConnection();
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(INSERT_STMT);
-
 			pstmt.setString(1, productVO.getProductClass());
 			pstmt.setString(2, productVO.getProductName());
 			pstmt.setInt(3, productVO.getProductPrice());
@@ -90,7 +168,7 @@ public class ProductDAO implements ProductDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-			con = ds.getConnection();
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(OFFSHELF_STMT);
 
 			pstmt.setInt(1, productVO.getProductSN());
@@ -124,7 +202,7 @@ public class ProductDAO implements ProductDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-			con = ds.getConnection();
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(UPDATE_STMT);
 
 			pstmt.setString(1, productVO.getProductClass());
@@ -169,7 +247,7 @@ public class ProductDAO implements ProductDAO_interface {
 		ProductVO productVO = null;
 
 		try {
-			con = ds.getConnection();
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ONE_BY_PRODUCTSN);
 
 			pstmt.setInt(1, productSN);
@@ -231,7 +309,7 @@ public class ProductDAO implements ProductDAO_interface {
 		List<ProductVO> list = new ArrayList<ProductVO>();
 
 		try {
-			con = ds.getConnection();
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_PRODUCT_BY_CLASS);
 
 			pstmt.setString(1, productClass);
@@ -292,7 +370,7 @@ public class ProductDAO implements ProductDAO_interface {
 		List<ProductVO> list = new ArrayList<ProductVO>();
 
 		try {
-			con = ds.getConnection();
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_PRODUCT_BY_DISCOUNT);
 
 			pstmt.setBoolean(1, productDiscount);
@@ -353,7 +431,7 @@ public class ProductDAO implements ProductDAO_interface {
 		List<ProductVO> list = new ArrayList<ProductVO>();
 
 		try {
-			con = ds.getConnection();
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_PRODUCT_BY_PRIME);
 
 			pstmt.setBoolean(1, productPrime);
@@ -414,7 +492,7 @@ public class ProductDAO implements ProductDAO_interface {
 		List<ProductVO> list = new ArrayList<ProductVO>();
 
 		try {
-			con = ds.getConnection();
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ALL);
 
 			rs = pstmt.executeQuery();
