@@ -1,16 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.orderforgroup.model.*"%>
 
-<%
-	
-	// Integer userID = (Integer) session.getAttribute("userID");	// userID 存在session
+<%	
 	OderForGroupService oderForGroupSvc = new OderForGroupService();
-	List<OderForGroupVO> list = oderForGroupSvc.getOrderByUserID(1);	// UserID先寫死
+	List<OderForGroupVO> list = oderForGroupSvc.getAll();
 	pageContext.setAttribute("list", list);	// WHY
-	
+
 %>
 
 <!DOCTYPE html>
@@ -18,7 +17,7 @@
 <head>
 <meta charset="UTF-8">
 <title>List All for back</title>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/orderforgroup/css/listByUserID.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/orderforgroup/css/listAllForBackend.css">
 
 </head>
 <body>
@@ -54,8 +53,7 @@
                 </FORM>
             </div>
           </li>
-	</c:forEach>
-	<div class='pageNumber'><%@ include file="page2.file" %></div>
+	</c:forEach><%@ include file="page2.file" %>
 
     
         </ul>

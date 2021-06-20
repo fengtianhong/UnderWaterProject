@@ -51,6 +51,7 @@
 	</servlet-mapping>
 
 	<servlet>
+<<<<<<< HEAD
 		<servlet-name>GroupTourServlet</servlet-name>
 		<servlet-class>com.grouptour.controller.GroupTourServlet</servlet-class>
 	</servlet>
@@ -71,6 +72,8 @@
 	</servlet-mapping>
 
 	<servlet>
+=======
+>>>>>>> origin/katy
 		<servlet-name>MemberServlet</servlet-name>
 		<servlet-class>com.member.controller.MemberServlet</servlet-class>
 	</servlet>
@@ -89,6 +92,7 @@
 		<servlet-name>LoginServlet</servlet-name>
 		<url-pattern>/member/login.do</url-pattern>
 	</servlet-mapping>
+<<<<<<< HEAD
 	<servlet>
 		<servlet-name>GetImage</servlet-name>
 		<servlet-class>com.grouptour.controller.GetImage</servlet-class>
@@ -175,5 +179,7 @@
 		<servlet-name>ShoppingCarServlet</servlet-name>
 		<url-pattern>/shoppingcar/shoppingcar.do</url-pattern>
 	</servlet-mapping>
+=======
+>>>>>>> origin/katy
 	
 </web-app>
