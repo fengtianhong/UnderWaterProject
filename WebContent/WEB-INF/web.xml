@@ -50,15 +50,7 @@
 		<url-pattern>/party/party.do</url-pattern>
 	</servlet-mapping>
 
-	<servlet>
-		<servlet-name>GroupTourServlet</servlet-name>
-		<servlet-class>com.grouptour.controller.GroupTourServlet</servlet-class>
-	</servlet>
 
-	<servlet-mapping>
-		<servlet-name>GroupTourServlet</servlet-name>
-		<url-pattern>/grouptour/grouptour.do</url-pattern>
-	</servlet-mapping>
 	
 	<servlet>
 		<servlet-name>ArticleTitleOptServlet</servlet-name>
@@ -71,6 +63,7 @@
 	</servlet-mapping>
 
 	<servlet>
+
 		<servlet-name>MemberServlet</servlet-name>
 		<servlet-class>com.member.controller.MemberServlet</servlet-class>
 	</servlet>
@@ -89,35 +82,7 @@
 		<servlet-name>LoginServlet</servlet-name>
 		<url-pattern>/member/login.do</url-pattern>
 	</servlet-mapping>
-	<servlet>
-		<servlet-name>GetImage</servlet-name>
-		<servlet-class>com.grouptour.controller.GetImage</servlet-class>
-	</servlet>
 
-	<servlet-mapping>
-		<servlet-name>GetImage</servlet-name>
-		<url-pattern>/grouptour/GetImage.do</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>OrderForGroupServlet</servlet-name>
-		<servlet-class>com.orderforgroup.controller.OrderForGroupServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>OrderForGroupServlet</servlet-name>
-		<url-pattern>/orderforgroup/orderforgroup.do</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>CollectionsServlet</servlet-name>
-		<servlet-class>com.collections.controller.CollectionsServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>CollectionsServlet</servlet-name>
-		<url-pattern>/collections/collections.do</url-pattern>
-	</servlet-mapping>
-	
 	<servlet>
 		<servlet-name>IdentityServlet</servlet-name>
 		<servlet-class>com.member.controller.IdentityServlet</servlet-class>
@@ -137,6 +102,7 @@
 		<servlet-name>CheckAccountServlet</servlet-name>
 		<url-pattern>/member/CheckAccountServlet</url-pattern>
 	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>ProductServlet</servlet-name>
 		<servlet-class>com.product.controller.ProductServlet</servlet-class>
@@ -176,5 +142,6 @@
 		<servlet-name>ShoppingCarServlet</servlet-name>
 		<url-pattern>/shoppingcar/shoppingcar.do</url-pattern>
 	</servlet-mapping>
+
 	
 </web-app>
