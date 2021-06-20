@@ -66,12 +66,18 @@ public class MemberService {
 		return dao.getAll();
 	}
 	
-	public boolean loginMember(String account, String pwd) {
+	public Boolean loginMember(String account, String pwd) {
 		MemberVO vo = new MemberVO();
 		vo.setAccount(account);
 		vo.setPwd(pwd);
 //		dao.login(vo);
 //		return vo;
 		return dao.login(vo);
+	}
+	
+	public Boolean checkAccountMember(String account) {
+		MemberVO vo = new MemberVO();
+		vo.setAccount(account);
+		return dao.checkAccount(vo);
 	}
 }
