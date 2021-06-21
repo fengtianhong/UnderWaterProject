@@ -1,6 +1,7 @@
 package com.collections.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -33,24 +34,33 @@ public class CollectionsServlet extends HttpServlet {
 		// 前端按了<3 
 		if ("favorite".equals(action)) {
 			
-			// 傳入 UserID, GroupTourSN
-			Integer userID = new Integer(req.getParameter("userID").trim());
-			Integer groupTourSN = new Integer(req.getParameter("groupTourSN").trim());
 			
-			// 查詢資料
-			CollectionsService colSvc = new CollectionsService();
-			List<Integer> list = colSvc.getCollectionsByUserid(userID);
-			
-			if(list.contains(groupTourSN)) {	// 套裝行程存在該使用者收藏時刪除資料
-				colSvc.deleteCollections(groupTourSN, userID);
-				req.setAttribute("Msg", "移除收藏!");
-			}else {
-				colSvc.addCollections(groupTourSN, userID);	// 或者加入收藏
-				req.setAttribute("Msg", "成功加入收藏!");
+			try {
+				// 傳入 UserID, GroupTourSN
+				Integer userID = new Integer(req.getParameter("userID").trim());
+				Integer groupTourSN = new Integer(req.getParameter("groupTourSN").trim());
+				
+				// 查詢資料
+				CollectionsService colSvc = new CollectionsService();
+				List<Integer> list = colSvc.getCollectionsByUserid(userID);
+				PrintWriter out = res.getWriter();
+				
+				if(list.contains(groupTourSN)) {	// 套裝行程存在該使用者收藏時刪除資料
+					colSvc.deleteCollections(groupTourSN, userID);
+					out.print("delete");
+				}else {
+					colSvc.addCollections(groupTourSN, userID);	// 或者加入收藏
+					out.print("add");
+				}
+				return;
+				
+			}catch(Exception e) {
+				e.printStackTrace();	//
+				System.out.println("failure"+ e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/qa");	// 重新insert
+				failureView.forward(req, res);
 			}
-			RequestDispatcher successView = req.getRequestDispatcher("/collections/test_collections.jsp");
-			successView.forward(req, res);
-			System.out.println("CollectionsServlet DONE");
+			
 
 		}
 		
