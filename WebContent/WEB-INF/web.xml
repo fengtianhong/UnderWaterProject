@@ -100,7 +100,7 @@
 	
 	<servlet-mapping>
 		<servlet-name>CheckAccountServlet</servlet-name>
-		<url-pattern>/member/CheckAccountServlet</url-pattern>
+		<url-pattern>/member/CheckAccountServlet.do</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
@@ -143,5 +143,13 @@
 		<url-pattern>/shoppingcar/shoppingcar.do</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>WebManageSystemServlet</servlet-name>
+		<servlet-class>com.member.controller.WebManageSystemServlet</servlet-class>
+	</servlet>
 	
+	<servlet-mapping>
+		<servlet-name>WebManageSystemServlet</servlet-name>
+		<url-pattern>/member/WebManageSystem.do</url-pattern>
+	</servlet-mapping>
 </web-app>
