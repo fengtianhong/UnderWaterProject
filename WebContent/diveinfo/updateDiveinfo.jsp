@@ -5,12 +5,7 @@
 
 <%
 	DiveInfoVO diveinfoVO = (DiveInfoVO) request.getAttribute("diveinfoVO"); 
-	byte[] picTemp = null;
-	System.out.print(diveinfoVO.getPic());
-
-	if (diveinfoVO.getPic() != null) {
-		picTemp = diveinfoVO.getPic();
-	}
+	byte[] picTemp = diveinfoVO.getPic();
 	session.setAttribute("picTemp", picTemp);
 %>
 <html>

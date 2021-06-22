@@ -37,6 +37,11 @@ public class NewsService {
 		return newsvo;
 	}
 	
+	public void deleteNews(Integer newsSN) {
+		dao.delete(newsSN);
+	}
+
+	
 	public NewsVO getOneNewsVO(Integer newsSN) {
 		return dao.findByPrimaryKey(newsSN);
 	}

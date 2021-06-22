@@ -4,6 +4,8 @@
 <%@ page import="com.news.model.*"%>
 <%
 	NewsVO newsVO = (NewsVO) request.getAttribute("newsVO");
+	byte[] imageTemp = newsVO.getImage();
+	session.setAttribute("imageTemp", imageTemp);
 %>
 <html>
 <head>
@@ -29,7 +31,7 @@ img {
 	</c:if>
 
 
-	<FORM METHOD="post" ACTION="news.do" name="form1">
+	<FORM METHOD="post" ACTION="news.do" name="form1" enctype="multipart/form-data">
 		<table>
 			<tr>
 				<td>新聞編號:<font color=red><b>*</b></font></td>
@@ -37,24 +39,25 @@ img {
 			</tr>
 			<tr>
 				<td>標題:</td>
-				<td><input type="TEXT" name="sal" size="45"
+				<td><input type="TEXT" name="title" size="45"
 					value="<%=newsVO.getTitle()%>" /></td>
 			</tr>
 			<tr>
 				<td>內容:</td>
-				<td><input type="TEXT" name="sal" size="45"
+				<td><input type="TEXT" name="content" size="45"
 					value="<%=newsVO.getContent()%>" /></td>
 			</tr>
 			<tr>
 				<td>上架日期:</td>
-				<td><input name="hiredate" id="f_date1" type="text"></td>
+				<td><input name="newsDate" id="f_date1" type="text"></td>
 			</tr>
 			<tr>
 				<td>消息來源:</td>
-				<td><input type="TEXT" name="sal" size="45"
+				<td><input type="TEXT" name="newsFrom" size="45"
 					value="<%=newsVO.getNewsFrom()%>" /></td>
 			</tr>
-					<tr>
+
+			<tr>
 				<td>類型:</td>
 				<td><select name="newsType">
 						<option value="0"
@@ -65,13 +68,27 @@ img {
 							<%=(newsVO == null) ? "" : ("2".equals(newsVO.getNewsType())) ? "selected" : ""%>>揪團</option>
 				</select></td>
 			</tr>
+			<tr>
+				<td>圖片:</td>
+
+				<td><div class="show_pic">
+						<img
+							src="<%=request.getContextPath()%>/news/ShowPic?newsSN=${newsVO.newsSN}">
+					</div></td>
+
+				<td><input type="file" name="image" id="the_file"
+					accept="image/*"></td>
+				<td><div class="show_pic">
+						<div class="picture"></div>
+					</div></td>
+			</tr>
 
 
 
 
 		</table>
 		<br> <input type="hidden" name="action" value="update"> <input
-			type="hidden" name="empno" value="<%=newsVO.getNewsSN()%>"> <input
+			type="hidden" name="newsSN" value="<%=newsVO.getNewsSN()%>"> <input
 			type="submit" value="送出修改">
 	</FORM>
 </body>
@@ -152,5 +169,27 @@ img {
 	//              return [true, ""];
 	//      }});
 </script>
+<script>
+		window.addEventListener("DOMContentLoaded", function() {
 
+			// 顯示圖片
+			var the_file = document.getElementById("the_file");
+			the_file.addEventListener("change", function(e) {
+
+				var picture = document.getElementsByClassName("picture")[0];
+				picture.innerHTML = ""; // 清空東西 
+
+				let reader = new FileReader();
+				reader.readAsDataURL(this.files[0]);
+				reader.addEventListener("load", function() {
+
+					var pic_src = reader.result; // 取得圖片編碼
+					picture.innerHTML = "<img class='preview'>";
+					document.querySelector(".preview").setAttribute('src',
+							pic_src);
+				})
+			});
+
+		});
+	</script>
 </html>
