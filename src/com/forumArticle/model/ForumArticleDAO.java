@@ -34,7 +34,7 @@ public class ForumArticleDAO implements ForumArticleDAO_interface{
 			"SELECT articlesN, articleTitle, publishedDate, articleText, articleStatus, userID, articleTitleOptSN, rateGCount, rateNGCount FROM ForumArticle where articleSN = ?";
 		private static final String mUPDATE = 
 			"UPDATE ForumArticle set articleStatus = ? where articleSN = ?";
-		private static final String uUPDATE = 
+		private static final String userUPDATE = 
 			"UPDATE ForumArticle set articleTitle = ?, articleText = ? where articleSN = ?";
 		
 //	新增文章
@@ -114,13 +114,13 @@ public class ForumArticleDAO implements ForumArticleDAO_interface{
 	}
 //	修改文章(使用者)	
 	@Override
-	public void uUpdate(ForumArticleVO forumArticleVO) {
+	public void userUpdate(ForumArticleVO forumArticleVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(uUPDATE);
+			pstmt = con.prepareStatement(userUPDATE);
 			
 			pstmt.setInt(1, forumArticleVO.getArticleStatus());
 			pstmt.setString(2, forumArticleVO.getArticleText());

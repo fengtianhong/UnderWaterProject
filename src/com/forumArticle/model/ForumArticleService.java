@@ -47,7 +47,7 @@ public class ForumArticleService {
 	}
 	//	使用者更新
 //	public ForumArticleVO uUpdateForumArticle(Integer articleSN, String articleTitle, Timestamp publishedDate, String articleText, Integer articleStatus, Integer userID, Integer articleTitleOptSN, Integer rateGCount, Integer rateNGCount) {
-	public ForumArticleVO uUpdateForumArticle(Integer articleSN, String articleTitle, String articleText) {		
+	public ForumArticleVO userUpdateForumArticle(Integer articleSN, String articleTitle, String articleText) {		
 		
 		ForumArticleVO forumArticlevo = new ForumArticleVO();
 		
@@ -60,7 +60,7 @@ public class ForumArticleService {
 //		forumArticlevo.setArticleTitleOptSN(articleTitleOptSN);
 //		forumArticlevo.setRateGCount(rateGCount);
 //		forumArticlevo.setRateNGCount(rateNGCount);
-		dao.uUpdate(forumArticlevo);
+		dao.userUpdate(forumArticlevo);
 		
 		return forumArticlevo;
 	}
