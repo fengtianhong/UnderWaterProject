@@ -12,7 +12,7 @@ public class ProductService {
 	}
 
 	public ProductVO insertProduct(String productClass, String productName, Integer productPrice, Integer productQuantity,
-			String productStatus, String productDetail, Timestamp productCreateTime, Boolean productDiscount,
+			String productStatus, String productDetail, Boolean productDiscount,
 			Boolean productPrime, Integer ratingPoint, Integer ratingNumber) {
 
 		ProductVO productVO = new ProductVO();
@@ -23,8 +23,7 @@ public class ProductService {
 		productVO.setProductQuantity(productQuantity);
 		productVO.setProductStatus(productStatus);
 		productVO.setProductDetail(productDetail);
-		productVO.setProductCreateTime(productCreateTime);
-		productVO.setProductDiscount(productDiscount);
+//		productVO.setProductCreateTime(productCreateTime);
 		productVO.setProductDiscount(productDiscount);
 		productVO.setProductPrime(productPrime);
 		productVO.setRatingPoint(ratingPoint);
@@ -58,7 +57,7 @@ public class ProductService {
 	}
 
 	public ProductVO updateProduct(Integer productSN, String productClass, String productName, Integer productPrice,
-			Integer productQuantity, String productStatus, String productDetail, Timestamp productCreateTime,
+			Integer productQuantity, String productDetail, Timestamp productCreateTime,
 			Boolean productDiscount, Boolean productPrime, Integer ratingPoint, Integer ratingNumber) {
 
 		ProductVO productVO = new ProductVO();
@@ -68,7 +67,7 @@ public class ProductService {
 		productVO.setProductName(productName);
 		productVO.setProductPrice(productPrice);
 		productVO.setProductQuantity(productQuantity);
-		productVO.setProductStatus(productStatus);
+//		productVO.setProductStatus(productStatus);
 		productVO.setProductDetail(productDetail);
 		productVO.setProductCreateTime(productCreateTime);
 		productVO.setProductDiscount(productDiscount);

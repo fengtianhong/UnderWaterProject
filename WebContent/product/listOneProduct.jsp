@@ -8,13 +8,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>依商品編號查詢資料 </title>
+<title>單一商品查詢</title>
 
 </head>
 
 <body>
 
-<a href="selectProduct.jsp">回到select頁面</a>
+<a href="selectProduct.jsp">回查詢首頁</a>
 
 <table>
 	<tr>

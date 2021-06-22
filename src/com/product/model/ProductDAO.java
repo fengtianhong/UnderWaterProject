@@ -24,14 +24,15 @@ public class ProductDAO implements ProductDAO_interface {
 
 	private static final String GET_ONE_BY_PRODUCTSN = "SELECT * FROM Product WHERE productSN = ?";
 
-	private static final String GET_PRODUCT_BY_CLASS = "SELECT * FROM Product WHERE productClass = ? ORDER BY productSN";
+//	private static final String GET_PRODUCT_BY_CLASS = "SELECT * FROM Product WHERE productClass = ? ORDER BY productSN";
+	private static final String GET_PRODUCT_BY_CLASS = "SELECT DISTINCT productClass FROM Product ORDER BY productSN";	// 依商品類別查詢
+	
+	private static final String GET_PRODUCT_BY_DISCOUNT = "SELECT * FROM Product WHERE productDiscount = ? ORDER BY productPrice";	// 要改
 
-	private static final String GET_PRODUCT_BY_DISCOUNT = "SELECT * FROM Product WHERE productDiscount = ? ORDER BY productPrice";
-
-	private static final String GET_PRODUCT_BY_PRIME = "SELECT * FROM Product WHERE productPrime = ? ORDER BY productPrice";
+	private static final String GET_PRODUCT_BY_PRIME = "SELECT * FROM Product WHERE productPrime = ? ORDER BY productPrice";	// 要改
 
 	private static final String GET_ALL = "SELECT * FROM Product ORDER BY productSN";
-
+	
 	private static DataSource ds = null;
 	static {
 		try {
