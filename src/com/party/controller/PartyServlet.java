@@ -1,11 +1,9 @@
 package com.party.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -100,12 +98,12 @@ public class PartyServlet extends HttpServlet {
 		}
 		
 		
-		//會員 從報名 提交報名表
+//未完成	//會員 從報名 提交報名表
 		if ("submitRegistration".equals(action)) {
 			
 			Integer partySN = Integer.parseInt(req.getParameter("partySN"));
 //**** 需改寫動態帶入
-			Integer partyMember = 2;
+			Integer partyMember = 4;
 //**** String partyMember = req.getParameter("partyMember");
 			String gender = req.getParameter("gender");
 			String email = req.getParameter("email");
@@ -280,12 +278,29 @@ public class PartyServlet extends HttpServlet {
 			successView.forward(req, res);
 		}
 		
-//未完成     //使用者 查詢自己主揪的團
+//未完成     //使用者 放棄修改 自己主揪的團
 		if ("goBackToPartyIHost".equals(action)) {
 			RequestDispatcher successView = req.getRequestDispatcher("/party/partyIHost.jsp");
 			successView.forward(req, res);
 		}
 		
+		//使用者 審核自己主揪的團
+		if ("updatePartyMemberStatus".equals(action)) {
+			Integer partyMemberSN = Integer.parseInt(req.getParameter("partyMemberSN"));
+			String status = req.getParameter("status");
+			partyMemberSvc.updateStatus(partyMemberSN, status);
+			
+			Integer partySN = Integer.parseInt(req.getParameter("partySN"));
+			PartyVO partyVO = partySvc.findByPartySN(partySN);
+			req.setAttribute("partyVO", partyVO);
+			
+			List<PartyMemberVO> partyMembers = partyMemberSvc.findByPartySN(partySN);
+			req.setAttribute("partyMembers", partyMembers);
+			
+			RequestDispatcher successView = req.getRequestDispatcher("/party/partyIHostDetail.jsp");
+			successView.forward(req, res);
+			
+		}
 		
 	}
 

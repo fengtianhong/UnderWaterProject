@@ -128,7 +128,6 @@
 	<div style="color:red">目前尚無會員報名喔!</div>
 </c:if>
 
-<form method="post" action="<%=request.getContextPath()%>/party/party.do">
 <c:if test="${not empty partyMembers}">
 	<table>
 		<tr>
@@ -147,52 +146,64 @@
 			<td>確認後不可修改</td>
 		</tr>
 	<c:forEach var="partyMember" items="${partyMembers}">
-		<tr>
-			<td>${partyMember.partyMemberSN}</td>
-			<td>${memberSvc.getone(partyMember.partyMember).userName}</td>
-			<td>${partyMember.gender == 0? "男" : "女"}</td>
-			<td>${partyMember.email}</td>
-			<td>${partyMember.phone}</td>
-			<td>${partyMember.birthDate}</td>
-			<td>${partyMember.personID}</td>
-			<c:if test="${partyMember.certification == 'A1'}">
-				<td>PADI OW</td>
-			</c:if>
-			<c:if test="${partyMember.certification == 'A2'}">
-				<td>PADI AOW</td>
-			</c:if>
-			<c:if test="${partyMember.certification == 'B1'}">
-				<td>SSI OW</td>
-			</c:if>
-			<c:if test="${partyMember.certification == 'B2'}">
-				<td>SSI AOW</td>
-			</c:if>
-			<c:if test="${partyMember.certification == null}">
-				<td>無</td>
-			</c:if>
-			<td><button>(待做)</button></td>
-			<td>${partyMember.appliedTime}</td>
-			<td>${partyMember.comment}</td>
-			<td>
-				<select size="" name="status">
-						<option value="0" ${partyVO.status == "0"? "selected": ""}>待審核
-						<option value="1" ${partyVO.status == "3"? "selected": ""}>審核通過
-						<option value="2" ${partyVO.status == "3"? "selected": ""}>審核未通過
-				</select>
-			</td>
-			<td>
-				<c:if test="${partyVO.status == 0}">
-					<button type="submit" name="action" value="updatePartyMemberStatus">確認</button>
+		<form method="post" action="<%=request.getContextPath()%>/party/party.do">
+			<tr>
+				<td>
+					${partyMember.partyMemberSN}
+					<input type="hidden" name="partyMemberSN" value="${partyMember.partyMemberSN}">
+					<input type="hidden" name="partySN" value="${partyVO.partySN}">
+				</td>
+				<td>${memberSvc.getone(partyMember.partyMember).userName}</td>
+				<td>${partyMember.gender == 0? "男" : "女"}</td>
+				<td>${partyMember.email}</td>
+				<td>${partyMember.phone}</td>
+				<td>${partyMember.birthDate}</td>
+				<td>${partyMember.personID}</td>
+				<c:if test="${partyMember.certification == 'A1'}">
+					<td>PADI OW</td>
 				</c:if>
-				<c:if test="${partyVO.status != 0}">
-					<button disabled>已確認</button>
+				<c:if test="${partyMember.certification == 'A2'}">
+					<td>PADI AOW</td>
 				</c:if>
-			</td>
-		</tr>
+				<c:if test="${partyMember.certification == 'B1'}">
+					<td>SSI OW</td>
+				</c:if>
+				<c:if test="${partyMember.certification == 'B2'}">
+					<td>SSI AOW</td>
+				</c:if>
+				<c:if test="${partyMember.certification == null}">
+					<td>無</td>
+				</c:if>
+				<td><button>(待做)</button></td>
+				<td>${partyMember.appliedTime}</td>
+				<td>${partyMember.comment}</td>
+				<c:if test="${partyMember.status == '0'}">
+					<td>
+						<select size="" name="status">
+								<option value="0" selected>待審核
+								<option value="1">審核通過
+								<option value="2">審核不通過
+						</select>
+					</td>
+					<td><button type="submit" name="action" value="updatePartyMemberStatus">確認</button></td>
+				</c:if>
+				<c:if test="${partyMember.status == '1'}">
+					<td>審核通過</td>
+					<td>
+						<button disabled>已確認</button>
+					</td>
+				</c:if>
+				<c:if test="${partyMember.status == '2'}">
+					<td>審核不通過</td>
+					<td>
+						<button disabled>已確認</button>
+					</td>
+				</c:if>
+			</tr>
+		</form>
 	</c:forEach>
 	</table>
 </c:if>
-</form>
 
 </body>
 </html>
