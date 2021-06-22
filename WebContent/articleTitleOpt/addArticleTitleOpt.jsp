@@ -56,15 +56,12 @@
 	</ul>
 </c:if>
 	
-<FORM METHOD="post" ACTION="articleTitleOpt.do" name="form1" enctype="multipart/form-data">
+<FORM METHOD="post" ACTION="articleTitleOpt.do" name="form1">
     <table id = "addtitle">
         <tr>
             <td>請在此輸入要新增的標題選項文字</td>
-        </tr>
-        <tr>
             <td>
-            	<input type="text" name="TitleText" size="45" 
-            			value="<%= (articleTitleOptVO==null)? "新增標題" : articleTitleOptVO.getArticleTitleOptText()%>" />
+            	<input type="text" name="articleTitleOptText" size="36" value="<%= (articleTitleOptVO==null)? "輸入文字" : articleTitleOptVO.getArticleTitleOptText()%>" />
             </td>
         	<td>
         		<input type="hidden" name="action" value="insert">

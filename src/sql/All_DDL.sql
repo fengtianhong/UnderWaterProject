@@ -509,8 +509,8 @@ create table `ForumArticle` (
 	`articleStatus` int not null comment '文章狀態',
 	`userID` int not null comment '會員編號',
 	`articleTitleOptSN` int not null comment '發文選項編號',
-	`rateGCount` int not null comment '文章好評',
-	`rateNGCount` int not null comment '文章負評',
+	`rateGCount` int not null default '0' comment '文章好評',
+	`rateNGCount` int not null default '0' comment '文章負評',
 	CONSTRAINT `ForumArticle_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`),
 	CONSTRAINT `ForumArticle_articleTitleOptSN` FOREIGN KEY (`articleTitleOptSN`) REFERENCES `ArticleTitleOpt` (`articleTitleOptSN`)
 )AUTO_INCREMENT = 30001 COMMENT='討論區文章';
@@ -538,7 +538,7 @@ create table `ArticleReport` (
 	`userID` int not null comment '會員編號',
 	`articleSN` int not null comment '文章編號',
 	`rptResult` char(1) comment '檢舉處理狀態',
-	`reRptResult` varchar(150) comment '檢舉處理回覆',
+	`reRptResult` varchar(150) comment '檢舉處理回報',
 	CONSTRAINT `ArticleReport_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`),
 	CONSTRAINT `ArticleReport_articleSN` FOREIGN KEY (`articleSN`) REFERENCES `ForumArticle` (`articleSN`)
 )AUTO_INCREMENT = 3001 COMMENT='文章檢舉';

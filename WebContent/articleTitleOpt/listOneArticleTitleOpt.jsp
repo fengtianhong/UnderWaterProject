@@ -16,12 +16,31 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>查詢標題選項：</title>
+		
+		<style>
+			table#listallpg {
+				background-color: #97CBFF;
+				border: 2px solid black;
+				text-align: center;
+				margin: 0 auto;
+			}
+		</style>
+		
 	</head>
 	<body>
-		<table>
+	
+		<table id="listOnepg">
 			<tr>
-				<td>標題選項編號</td>
-				<td>標題選項文字</td>
+				<td>
+					<h3>查詢所有文章選項標題，列表如下</h3>
+					<h4><a href="articleTitleOptSelect.jsp">回標題選項查詢首頁</a></h4>
+				</td>
+			</tr>
+		</table>
+		<table id="getone">
+			<tr>
+				<th>標題選項編號</th>
+				<th>標題選項文字</th>
 			</tr>
 
 			<tr>

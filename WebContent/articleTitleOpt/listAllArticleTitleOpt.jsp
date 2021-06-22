@@ -69,12 +69,13 @@
 				<td>標題選項內容</td>
 				<td>修改標題選項</td>
 			</tr>
-			<c:forEach var="articleTitleOptVO" items="${list}">
+			<%@ include file="page1.file" %>
+			<c:forEach var="articleTitleOptVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 				<tr>
 					<td>${articleTitleOptVO.articleTitleOptSN}</td>
 					<td>${articleTitleOptVO.articleTitleOptText}</td>
 					<td>
-						<form method="post" action="<%=request.getContextPath()%>/articleTitleOpt/articleTitleOpt.do" style="margin-bottom: 0px;">
+						<form method="post" action="articleTitleOpt.do" style="margin-bottom: 0px;">
 							<input type="submit" value="修改">
 							<input type="hidden" name="articleTitleOptSN" value="${articleTitleOptVO.articleTitleOptSN}">
 							<input type="hidden" name="action" value="getOne_For_Update">
@@ -83,5 +84,6 @@
 				</tr>
 			</c:forEach>	
 		</table>
+		<%@ include file="page2.file" %>
 	</body>
 </html>
