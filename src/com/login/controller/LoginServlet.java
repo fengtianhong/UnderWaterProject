@@ -46,7 +46,7 @@ public class LoginServlet extends HttpServlet {
 //				System.out.println(checknum);
 				req.setAttribute("msg", "驗證碼正確");
 				req.setAttribute("account", account);
-				req.getRequestDispatcher("cookie.jsp").forward(req, res);
+				req.getRequestDispatcher("index.jsp").forward(req, res);
 			}else {
 //				System.out.println(check);
 //				System.out.println(checknum);

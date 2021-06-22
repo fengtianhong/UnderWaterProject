@@ -20,7 +20,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>登入頁面</title>
+<title>Under Water 在水之下 註冊</title>
 </head>
 <body>
 	<div align="center">
@@ -59,7 +59,7 @@
 				<a href="register.jsp">註冊</a>
 			</div>
 			<div id="wrap2">
-				<a href="getaccount.jsp">忘記密碼</a>
+				<a href="getaccount.jsp">/忘記密碼</a>
 			</div>
 		</div>
 	</div>

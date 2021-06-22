@@ -3,53 +3,60 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.member.model.*"%>
 
-
 <%
 	// 抓取新增失敗時回傳的VO
 	MemberVO memberVO = (MemberVO) request.getAttribute("MemberVO");
 %>
-<%=memberVO == null%><%-- 確認有沒有抓到用(可刪) --%>
-
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>註冊</title>
 <style>
-.ckeditor {
-	width: 45%;
+.contain {
+	width: 70%;
 }
 </style>
 </head>
 <body>
-	<div align="center">
-		<form  method="post" action="CheckAccountServlet.do"
+
+	<div  class="contain" align="center">
+		<div>
+			<c:if test="${not empty errorMsgs}">
+				<font style="color=red">以下欄位請輸入正確資料:</font>
+				<ul>
+					<c:forEach var="message" items="${errorMsgs }">
+						<li style="color=red">${message}</li>
+					</c:forEach>
+				</ul>
+			</c:if>
+		</div>
+		<form  method="post" action="member.do"
 			enctype="multipart/form-data" onsubmit="return checkform(this)">
-			<table>
+			<table style="border-collapse:separate; border-spacing:0px 50px;">
 				<tr>
 					<td>帳號:</td>
-					<td><input type="email" name="account" size="45"
+					<td ><input placeholder="必填" type="email" name="account" size="45"
 						value="<%=(memberVO == null) ? "" : memberVO.getAccount()%>" /></td>
 					<td><input type="submit" name="btn_account" value="檢查帳號可用性" size="30" id="btn_account"><p>${used}</td>
 				</tr>
 				<tr>
 					<td>密碼:</td>
-					<td><input type="password" name="pwd"
+					<td><input placeholder="必填" type="password" name="pwd"
 						value="<%=(memberVO == null) ? "" : memberVO.getPwd()%>" /></td>
 				</tr>
 				<tr>
 					<td>再次確認密碼:</td>
-					<td><input type="password" name="repwd" id="repwd" /></td>
+					<td><input placeholder="必填" type="password" name="repwd" id="repwd" /></td>
 				</tr>
 				<tr>
 					<td>姓名:</td>
-					<td><input type="TEXT" name="userName"
+					<td><input placeholder="必填" type="TEXT" name="userName"
 						value="<%=(memberVO == null) ? "" : memberVO.getUserName()%>" /></td>
 				</tr>
 				<tr>
 					<td>暱稱:</td>
-					<td><input type="TEXT" name="nickName"
+					<td><input placeholder="必填" type="TEXT" name="nickName"
 						value="<%=(memberVO == null) ? "" : memberVO.getNickName()%>" /></td>
 				</tr>
 				<tr>
@@ -59,7 +66,7 @@
 				</tr>
 				<tr>
 					<td>性別:</td>
-					<td><input type="radio" name="gender" value="男"
+					<td><input placeholder="必填" type="radio" name="gender" value="男"
 						${memberVO.equals("男") ? 'selected' : ''}>男 <input
 						type="radio" name="gender" value="男"
 						${memberVO.equals("女") ? 'selected' : ''}>女</td>
@@ -100,7 +107,12 @@
 				</tr>
 
 				<tr>
-					<td>驗證碼:</td>
+					<td>
+						驗證碼：<input type="text" name="checknum" id="checknum" onblur="Manual_VerificationCode(this.value)"/>
+						<img src="<%=request.getContextPath()%>/member/IdentityServlet"
+						id="identity" onload="btn.disabled=false;" /> <input
+						type="button" value=" 換個圖片 " id="btn" onclick="reloadImage()">
+					</td>
 
 				</tr>
 
@@ -124,21 +136,23 @@
 <style>
 
 
+
 </style>
 <script>
-	function checkform(form){
-		if(form.account.value == ""){
-			alert("帳號不能空白");
-			return false;
-		}else if(form.pwd.value == ""){
-			alert("密碼不能空白");
-			return false;
-		}else if(form.pwd.value != form.repwd.value){
-			alert("兩次密碼不一致");
-			return false;
-		}else{
-			return true;
-		}
+
+function checkform(form){
+	if(form.account.value == ""){
+		alert("帳號不能空白");
+		return false;
+	}else if(form.pwd.value == ""){
+		alert("密碼不能空白");
+		return false;
+	}else if(form.pwd.value != form.repwd.value){
+		alert("兩次密碼不一致");
+		return false;
+	}else{
+		return true;
 	}
+}
 </script>
 </html>
