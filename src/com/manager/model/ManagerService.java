@@ -1,4 +1,4 @@
-package com.Manager.model;
+package com.manager.model;
 
 public class ManagerService {
 	
@@ -10,17 +10,25 @@ public class ManagerService {
 		dao = new ManagerDAO();
 	}
 	
-	public ManagerVO insertManagerVO(String account, String pwd, Integer status) {
+	public ManagerVO insertManager(String account, String pwd, Integer status) {
 		ManagerVO vo = new ManagerVO();
 		vo.setAccount(account);
 		vo.setStatus(status);
 		return vo;
 	}
 	
-	public ManagerVO updateManagerVO(String account,Integer status) {
+	public ManagerVO updateManager(String account,Integer status) {
 		ManagerVO vo = new ManagerVO();
 		vo.setAccount(account);
 		vo.setStatus(status);
 		return vo;
+	}
+	
+	public Boolean loginManager(String account,String pwd) {
+		ManagerVO vo = new ManagerVO();
+		vo.setAccount(account);
+		vo.setPwd(pwd);
+		
+		return dao.login(vo);
 	}
 }
