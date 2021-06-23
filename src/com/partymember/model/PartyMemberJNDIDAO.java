@@ -31,7 +31,7 @@ public class PartyMemberJNDIDAO implements PartyMemberDAO_interface {
 	private static final String UPDATESTATUS_STMT = 
 			"update PartyMember set status = ? where partyMemberSN = ?";
 	private static final String FINDBYPARTYMEMBERSN_STMT = "select * from partyMember where partyMemberSN = ?";
-	private static final String FINDBYPARTYMEMBER_STMT = "select * from partyMember where partyMember = ?";
+	private static final String FINDBYPARTYMEMBER_STMT = "select * from partyMember where partyMember = ? order by partySN desc";
 	private static final String FINDBYPARTYSN_STMT = "select * from partyMember where partySN = ?";
 	private static final String GETALL_STMT = "select * from partyMember";
 	private static final String DELETEBYPARTYMEMBERSN_STMT = "delete from partyMember where partyMemberSN = ?";

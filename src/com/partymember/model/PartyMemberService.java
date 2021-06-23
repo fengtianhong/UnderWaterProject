@@ -18,4 +18,11 @@ public class PartyMemberService {
 		return dao.findByPartySN(partySN);
 	}
 	
-}
+	public int updateStatus(Integer partyMemberSN, String status) {
+		return dao.updateStatus(partyMemberSN, status);
+	}
+	
+	public List<PartyMemberVO> findByPartyMember(Integer partyMember) {
+		return dao.findByPartyMember(partyMember);
+	}
+	}

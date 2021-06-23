@@ -4,13 +4,6 @@
 <%@ page import="com.party.model.*"%>
 <jsp:useBean id="diveInfoSvc" scope="page" class="com.diveinfo.model.DiveInfoService" />
 
-<%
-// Integer partySN = (Integer) request.getAttribute("partySN");
-// PartyService partySvc = new PartyService();
-// PartyVO partyVO1 = partySvc.findByPartySN(partySN);
-// pageContext.setAttribute("partyVO1", partyVO1);
-%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,8 +16,8 @@
 	
 	<form method="post" action="<%=request.getContextPath()%>/party/party.do">
 		<input type="hidden" name="partySN" value="${partyVO.partySN}">
-		<button type="submit" name="action" value="goBackToList">回上頁</button>
-		<button type="submit" name="action" value="goRegister">報名去</button>
+		<input type="button" onclick="history.back()" value="回上頁">
+		<button type="submit" name="action" value="goRegister">報名去(待處理若會員已報名過的判斷)</button>
 	</form>
 	
 	<table>

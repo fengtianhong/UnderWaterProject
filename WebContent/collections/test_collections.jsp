@@ -5,19 +5,14 @@
 <%@ page import="com.collections.model.*"%>
     
 <% 
-	CollectionsService colSvc = new CollectionsService();
-	CollectionsVO colVO = (CollectionsVO) request.getAttribute("colVO");
+// DisplayOne的頁面會拿到 userID, groupTourSN
+	request.setAttribute("userID", 1);	// 先寫死
+	request.setAttribute("groupTourSN", 6001);	// 先寫死
+
 	
-	// 從套裝行程列表選行程時要記得傳入 groupTourSN
-	Integer groupTourSN = (Integer) request.getAttribute("groupTourSN");	
+// 	// 從套裝行程列表選行程時要記得傳入 groupTourSN
+// 	Integer groupTourSN = (Integer) request.getAttribute("groupTourSN");	
 	
-	boolean isFavorite = false;
-	if (colVO != null) {	// 覺得 EL 可以做到
-		List<Integer> list = colSvc.getCollectionsByUserid(colVO.getUserID());
-		// pageContext.setAttribute("list", list);
-		isFavorite = list.contains(groupTourSN);
-		request.setAttribute("isFavorite", isFavorite);
-	}
 %>
     
 <!DOCTYPE html>
@@ -51,30 +46,26 @@
 	<br>
 	<img class="GPimg" alt="" src="<%=request.getContextPath()%>/collections/kenting_isolation.jpg">
 	
-	<FORM NAME="heartForm" METHOD="post" ACTION="<%=request.getContextPath()%>/collections/collections.do" >
-		<h2> 我是套裝行程 </h2>
-<!-- 		抓資料讓愛心一開始就顯示對 > DONE -->
+		<h2 class="1"> 我是套裝行程 </h2>
 
-		<%=isFavorite %>
 
-		<span class="heart btn" onclick="heartForm.submit()">
-			<i class="fas fa-heart"></i>
-			<input type="hidden" name="action" value="favorite">
-			<input type="hidden" name="userID" value="2">
-			<input type="hidden" name="groupTourSN" value="6002">
-		</span>
-		<c:if test="${not empty Msg}">
-			<i style="color: red">${Msg}</i>
-		</c:if>
-	</FORM>
+		
+		<div style="display:none"><!-- 抓資料讓愛心一開始就顯示對 -->
+			<jsp:useBean id="colSvc" scope="page" class="com.collections.model.CollectionsService"></jsp:useBean>
+			<span class="favorite">${colSvc.getCollectionsByUserid(userID)}</span>
+			<span class="groupTourSN">${groupTourSN}</span>
+		</div>
+		<!-- 送收藏資料 -->
+		<span class="heart btn" ><i class="fas fa-heart"></i></span>
+
 	
 	
 	
 	<h3>報名導至 addOderForGroup 用，userID, GroupTourSN 暫時寫死</h3>
 	
 	<FORM NAME="orderForm" METHOD="post" ACTION="<%=request.getContextPath()%>/orderforgroup/orderforgroup.do" >
-	<input type="hidden" name="userID" value="3">
-	<input type="hidden" name="groupTourSN" value="6003">
+	<input type="hidden" name="userID" value="${userID}">
+	<input type="hidden" name="groupTourSN" value="${groupTourSN}">
 	<input type="hidden" name="action" value="getOne_ForOrder">
 	<input type="submit" value="我要報名">
 	</FORM>
@@ -89,20 +80,43 @@
 <script>
 
 function init() {
-	if (<%=isFavorite%>) {
+	
+	// 抓取收藏
+	var favorite = $(".favorite").text();
+	var groupTourSN = $(".groupTourSN").text();
+	if(favorite.indexOf(groupTourSN) > 0) {
 		$(".heart").addClass("-on");
-		console.log("isFavorite");
 	}
-    console.log("hi");
 }
 
 $(function () {
-
-    init();
-    $(".heart").on("click", function() {
-        confirm("ADD COLLECTIONS?");
-        $(this).toggleClass("-on");
+	
+	init();
+	
+	// 更新收藏
+    $(".heart").on("click", function(){
+        // confirm("ADD COLLECTIONS?");
+        var that = this;
+        var userID = 3;		// 先寫死
+        var groupTourSN = $(".groupTourSN").text();
+    
+        $.ajax({
+                url: "<%=request.getContextPath()%>/collections/collections.do?action=favorite&userID=" + userID + "&groupTourSN=" + groupTourSN,
+                type: "GET",
+                dataType: "text",
+                success: function(data){
+                    console.log(data);
+                    if(data == "delete") {
+                    	alert("移除收藏");
+                    	$(that).removeClass("-on");
+                    }else{
+                    	alert("加入收藏");
+                    	$(that).addClass("-on");
+                    }
+                }
+        });
     })
+    
 })
 </script>
 </body>

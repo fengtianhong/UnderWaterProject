@@ -27,7 +27,7 @@ public class ArticleTitleOptServlet extends HttpServlet{
 		if ("getOne_For_Display".equals(action)) {	// from select
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			System.out.println("123");
+			
 			try {
 				//	接收參數，輸入的錯誤處理
 				String str = req.getParameter("articleTitleOptSN");
@@ -69,7 +69,7 @@ public class ArticleTitleOptServlet extends HttpServlet{
 				//	查詢完轉交
 				req.setAttribute("articleTitleOptVO", articleTitleOptVO);
 				String url = "/articleTitleOpt/listOneArticleTitleOpt.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);
+				RequestDispatcher successView = req.getRequestDispatcher(url);//成功的話轉交listOne
 				successView.forward(req, res);
 				
 				
@@ -93,12 +93,11 @@ public class ArticleTitleOptServlet extends HttpServlet{
 				ArticleTitleOptService articleTitleOptSvc = new ArticleTitleOptService();
 				ArticleTitleOptVO articleTitleOptVO = articleTitleOptSvc.getOneArticleTitleOpt(articleTitleOptSN);	//	查詢
 
-				req.setAttribute("articleTitleOptVO", articleTitleOptVO);
+				req.setAttribute("articleTitleOptVO", articleTitleOptVO);	//	轉交
 				String url = "/articleTitleOpt/updateArticleTitleOpt.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 			} catch (Exception e) {		//錯誤處理
-				e.printStackTrace();
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/articleTitleOpt/listAllArticleTitleOpt.jsp");
 				failureView.forward(req, res);
@@ -106,7 +105,7 @@ public class ArticleTitleOptServlet extends HttpServlet{
 		}
 		
 		
-		if ("update".equals(action)) {
+		if ("update".equals(action)) {		//update.jsp
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			
@@ -115,7 +114,7 @@ public class ArticleTitleOptServlet extends HttpServlet{
 				Integer articleTitleOptSN = new Integer(req.getParameter("articleTitleOptSN").trim());
 				
 				String articleTitleOptText = req.getParameter("articleTitleOptText");
-				String articleTitleOptTextReg = "^(\u4e00-\u9fa5){4}$";
+				String articleTitleOptTextReg = "^[(\u4e00-\u9fa5)]{4}$";
 				
 				if (articleTitleOptText == null || articleTitleOptText.trim().length() == 0) {
 					errorMsgs.add("文章選項：請勿空白");
@@ -128,15 +127,15 @@ public class ArticleTitleOptServlet extends HttpServlet{
 				articleTitleOptVO.setArticleTitleOptText(articleTitleOptText);
 
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute(articleTitleOptTextReg, articleTitleOptVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/articleTitleOpt/listAllArticleTitleOpt.jsp");
+					req.setAttribute("articleTitleOptVO", articleTitleOptVO);
+					RequestDispatcher failureView = req.getRequestDispatcher("/articleTitleOpt/updateArticleTitleOpt.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				
 				//	開始修改
 				ArticleTitleOptService articleTitleOptSvc = new ArticleTitleOptService();
-				articleTitleOptVO = articleTitleOptSvc.updateArticleTitleOpt(articleTitleOptSN, articleTitleOptTextReg);
+				articleTitleOptVO = articleTitleOptSvc.updateArticleTitleOpt(articleTitleOptSN, articleTitleOptText);
 				
 				//	修改完成的轉交
 				req.setAttribute("articleTicleOptVO", articleTitleOptVO);
@@ -158,12 +157,12 @@ public class ArticleTitleOptServlet extends HttpServlet{
 			try {
 				//	接收
 				String articleTitleOptText = req.getParameter("articleTitleOptText");
-				String articleTitleOptTextReg = "^(\u4e00-\u9fa5){4}$";
+				String articleTitleOptTextReg = "^[(\u4e00-\u9fa5)]{4}$";
 				
 				if (articleTitleOptText == null || articleTitleOptText.trim().length() == 0) {
-					errorMsgs.add("文章選項請勿空白");
+					errorMsgs.add("文章選項：請勿空白");
 				} else if (!articleTitleOptText.trim().matches(articleTitleOptTextReg)) {
-					errorMsgs.add("文章選項只能是中文，且文字長度應為4。");
+					errorMsgs.add("文章選項：只能是中文，且文字長度應為4。");
 				}
 				
 				ArticleTitleOptVO articleTitleOptVO = new ArticleTitleOptVO();

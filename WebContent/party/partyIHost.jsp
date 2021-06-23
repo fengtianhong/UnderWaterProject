@@ -26,7 +26,7 @@
 </head>
 <body>
 
-<h2>我所舉辦的揪團</h2>
+<h2>我所舉辦的揪團(待改寫動態帶入會員編號)</h2>
 
 <c:if test="${empty listAll}">
 	<div style="color:red">您並沒有舉辦任何揪團活動喔!</div>

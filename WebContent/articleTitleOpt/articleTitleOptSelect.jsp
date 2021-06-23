@@ -3,11 +3,11 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.articleTitleOpt.model.*"%>
 
-<%
+<%-- <%
 	ArticleTitleOptService articleTitleOptSvc = new ArticleTitleOptService();
 	List<ArticleTitleOptVO> list = articleTitleOptSvc.getAll();
 	pageContext.setAttribute("list", list);
-%>
+%> --%>
 
 <html>
 	<head>
@@ -68,23 +68,32 @@
 			<input type="button" value="前往新增標題選項" onclick="location.href='addArticleTitleOpt.jsp'">
 		</div>
 
-		<!-- <input type="button" value="前往更新標題選項" onclick="location.href='updateArticleTitleOpt.jsp'">  -->
-<%-- 		<form action="<%= request.getContextPath()%>/articleTitleOpt/articleTitleOpt.do">		
-			<input type="button" value="getOne_For_Update" name="action">
-			<input type="hidden" value="${articleTitleOptVO.articleTitleOptSN}" name="articleTitleOptSN">
-		</form> --%>
-
 		<div id="search">
 			<h3>發文選項查詢</h3>
 			<ul>
-				<li><b>查詢全部標題選項：</b><a href="listAllArticleTitleOpt.jsp">按此查詢或修改</a></li>
+				<li><b>查詢全部標題選項/修改：</b><a href="listAllArticleTitleOpt.jsp">按此查詢或修改</a></li>
 				<li>
-					<FORM METHOD="post" ACTION="articleTitleOpt.do" enctype="multipart/form-data">
+					<FORM METHOD="post" ACTION="articleTitleOpt.do">
 						<b>輸入發文標題選項編號(如：31):</b>
-						<input type="text" name="articleTitleOptSN">
-						<input type="hidden" name="action" value="getOne_For_display">
-						<input type="submit" value="送出">
+						    <input type="text" name="articleTitleOptSN">
+					        <input type="hidden" name="action" value="getOne_For_Display">
+					        <input type="submit" value="送出">
 					</FORM>
+				</li>
+				
+				 <jsp:useBean id="articleTitleOptSvc" scope="page" class="com.articleTitleOpt.model.ArticleTitleOptService" />
+				
+				<li>	
+					<FORM METHOD="post" ACTION="articleTitleOpt.do" >
+				       <b>標題選項查看:</b>
+				       <select size="1" name="articleTitleOptSN">
+				         	<c:forEach var="articleTitleOptVO" items="${articleTitleOptSvc.all}" > 
+				          		<option value="${articleTitleOptVO.articleTitleOptSN}">${articleTitleOptVO.articleTitleOptText}
+				       		</c:forEach>   
+				       </select>
+				       <input type="hidden" name="action" value="getOne_For_Display">
+				       <input type="submit" value="送出">
+				     </FORM>
 				</li>
 			</ul>
 		</div>

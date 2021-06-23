@@ -32,8 +32,10 @@ public class ForumArticleDAO implements ForumArticleDAO_interface{
 			"SELECT articlesN, articleTitle, publishedDate, articleText, articleStatus, userID, articleTitleOptSN, rateGCount, rateNGCount FROM ForumArticle order by articleSN";
 		private static final String GET_ONE_STMT = 
 			"SELECT articlesN, articleTitle, publishedDate, articleText, articleStatus, userID, articleTitleOptSN, rateGCount, rateNGCount FROM ForumArticle where articleSN = ?";
-		private static final String UPDATE = 
-			"UPDATE ForumArticle set (articleTitle = ?, publishedDate = ?, articleText = ?, articleStatus = ?, userID = ?, articleTitleOptSN = ?, rateGCount = ?, rateNGCount = ? where articleSN = ?";
+		private static final String mUPDATE = 
+			"UPDATE ForumArticle set articleStatus = ? where articleSN = ?";
+		private static final String userUPDATE = 
+			"UPDATE ForumArticle set articleTitle = ?, articleText = ? where articleSN = ?";
 		
 //	新增文章
 	@Override
@@ -76,25 +78,18 @@ public class ForumArticleDAO implements ForumArticleDAO_interface{
 		}
 	}
 
-//	修改文章
+//	修改文章(管理員)
 	@Override
-	public void update(ForumArticleVO forumArticleVO) {
+	public void mUpdate(ForumArticleVO forumArticleVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(UPDATE);
+			pstmt = con.prepareStatement(mUPDATE);
 			
-			pstmt.setString(1, forumArticleVO.getArticleTitle());
-			pstmt.setTimestamp(2, forumArticleVO.getPublishedDate());
-			pstmt.setString(3, forumArticleVO.getArticleText());
-			pstmt.setInt(4, forumArticleVO.getArticleStatus());
-			pstmt.setInt(5, forumArticleVO.getUserID());
-			pstmt.setInt(6, forumArticleVO.getArticleTitleOptSN());
-			pstmt.setInt(7, forumArticleVO.getRateGCount());
-			pstmt.setInt(8, forumArticleVO.getRateNGCount());
-			pstmt.setInt(9, forumArticleVO.getArticleSN());
+			pstmt.setInt(1, forumArticleVO.getArticleStatus());
+			pstmt.setInt(2, forumArticleVO.getArticleSN());
 			
 			pstmt.executeUpdate();
 			
@@ -117,7 +112,45 @@ public class ForumArticleDAO implements ForumArticleDAO_interface{
 			}
 		}	
 	}
-
+//	修改文章(使用者)	
+	@Override
+	public void userUpdate(ForumArticleVO forumArticleVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(userUPDATE);
+			
+			pstmt.setInt(1, forumArticleVO.getArticleStatus());
+			pstmt.setString(2, forumArticleVO.getArticleText());
+			pstmt.setInt(3, forumArticleVO.getArticleSN());
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}	
+		
+	}
+	
+	
+	
 	@Override
 	public ForumArticleVO findByPrimaryKey(Integer articleSN) {
 		ForumArticleVO forumArticleVO = null;
@@ -226,4 +259,5 @@ public class ForumArticleDAO implements ForumArticleDAO_interface{
 		}
 		return list;
 	}
+
 }
