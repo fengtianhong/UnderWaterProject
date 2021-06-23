@@ -27,7 +27,7 @@ public class ForumArticleDAO implements ForumArticleDAO_interface{
 	}
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO ForumArticle (articleTitle, publishedDate, articleText, articleStatus, userID, articleTitleOptSN, rateGCount, rateNGCount) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+			"INSERT INTO ForumArticle (articleTitle, articleText, userID, articleTitleOptSN) VALUES (?, ?, ?, ?)";
 		private static final String GET_ALL_STMT = 
 			"SELECT articlesN, articleTitle, publishedDate, articleText, articleStatus, userID, articleTitleOptSN, rateGCount, rateNGCount FROM ForumArticle order by articleSN";
 		private static final String GET_ONE_STMT = 
@@ -48,13 +48,13 @@ public class ForumArticleDAO implements ForumArticleDAO_interface{
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
 			pstmt.setString(1, forumArticleVO.getArticleTitle());
-			pstmt.setTimestamp(2, forumArticleVO.getPublishedDate());
-			pstmt.setString(3, forumArticleVO.getArticleText());
-			pstmt.setInt(4, forumArticleVO.getArticleStatus());
-			pstmt.setInt(5, forumArticleVO.getUserID());
-			pstmt.setInt(6, forumArticleVO.getArticleTitleOptSN());
-			pstmt.setInt(7, forumArticleVO.getRateGCount());
-			pstmt.setInt(8, forumArticleVO.getRateNGCount());
+//			pstmt.setTimestamp(2, forumArticleVO.getPublishedDate());
+			pstmt.setString(2, forumArticleVO.getArticleText());
+//			pstmt.setBoolean(4, forumArticleVO.getArticleStatus());
+			pstmt.setInt(3, forumArticleVO.getUserID());
+			pstmt.setInt(4, forumArticleVO.getArticleTitleOptSN());
+//			pstmt.setInt(7, forumArticleVO.getRateGCount());
+//			pstmt.setInt(8, forumArticleVO.getRateNGCount());
 			
 			pstmt.executeUpdate();
 			
@@ -88,7 +88,7 @@ public class ForumArticleDAO implements ForumArticleDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(mUPDATE);
 			
-			pstmt.setInt(1, forumArticleVO.getArticleStatus());
+			pstmt.setBoolean(1, forumArticleVO.getArticleStatus());
 			pstmt.setInt(2, forumArticleVO.getArticleSN());
 			
 			pstmt.executeUpdate();
@@ -122,7 +122,7 @@ public class ForumArticleDAO implements ForumArticleDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(userUPDATE);
 			
-			pstmt.setInt(1, forumArticleVO.getArticleStatus());
+			pstmt.setString(1, forumArticleVO.getArticleTitle());
 			pstmt.setString(2, forumArticleVO.getArticleText());
 			pstmt.setInt(3, forumArticleVO.getArticleSN());
 			
@@ -172,7 +172,7 @@ public class ForumArticleDAO implements ForumArticleDAO_interface{
 				forumArticleVO.setArticleTitle(rs.getString("articleTitle"));
 				forumArticleVO.setPublishedDate(rs.getTimestamp("publishedDate"));
 				forumArticleVO.setArticleText(rs.getString("articleText"));
-				forumArticleVO.setArticleStatus(rs.getInt("articleStatus"));
+				forumArticleVO.setArticleStatus(rs.getBoolean("articleStatus"));
 				forumArticleVO.setUserID(rs.getInt("userID"));
 				forumArticleVO.setArticleTitleOptSN(rs.getInt("articleTitleOptSN"));
 				forumArticleVO.setRateGCount(rs.getInt("rateGCount"));
@@ -225,7 +225,7 @@ public class ForumArticleDAO implements ForumArticleDAO_interface{
 				forumArticleVO.setArticleTitle(rs.getString("articleTitle"));
 				forumArticleVO.setPublishedDate(rs.getTimestamp("publishedDate"));
 				forumArticleVO.setArticleText(rs.getString("articleText"));
-				forumArticleVO.setArticleStatus(rs.getInt("articleStatus"));
+				forumArticleVO.setArticleStatus(rs.getBoolean("articleStatus"));
 				forumArticleVO.setUserID(rs.getInt("userID"));
 				forumArticleVO.setArticleTitleOptSN(rs.getInt("articleTitleOptSN"));
 				forumArticleVO.setRateGCount(rs.getInt("rateGCount"));

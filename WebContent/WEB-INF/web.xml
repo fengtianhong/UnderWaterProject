@@ -61,6 +61,16 @@
 		<servlet-name>ArticleTitleOptServlet</servlet-name>
 		<url-pattern>/articleTitleOpt/articleTitleOpt.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ForumArticleServlet</servlet-name>
+		<servlet-class>com.forumArticle.controller.ForumArticleServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ForumArticleServlet</servlet-name>
+		<url-pattern>/forumArticle/forumArticle.do</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 

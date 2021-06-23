@@ -1,6 +1,5 @@
 package com.forumArticle.model;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 public class ForumArticleService {
@@ -10,17 +9,17 @@ public class ForumArticleService {
 		dao = new ForumArticleDAO();
 	}
 	
-	public ForumArticleVO addForumArticle(String articleTitle, Timestamp publishedDate, String articleText, Integer articleStatus, Integer userID, Integer articleTitleOptSN, Integer rateGCount, Integer rateNGCount) {
+	public ForumArticleVO addForumArticle(String articleTitle, String articleText, Integer userID, Integer articleTitleOptSN) {
 		ForumArticleVO forumArticlevo = new ForumArticleVO();
 		
 		forumArticlevo.setArticleTitle(articleTitle);
-		forumArticlevo.setPublishedDate(publishedDate);
+//		forumArticlevo.setPublishedDate(publishedDate);
 		forumArticlevo.setArticleText(articleText);
-		forumArticlevo.setArticleStatus(articleStatus);
+//		forumArticlevo.setArticleStatus(articleStatus);
 		forumArticlevo.setUserID(userID);
 		forumArticlevo.setArticleTitleOptSN(articleTitleOptSN);
-		forumArticlevo.setRateGCount(rateGCount);
-		forumArticlevo.setRateNGCount(rateNGCount);
+//		forumArticlevo.setRateGCount(rateGCount);
+//		forumArticlevo.setRateNGCount(rateNGCount);
 		dao.insert(forumArticlevo);
 		
 		return forumArticlevo;
@@ -28,7 +27,7 @@ public class ForumArticleService {
 	
 	//	管理者更新
 //	public ForumArticleVO mUpdateForumArticle(Integer articleSN, String articleTitle, Timestamp publishedDate, String articleText, Integer articleStatus, Integer userID, Integer articleTitleOptSN, Integer rateGCount, Integer rateNGCount) {
-	public ForumArticleVO mUpdateForumArticle(Integer articleSN, Integer articleStatus) {		
+	public ForumArticleVO mUpdateForumArticle(Integer articleSN, Boolean articleStatus) {		
 		
 		ForumArticleVO forumArticlevo = new ForumArticleVO();
 		
@@ -46,7 +45,6 @@ public class ForumArticleService {
 		return forumArticlevo;
 	}
 	//	使用者更新
-//	public ForumArticleVO uUpdateForumArticle(Integer articleSN, String articleTitle, Timestamp publishedDate, String articleText, Integer articleStatus, Integer userID, Integer articleTitleOptSN, Integer rateGCount, Integer rateNGCount) {
 	public ForumArticleVO userUpdateForumArticle(Integer articleSN, String articleTitle, String articleText) {		
 		
 		ForumArticleVO forumArticlevo = new ForumArticleVO();

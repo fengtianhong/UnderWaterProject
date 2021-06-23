@@ -79,7 +79,7 @@ public class ForumArticleServlet extends HttpServlet {
 			}			
 		}
 		
-		//	****************************** 2.查詢單一個後更新 (getOne_For_Update)******************************
+		//	****************************** 2-1.查詢單一個後更新 (getOne_For_Update)******************************
 		//	fAListAll.jsp的請求
 		if ("getOne_For_Update".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
@@ -103,7 +103,7 @@ public class ForumArticleServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
-		//	****************************** 3.(管理員)更新 (update)******************************
+		//	****************************** 2-2.(管理員)更新 (update)******************************
 		//	想法：管理員的更新，應該不是要去更改使用者發表的內容
 		//	fAUpdate.jsp的請求
 		if ("mUpdate".equals(action)) {
@@ -112,7 +112,7 @@ public class ForumArticleServlet extends HttpServlet {
 			//	接收參數+錯誤處理
 			try {
 				Integer articleSN = new Integer(req.getParameter("articleSN").trim());
-				Integer articleStatus = new Integer(req.getParameter("articleStatus"));
+				Boolean articleStatus = new Boolean(req.getParameter("articleStatus"));
 
 				ForumArticleVO forumArticleVO = new ForumArticleVO();
 				forumArticleVO.setArticleSN(articleSN);
@@ -142,7 +142,33 @@ public class ForumArticleServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
-//		****************************** 4.(使用者)更新 (update)******************************	
+		
+		//	****************************** 3-1.使用者查詢單一個後更新 (getOne_For_Update)******************************
+		//	forumArticle.jsp的請求
+		if ("getOne_For_Update".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				//	接收參數+錯誤處理
+				Integer articleSN = new Integer(req.getParameter("articleSN"));
+				//	開始查詢
+				ForumArticleService forumArticleSvc = new ForumArticleService();
+				ForumArticleVO forumArticleVO = forumArticleSvc.getOneForumArticle(articleSN);
+				//	查詢後轉交update
+				req.setAttribute("forumArticleVO", forumArticleVO); // 資料庫取出的forumArticleVO物件,存入req
+				String url = "/forumArticle/forumArticleUpdate.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 forumArticleUpdate.jsp
+				successView.forward(req, res);
+				//	其他錯誤處理
+			} catch (Exception e) {
+				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/forumArticle.jsp");
+				failureView.forward(req, res);
+			}
+		}		
+		
+//		****************************** 3-2.(使用者)更新 (update)******************************	
 		if ("userUpdate".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -184,7 +210,7 @@ public class ForumArticleServlet extends HttpServlet {
 				
 				//	修改完成後轉交
 				req.setAttribute("forumArticleVO", forumArticleVO);
-				String url = "該文章頁面＠＠？";
+				String url = "/forumArticle/forumArticle.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
@@ -195,23 +221,61 @@ public class ForumArticleServlet extends HttpServlet {
 			}
 		}
 //		****************************** 5.新增 (insert)******************************			
+		//	來自forumArticle.jsp的新增發文請求
+		if ("insert".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
 			
-			
-			
-
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+			try {
+				//接收請求參數 以及 錯誤格式處理
+				
+				String articleTitle = req.getParameter("articleTitle");
+				String articleTitleReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,15}$";
+				if (articleTitle == null || articleTitle.trim().length() == 0) {
+					errorMsgs.add("文章標題：請勿空白");
+				} else if(!articleTitle.trim().matches(articleTitleReg)) {
+					errorMsgs.add("文章標題：只能是中、英文字母、數字和_ , 且長度必需在2到15之間");
+	            }
+				
+				String articleText = req.getParameter("articleText");
+				String articleTextReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]$";
+				if (articleText == null || articleText.trim().length() == 0) {
+					errorMsgs.add("文章內容：請勿空白");
+				} else if(!articleText.trim().matches(articleTextReg)) {
+					errorMsgs.add("文章內容：只能是中、英文字母、數字和_。");
+	            }
+				
+				Integer userID = new Integer(req.getParameter("userID").trim());
+				Integer articleTitleOptSN = new Integer(req.getParameter("articleTitleOptSN").trim());
+				
+				ForumArticleVO forumArticleVO = new ForumArticleVO();
+				forumArticleVO.setArticleTitle(articleTitle);
+				forumArticleVO.setArticleText(articleText);
+				forumArticleVO.setUserID(userID);
+				forumArticleVO.setArticleTitleOptSN(articleTitleOptSN);
+				
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("forumArticleVO", forumArticleVO);
+					RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/forumArticleInsert.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+				
+				//	新增
+				ForumArticleService forumArticleSvc = new ForumArticleService();
+				forumArticleVO = forumArticleSvc.addForumArticle(articleTitle, articleText, userID, articleTitleOptSN);
+				
+				//	新增完成後轉交到forumArticle.jsp(文章列表)
+				String url = "/forumArticle/forumArticle.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); 
+				successView.forward(req, res);
+				
+				//	其他錯誤處理
+			} catch  (Exception e) {
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/forumArticleInsert.jsp");
+				failureView.forward(req, res);
+			}
+		}	
 	}
 }

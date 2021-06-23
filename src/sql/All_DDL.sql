@@ -506,7 +506,9 @@ create table `ForumArticle` (
 	-- `publishedDate` timestamp not null comment '發文時間',
 	`publishedDate` timestamp not null default current_timestamp comment '發文時間',
 	`articleText` longText not null comment '發文內容',
-	`articleStatus` int not null comment '文章狀態',
+--	`articleStatus` int not null comment '文章狀態',
+	-- 註解是更改資料欄位嘗試，下一行是更改後的作法。
+	`articleStatus` boolean not null default 1 comment '文章狀態',
 	`userID` int not null comment '會員編號',
 	`articleTitleOptSN` int not null comment '發文選項編號',
 	`rateGCount` int not null default '0' comment '文章好評',
@@ -517,13 +519,15 @@ create table `ForumArticle` (
 
 INSERT INTO ForumArticle (articleTitle, articleText, articleStatus, userID, articleTitleOptSN, rateGCount, rateNGCount) VALUES ("關於浮潛", '浮潛 Snorkeling	為熱帶度假海域或海島極為普及的水上休閒活動，使用呼吸管在水面上游泳，不需要複雜的裝備，也不需要像水肺潛水那樣複雜訓練就可以在自然環境中觀賞水下生物，且不會受呼氣出來的氣泡干擾視線，但僅限深度約10公尺以內、生物豐富的海域，較能以浮潛欣賞海底之美。', 1, 1, 31, 87, 2);
 INSERT INTO ForumArticle (articleTitle, articleText, articleStatus, userID, articleTitleOptSN, rateGCount, rateNGCount) VALUES ("新手須知的小事", '下水前請確保身心健康，感冒、鼻塞都不能下水。 潛水後24小時內不得搭飛機，空中低壓會導致低氧，可能會引發潛水伕病（減壓症），潛水前後一天也不建議飲酒。', 1, 2, 32, 20, 1);
-INSERT INTO ForumArticle (articleTitle, articleText, articleStatus, userID, articleTitleOptSN, rateGCount, rateNGCount) VALUES ("福澤深厚湯姆貓可以潛水嗎？", 'as title', 3, 2, 33, 0, 99);
+INSERT INTO ForumArticle (articleTitle, articleText, articleStatus, userID, articleTitleOptSN, rateGCount, rateNGCount) VALUES ("福澤深厚湯姆貓可以潛水嗎？", 'as title', 1, 2, 33, 0, 99);
 
 create table `ForumRate` (
 	`articleRateSN` int not null auto_increment comment '文章評價編號' primary key,
 	`userID` int not null comment '會員編號',
 	`articleSN` int not null comment '文章編號',
-	`articleRate` tinyint(1) not null comment '評價',
+--	`articleRate` tinyint(1) not null comment '評價',
+	-- 更改資料欄位測試，下一行是新的。
+	`articleRate` boolean not null default 0 comment '評價',
 	CONSTRAINT `ForumRate_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`),
 	CONSTRAINT `ForumRate_articleSN` FOREIGN KEY (`articleSN`) REFERENCES `ForumArticle` (`articleSN`)
 )AUTO_INCREMENT = 30000001 COMMENT='文章評價';
@@ -537,7 +541,7 @@ create table `ArticleReport` (
 	`rptReason` varchar(150) not null comment '檢舉原因',
 	`userID` int not null comment '會員編號',
 	`articleSN` int not null comment '文章編號',
-	`rptResult` char(1) comment '檢舉處理狀態',
+	`rptResult` varchar(9) comment '檢舉處理狀態',
 	`reRptResult` varchar(150) comment '檢舉處理回報',
 	CONSTRAINT `ArticleReport_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`),
 	CONSTRAINT `ArticleReport_articleSN` FOREIGN KEY (`articleSN`) REFERENCES `ForumArticle` (`articleSN`)
