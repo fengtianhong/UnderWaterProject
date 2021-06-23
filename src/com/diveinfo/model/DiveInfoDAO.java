@@ -42,8 +42,9 @@ public class DiveInfoDAO implements DiveInfoDAO_interface {
 			ps.setInt(10, diveInfoVO.getRatePeople());
 			ps.setString(11, diveInfoVO.getStatus());
 			ps.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception se) {
+//e.printStackTrace();
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			if (ps != null) {
 				try {
@@ -105,7 +106,7 @@ public class DiveInfoDAO implements DiveInfoDAO_interface {
 
 	@Override
 	public DiveInfoVO findByPrimaryKey(Integer pointSN) {
-		
+
 		DiveInfoVO diveinfoVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -113,15 +114,15 @@ public class DiveInfoDAO implements DiveInfoDAO_interface {
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
-			
+
 			pstmt.setInt(1, pointSN);
-			
+
 			rs = pstmt.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				diveinfoVO = new DiveInfoVO();
 				diveinfoVO.setPointSN(rs.getInt("pointSN"));
 				diveinfoVO.setPointName(rs.getString("pointName"));
-				diveinfoVO.setLatitude(rs.getDouble("latitude"));  
+				diveinfoVO.setLatitude(rs.getDouble("latitude"));
 				diveinfoVO.setLongitude(rs.getDouble("longitude"));
 				diveinfoVO.setView(rs.getString("view"));
 				diveinfoVO.setIntroduction(rs.getString("introduction"));
@@ -130,9 +131,9 @@ public class DiveInfoDAO implements DiveInfoDAO_interface {
 				diveinfoVO.setPic(rs.getBytes("pic"));
 				diveinfoVO.setRatePoint(rs.getInt("ratePoint"));
 				diveinfoVO.setRatePeople(rs.getInt("ratePeople"));
-				diveinfoVO.setStatus(rs.getString("status"));		
+				diveinfoVO.setStatus(rs.getString("status"));
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -158,7 +159,7 @@ public class DiveInfoDAO implements DiveInfoDAO_interface {
 	public List<DiveInfoVO> getAll() {
 		List<DiveInfoVO> list = new ArrayList<DiveInfoVO>();
 		DiveInfoVO diveinfoVO = null;
-		
+
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -167,11 +168,11 @@ public class DiveInfoDAO implements DiveInfoDAO_interface {
 			ps = con.prepareStatement(GET_ALL_STMT);
 			rs = ps.executeQuery();
 
-			while(rs.next()) {
+			while (rs.next()) {
 				diveinfoVO = new DiveInfoVO();
 				diveinfoVO.setPointSN(rs.getInt("pointSN"));
 				diveinfoVO.setPointName(rs.getString("pointName"));
-				diveinfoVO.setLatitude(rs.getDouble("latitude"));  
+				diveinfoVO.setLatitude(rs.getDouble("latitude"));
 				diveinfoVO.setLongitude(rs.getDouble("longitude"));
 				diveinfoVO.setView(rs.getString("view"));
 				diveinfoVO.setIntroduction(rs.getString("introduction"));
@@ -183,7 +184,7 @@ public class DiveInfoDAO implements DiveInfoDAO_interface {
 				diveinfoVO.setStatus(rs.getString("status"));
 				list.add(diveinfoVO);
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

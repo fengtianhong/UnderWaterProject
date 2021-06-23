@@ -1,0 +1,23 @@
+  <%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%> 
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" href="<%=request.getContextPath()%>"><img src="<%=request.getContextPath()%>/util/assets/img/logo.png" alt="..." /></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars ms-1"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/diveinfo/diveinfo.jsp">潛點地圖</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/diveinfo/diveinfo.jsp">揪團去</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/diveinfo/diveinfo.jsp">套裝行程</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/diveinfo/diveinfo.jsp">潛水商城</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/diveinfo/diveinfo.jsp">論壇</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="<%=request.getContextPath()%>/util/js/scripts.js"></script>

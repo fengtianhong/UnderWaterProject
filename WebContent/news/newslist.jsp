@@ -103,9 +103,9 @@ th, td {
 					<FORM METHOD="post"
 						ACTION="<%=request.getContextPath()%>/news/news.do"
 						style="margin-bottom: 0px;">
-						<input type="submit" value="上/下架"> <input type="hidden"
-							name="pointSN" value="${newsVO.newsSN}"> <input
-							type="hidden" name="action" value="changeStatus">
+						<input type="submit" value="刪除"> <input type="hidden"
+							name="newsSN" value="${newsVO.newsSN}"> <input
+							type="hidden" name="action" value="delete">
 					</FORM>
 				</td>
 			</tr>

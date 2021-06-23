@@ -5,7 +5,6 @@ import java.util.*;
 import javax.naming.*;
 import javax.sql.DataSource;
 
-
 public class NewsDAO implements NewsDAO_interface {
 	private static DataSource ds = null;
 	static {
@@ -19,9 +18,46 @@ public class NewsDAO implements NewsDAO_interface {
 	private static final String INSERT_STMT = "INSERT INTO News (title, content, image,newsDate, newsFrom, newsType) VALUES (?, ?, ?, ?, ?, ?)";
 	private static final String UPDATE_STMT = "UPDATE News set title=?, content=?, image=?, newsDate=?, newsFrom=?, newsType=? where newsSN = ?";
 	private static final String GET_ONE_STMT = "SELECT * FROM News WHERE newsSN = ?";
-	private static final String GET_ALL_STMT = "SELECT * FROM News ";
-	
-	
+	private static final String GET_ALL_STMT = "SELECT * FROM News order by newsDate desc";
+	private static final String DELETE_STMT = "DELETE FROM News WHERE newsSN = ?";
+
+	@Override
+	public void delete(Integer newsSN) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(DELETE_STMT);
+
+			pstmt.setInt(1, newsSN);
+
+			pstmt.executeUpdate();
+
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+
+		}
+	}
+
 	@Override
 	public void insert(NewsVO newsVO) {
 		Connection con = null;
@@ -33,7 +69,7 @@ public class NewsDAO implements NewsDAO_interface {
 			ps.setString(2, newsVO.getContent());
 			ps.setBytes(3, newsVO.getImage());
 			ps.setDate(4, newsVO.getNewsDate());
-			ps.setString(5, newsVO.getContent());
+			ps.setString(5, newsVO.getNewsFrom());
 			ps.setString(6, newsVO.getNewsType());
 			ps.executeUpdate();
 		} catch (Exception e) {
@@ -67,7 +103,7 @@ public class NewsDAO implements NewsDAO_interface {
 			ps.setString(2, newsVO.getContent());
 			ps.setBytes(3, newsVO.getImage());
 			ps.setDate(4, newsVO.getNewsDate());
-			ps.setString(5, newsVO.getContent());
+			ps.setString(5, newsVO.getNewsFrom());
 			ps.setString(6, newsVO.getNewsType());
 			ps.setInt(7, newsVO.getNewsSN());
 			ps.executeUpdate();

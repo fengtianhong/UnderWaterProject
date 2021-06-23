@@ -22,7 +22,7 @@ public class DiveInfoService {
 		diveinfovo.setRatePoint(ratepoint);
 		diveinfovo.setRatePeople(ratepeople);
 		diveinfovo.setStatus(status);
-		dao.insert(diveinfovo);
+dao.insert(diveinfovo);
 		
 		return diveinfovo;
 	}

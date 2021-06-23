@@ -603,7 +603,7 @@ CREATE TABLE `News` (
   `content` longtext NOT NULL COMMENT '內文',
   `image` longblob  COMMENT '照片',
   `newsDate` date NOT NULL COMMENT '新聞日期',
-  `newsFrom` varchar(20) NOT NULL COMMENT '新聞來源',
+  `newsFrom` varchar(100) NOT NULL COMMENT '新聞來源',
   `newsType` char(1) NOT NULL COMMENT '新聞類型',
   PRIMARY KEY (`newsSN`)
 ) COMMENT='最新消息' AUTO_INCREMENT = 500001;
