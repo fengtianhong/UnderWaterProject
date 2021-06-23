@@ -1,0 +1,6 @@
+    <div id="footerGroup">
+        <img id="ad" src="<%=request.getContextPath()%>/util/assets/img/diveman/ad.png" alt="">
+        <img id="about" src="<%=request.getContextPath()%>/util/assets/img/diveman/about.png" alt="">
+        <img id="QA" src="<%=request.getContextPath()%>/util/assets/img/diveman/QA.svg" alt="">
+        <img id="footer" src="<%=request.getContextPath()%>/util/assets/img/diveman/footer.png" alt="">
+    </div>

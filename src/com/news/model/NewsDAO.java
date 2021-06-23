@@ -18,7 +18,7 @@ public class NewsDAO implements NewsDAO_interface {
 	private static final String INSERT_STMT = "INSERT INTO News (title, content, image,newsDate, newsFrom, newsType) VALUES (?, ?, ?, ?, ?, ?)";
 	private static final String UPDATE_STMT = "UPDATE News set title=?, content=?, image=?, newsDate=?, newsFrom=?, newsType=? where newsSN = ?";
 	private static final String GET_ONE_STMT = "SELECT * FROM News WHERE newsSN = ?";
-	private static final String GET_ALL_STMT = "SELECT * FROM News ";
+	private static final String GET_ALL_STMT = "SELECT * FROM News order by newsDate desc";
 	private static final String DELETE_STMT = "DELETE FROM News WHERE newsSN = ?";
 
 	@Override
