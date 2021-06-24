@@ -91,7 +91,13 @@
 	</tr>
 	<tr>
 		<td>證照資格</td>
-		<td><input type="TEXT" name="certificationLimit" size="45" value="<%= (groupTourVO==null)?"":groupTourVO.getCertificationLimit()%>" /></td>
+		<td>
+			<select name="certificationLimit" size="1">
+				<option value="0" ${(groupTourVO.certificationLimit==0)? 'selected':'' }>不須證照
+				<option value="1" ${(groupTourVO.certificationLimit==1)? 'selected':'' }>PADI OW / SSI OW
+				<option value="2" ${(groupTourVO.certificationLimit==2)? 'selected':'' }>PADI AOW / SSI AOW
+			</select>
+		</td>
 	</tr>
 	<tr>
 		<td>status</td>
