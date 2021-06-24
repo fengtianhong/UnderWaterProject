@@ -47,7 +47,7 @@
 	</tr>
 	<tr>
 		<td>行程開始時間</td>
-		<td><input type="TEXT" class="startDate" name="startTime" autocomplete="off" value="<%= (groupTourVO==null)?"":groupTourVO.getStartTime()%>" /></td>
+		<td><input type="TEXT" class="startDate" name="startTime" autocomplete="off" value="<%=(groupTourVO==null)?"":groupTourVO.getStartTime()%>" /></td>
 	</tr>
 	<tr>
 		<td>行程結束時間</td>
