@@ -47,7 +47,9 @@
 			</tr>
 			<tr>
 				<td>介紹:</td>
-				<td><input type="TEXT" name="introduction" size="45"
+				<td>
+				
+				<input type="TEXT" name="introduction" size="45"
 					placeholder="請輸入潛點詳細介紹"
 					value="<%=(diveinfoVO == null) ? "" : diveinfoVO.getIntroduction()%>"></td>
 			</tr>

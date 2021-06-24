@@ -5,7 +5,7 @@
 <%
 	NewsVO newsVO = (NewsVO) request.getAttribute("newsVO");
 %>
-<%= newsVO==null %>
+<%=newsVO == null%>
 <html>
 <head>
 <title>新增最新消息</title>
@@ -29,15 +29,14 @@
 			</tr>
 			<tr>
 				<td>內容:</td>
-				<td><input type="TEXT" name="content" size="45"
-					placeholder="請輸入最新消息內容"
-					value="<%=(newsVO == null) ? "" : newsVO.getContent()%>"></td>
+				<td><textarea name="content" rows="6" cols="40"><%=(newsVO == null) ? "" : newsVO.getContent()%></textarea>
+				</td>
 			</tr>
 			<tr>
 				<td>圖片:</td>
 				<td>
-					<div class="picture"></div>
-					<input type="file" name="image" id="the_file" accept="image/*">
+					<div class="picture"></div> <input type="file" name="image"
+					id="the_file" accept="image/*">
 				</td>
 			</tr>
 			<tr>
@@ -101,7 +100,7 @@
 	       timepicker:false,       //timepicker:true,
 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
-		   value: '<%=newsDate%>'  // value:   new Date(),
+		   value: '<%=newsDate%>' // value:   new Date(),
 	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
 	//startDate:	            '2017/07/10',  // 起始日
 	//minDate:               '-1970-01-01', // 去除今日(不含)之前
@@ -156,26 +155,27 @@
 </script>
 
 <script>
-		window.addEventListener("DOMContentLoaded", function() {
+	window.addEventListener("DOMContentLoaded", function() {
 
-			// 顯示圖片
-			var the_file = document.getElementById("the_file");
-			the_file.addEventListener("change", function(e) {
+		// 顯示圖片
+		var the_file = document.getElementById("the_file");
+		the_file.addEventListener("change", function(e) {
 
-				var picture = document.getElementsByClassName("picture")[0];
-				picture.innerHTML = ""; // 清空東西 
+			var picture = document.getElementsByClassName("picture")[0];
+			picture.innerHTML = ""; // 清空東西 
 
-				let reader = new FileReader();
-				reader.readAsDataURL(this.files[0]);
-				reader.addEventListener("load", function() {
+			let reader = new FileReader();
+			reader.readAsDataURL(this.files[0]);
+			reader.addEventListener("load",
+					function() {
 
-					var pic_src = reader.result; // 取得圖片編碼
-					picture.innerHTML = "<img class='preview'>";
-					document.querySelector(".preview").setAttribute('src',
-							pic_src);
-				})
-			});
-
+						var pic_src = reader.result; // 取得圖片編碼
+						picture.innerHTML = "<img class='preview'>";
+						document.querySelector(".preview").setAttribute('src',
+								pic_src);
+					})
 		});
-	</script>
+
+	});
+</script>
 </html>

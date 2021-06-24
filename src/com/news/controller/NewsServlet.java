@@ -120,6 +120,34 @@ public class NewsServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+		if ("getOne_For_Show".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/*************************** 1.接收請求參數 ****************************************/
+				Integer newsSN = new Integer(req.getParameter("newsSN"));
+
+				/*************************** 2.開始查詢資料 ****************************************/
+				NewsService newsSvc = new NewsService();
+				NewsVO newsVO = newsSvc.getOneNewsVO(newsSN);
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+				req.setAttribute("newsVO", newsVO); // 資料庫取出的empVO物件,存入req
+				String url = "/news/newsDetail.jsp";
+
+				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
+
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 **********************************/
+			} catch (Exception e) {
+				e.printStackTrace();
+				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/news/news.jsp");
+				failureView.forward(req, res);
+			}
+		}
 		if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();

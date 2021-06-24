@@ -44,8 +44,7 @@ img {
 			</tr>
 			<tr>
 				<td>內容:</td>
-				<td><input type="TEXT" name="content" size="45"
-					value="<%=newsVO.getContent()%>" /></td>
+				<td><textarea name="content" rows="6" cols="40"><%=newsVO.getContent()%></textarea></td>
 			</tr>
 			<tr>
 				<td>上架日期:</td>

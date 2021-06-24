@@ -50,6 +50,12 @@ th, td {
 	padding: 5px;
 	/*     text-align: center; */
 }
+ textarea
+{
+     border: none;
+     resize: none;
+     cursor: pointer;
+}
 </style>
 <html>
 <head>
@@ -81,7 +87,7 @@ th, td {
 			<tr>
 				<td>${newsVO.newsSN}</td>
 				<td>${newsVO.title}</td>
-				<td>${newsVO.content}</td>
+				<td><textarea rows="6" cols="40" readonly>${newsVO.content}</textarea></td>
 				<td><div class="show_pic">
 						<img
 							src="<%=request.getContextPath()%>/news/ShowPic?newsSN=${newsVO.newsSN}">

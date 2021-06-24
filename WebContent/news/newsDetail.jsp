@@ -7,29 +7,40 @@
 %>
 <html>
 <head>
+<style type="text/css">
+.show_pic {
+	width: 400px;
+}
+
+img {
+	width: 100%;
+}
+ textarea
+{
+     resize: none;
+     cursor: pointer;
+}
+</style>
 <title><%=newsVO.getTitle()%></title>
 </head>
 <body>
 	<table>
 		<tr>
 			<td>標題:</td>
-			<td><input type="TEXT" name="title" size="45"
-				value="<%=newsVO.getTitle()%>" /></td>
+			<td><%=newsVO.getTitle()%></td>
 		</tr>
 		<tr>
 			<td>上架日期:</td>
-			<td><input name="newsDate" id="f_date1" type="text"></td>
+			<td><%=newsVO.getNewsDate()%></td>
 		</tr>
 		<tr>
 			<td>內容:</td>
-			<td><input type="TEXT" name="content" size="45"
-				value="<%=newsVO.getContent()%>" /></td>
+			<td><textarea readonly rows="6" cols="40"><%=newsVO.getContent()%></textarea></td>
 		</tr>
 
 		<tr>
 			<td>消息來源:</td>
-			<td><input type="TEXT" name="newsFrom" size="45"
-				value="<%=newsVO.getNewsFrom()%>" /></td>
+			<td><%=newsVO.getNewsFrom()%></td>
 		</tr>
 
 		<tr>
@@ -46,5 +57,11 @@
 
 
 	</table>
+	<button onclick="goback()">回上一頁</button>
+	<script>
+		function goback() {
+			history.go(-1);
+		}
+	</script>
 </body>
 </html>

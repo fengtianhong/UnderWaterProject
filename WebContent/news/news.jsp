@@ -12,18 +12,30 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+<!-- 以下兩個link必須載入用於header,footer -->
+<link rel="stylesheet" href="../share/index.css">
+<link rel="stylesheet" href="../vendors/bootstrap/css/bootstrap.min.css">
+
+
+
 <meta charset="UTF-8">
 <title>最新消息的啦</title>
-<%@ include file="../util/meta.file"%>
 <style>
+
 .newsContent {
 	margin-top: 100px;
-	height: 800px;
 }
 
 .forinclude {
 	margin: 0 auto;
 	width: 300px;
+}
+
+textarea {
+	border: none;
+	resize: none;
+	cursor: pointer;
 }
 
 table {
@@ -34,8 +46,7 @@ table {
 </head>
 
 <body>
-	<%@ include file="../util/header.file"%>
-	<%@ include file="../util/sidebar.file"%>
+	<jsp:include page="../share/navbar.jsp" flush="true" />
 	<div class="newsContent">
 		<table>
 			<tr>
@@ -54,7 +65,7 @@ table {
 
 				<tr>
 					<td>${newsVO.title}</td>
-					<td>${newsVO.content}</td>
+					<td><textarea readonly rows="6" cols="40">${newsVO.content}</textarea></td>
 
 					<td><fmt:formatDate value="${newsVO.newsDate}"
 							pattern="yyyy-MM-dd" /></td>
@@ -64,9 +75,9 @@ table {
 						<FORM METHOD="post"
 							ACTION="<%=request.getContextPath()%>/news/news.do"
 							style="margin-bottom: 0px;">
-							<input type="submit" value="修改"> <input type="hidden"
+							<input type="submit" value="詳細資訊"> <input type="hidden"
 								name="newsSN" value="${newsVO.newsSN}"> <input
-								type="hidden" name="action" value="getOne_For_Update">
+								type="hidden" name="action" value="getOne_For_Show">
 						</FORM>
 					</td>
 
@@ -76,6 +87,6 @@ table {
 		</table>
 	</div>
 	<%@ include file="page2frontend.file"%>
-	<%@ include file="../util/footer.file"%>
+	<jsp:include page="../share/footer.jsp" flush="true" />
 </body>
 </html>
