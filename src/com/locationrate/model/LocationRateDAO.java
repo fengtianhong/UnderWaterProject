@@ -175,7 +175,8 @@ public class LocationRateDAO implements LocationRateDAO_interface{
 
 	
 	@Override
-	public LocationRateVO getByUser(Integer userID) {
+	public List<LocationRateVO> getByUser(Integer userID) {
+		List<LocationRateVO> list = new ArrayList<LocationRateVO>();
 		LocationRateVO locationRateVO = null;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -195,6 +196,7 @@ public class LocationRateDAO implements LocationRateDAO_interface{
 					locationRateVO.setRate(rs.getInt("rate"));
 					locationRateVO.setRateDetail(rs.getString("rateDetail"));
 					locationRateVO.setCreateTime(rs.getTimestamp("createTime"));
+					list.add(locationRateVO);
 				}
 			} catch (SQLException se) {
 				throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -214,7 +216,7 @@ public class LocationRateDAO implements LocationRateDAO_interface{
 					}
 				}
 			}	
-		return locationRateVO;
+		return list;
 	}
 
 }

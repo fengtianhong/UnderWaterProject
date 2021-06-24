@@ -26,6 +26,7 @@ public class GroupTourDAO implements GroupTourDAO_interface{
 	private static final String UPDATE_STMT = "UPDATE GroupTour SET tourName=?, tourPic=?, startTime=?, endTime=?, regTime=?, closeTime=?, pointSN=?, price=?, attendNumber=?, limitNumder=?, certificationLimit=?, status=?, content=? WHERE groupTourSN=?";
 	private static final String GET_ONE_STMT = "SELECT * FROM GroupTour WHERE groupTourSN=?";
 	private static final String GET_All_LIST_STMT = "SELECT * FROM GroupTour ORDER BY status, startTime";
+	private static final String UPDATE_ATTEND_NUMBER_STMT = "UPDATE GroupTour SET attendNumber=attendNumber+1 WHERE groupTourSN=?";
 
 	@Override
 	public void insert(GroupTourVO groupTourVO) {
@@ -50,6 +51,8 @@ public class GroupTourDAO implements GroupTourDAO_interface{
 			ps.executeUpdate();
 			
 		} catch (SQLException se) {
+			// runtime exception 可以穿越各層一直到view，顯示出錯誤訊息
+			// 且有效的錯誤訊息可以知道是程式的哪部分出錯
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			if(ps != null) {
@@ -146,6 +149,7 @@ public class GroupTourDAO implements GroupTourDAO_interface{
 				groupTourVO.setContent(rs.getString("content"));
 			}
 		} catch (SQLException se) {
+			// runtime exception 可以穿越各層一直到view，顯示出錯誤訊息
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			if(rs != null) {
@@ -233,6 +237,39 @@ public class GroupTourDAO implements GroupTourDAO_interface{
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public void attendGroup(Integer groupTourSN) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		try {
+			con = ds.getConnection();
+			ps = con.prepareStatement(UPDATE_ATTEND_NUMBER_STMT);
+			ps.setInt(1, groupTourSN);			
+						
+			ps.executeUpdate();
+			
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if(ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+//			if(con != null) {
+//				try {
+//					con.close();
+//				} catch (SQLException e) {
+//					e.printStackTrace(System.err);
+//				}
+//			}
+		}	
+		
 	}
 }
 

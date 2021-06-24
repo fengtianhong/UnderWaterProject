@@ -41,13 +41,14 @@ public class GroupTourServlet extends HttpServlet {
 				GroupTourVO groupTourVO = groupTourSvc.getOne(groupTourSN);
 				
 				req.setAttribute("groupTourVO", groupTourVO);
-				RequestDispatcher successView = req.getRequestDispatcher("/grouptour/updateGT.jsp");
+				RequestDispatcher successView = req.getRequestDispatcher("/grouptour/frontendListOne.jsp");
 				successView.forward(req, res);
 				
 			}catch(Exception e) {
 				System.out.println("update failure"+ e.getMessage());
 				errMsg.add("取得資料失敗，"+e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/grouptour/backendListGT.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/grouptour/frontendListAll.jsp");
+				failureView.forward(req, res);
 			}
 		}
 		
@@ -219,6 +220,7 @@ public class GroupTourServlet extends HttpServlet {
 				req.setAttribute("groupTourVO", groupTourVO);
 				RequestDispatcher successView = req.getRequestDispatcher("/grouptour/updateGT.jsp");
 				successView.forward(req, res);
+				return;
 				
 			}catch(Exception e) {
 				e.printStackTrace();   //

@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.orderforgroup.model.*"%>
 <%@ page import="com.member.model.*"%>
+<%@ page import="com.grouptour.model.*"%>
 
 
 <%  
@@ -11,9 +12,10 @@ OderForGroupVO oderForGroupVO = (OderForGroupVO) request.getAttribute("oderForGr
 
 //這東西應該會放在Session
 MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");	
-
+GroupTourVO groupTourVO = (GroupTourVO) request.getAttribute("groupTourVO");
 %>
 <%= oderForGroupVO==null %><%-- 確認有沒有抓到用(可刪) --%>
+<%= groupTourVO==null %><%-- 確認有沒有抓到用(可刪) --%>
 
 <!DOCTYPE html>
 <html>
@@ -27,12 +29,13 @@ MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 </head>
 <body>
 
+<h2>${memberVO.nickName}，歡迎報名套裝行程</h2><bl>
+
 <form method="post" action="<%=request.getContextPath()%>/orderforgroup/orderforgroup.do">
 <table>
-	<tr>
-		<td>${memberVO.nickName}，你好!!(just for test 會員報名時)</td>	
-		<td></td>
-	</tr>
+
+		
+
 	<tr>
 		<td>套裝行程名稱(列出訂購資訊)</td>	
 		<td>${groupTourVO.tourName}</td>
@@ -50,13 +53,13 @@ MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 	
 	<tr>
 		<td>訂購人(這個梅蘭未不會被get)</td>	
-		<td><input type="TEXT" name="personID" size="45" value="${memberVO.userName}" />
+		<td><input type="TEXT" size="45" value="${memberVO.userName}" />
 		</td>
 	</tr>	
 	
 	<tr>
 		<td>身分證字號</td>	
-		<td><input type="TEXT" name="personID" size="45" value="${memberVO.userID}" />
+		<td><input type="TEXT" name="personID" size="45" value="${memberVO.personID}" />
 		</td>
 	</tr>
 	<tr>
@@ -99,17 +102,8 @@ MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
      $('.date').datetimepicker({
 	       timepicker:false,
 	       format:'Y-m-d',
-		   beforeShowDay: function(date) {
-       	  if (  date.getYear() <  today.getYear() || 
-		       (date.getYear() == today.getYear() && date.getMonth() <  today.getMonth()) || 
-		       (date.getYear() == today.getYear() && date.getMonth() == today.getMonth() && date.getDate() < today.getDate())
-	          ) {
-	               return [false, ""]
-	          }
-	          return [true, ""];
-    	}});
+	       });
 
-	
         
       });
 

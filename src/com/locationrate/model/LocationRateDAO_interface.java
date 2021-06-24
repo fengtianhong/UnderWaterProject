@@ -7,5 +7,5 @@ public interface LocationRateDAO_interface {
 	public void update(LocationRateVO locationRateVO);
 	public void delete(Integer SN);
 	public List<LocationRateVO> getByPointSN(Integer pointSN);	// for diveinfo
-	public LocationRateVO getByUser(Integer userID);
+	public List<LocationRateVO> getByUser(Integer userID);
 }

@@ -23,7 +23,7 @@ public class LocationrateService {
 		vo.setPointSN(pointSN);
 		vo.setRate(rate);
 		vo.setRateDetail(rateDetail);
-		dao.insert(vo);
+		dao.update(vo);
 		return vo;
 	}
 	public void deleteLocationRate(Integer SN) {
@@ -32,7 +32,7 @@ public class LocationrateService {
 	public List<LocationRateVO> getByPointSN(Integer pointSN) {
 		return dao.getByPointSN(pointSN);
 	}
-	public LocationRateVO getByUser(Integer userID) {
+	public List<LocationRateVO> getByUser(Integer userID) {
 		return dao.getByUser(userID);
 	}
 }

@@ -8,6 +8,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.grouptour.model.GroupTourDAO;
+
 import util.Util;
 
 public class OderForGroupDAO implements OderForGroupDAO_interface{
@@ -35,6 +37,9 @@ public class OderForGroupDAO implements OderForGroupDAO_interface{
 		
 		try {
 			con = ds.getConnection();
+			con.setAutoCommit(false);
+			
+			// 新增訂單
 			ps = con.prepareStatement(INSERT_STMT);
 			ps.setInt(1, oderForGroupVO.getUserID());			
 			ps.setInt(2, oderForGroupVO.getGroupTourSN());			
@@ -44,9 +49,27 @@ public class OderForGroupDAO implements OderForGroupDAO_interface{
 			ps.setString(6, oderForGroupVO.getPersonID());						
 			ps.setDate(7, oderForGroupVO.getBirthdate());											
 			ps.executeUpdate();
+			//ps.close();//
+			
+			// 更新報名人數
+			GroupTourDAO dao = new GroupTourDAO();
+			dao.attendGroup(oderForGroupVO.getGroupTourSN());
+			
+			con.commit();
+			con.setAutoCommit(true);
 			
 		} catch (SQLException se) {
+			if(con != null) {
+				try {
+					System.out.println("新增訂單之交易失敗");
+					con.rollback();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					throw new RuntimeException("rollback error occured. " + e.getMessage());
+				}
+			}
 			throw new RuntimeException("A database error occured. " + se.getMessage());
+			
 		} finally {
 			if(ps != null) {
 				try {
@@ -247,6 +270,45 @@ public class OderForGroupDAO implements OderForGroupDAO_interface{
 				}
 			}	
 		
+		return list;
+	}
+
+	@Override
+	public List<Integer> checkRepeatOrder(Integer userID) {
+		List<Integer> list = new ArrayList<Integer>();
+		OderForGroupVO oderForGroupVO = null;
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+			try {
+				con = ds.getConnection();
+				ps = con.prepareStatement(GET_ByUSERID_STMT);
+				ps.setInt(1, userID);
+				rs = ps.executeQuery();
+				
+				while(rs.next()) {
+					list.add(rs.getInt("groupTourSN"));
+				}
+				
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. " + se.getMessage());
+			} finally {
+				if(ps != null) {
+					try {
+						ps.close();
+					} catch (SQLException e) {
+						e.printStackTrace(System.err);
+					}
+				}
+				if(con != null) {
+					try {
+						con.close();
+					} catch (SQLException e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}	
 		return list;
 	}
 

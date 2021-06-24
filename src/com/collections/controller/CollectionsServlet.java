@@ -34,6 +34,7 @@ public class CollectionsServlet extends HttpServlet {
 		// 前端按了<3 
 		if ("favorite".equals(action)) {
 			
+			PrintWriter out = res.getWriter();
 			
 			try {
 				// 傳入 UserID, GroupTourSN
@@ -43,9 +44,8 @@ public class CollectionsServlet extends HttpServlet {
 				// 查詢資料
 				CollectionsService colSvc = new CollectionsService();
 				List<Integer> list = colSvc.getCollectionsByUserid(userID);
-				PrintWriter out = res.getWriter();
 				
-				if(list.contains(groupTourSN)) {	// 套裝行程存在該使用者收藏時刪除資料
+				if(list.contains(groupTourSN)) {				// 套裝行程存在該使用者收藏時刪除資料
 					colSvc.deleteCollections(groupTourSN, userID);
 					out.print("delete");
 				}else {
@@ -56,9 +56,8 @@ public class CollectionsServlet extends HttpServlet {
 				
 			}catch(Exception e) {
 				e.printStackTrace();	//
-				System.out.println("failure"+ e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/qa");	// 重新insert
-				failureView.forward(req, res);
+				System.out.println("add collection failure"+ e.getMessage());
+				out.print("fail");
 			}
 			
 

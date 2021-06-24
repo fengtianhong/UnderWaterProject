@@ -8,5 +8,6 @@ public interface OderForGroupDAO_interface {
 	public OderForGroupVO findByPrimaryKey(Integer orderSN);
 	public List<OderForGroupVO> getOrderByUserID(Integer userID);
 	public List<OderForGroupVO> getAll();
+	public List<Integer> checkRepeatOrder(Integer userID);	// 確認是否已報名用
 
 }
