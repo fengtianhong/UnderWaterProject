@@ -174,7 +174,7 @@
                     </li>
                     <li class="timeline-inverted">
                         <div class="timeline-image">
-                            <h4>更多揪團<br>就等你來</h4>
+                            <a href="party/party.do?action=party"><h4 style="color:white">更多揪團<br>就等你來</h4></a>
                         </div>
                     </li>
                 </ul>

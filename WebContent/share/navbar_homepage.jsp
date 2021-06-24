@@ -14,7 +14,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">潛水團</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                               <a class="dropdown-item" href="#">套裝行程</a>
-                              <a class="dropdown-item" href="http://localhost:8081/UnderWaterProject/party/party.do?action=party">揪團Go!</a>
+                              <a class="dropdown-item" href="party/party.do?action=party">揪團Go!</a>
                             </div>
                         </li>
                         <li class="nav-item"><a class="nav-link">商城</a></li>
