@@ -16,14 +16,16 @@
 <title>最新消息的啦</title>
 <%@ include file="../util/meta.file"%>
 <style>
-.newsContent{
- margin-top:100px; 
-height: 800px;
+.newsContent {
+	margin-top: 100px;
+	height: 800px;
 }
-.forinclude{
-	margin:0 auto;
-	width:300px;
+
+.forinclude {
+	margin: 0 auto;
+	width: 300px;
 }
+
 table {
 	margin: auto;
 	width: 800px;
@@ -33,37 +35,47 @@ table {
 
 <body>
 	<%@ include file="../util/header.file"%>
-	<%@ include file="../util/sidebar.file" %>
+	<%@ include file="../util/sidebar.file"%>
 	<div class="newsContent">
-	<table>
-		<tr>
-			<th>新聞標題</th>
-			<th>新聞內容</th>
-			<th>上架日期</th>
-			<th>消息來源</th>
-			<th>新聞類型</th>
-		</tr>
-		<div class="forinclude">
-		<%@ include file="page1frontend.file"%>
-		</div>
-		<c:forEach var="newsVO" items="${list}" begin="<%=pageIndex%>"
-			end="<%=pageIndex+rowsPerPage-1%>">
-
+		<table>
 			<tr>
-				<td>${newsVO.title}</td>
-				<td>${newsVO.content}</td>
-
-				<td><fmt:formatDate value="${newsVO.newsDate}"
-						pattern="yyyy-MM-dd" /></td>
-				<td>${newsVO.newsFrom}</td>
-				<td>${newsVO.newsType==0?"潛點":newsVO.newsType==1?"商品":"揪團"}</td>
-
-
+				<th>新聞標題</th>
+				<th>新聞內容</th>
+				<th>上架日期</th>
+				<th>消息來源</th>
+				<th>新聞類型</th>
+				<th>詳細內容</th>
 			</tr>
-		</c:forEach>
-	</table>
+			<div class="forinclude">
+				<%@ include file="page1frontend.file"%>
+			</div>
+			<c:forEach var="newsVO" items="${list}" begin="<%=pageIndex%>"
+				end="<%=pageIndex+rowsPerPage-1%>">
+
+				<tr>
+					<td>${newsVO.title}</td>
+					<td>${newsVO.content}</td>
+
+					<td><fmt:formatDate value="${newsVO.newsDate}"
+							pattern="yyyy-MM-dd" /></td>
+					<td>${newsVO.newsFrom}</td>
+					<td>${newsVO.newsType==0?"潛點":newsVO.newsType==1?"商品":"揪團"}</td>
+					<td>
+						<FORM METHOD="post"
+							ACTION="<%=request.getContextPath()%>/news/news.do"
+							style="margin-bottom: 0px;">
+							<input type="submit" value="修改"> <input type="hidden"
+								name="newsSN" value="${newsVO.newsSN}"> <input
+								type="hidden" name="action" value="getOne_For_Update">
+						</FORM>
+					</td>
+
+				</tr>
+
+			</c:forEach>
+		</table>
 	</div>
 	<%@ include file="page2frontend.file"%>
-	<%@ include file="../util/footer.file" %>
+	<%@ include file="../util/footer.file"%>
 </body>
 </html>
