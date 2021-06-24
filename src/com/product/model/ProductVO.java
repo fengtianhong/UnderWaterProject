@@ -1,6 +1,7 @@
 package com.product.model;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.sql.Timestamp;
 
 public class ProductVO implements Serializable {
@@ -11,15 +12,16 @@ public class ProductVO implements Serializable {
 	private Integer productPrice;
 	private Integer productQuantity;
 	private String productStatus;
+	private byte[] productPhoto;
 	private String productDetail;
-	private Timestamp productCreateTime;
-	private Boolean productDiscount;
-	private Boolean productPrime;
+	private Date productCreateTime;
+	private String productDiscount;
+	private String productPrime;
 	private Integer ratingPoint;
 	private Integer ratingNumber;
 
 	public ProductVO() {
-		super();
+		
 	}
 
 	public Integer getProductSN() {
@@ -70,6 +72,14 @@ public class ProductVO implements Serializable {
 		this.productStatus = productStatus;
 	}
 
+	public byte[] getProductPhoto() {
+		return productPhoto;
+	}
+
+	public void setProductPhoto(byte[] productPhoto) {
+		this.productPhoto = productPhoto;
+	}
+
 	public String getProductDetail() {
 		return productDetail;
 	}
@@ -78,27 +88,27 @@ public class ProductVO implements Serializable {
 		this.productDetail = productDetail;
 	}
 
-	public Timestamp getProductCreateTime() {
+	public Date getProductCreateTime() {
 		return productCreateTime;
 	}
 
-	public void setProductCreateTime(Timestamp productCreateTime) {
+	public void setProductCreateTime(Date productCreateTime) {
 		this.productCreateTime = productCreateTime;
 	}
 
-	public Boolean getProductDiscount() {
+	public String getProductDiscount() {
 		return productDiscount;
 	}
 
-	public void setProductDiscount(Boolean productDiscount) {
+	public void setProductDiscount(String productDiscount) {
 		this.productDiscount = productDiscount;
 	}
 
-	public Boolean getProductPrime() {
+	public String getProductPrime() {
 		return productPrime;
 	}
 
-	public void setProductPrime(Boolean productPrime) {
+	public void setProductPrime(String productPrime) {
 		this.productPrime = productPrime;
 	}
 

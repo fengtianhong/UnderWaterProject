@@ -105,7 +105,7 @@
 	
 	<servlet>
 		<servlet-name>ProductServlet</servlet-name>
-		<servlet-class>com.product.controller.ProductServlet</servlet-class>
+		<servlet-class>com.product.controller.ProductServletBk</servlet-class>
 	</servlet>
 	
 	<servlet-mapping>

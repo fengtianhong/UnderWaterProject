@@ -94,22 +94,22 @@ insert into Diveinfo(pointName,latitude,longitude,`view`,introduction,season,
 values
 ("澎湖仙島",23.249750, 119.674783,"蚵仔嫂的故鄉",
 "澎湖南方四島國家公園海域遊憩區擁有美麗壯闊的珊瑚生態和魚群，歡迎民眾來親近海洋，雖然目前交通仍然不方便，但也因此保留了更多原始風貌",
-"春夏秋冬","離島",null,5,1,1),
+"春夏秋冬","離島",null,5,1,上架),
 ("墾丁獨立礁",21.563336, 120.45536,"海蛞蝓與豆丁海馬朝聖地",
 "獨立礁是墾丁船潛最受歡迎，也是潛水員們最喜歡的潛點。獨立礁是一顆矗立在空曠沙地上的巨大礁石。狀似龍頭的礁岩面南而立，磐頂約8米，置底30米。這個潛點最受歡迎的明星生物，是棲息於24米海扇上的豆丁海馬。迷你而圓滾滾的迷人身形是潛水員們不能錯過的探訪對象，真的是太可愛了 !",
-"春夏秋冬","南部",null,5,1,1),
+"春夏秋冬","南部",null,5,1,上架),
 ("墾丁合界沈船",21.959135, 120.710401,"行駛在海底的船",
 "合界，建議船潛，如果要岸潛的話，可以在水面移動到位置再下潛。必來打卡的點是這裡水下32米只剩下船骨的沉船，因為長得很像肋骨，大家都稱之為「排骨」！下水點的兩邊都有公車站牌很好找～這裡最深有大約有34米，加上有時水流湍急、浪大，適合中高階的大家來參觀！船骨成了魚礁，也有豐富的生態可以觀看。",
-"春夏秋冬","南部",null,5,1,1),
+"春夏秋冬","南部",null,5,1,上架),
 ("小琉球美人洞",22.353668, 120.37315,"海龜集會所",
 "堪稱海龜數量最多的潛點，下水時要注意溝槽地形，時而有浪。有時水質清澈，能見度可達20米以上。",
-"春夏秋冬","離島",null,5,1,1),
+"春夏秋冬","離島",null,5,1,上架),
 ("東北角龍洞",25.112701, 121.919074,"龍洞1號",
 "位在龍洞灣公園內，有大型室內停車場，停車及著裝方便，亦有潛水步道，是東北角潛水最輕鬆的潛點。",
-"春夏秋冬","北部",null,5,1,1),
+"春夏秋冬","北部",null,5,1,上架),
 ("綠島石朗",22.65577,121.47454,"浮潛與水肺都可以的地方",
 "綠島是國際級的潛水天堂，而位於西岸沿海一帶的石朗海域，則是綠島最受歡迎的潛水勝地，和柴口、大白沙並列為綠島三大潛水區。這裡靠近島內商家雲集的南寮村，浮潛後徒步走去用餐只要十分鐘，非常方便；南寮漁港也在不遠處，飽餐一頓再搭船出海賞鯨，多麼悠閒愜意！",
-"春夏秋冬","離島",null,5,1,1);
+"春夏秋冬","離島",null,5,1,上架);
 
 -- --------------------------------------套裝行程----------------------------------------
 
@@ -153,7 +153,7 @@ create table `OderForGroup` (
     `groupTourSN` int not null comment '套裝行程編號',
     `totalPrice` int not null comment '訂單總額',
 	`purchaseDate`  date not null comment '購買日期',
-    `phone` varchar(10) not null comment '手機',
+    `phone` varchar(20) not null comment '手機',
     `personID` char(10) not null comment '身分證號',
     `birthdate` date not null comment '會員生日',
      CONSTRAINT OderForGroup_userID_FK FOREIGN KEY (userID) REFERENCES Member (userID),
@@ -202,9 +202,11 @@ CREATE TABLE `Party` (
 ) COMMENT='揪團列表' AUTO_INCREMENT=400001;
 
 insert into party (partyHost, partyTitle, regDate, closeDate, startDate, endDate, partyMinSize, partyLocation, partyDetail)
-values ('1', '要不要一起去找山迪', '2000-01-01', '2000-01-31', '2000-03-03', '2000-03-04', '5', '200001', '這是測試DDL'), 
-('1', '或者去追逐派大興', '2001-09-09', '2001-10-10', '2001-12-20', '2001-12-23', '2', '200001', '這也是測試DDL');
-
+values 
+('1', '要不要一起去找珊迪', '2021-01-01', '2021-01-31', '2021-03-03', '2021-03-04', '2', '200001', '很久沒有去找珊迪玩耍了! 大家有沒有興趣來約一下啊!'), 
+('1', '之前是不是也說要去追逐派大星', '2020-09-09', '2020-10-10', '2020-12-20', '2020-12-23', '2', '200002', '不過派大星可能在冬眠惹...'),
+('2', '有人想去很酷的外星海嗎?!', '2021-06-18', '2021-09-18', '2021-12-31', '2022-01-01', '10', '200003', '聽說克卜勒22b也有海洋，要不要一起去玩玩看呀?'),
+('3', '開一團教你如何宅在家裡也能享受潛水樂趣', '2020-01-01', '2020-01-31', '2020-02-01', '2020-02-28', '3', '200004', '這可厲害了沒聽說過吧!');
 
 CREATE TABLE `PartyMember` (
   `partyMemberSN` int NOT NULL AUTO_INCREMENT COMMENT '揪團團員名單流水號',
@@ -228,8 +230,11 @@ CREATE TABLE `PartyMember` (
 ) COMMENT='揪團團員名單' AUTO_INCREMENT=400001;
 
 insert into PartyMember (partySN, partyMember, gender, email, phone, birthDate, personID, comment)
-values ('400002', '1', '2', 'thisisSpongeBob@test.com', '0988888888', '1998-02-02', 'B555555555', '這是測試DDL'), 
-('400002', '2', '2', 'thisisSomeone@test.com', '0911222333', '1900-02-02', 'C777777777', '這是測試DDL');
+values 
+('400001', '2', '1', 'KingOfJava@tibame.com', '0988888888', '1998-02-02', 'B888888888', '大吳老師我也想參加'), 
+('400001', '3', '2', 'IAmTomCat@tibame.com', '0977777777', '1900-01-01', 'C777777777', '大吳老師帶我走'),
+('400003', '4', '2', 'JSPrincessIsMe@tibame.com', '0966666666', '1995-07-04', 'B666666666', '現在是什麼情況?只有我參加嗎?'),
+('400003', '5', '1', 'MySQLConqueror@tibame.com', '0955555555', '1990-11-12', 'B555555555', '還有我, 我也想跟小吳老師一起去玩!');
 
 CREATE TABLE `MemberRate` (
   `SN` int NOT NULL AUTO_INCREMENT COMMENT '會員評價流水編號',
@@ -254,47 +259,52 @@ CREATE TABLE `MemberRate` (
 ) COMMENT='會員評價';
 
 insert into MemberRate (partySN, rateMaker, rateRecipiant, rate, rateDetail)
-values ('400002', '1', '2', '5', '測試第一筆評價DDL');
+values 
+('400001', '1', '3', '5', '雖然臭貓常常死掉但還是要給你很高分!要乖乖的喔!'),
+('400001', '2', '3', '1', '請向九命怪貓多多看齊好嗎'),
+('400001', '1', '2', '5', '冠宏老師一定都有教過，你們有沒有聽我就不知道了^_^'),
+('400003', '5', '4', '3', '上元你是不是報錯揪團了??'),
+('400003', '2', '4', '3', '我也有同感(點頭)'),
+('400003', '4', '2', '4', '有可能喔~但是我覺得很好玩啊!!!');
 
 -- --------------------------------------商城相關表格----------------------------------------
 
-
 CREATE TABLE `Product` (
   `productSN` int NOT NULL AUTO_INCREMENT COMMENT '商品編號',
-  `productClass` varchar(2) NOT NULL COMMENT '商品類別',
-  `productName` varchar(50) NOT NULL COMMENT '商品名稱',
+  `productClass` varchar(20) NOT NULL COMMENT '商品類別',
+  `productName` varchar(80) NOT NULL COMMENT '商品名稱',
   `productPrice` int NOT NULL COMMENT '商品單價',
   `productQuantity` int NOT NULL COMMENT '商品數量',
-  `productStatus` char(1) NOT NULL COMMENT '商品狀態',
+  `productStatus` varchar(20) NOT NULL COMMENT '商品狀態',
+  `productPhoto` longblob COMMENT '商品預覽圖',
   `productDetail` longtext NOT NULL COMMENT '商品說明',
-  `productCreateTime` timestamp NOT NULL DEFAULT NOW() COMMENT '上架時間',
-  `productDiscount` tinyint(1) NOT NULL COMMENT '優惠品',
-  `productPrime` tinyint(1) NOT NULL COMMENT '精選品',
-  `ratingPoint` int NOT NULL COMMENT '評價總分數',
-  `ratingNumber` int NOT NULL COMMENT '評價總人數',
-  PRIMARY KEY (`productSN`),
-  CONSTRAINT `product_chk_1` CHECK ((`productPrice` > 0))
+  `productCreateTime` date NOT NULL COMMENT '上架時間',
+  `productDiscount` varchar(20) NOT NULL COMMENT '優惠品',
+  `productPrime` varchar(20) NOT NULL COMMENT '精選品',
+  `ratingPoint` int NOT NULL DEFAULT 0 COMMENT '評價總分',
+  `ratingNumber` int NOT NULL DEFAULT 0 COMMENT '評價人數',
+  PRIMARY KEY (`productSN`)
 ) COMMENT='商品';
 
 INSERT INTO Product (productClass,productName,productPrice,productQuantity,productStatus,
-productDetail,productDiscount,productPrime,ratingPoint,ratingNumber)
+productPhoto,productDetail,productCreateTime,productDiscount,productPrime,ratingPoint,ratingNumber)
 values
-("蛙鞋","穿脫超省力power牌鞋鞋",799,60,1,
-"話不要那麼多啦，趕快買，買到賺到。",false,true,22,3),
-("呼吸器","大章魚浮潛三寶呼吸器",999,50,1,
+("蛙鞋","穿脫超省力power牌鞋鞋",799,60,"上架",null,
+"話不要那麼多啦，趕快買，買到賺到。","2021-06-14","否","是",22,3),
+("呼吸管","大章魚浮潛三寶呼吸管",999,50,"上架",null,
 "吸入後，空氣直接從兩側進入，不會停留在視野內。
-呼氣時，排氣會從中間的排氣門排出，以防止產生霧氣。",true,false,15,2),
-("面鏡","超值防霧潛水面鏡",699,70,1,
+呼氣時，排氣會從中間的排氣門排出，以防止產生霧氣。","2021-06-15","是","是",15,2),
+("面鏡","超值防霧潛水面鏡",699,70,"上架",null,
 "強化防霧耐磨鏡片，超高清晰度。
 3D建模製造，符合亞洲人臉型，舒適防滲水。
 一體式鏡片，無中柱遮擋，視野擴增至180度。
 日本進口高級食品級矽膠材質，壓力實驗耐30萬次拉扯。
-呼吸管排水閥設計，不易進水輕鬆悠遊。",false,false,21,3),
-("防寒衣","TRUDIVE 防寒衣【Siren 海妖系列】半身滑面",3300,40,1,
+呼吸管排水閥設計，不易進水輕鬆悠遊。","2021-05-05","否","否",21,3),
+("防寒曬衣物","TRUDIVE 防寒衣【Siren 海妖系列】半身滑面",3300,40,"上架",null,
 "針對亞洲女性身材調整版型，展現出每位女性的自信。Siren不僅帶給妳水下的舒適度，更期待妳成為海中那位迷人的海妖。
 防寒衣採用YAMATO 或 JAKO MSL 等高彈性的氯丁橡膠製作，內層採用高彈性布料，外層則以TRUDIVE 的專利鈦塗層專利技術上色。
-鈦塗層滑面加上超彈內裡布，不僅好穿，拍照也有型。",false,true,15,2),
-("氣瓶","DEEP Pro迷你SCUBA潛水罐",3800,10,1,
+鈦塗層滑面加上超彈內裡布，不僅好穿，拍照也有型。","2021-05-09","否","是",15,2),
+("氣瓶","DEEP Pro迷你SCUBA潛水罐",3800,10,"上架",null,
 "品牌：Catalina
 尺寸：S80
 鋁合金材質
@@ -303,7 +313,23 @@ values
 工作壓力:200BAR/3000PSI
 氣瓶直徑:18.5CM
 氣瓶高度:66CM
-氣瓶重量:15公斤",true,true,6,1);
+氣瓶重量:15公斤","2021-06-15","是","是",6,1),
+("照明燈","Deep Pro 潛伴信號燈",990,25,"上架",null,
+"• 亮度：108流明
+• 電池：1個AA電池，可更換
+• 發光角度：15度
+• 尺寸：86mm x 20mm x 20mm
+• 重量：68g  /  42.8g ( in sea )
+• 防水：100M
+• 顏色：紅 / 粉 / 藍 / 黑","2021-06-19","否","否",0,0),
+("其他配件","Aropec SUR-H106 浮力袋(口吹+洩氣閥+灌氣+外袋)",1650,30,"上架",null,
+"可用口吹、BC管、或二級頭底部開口進充氣
+附掛勾可簡易掛在BC上
+含洩氣閥，過充可自動洩氣
+底部附黏扣帶, 未充氣時方便收納
+附含掛勾之收納袋
+尺寸: 17.8 x 122cm (7 x 48吋)
+附吹嘴及安全洩壓閥","2021-06-22","是","是",0,0);
 
 
 CREATE TABLE `OrderForProduct` (
@@ -311,21 +337,19 @@ CREATE TABLE `OrderForProduct` (
   `userID` int NOT NULL COMMENT '會員編號',
   `purchaseDate` timestamp NOT NULL DEFAULT NOW() COMMENT '購買時間',
   `totalPrice` int NOT NULL COMMENT '結帳總金額',
-  `orderStatus` char(1) NOT NULL COMMENT '訂單狀態',
-  `clearDate` timestamp NULL DEFAULT NULL COMMENT '完成時間',
+  `orderStatus` varchar(20) NOT NULL COMMENT '訂單狀態',
   PRIMARY KEY (`orderSN`),
   KEY `FK_OrderForProduct_userID` (`userID`),
-  CONSTRAINT `FK_OrderForProduct_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`),
-  CONSTRAINT `orderforproduct_chk_1` CHECK ((`totalPrice` > 0))
+  CONSTRAINT `FK_OrderForProduct_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`)
 ) COMMENT='商品訂單';
 
 INSERT INTO OrderForProduct (userID,totalPrice,orderStatus)
 values
-(1,1798,0),
-(2,4499,1),
-(3,5797,0),
-(4,11997,1),
-(5,3196,0);
+(1,1798,"處理中"),
+(2,4499,"已完成"),
+(3,5797,"已完成"),
+(4,11997,"處理中"),
+(5,3196,"處理中");
 
 
 CREATE TABLE `OrderList` (
@@ -339,8 +363,7 @@ CREATE TABLE `OrderList` (
   KEY `FK_OrderList_productSN` (`productSN`),
   KEY `FK_OrderList_OrderSN` (`orderSN`),
   CONSTRAINT `FK_OrderList_OrderSN` FOREIGN KEY (`orderSN`) REFERENCES `OrderForProduct` (`orderSN`),
-  CONSTRAINT `FK_OrderList_productSN` FOREIGN KEY (`productSN`) REFERENCES `Product` (`productSN`),
-  CONSTRAINT `orderlist_chk_1` CHECK ((`productPrice` > 0))
+  CONSTRAINT `FK_OrderList_productSN` FOREIGN KEY (`productSN`) REFERENCES `Product` (`productSN`)
 ) COMMENT='商品訂單明細';
 
 INSERT INTO OrderList (productSN,orderSN,purchaseQuantity,productPrice,rating)
@@ -369,9 +392,7 @@ CREATE TABLE `ShoppingCar` (
   KEY `FK_ShoppingCar_userID` (`userID`),
   KEY `FK_ShoppingCar_productSN` (`productSN`),
   CONSTRAINT `FK_ShoppingCar_productSN` FOREIGN KEY (`productSN`) REFERENCES `Product` (`productSN`),
-  CONSTRAINT `FK_ShoppingCar_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`),
-  CONSTRAINT `shoppingcar_chk_1` CHECK ((`productPrice` > 0)),
-  CONSTRAINT `shoppingcar_chk_2` CHECK ((`totalPrice` > 0))
+  CONSTRAINT `FK_ShoppingCar_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`)
 ) COMMENT='購物車';
 
 INSERT INTO ShoppingCar (userID,productSN,purchaseQuantity,productPrice,totalPrice)
@@ -383,16 +404,6 @@ values
 (3,2,1,999,999),
 (3,4,1,3300,3300),
 (4,1,6,799,4794);
-
-
-CREATE TABLE `ProductPhoto` (
-  `photoSN` int NOT NULL AUTO_INCREMENT COMMENT '圖片流水號',
-  `productSN` int NOT NULL COMMENT '商品編號',
-  `productImages` longblob NOT NULL COMMENT '商品圖片',
-  PRIMARY KEY (`photoSN`),
-  KEY `FK_ProductPhoto_productSN` (`productSN`),
-  CONSTRAINT `FK_ProductPhoto_productSN` FOREIGN KEY (`productSN`) REFERENCES `Product` (`productSN`)
-) COMMENT='商品圖片';
 
 
 -- --------------------------------------會員相關表格 CustomerReply Follow Chat----------------------------------------
@@ -586,8 +597,8 @@ CREATE TABLE `Manager` (
 CREATE TABLE `News` (
   `newsSN` int NOT NULL AUTO_INCREMENT COMMENT '新聞編號',
   `title` varchar(20) NOT NULL COMMENT '標題',
-  `content` text NOT NULL COMMENT '內文',
-  `image` longblob NOT NULL COMMENT '照片',
+  `content` longtext NOT NULL COMMENT '內文',
+  `image` longblob  COMMENT '照片',
   `newsDate` date NOT NULL COMMENT '新聞日期',
   `newsFrom` varchar(20) NOT NULL COMMENT '新聞來源',
   `newsType` char(1) NOT NULL COMMENT '新聞類型',

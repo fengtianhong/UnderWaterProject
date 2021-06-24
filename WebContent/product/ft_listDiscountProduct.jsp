@@ -5,14 +5,14 @@
 
 <%
 	ProductService productSvc = new ProductService();
-	List<ProductVO> list = productSvc.getAll();
+	List<ProductVO> list = productSvc.getDiscountProduct("是");
 	pageContext.setAttribute("list", list);
 %>
 
 <html>
 <head>
 <meta charset="UTF-8">
-<title>顯示所有商品</title>
+<title>顯示優惠商品</title>
 
 </head>
 
@@ -21,7 +21,7 @@
 	<table id="table-1">
 		<tr>
 			<td>
-				<h3>所有商品資料</h3>
+				<h3>所有優惠商品</h3>
 				<h4>
 					<a href="selectProduct.jsp">回查詢首頁</a>
 				</h4>
@@ -55,7 +55,6 @@
 		</tr>
 
 		<%-- 	<%@ include file="page1.file" %>  --%>
-
 		<c:forEach var="productVO" items="${list}">
 
 			<tr>
@@ -71,20 +70,6 @@
 				<td>${productVO.productPrime}</td>
 				<td>${productVO.ratingPoint}</td>
 				<td>${productVO.ratingNumber}</td>
-				<td>
-					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/product.do">
-						<input type="submit" value="變更上下架狀態"> 
-						<input type="hidden" name="productSN" value="${productVO.productSN}">
-						<input type="hidden" name="action" value="OffShelfProduct">
-					</FORM>
-				</td>
-				<td>
-					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/product/product.do">
-						<input type="submit" value="變更商品資料">
-						<input type="hidden" name="productSN" value="${productVO.productSN}">
-						<input type="hidden" name="action" value="UpdateProduct">
-					</FORM>
-				</td>
 			</tr>
 		</c:forEach>
 	</table>
