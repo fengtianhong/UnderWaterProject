@@ -27,16 +27,19 @@ public class Test_DataSource_Katy extends HttpServlet {
 		PrintWriter out = res.getWriter();
 
 		try {
-//=============================== GroupTour equals ===============================
-			GroupTourService svc = new GroupTourService();
-
-			GroupTourVO vo1 = svc.getOne(6001);
 			
-			GroupTourVO vo2 = svc.getOne(6001);
-			System.out.println(vo1);
-			System.out.println(vo2);
-			System.out.println(vo1 == vo2);
-			System.out.println(vo1.equals(vo2));
+//			GroupTourDAO dao = new GroupTourDAO();
+//			dao.attendGroup(6001);
+//=============================== GroupTour equals ===============================
+//			GroupTourService svc = new GroupTourService();
+//
+//			GroupTourVO vo1 = svc.getOne(6001);
+//			
+//			GroupTourVO vo2 = svc.getOne(6001);
+//			System.out.println(vo1);
+//			System.out.println(vo2);
+//			System.out.println(vo1 == vo2);
+//			System.out.println(vo1.equals(vo2));
 		
 //=============================== GroupTourDAO ===============================
 //			GroupTourDAO dao = new GroupTourDAO();
@@ -94,19 +97,19 @@ public class Test_DataSource_Katy extends HttpServlet {
 			
 //=============================== OderForGroupDAO ===============================
 // 訂單結束時間的話吃 GroupTour 的行程結束時間 > 但要寫在DAO?
-//			OderForGroupDAO dao = new OderForGroupDAO();
-//			OderForGroupVO vo = new OderForGroupVO();
-//			vo.setOrderSN(6005); // use default
-//			vo.setUserID(2);	
-//			vo.setGroupTourSN(6001);
-//			vo.setTotalPrice(10000);
-//			vo.setPurchaseDate(java.sql.Date.valueOf("2021-04-28"));
-//			vo.setPhone("0918210612");
-//			vo.setPersonID("A9999999");
-//			vo.setBirthdate(java.sql.Date.valueOf("1996-07-19"));
-//			out.println(vo.toString());
-////			dao.insert(vo);			// OK
-////			dao.update(vo);			// OK
+			OderForGroupDAO dao = new OderForGroupDAO();
+			OderForGroupVO vo = new OderForGroupVO();
+			vo.setOrderSN(6005); // use default
+			vo.setUserID(2);	
+			vo.setGroupTourSN(6001);
+			vo.setTotalPrice(10000);
+			vo.setPurchaseDate(java.sql.Date.valueOf("2021-04-28"));
+			vo.setPhone("0918210612");
+			vo.setPersonID("A9999999");
+			vo.setBirthdate(java.sql.Date.valueOf("1996-07-19"));
+			out.println(vo.toString());
+			dao.insert(vo);			// OK
+//			dao.update(vo);			// OK
 //			out.println(dao.findByPrimaryKey(6003));  	// OK
 //			out.println(dao.getOrderByUserID(2)); 		// OK
 			

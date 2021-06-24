@@ -17,7 +17,8 @@ public class JedisPoolUtil {
 					config.setMaxTotal(8);	// 連線數可以改大一點
 					config.setMaxIdle(8);
 					config.setMaxWaitMillis(10000);
-					pool = new JedisPool(config, "katyjava.mooo.com", 6379);
+//					pool = new JedisPool(config, "katyjava.mooo.com", 6379);	// GCP docker
+					pool = new JedisPool(config, "127.0.0.1", 6379);	// 本機
 				}
 			}
 		}

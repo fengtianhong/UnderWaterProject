@@ -9,7 +9,7 @@
 <%
 	GroupTourService groupTourSvc = new GroupTourService();
 	List<GroupTourVO> list = groupTourSvc.getAll();
-	pageContext.setAttribute("list", list);	// WHY
+	pageContext.setAttribute("list", list);
 	
 %>
 

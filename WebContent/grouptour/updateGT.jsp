@@ -36,7 +36,7 @@
 	<tr>
 	</tr>
 	<tr>
-		<td>套裝行程圖片 NOT YET(IO & OUT)</td>
+		<td>套裝行程圖(IO & OUT)</td>
 		<td>
 			<input type="file" id="the_file" name="tourPic" accept="image/*">
 			<div class="picture"><img class='preview' src="GetImage.do?id=${groupTourVO.groupTourSN}"></div>

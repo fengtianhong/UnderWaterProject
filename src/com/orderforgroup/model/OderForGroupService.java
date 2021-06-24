@@ -46,5 +46,8 @@ public class OderForGroupService {
 	public List<OderForGroupVO> getAll() {
 		return dao.getAll();
 	}
+	public List<Integer> checkRepeatOrder(Integer userID) {
+		return dao.checkRepeatOrder(userID);
+	}
 
 }

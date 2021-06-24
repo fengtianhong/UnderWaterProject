@@ -71,10 +71,10 @@ public class OrderForGroupServlet extends HttpServlet {
 				
 				
 				String personID = req.getParameter("personID").trim();
-				String personIDReg = "^[A-Z][0-9]{9}$";
+				String personIDReg = "^[A-Z]{1}[0-9]{9}$";
 				if(personID == null || personID.length() == 0) {
 					errMsg.add("請確認身分證字號");
-				}else if(personID.matches(personIDReg)) {
+				}else if(!personID.matches(personIDReg)) {
 					errMsg.add("請確認身分證字號是否正確，開頭需大寫");
 				}
 				
@@ -99,7 +99,11 @@ public class OrderForGroupServlet extends HttpServlet {
 				oderForGroupVO.setBirthdate(birthdate);
 				
 				if(!errMsg.isEmpty()) {
+					GroupTourService groupTourSvc = new GroupTourService();
+					GroupTourVO groupTourVO = groupTourSvc.getOne(groupTourSN);
+					
 					req.setAttribute("oderForGroupVO", oderForGroupVO);
+					req.setAttribute("groupTourVO", groupTourVO);
 					RequestDispatcher failureView = req.getRequestDispatcher("/orderforgroup/addOrderForGroup.jsp");	// 重新insert 待確認
 					failureView.forward(req, res);
 					return;
@@ -108,8 +112,10 @@ public class OrderForGroupServlet extends HttpServlet {
 				OderForGroupService oderForGroupSvc = new OderForGroupService();
 				oderForGroupSvc.insertOderForGroup(userID, groupTourSN, totalPrice, purchaseDate, phone, personID, birthdate);
 // 這邊要讓套裝行程的報名人數加一
+// 已寫DAO 未測
+//A database error occured. Lock wait timeout exceeded; try restarting transaction
 				
-				req.setAttribute("Msg", "新增成功");
+				req.setAttribute("Msg", "報名成功");
 				RequestDispatcher successView = req.getRequestDispatcher("/collections/test_collections.jsp");	// 訂單成功頁面 待確認
 				successView.forward(req, res);
 				
@@ -124,7 +130,7 @@ public class OrderForGroupServlet extends HttpServlet {
 		}
 		
 		
-		if("update".equals(action)) {			// 訂單修改
+		if("update".equals(action)) {
 			List<String> errMsg = new LinkedList<String>();
 			req.setAttribute("errMsg", errMsg);
 			
@@ -164,10 +170,10 @@ public class OrderForGroupServlet extends HttpServlet {
 				
 				
 				String personID = req.getParameter("personID").trim();
-				String personIDReg = "^[A-Z][0-9]{9}$";
+				String personIDReg = "^[A-Z]{1}[0-9]{9}$";
 				if(personID == null || personID.length() == 0) {
 					errMsg.add("請確認身分證字號");
-				}else if(personID.matches(personIDReg)) {
+				}else if(!personID.matches(personIDReg)) {
 					errMsg.add("請確認身分證字號是否正確，開頭需大寫");
 				}
 				
@@ -222,7 +228,13 @@ public class OrderForGroupServlet extends HttpServlet {
 				OderForGroupService oderForGroupSvc = new OderForGroupService();
 				OderForGroupVO oderForGroupVO = oderForGroupSvc.findByPrimaryKey(orderSN);
 				
+				Integer groupTourSN = new Integer(req.getParameter("groupTourSN"));
+				GroupTourService groupTourSvc = new GroupTourService();
+				GroupTourVO groupTourVO = groupTourSvc.getOne(groupTourSN);
+				
 				req.setAttribute("oderForGroupVO", oderForGroupVO);
+				req.setAttribute("groupTourVO", groupTourVO);
+
 				RequestDispatcher successView = req.getRequestDispatcher("/orderforgroup/updateOrderForGroup.jsp"); // 更改訂單頁面
 				successView.forward(req, res);
 				
@@ -236,7 +248,7 @@ public class OrderForGroupServlet extends HttpServlet {
 		}
 		
 		
-		if("getOne_ForOrder".equals(action)) {		// 報名
+		if("getOne_ForOrder".equals(action)) {		// 按我要報名
 			List<String> errMsg = new LinkedList<String>();
 			req.setAttribute("errMsg", errMsg);
 			try {
@@ -250,23 +262,48 @@ public class OrderForGroupServlet extends HttpServlet {
 				MemberVO memberVO = memberSvc.getone(userID);
 				HttpSession session = req.getSession();
 				
-// NOT YET 要加資格判斷
-// 以及判斷是否有報名過(這個要在套裝行程顯示頁面?)			
-				String certification = memberVO.getCertification();
-				String certificationLimit = groupTourVO.getCertificationLimit();
-				
-				
 				session.setAttribute("memberVO", memberVO);
 				req.setAttribute("groupTourVO", groupTourVO);
 				
+				// 證照資格判斷 (測會員資格null會發生甚麼事 0:無證照 1:OW 2:AOW)
+				try {
+					Integer certification = Integer.parseInt(memberVO.getCertification());	// 可能null
+					Integer certificationLimit = Integer.parseInt(groupTourVO.getCertificationLimit());
+					if(certification < certificationLimit) {
+						errMsg.add("資格不符，請確認您的證照資訊");
+					}
+				}catch(Exception e) {
+					e.printStackTrace();
+					errMsg.add("資格不符，請確認您的證照資訊");
+				}
+				
+				// 以及判斷是否有報名過(同步在套裝行程顯示頁面)
+				OderForGroupService oderForGroupSvc = new OderForGroupService();
+				List<OderForGroupVO> list = oderForGroupSvc.getOrderByUserID(userID);
+							
+				for(OderForGroupVO vo : list) {
+					if(groupTourSN == vo.getGroupTourSN()) {
+						errMsg.add("您已報名過此行程");
+					}
+				}
+				
+				// 不能報名
+				if(!errMsg.isEmpty()) {	
+					req.setAttribute("errMsg", errMsg);
+					RequestDispatcher failureView = req.getRequestDispatcher("/grouptour/frontendListOne.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+				
+				// 可以報名
 				RequestDispatcher successView = req.getRequestDispatcher("/orderforgroup/addOrderForGroup.jsp"); // 下單頁面
 				successView.forward(req, res);
 				
 			}catch(Exception e) {
 				e.printStackTrace();   //
 				System.out.println("update failure");
-				errMsg.add("取得資料失敗，"+e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/collections/test_collections.jsp");	// 回到套裝行程頁面
+				errMsg.add("報名失敗，"+e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/grouptour/frontendListOne.jsp");	// 回到套裝行程頁面
 				failureView.forward(req, res);
 			}
 		}
