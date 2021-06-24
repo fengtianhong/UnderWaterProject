@@ -61,12 +61,6 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 //		p1.setRatingNumber(2);
 //		dao.insert(p1);
 
-		// 上下架
-		ProductVO p2 = new ProductVO();
-		p2.setProductStatus("0");
-		p2.setProductSN(8);
-		dao.offShelf(p2);
-
 		// 修改
 //		ProductVO p2 = new ProductVO();
 //		p2.setProductClass("泳鏡");
@@ -135,8 +129,8 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 			pstmt.setInt(4, productVO.getProductQuantity());
 			pstmt.setString(5, productVO.getProductStatus());
 			pstmt.setString(6, productVO.getProductDetail());
-			pstmt.setBoolean(7, productVO.getProductDiscount());
-			pstmt.setBoolean(8, productVO.getProductPrime());
+			pstmt.setString(7, productVO.getProductDiscount());
+			pstmt.setString(8, productVO.getProductPrime());
 			pstmt.setInt(9, productVO.getRatingPoint());
 			pstmt.setInt(10, productVO.getRatingNumber());
 
@@ -163,40 +157,6 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 	}
 
 	@Override
-	public void offShelf(ProductVO productVO) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-
-		try {
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(OFFSHELF_STMT);
-
-			pstmt.setInt(1, productVO.getProductSN());
-
-			pstmt.executeUpdate();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-
-	}
-
-	@Override
 	public void update(ProductVO productVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -210,9 +170,9 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 			pstmt.setInt(3, productVO.getProductPrice());
 			pstmt.setInt(4, productVO.getProductQuantity());
 			pstmt.setString(5, productVO.getProductDetail());
-			pstmt.setTimestamp(6, productVO.getProductCreateTime());
-			pstmt.setBoolean(7, productVO.getProductDiscount());
-			pstmt.setBoolean(8, productVO.getProductPrime());
+			pstmt.setDate(6, productVO.getProductCreateTime());
+			pstmt.setString(7, productVO.getProductDiscount());
+			pstmt.setString(8, productVO.getProductPrime());
 			pstmt.setInt(9, productVO.getRatingPoint());
 			pstmt.setInt(10, productVO.getRatingNumber());
 			pstmt.setInt(11, productVO.getProductSN());
@@ -265,9 +225,9 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 				productVO.setProductQuantity(rs.getInt("productQuantity"));
 				productVO.setProductStatus(rs.getString("productStatus"));
 				productVO.setProductDetail(rs.getString("productDetail"));
-				productVO.setProductCreateTime(rs.getTimestamp("productCreateTime"));
-				productVO.setProductDiscount(rs.getBoolean("productDiscount"));
-				productVO.setProductPrime(rs.getBoolean("productPrime"));
+				productVO.setProductCreateTime(rs.getDate("productCreateTime"));
+				productVO.setProductDiscount(rs.getString("productDiscount"));
+				productVO.setProductPrime(rs.getString("productPrime"));
 				productVO.setRatingPoint(rs.getInt("ratingPoint"));
 				productVO.setRatingNumber(rs.getInt("ratingNumber"));
 			}
@@ -325,9 +285,9 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 				productVO.setProductQuantity(rs.getInt("productQuantity"));
 				productVO.setProductStatus(rs.getString("productStatus"));
 				productVO.setProductDetail(rs.getString("productDetail"));
-				productVO.setProductCreateTime(rs.getTimestamp("productCreateTime"));
-				productVO.setProductDiscount(rs.getBoolean("productDiscount"));
-				productVO.setProductPrime(rs.getBoolean("productPrime"));
+				productVO.setProductCreateTime(rs.getDate("productCreateTime"));
+				productVO.setProductDiscount(rs.getString("productDiscount"));
+				productVO.setProductPrime(rs.getString("productPrime"));
 				productVO.setRatingPoint(rs.getInt("ratingPoint"));
 				productVO.setRatingNumber(rs.getInt("ratingNumber"));
 				list.add(productVO);
@@ -362,7 +322,7 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 	}
 
 	@Override
-	public List<ProductVO> getProductByDiscount(Boolean productDiscount) {
+	public List<ProductVO> getProductByDiscount(String productDiscount) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -373,7 +333,7 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_PRODUCT_BY_DISCOUNT);
 
-			pstmt.setBoolean(1, productDiscount);
+			pstmt.setString(1, productDiscount);
 
 			rs = pstmt.executeQuery();
 
@@ -386,9 +346,9 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 				productVO.setProductQuantity(rs.getInt("productQuantity"));
 				productVO.setProductStatus(rs.getString("productStatus"));
 				productVO.setProductDetail(rs.getString("productDetail"));
-				productVO.setProductCreateTime(rs.getTimestamp("productCreateTime"));
-				productVO.setProductDiscount(rs.getBoolean("productDiscount"));
-				productVO.setProductPrime(rs.getBoolean("productPrime"));
+				productVO.setProductCreateTime(rs.getDate("productCreateTime"));
+				productVO.setProductDiscount(rs.getString("productDiscount"));
+				productVO.setProductPrime(rs.getString("productPrime"));
 				productVO.setRatingPoint(rs.getInt("ratingPoint"));
 				productVO.setRatingNumber(rs.getInt("ratingNumber"));
 				list.add(productVO);
@@ -423,7 +383,7 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 	}
 
 	@Override
-	public List<ProductVO> getProductByPrime(Boolean productPrime) {
+	public List<ProductVO> getProductByPrime(String productPrime) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -434,7 +394,7 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_PRODUCT_BY_PRIME);
 
-			pstmt.setBoolean(1, productPrime);
+			pstmt.setString(1, productPrime);
 
 			rs = pstmt.executeQuery();
 
@@ -447,9 +407,9 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 				productVO.setProductQuantity(rs.getInt("productQuantity"));
 				productVO.setProductStatus(rs.getString("productStatus"));
 				productVO.setProductDetail(rs.getString("productDetail"));
-				productVO.setProductCreateTime(rs.getTimestamp("productCreateTime"));
-				productVO.setProductDiscount(rs.getBoolean("productDiscount"));
-				productVO.setProductPrime(rs.getBoolean("productPrime"));
+				productVO.setProductCreateTime(rs.getDate("productCreateTime"));
+				productVO.setProductDiscount(rs.getString("productDiscount"));
+				productVO.setProductPrime(rs.getString("productPrime"));
 				productVO.setRatingPoint(rs.getInt("ratingPoint"));
 				productVO.setRatingNumber(rs.getInt("ratingNumber"));
 				list.add(productVO);
@@ -506,9 +466,9 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 				productVO.setProductQuantity(rs.getInt("productQuantity"));
 				productVO.setProductStatus(rs.getString("productStatus"));
 				productVO.setProductDetail(rs.getString("productDetail"));
-				productVO.setProductCreateTime(rs.getTimestamp("productCreateTime"));
-				productVO.setProductDiscount(rs.getBoolean("productDiscount"));
-				productVO.setProductPrime(rs.getBoolean("productPrime"));
+				productVO.setProductCreateTime(rs.getDate("productCreateTime"));
+				productVO.setProductDiscount(rs.getString("productDiscount"));
+				productVO.setProductPrime(rs.getString("productPrime"));
 				productVO.setRatingPoint(rs.getInt("ratingPoint"));
 				productVO.setRatingNumber(rs.getInt("ratingNumber"));
 				list.add(productVO);

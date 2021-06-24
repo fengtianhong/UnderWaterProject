@@ -271,40 +271,40 @@ values
 
 CREATE TABLE `Product` (
   `productSN` int NOT NULL AUTO_INCREMENT COMMENT '商品編號',
-  `productClass` varchar(2) NOT NULL COMMENT '商品類別',
-  `productName` varchar(50) NOT NULL COMMENT '商品名稱',
+  `productClass` varchar(20) NOT NULL COMMENT '商品類別',
+  `productName` varchar(80) NOT NULL COMMENT '商品名稱',
   `productPrice` int NOT NULL COMMENT '商品單價',
   `productQuantity` int NOT NULL COMMENT '商品數量',
-  `productStatus` char(1) NOT NULL COMMENT '商品狀態',
+  `productStatus` varchar(20) NOT NULL COMMENT '商品狀態',
+  `productPhoto` longblob COMMENT '商品預覽圖',
   `productDetail` longtext NOT NULL COMMENT '商品說明',
-  `productCreateTime` timestamp NOT NULL DEFAULT NOW() COMMENT '上架時間',
-  `productDiscount` tinyint(1) NOT NULL COMMENT '優惠品',
-  `productPrime` tinyint(1) NOT NULL COMMENT '精選品',
-  `ratingPoint` int NOT NULL COMMENT '評價總分數',
-  `ratingNumber` int NOT NULL COMMENT '評價總人數',
-  PRIMARY KEY (`productSN`),
-  CONSTRAINT `product_chk_1` CHECK ((`productPrice` > 0))
+  `productCreateTime` date NOT NULL COMMENT '上架時間',
+  `productDiscount` varchar(20) NOT NULL COMMENT '優惠品',
+  `productPrime` varchar(20) NOT NULL COMMENT '精選品',
+  `ratingPoint` int NOT NULL DEFAULT 0 COMMENT '評價總分',
+  `ratingNumber` int NOT NULL DEFAULT 0 COMMENT '評價人數',
+  PRIMARY KEY (`productSN`)
 ) COMMENT='商品';
 
 INSERT INTO Product (productClass,productName,productPrice,productQuantity,productStatus,
-productDetail,productDiscount,productPrime,ratingPoint,ratingNumber)
+productPhoto,productDetail,productCreateTime,productDiscount,productPrime,ratingPoint,ratingNumber)
 values
-("蛙鞋","穿脫超省力power牌鞋鞋",799,60,1,
-"話不要那麼多啦，趕快買，買到賺到。",false,true,22,3),
-("呼吸器","大章魚浮潛三寶呼吸器",999,50,1,
+("蛙鞋","穿脫超省力power牌鞋鞋",799,60,"上架",null,
+"話不要那麼多啦，趕快買，買到賺到。","2021-06-14","否","是",22,3),
+("呼吸管","大章魚浮潛三寶呼吸管",999,50,"上架",null,
 "吸入後，空氣直接從兩側進入，不會停留在視野內。
-呼氣時，排氣會從中間的排氣門排出，以防止產生霧氣。",true,false,15,2),
-("面鏡","超值防霧潛水面鏡",699,70,1,
+呼氣時，排氣會從中間的排氣門排出，以防止產生霧氣。","2021-06-15","是","是",15,2),
+("面鏡","超值防霧潛水面鏡",699,70,"上架",null,
 "強化防霧耐磨鏡片，超高清晰度。
 3D建模製造，符合亞洲人臉型，舒適防滲水。
 一體式鏡片，無中柱遮擋，視野擴增至180度。
 日本進口高級食品級矽膠材質，壓力實驗耐30萬次拉扯。
-呼吸管排水閥設計，不易進水輕鬆悠遊。",false,false,21,3),
-("防寒衣","TRUDIVE 防寒衣【Siren 海妖系列】半身滑面",3300,40,1,
+呼吸管排水閥設計，不易進水輕鬆悠遊。","2021-05-05","否","否",21,3),
+("防寒曬衣物","TRUDIVE 防寒衣【Siren 海妖系列】半身滑面",3300,40,"上架",null,
 "針對亞洲女性身材調整版型，展現出每位女性的自信。Siren不僅帶給妳水下的舒適度，更期待妳成為海中那位迷人的海妖。
 防寒衣採用YAMATO 或 JAKO MSL 等高彈性的氯丁橡膠製作，內層採用高彈性布料，外層則以TRUDIVE 的專利鈦塗層專利技術上色。
-鈦塗層滑面加上超彈內裡布，不僅好穿，拍照也有型。",false,true,15,2),
-("氣瓶","DEEP Pro迷你SCUBA潛水罐",3800,10,1,
+鈦塗層滑面加上超彈內裡布，不僅好穿，拍照也有型。","2021-05-09","否","是",15,2),
+("氣瓶","DEEP Pro迷你SCUBA潛水罐",3800,10,"上架",null,
 "品牌：Catalina
 尺寸：S80
 鋁合金材質
@@ -313,7 +313,23 @@ values
 工作壓力:200BAR/3000PSI
 氣瓶直徑:18.5CM
 氣瓶高度:66CM
-氣瓶重量:15公斤",true,true,6,1);
+氣瓶重量:15公斤","2021-06-15","是","是",6,1),
+("照明燈","Deep Pro 潛伴信號燈",990,25,"上架",null,
+"• 亮度：108流明
+• 電池：1個AA電池，可更換
+• 發光角度：15度
+• 尺寸：86mm x 20mm x 20mm
+• 重量：68g  /  42.8g ( in sea )
+• 防水：100M
+• 顏色：紅 / 粉 / 藍 / 黑","2021-06-19","否","否",0,0),
+("其他配件","Aropec SUR-H106 浮力袋(口吹+洩氣閥+灌氣+外袋)",1650,30,"上架",null,
+"可用口吹、BC管、或二級頭底部開口進充氣
+附掛勾可簡易掛在BC上
+含洩氣閥，過充可自動洩氣
+底部附黏扣帶, 未充氣時方便收納
+附含掛勾之收納袋
+尺寸: 17.8 x 122cm (7 x 48吋)
+附吹嘴及安全洩壓閥","2021-06-22","是","是",0,0);
 
 
 CREATE TABLE `OrderForProduct` (
@@ -321,21 +337,19 @@ CREATE TABLE `OrderForProduct` (
   `userID` int NOT NULL COMMENT '會員編號',
   `purchaseDate` timestamp NOT NULL DEFAULT NOW() COMMENT '購買時間',
   `totalPrice` int NOT NULL COMMENT '結帳總金額',
-  `orderStatus` char(1) NOT NULL COMMENT '訂單狀態',
-  `clearDate` timestamp NULL DEFAULT NULL COMMENT '完成時間',
+  `orderStatus` varchar(20) NOT NULL COMMENT '訂單狀態',
   PRIMARY KEY (`orderSN`),
   KEY `FK_OrderForProduct_userID` (`userID`),
-  CONSTRAINT `FK_OrderForProduct_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`),
-  CONSTRAINT `orderforproduct_chk_1` CHECK ((`totalPrice` > 0))
+  CONSTRAINT `FK_OrderForProduct_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`)
 ) COMMENT='商品訂單';
 
 INSERT INTO OrderForProduct (userID,totalPrice,orderStatus)
 values
-(1,1798,0),
-(2,4499,1),
-(3,5797,0),
-(4,11997,1),
-(5,3196,0);
+(1,1798,"處理中"),
+(2,4499,"已完成"),
+(3,5797,"已完成"),
+(4,11997,"處理中"),
+(5,3196,"處理中");
 
 
 CREATE TABLE `OrderList` (
@@ -349,8 +363,7 @@ CREATE TABLE `OrderList` (
   KEY `FK_OrderList_productSN` (`productSN`),
   KEY `FK_OrderList_OrderSN` (`orderSN`),
   CONSTRAINT `FK_OrderList_OrderSN` FOREIGN KEY (`orderSN`) REFERENCES `OrderForProduct` (`orderSN`),
-  CONSTRAINT `FK_OrderList_productSN` FOREIGN KEY (`productSN`) REFERENCES `Product` (`productSN`),
-  CONSTRAINT `orderlist_chk_1` CHECK ((`productPrice` > 0))
+  CONSTRAINT `FK_OrderList_productSN` FOREIGN KEY (`productSN`) REFERENCES `Product` (`productSN`)
 ) COMMENT='商品訂單明細';
 
 INSERT INTO OrderList (productSN,orderSN,purchaseQuantity,productPrice,rating)
@@ -379,9 +392,7 @@ CREATE TABLE `ShoppingCar` (
   KEY `FK_ShoppingCar_userID` (`userID`),
   KEY `FK_ShoppingCar_productSN` (`productSN`),
   CONSTRAINT `FK_ShoppingCar_productSN` FOREIGN KEY (`productSN`) REFERENCES `Product` (`productSN`),
-  CONSTRAINT `FK_ShoppingCar_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`),
-  CONSTRAINT `shoppingcar_chk_1` CHECK ((`productPrice` > 0)),
-  CONSTRAINT `shoppingcar_chk_2` CHECK ((`totalPrice` > 0))
+  CONSTRAINT `FK_ShoppingCar_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`)
 ) COMMENT='購物車';
 
 INSERT INTO ShoppingCar (userID,productSN,purchaseQuantity,productPrice,totalPrice)
@@ -393,16 +404,6 @@ values
 (3,2,1,999,999),
 (3,4,1,3300,3300),
 (4,1,6,799,4794);
-
-
-CREATE TABLE `ProductPhoto` (
-  `photoSN` int NOT NULL AUTO_INCREMENT COMMENT '圖片流水號',
-  `productSN` int NOT NULL COMMENT '商品編號',
-  `productImages` longblob NOT NULL COMMENT '商品圖片',
-  PRIMARY KEY (`photoSN`),
-  KEY `FK_ProductPhoto_productSN` (`productSN`),
-  CONSTRAINT `FK_ProductPhoto_productSN` FOREIGN KEY (`productSN`) REFERENCES `Product` (`productSN`)
-) COMMENT='商品圖片';
 
 
 -- --------------------------------------會員相關表格 CustomerReply Follow Chat----------------------------------------
