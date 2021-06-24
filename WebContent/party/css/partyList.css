@@ -1,0 +1,185 @@
+* {
+  margin: 0;
+  /* padding: 0; */
+  /* border: 1px solid red; */
+}
+
+body {
+  position: relative;
+  background: rgb(16, 24, 42);
+  background: linear-gradient(330deg, rgba(16, 24, 42, 1) 0%, rgba(51, 161, 175, 1) 100%); 
+  height: 1600px;
+}
+
+#wave {
+  position: absolute;
+  width: 100%;
+  margin-top: -150px;
+}
+
+.divePosition {
+  position: fixed;
+  margin-top: -130px;
+  margin-left: 30px;
+}
+
+#diveMan {
+  position: relative;
+  margin-left: 30px;
+  transform: scale(0.7);
+}
+
+.howDive {
+  position: relative;
+  margin-left: -120px;
+  margin-top: -40px;
+  color: white;
+}
+
+#depthBar {
+  position: fixed;
+  margin-top: -200px;
+}
+
+nav.navbar {
+  transition: 0.5s;
+}
+
+nav.navbar.fixed-top.navbar-expand-md.navbar-light {
+  background-color: transparent;
+}
+
+nav.navbar.fixed-top.navbar-expand-md.navbar-light a {
+  color: #b0b0b0;
+  transition: 0.5s;
+  cursor: pointer;
+  text-align: right;
+  margin-right: 15px;
+}
+
+nav.navbar.fixed-top.navbar-expand-md.navbar-light a:hover {
+  transform: scale(1.2) ;
+}
+.row{
+  margin: 0px;
+}
+#footerGroup {
+  position: absolute;
+  bottom: 0;
+}
+#footerGroup>img {
+  max-width: 100px;
+  width: 15%;
+}
+#footerGroup>#footer {
+  max-width: none;
+  width: 100%;
+}
+
+#footerGroup>#ad {
+  position: relative;
+  margin-bottom: -40%;
+  margin-left: 30%;
+}
+
+#footerGroup>#about {
+  position: relative;
+  margin-bottom: -45%;
+  margin-left: 30%;
+}
+
+#footerGroup>#QA {
+  position: relative;
+  margin-bottom: -30%;
+  margin-left: 50%;
+}
+
+
+.main {
+	margin: 150px auto 150px;
+	width: 750px;
+	height: 1600px;
+	overflow: hidden;
+/* 	border: solid 2px red; */
+}
+
+/* 有廣告才要用  */
+.aside {
+	width: 150px;
+	height: 300px;
+	position: fixed;
+	right: 0px;
+	bottom: 50px;
+	background-color: #ffffff;
+}
+
+/* ================ partyList.jsp ================ */
+
+h4 {
+	text-align: center;
+	color: #d3d3d3;
+}
+
+section.search {
+	color: #d3d3d3;
+	display: flex;	/*垂直置中*/
+	align-items: center;	/*垂直置中*/
+}
+
+section.search > input[type="text"] {
+	font-size: 14px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	border: solid 1px #d3d3d3;
+}
+
+section.search > select {
+	font-size: 14px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	border: solid 1px #d3d3d3;
+}
+
+section.search > button, span {
+	margin-left: 5px;
+}
+
+section.alert {
+	color: #98f4fc;
+	text-align: center;
+}
+
+section.party {
+/* 	border: solid 1px red; */
+	margin-top: 20px;
+}
+
+div.partyintro {
+	background-color: #e8edf7;
+	width: 500px;
+	margin: 10px auto;
+	padding: 10px;
+	border-radius: 10px;
+}
+
+div.status {
+	text-align: right;
+}
+
+/* ================  分頁相關  ================ */
+
+.page {
+	color: #d3d3d3;
+	text-align: center;
+}
+
+.page select {
+	font-size: 14px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	border: solid 1px #d3d3d3;
+}
+
+.page form {
+	display: inline;
+}

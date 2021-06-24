@@ -41,20 +41,39 @@ public class PartyServlet extends HttpServlet {
 		PrintWriter out = res.getWriter();
 //		System.out.println("有進到party.do");
 		
+		
 // ========================= 會員使用畫面  =====================================
 		
-		//會員 查詢 揪團總表
+		//會員 從首頁 連到揪團總表
+		if ("party".equals(action)) {
+			List<PartyVO> listBySearch = null;
+			req.setAttribute("listBySearch", listBySearch);
+			
+			RequestDispatcher successView = req.getRequestDispatcher("/party/partyList.jsp");
+			successView.forward(req, res);
+		}
+		
+		//會員 查詢 揪團總表(有下條件)
 		if ("getAllBy".equals(action)) {
+			System.out.println("test");
 			String keyword = req.getParameter("keyword");
 			Integer pointSN = Integer.parseInt(req.getParameter("pointSN"));
 			Integer partyMinSize = Integer.parseInt(req.getParameter("partyMinSize"));
 			List<PartyVO> listBySearch = partySvc.findBySearch(keyword, pointSN, partyMinSize);
 			
-			HttpSession session = req.getSession();
-			session.setAttribute("listBySearch", listBySearch);
-			
-			RequestDispatcher successView = req.getRequestDispatcher("/party/partyList.jsp");
-			successView.forward(req, res);
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			if (listBySearch.size() == 0) {
+				errorMsgs.add("查無此條件資料，請重新查詢！");
+				RequestDispatcher successView = req.getRequestDispatcher("/party/partyList.jsp");
+				successView.forward(req, res);				
+			} else {
+				HttpSession session = req.getSession();
+				session.setAttribute("listBySearch", listBySearch);
+				RequestDispatcher successView = req.getRequestDispatcher("/party/partyList.jsp");
+				successView.forward(req, res);
+			}
 		}
 		
 		//會員 查詢 揪團細節
