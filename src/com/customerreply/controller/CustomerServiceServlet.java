@@ -25,7 +25,7 @@ public class CustomerServiceServlet extends HttpServlet {
 			// 後台管理者身分驗證(Filter? Param = userID????)
 			try {
 				String userID = req.getParameter("userID");
-				req.setAttribute("userID", userID);
+				req.setAttribute("userID", "Manager");
 				RequestDispatcher dispatcher = req.getRequestDispatcher("/customerreply/CSmanager.jsp");	//
 				dispatcher.forward(req, res);
 				

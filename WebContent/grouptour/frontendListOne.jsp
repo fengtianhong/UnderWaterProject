@@ -90,7 +90,9 @@
 		<td>證照資格</td>
 		<td>
 			<jsp:useBean id="memSvc" scope="page" class="com.member.model.MemberService"></jsp:useBean>
-			${groupTourVO.certificationLimit}
+	        <c:if test="${${groupTourVO.certificationLimit} == '0'}">不限</c:if>
+	        <c:if test="${${groupTourVO.certificationLimit} == '1'}">PADI OW / SSI OW</c:if>
+	        <c:if test="${${groupTourVO.certificationLimit} == '2'}">PADI AOW / SSI AOW</c:if>
 		</td>
 	</tr>
 </table>

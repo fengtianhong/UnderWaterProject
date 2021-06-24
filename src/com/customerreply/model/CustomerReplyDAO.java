@@ -2,6 +2,8 @@ package com.customerreply.model;
 
 import java.util.List;
 
+import com.websocketchat.redis.JedisPoolUtil;
+
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 

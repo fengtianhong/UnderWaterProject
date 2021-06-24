@@ -1,4 +1,4 @@
-package com.customerreply.model;
+package com.websocketchat.redis;
 
 import redis.clients.jedis.JedisPool;
 
@@ -18,12 +18,12 @@ public class TestJedis {
 			
 			jedis.close();
 		}
-		CustomerReplyDAO dao = new CustomerReplyDAO();	// getHistoryMsg & insertMsg TEST
-//		dao.insertMsg(0001, "test");
-//		dao.insertMsg(0001, "123");
-		List<String> list = dao.getHistoryMsg(0001);
-		for(String msg : list)
-			System.out.println(msg);
+//		CustomerReplyDAO dao = new CustomerReplyDAO();	// getHistoryMsg & insertMsg TEST
+////		dao.insertMsg(0001, "test");
+////		dao.insertMsg(0001, "123");
+//		List<String> list = dao.getHistoryMsg(0001);
+//		for(String msg : list)
+//			System.out.println(msg);
 		
 	}
 

@@ -17,9 +17,9 @@ import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
 import com.customerreply.model.ChatMessage;
-import com.customerreply.model.JedisHandleMessage;
 import com.customerreply.model.State;
 import com.google.gson.Gson;
+import com.websocketchat.redis.JedisHandleMessage;
 
 
 @ServerEndpoint("/FriendWS/{userID}")
