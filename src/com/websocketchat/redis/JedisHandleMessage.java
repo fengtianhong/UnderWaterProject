@@ -1,4 +1,4 @@
-package com.customerreply.model;
+package com.websocketchat.redis;
 
 import java.util.List;
 
