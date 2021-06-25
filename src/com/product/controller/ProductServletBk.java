@@ -35,37 +35,6 @@ public class ProductServletBk extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		
-//		if ("getProductByClass".equals(action)) {
-//
-//			List<String> errorMsgs = new LinkedList<String>();
-//			request.setAttribute("errorMsgs", errorMsgs);
-//
-//			try {
-//				String str = request.getParameter("productClass");
-//				if (str.trim().length() == 0) {
-//					errorMsgs.add("請輸入查詢資料");
-//				}
-//				if (!errorMsgs.isEmpty()) {
-//					RequestDispatcher failView = request.getRequestDispatcher("/product/ft_searchProduct.jsp");
-//					failView.forward(request, response);
-//					return;
-//				}
-//				System.out.println(str);
-//				ProductService productSvc = new ProductService();
-//				List<ProductVO> list = productSvc.getOneClassProduct(str);
-//
-//				request.setAttribute("list", list);	
-//				String url = "/product/ft_listClassProduct.jsp";
-//				RequestDispatcher successView = request.getRequestDispatcher(url);
-//				successView.forward(request, response);
-//
-//			} catch (Exception e) {
-//				errorMsgs.add("查無資料" + e.getMessage());
-//				RequestDispatcher failView = request.getRequestDispatcher("/product/ft_searchProduct.jsp");
-//				failView.forward(request, response);
-//			}
-//		}
-
 		if ("bk_getOneProduct".equals(action)) {
 
 			List<String> errorMsgs = new LinkedList<String>();

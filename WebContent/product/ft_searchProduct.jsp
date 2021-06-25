@@ -23,25 +23,15 @@
 
 	<ul>		
 		<li><a href='ft_listDiscountProduct.jsp'>優惠專區</a><br><br></li>		
-<!-- 		<li><a href='bk_listAllProduct.jsp'>查詢所有商品</a><br><br></li>		 -->
-		
-		<jsp:useBean id="productVO" scope="page" class="com.product.model.ProductVO" />
-		
-<!-- 		<li> -->
-<!-- 			<form method="post" action="product.do"> -->
-<!-- 				<b>請輸入編號:</b> -->
-<!-- 				<input type="text" name="productSN">  -->
-<!-- 				<input type="hidden" name="action" value="getOneProduct">  -->
-<!-- 				<input type="submit" value="送出"> -->
-<!-- 			</form> -->
-<!-- 		</li> -->
-     			   
+		<li><a href='ft_listAllProduct.jsp'>查詢所有商品</a><br><br></li>    			   
 		<li>
 		    <b>依商品類別查詢:</b>
-		    <FORM METHOD="post" ACTION="product.do">
+		    <FORM METHOD="post" ACTION="product_user.do">
 		       <b>請選擇類別:</b>
 		       <select size="1" name="productClass">
-<!-- 		       		動態寫法寫不出來 -->
+		       
+		       <jsp:useBean id="productVO" scope="page" class="com.product.model.ProductVO" />
+
 <%-- 		       		<c:forEach var="productVO" items="${productVO.productClass}">  --%>
 <%--           			<option value="${productVO.productClass}">${productVO.productClass} --%>
 <%--          			</c:forEach> --%>
@@ -53,7 +43,8 @@
 					<option value="防寒曬衣物">防寒曬衣物</option>
 					<option value="氣瓶">氣瓶</option>
 					<option value="照明燈">照明燈</option>
-					<option value="其他配件">其他配件</option>									
+					<option value="其他配件">其他配件</option>
+												
 		       </select>
 		       <input type="hidden" name="action" value="getProductByClass">
 		       <input type="submit" value="送出">
