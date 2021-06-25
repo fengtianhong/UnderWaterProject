@@ -71,7 +71,7 @@ h1 {
 
 .column {
   float: left;
-  width: 50%;
+  width: 100%;
   padding: 5%;
   margin-bottom: 5px;
   background-color: #ffffff;

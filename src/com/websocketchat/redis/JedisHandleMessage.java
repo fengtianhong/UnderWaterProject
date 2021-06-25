@@ -1,6 +1,9 @@
 package com.websocketchat.redis;
 
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -30,6 +33,24 @@ public class JedisHandleMessage {
 		jedis.rpush(receiverKey, message);
 
 		jedis.close();
+	}
+	
+	public static Set<String> getManagerMsg() {
+		
+		Set<String> set = new HashSet<String>();
+		try {
+			Jedis jedis = pool.getResource();
+			jedis.auth("123456");
+			set = (Set<String>) jedis.keys("Manager*");  
+//			System.out.println("MANAGER KEY : ");
+//			for (String key : set) {
+//				System.out.println(key); 
+//			}
+		}catch(Exception e) {
+			System.out.println("JedisHandleMessage ERROR");
+			e.printStackTrace();
+		}
+		return set;
 	}
 
 }

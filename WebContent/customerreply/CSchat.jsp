@@ -26,7 +26,7 @@
 	</div>
 </body>
 <script>
-	var MyPoint = "/FriendWS/${userID}";	// java EL，可以改成 roomID 跟 session 等，變成發送給特定對象(一對一的聊天室)
+	var MyPoint = "/CustomerServiceWS/${userID}";	// java EL，可以改成 roomID 跟 session 等，變成發送給特定對象(一對一的聊天室)
 	var host = window.location.host;
 	var path = window.location.pathname;
 	var webCtx = path.substring(0, path.indexOf('/', 1));
@@ -51,7 +51,8 @@
 		webSocket.onmessage = function(event) {
 			var jsonObj = JSON.parse(event.data);
 			if ("open" === jsonObj.type) {
-				getHistoryMsg(jsonObj);
+				getHistoryMsg();
+// 				getHistoryMsg(jsonObj);
 			} else if ("history" === jsonObj.type) {
 				messagesArea.innerHTML = '';
 				var ul = document.createElement('ul');
@@ -77,7 +78,8 @@
 				document.getElementById("area").appendChild(li);
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			} else if ("close" === jsonObj.type) {
-				getHistoryMsg(jsonObj);
+				getHistoryMsg();
+// 				getHistoryMsg(jsonObj);
 			}
 			
 		};

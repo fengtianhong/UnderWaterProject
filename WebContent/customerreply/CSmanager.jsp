@@ -10,7 +10,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet" href="./css/friendchat.css" type="text/css" />
 <style type="text/css">
-
+.green{
+	border: 1px solid green;
+}
 </style>
 <title>Manager 聊天室(幾乎不用動)</title>
 </head>
@@ -26,7 +28,7 @@
 	</div>
 </body>
 <script>
-	var MyPoint = "/FriendWS/${userID}";	// java EL，可以改成 roomID 跟 session 等，變成發送給特定對象(一對一的聊天室)
+	var MyPoint = "/CustomerServiceWS/${userID}";	// java EL，可以改成 roomID 跟 session 等，變成發送給特定對象(一對一的聊天室)
 	var host = window.location.host;  		// 取得目前造訪網頁的主機名稱(hostname), 包含port
 	var path = window.location.pathname;	// 取得目前造訪網頁的路徑(呼叫路徑)
 	var webCtx = path.substring(0, path.indexOf('/', 1));	// 取得UnderWaterProject
@@ -41,18 +43,38 @@
 		// create a websocket
 		webSocket = new WebSocket(endPointURL);
 
-		webSocket.onopen = function(event) {
+		webSocket.onopen = function(event) {	
 			console.log("Connect Success!");
 			document.getElementById('sendMessage').disabled = false;
 			document.getElementById('connect').disabled = true;
 			document.getElementById('disconnect').disabled = false;
+			
 		};
 
 		webSocket.onmessage = function(event) {
 			var jsonObj = JSON.parse(event.data);
+			
 			if ("open" === jsonObj.type) {
 				refreshFriendList(jsonObj);
 			} else if ("history" === jsonObj.type) {
+				
+				
+				var repeat = false;
+				var row = document.getElementById("row");
+				var receivers = row.childNodes;
+				if(row.childNodes.length == 0) {
+					row.innerHTML +='<div onclick="heyYo(this)" id='+ jsonObj.receiver +' class="column" name="friendName" value=' + jsonObj.receiver + ' ><h2>' + jsonObj.receiver + '</h2></div>';
+				}
+				for(var i = 0; i < row.childNodes.length; i++) {
+					if(receivers[i].getAttribute("id") == jsonObj.receiver ) {
+						repeat = true;
+						break;
+					}
+				}
+				if(repeat == false) {
+					row.innerHTML +='<div onclick="heyYo(this)" id='+ jsonObj.receiver +' class="column" name="friendName" value=' + jsonObj.receiver + ' ><h2>' + jsonObj.receiver + '</h2></div>';
+				}
+				
 				messagesArea.innerHTML = '';
 				var ul = document.createElement('ul');
 				ul.id = "area";
@@ -114,28 +136,81 @@
 	function refreshFriendList(jsonObj) {
 		var friends = jsonObj.users;
 		var row = document.getElementById("row");
-		row.innerHTML = '';
+		var receivers = row.childNodes;
+		var isMe = false;
+		var repeat = false;
+// 		row.innerHTML = '';	// 離線也不要清空
+		
 		for (var i = 0; i < friends.length; i++) {
-			if (friends[i] === self) { continue; }
-			row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' ><h2>' + friends[i] + '</h2></div>';
+			// 自己的聊天室不需要新增
+			if (friends[i] === self) { isMe = true; }
+			// 歷史訊息已有的聊天室不需要新增
+			for(var j = 0; j < row.childNodes.length; j++) {	
+				if (receivers[j].getAttribute("id") == friends[i]) { repeat = true; }
+			}
+			if(repeat == false && isMe == false) {
+				row.innerHTML +='<div onclick="heyYo(this)" id=' + friends[i] + ' class="column" name="friendName" value=' + friends[i] + ' ><h2>' + friends[i] + '</h2></div>';
+			}else if(repeat == true) {
+				console.log("repeat");
+				document.getElementById(friends[i]).setAttribute("class","green column");
+			}
 		}
-		addListener();
+		addListener(jsonObj);
 	}
+
+	
 	// 註冊列表點擊事件並抓取好友名字以取得歷史訊息
-	function addListener() {
-		var container = document.getElementById("row");
-		container.addEventListener("click", function(e) {
-			var friend = e.srcElement.textContent;
-			updateFriendName(friend);
-			var jsonObj = {
-					"type" : "history",
-					"sender" : self,
-					"receiver" : friend,
-					"message" : ""
-				};
-			webSocket.send(JSON.stringify(jsonObj));
-		});
+	function addListener(jsonObj) {
+		var container = document.getElementById("row");	
+// 		heyYo();
+		
+// 		container.addEventListener("click", function(e) {
+// 			console.log("1 : 是你嗎");
+// 				var friend = e.srcElement.textContent;	///// div id 已有的值才可以
+// ///		
+// 				console.log(friend);
+// 				var check = document.getElementById("row").childNodes;
+// 				var exist = false;
+// 				for(var i = 0; i < container.childNodes.length; i++) {
+// 					if(check[i].getAttribute("id") != friend) {
+// 						console.log("2 : "+check[i].getAttribute("id"));
+// 						exist = true;
+// 					}
+// 				}
+// 				if(exist = true) {
+// 					console.log("3 : exist = true");
+// 					updateFriendName(friend);
+// 					var jsonObj = {
+// 							"type" : "history",		
+// 							"sender" : self,
+// 							"receiver" : friend,
+// 							"message" : ""
+// 						};
+// 					webSocket.send(JSON.stringify(jsonObj));
+					
+// 				}
+// 		});
 	}
+	
+	function heyYo(e) {
+		console.log("heyYo");
+		console.log(e.id);
+// 		var container = document.getElementById("row");
+// 		var list = container.childNodes;
+// 		list.forEach(element =
+	//> element.addEventListener("click", function() {
+				var friend = e.id;
+				updateFriendName(friend);
+				var jsonObj = {
+						"type" : "history",		
+						"sender" : self,
+						"receiver" : friend,
+						"message" : ""
+					};
+				webSocket.send(JSON.stringify(jsonObj));
+// 		}));
+	}
+	
 	
 	function disconnect() {
 		webSocket.close();
