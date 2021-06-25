@@ -7,12 +7,15 @@
 %>
 <html>
 <head>
+<link rel="stylesheet" href="../share/index.css">
+<link rel="stylesheet" href="../vendors/bootstrap/css/bootstrap.min.css">
+
 <style type="text/css">
 .show_pic {
 	width: 400px;
 }
 
-img {
+.show_pic>img {
 	width: 100%;
 }
  textarea
@@ -24,6 +27,7 @@ img {
 <title><%=newsVO.getTitle()%></title>
 </head>
 <body>
+<jsp:include page="../share/navbar.jsp" flush="true" />
 	<table>
 		<tr>
 			<td>標題:</td>
@@ -58,6 +62,8 @@ img {
 
 	</table>
 	<button onclick="goback()">回上一頁</button>
+	
+	<jsp:include page="../share/footer.jsp" flush="true" />
 	<script>
 		function goback() {
 			history.go(-1);

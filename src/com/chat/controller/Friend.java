@@ -21,8 +21,6 @@ import com.chat.model.State;
 import com.google.gson.Gson;
 import com.websocketchat.redis.JedisHandleMessage;
 
-
-
 @ServerEndpoint("/Friend/{userName}")
 public class Friend {
 	private static Map<String, Session> sessionsMap = new ConcurrentHashMap<>();
@@ -53,7 +51,7 @@ public class Friend {
 		ChatMessage chatMessage = gson.fromJson(message, ChatMessage.class);
 		String sender = chatMessage.getSender();
 		String receiver = chatMessage.getReceiver();
-		
+
 		if ("history".equals(chatMessage.getType())) {
 			List<String> historyData = JedisHandleMessage.getHistoryMsg(sender, receiver);
 			String historyMsg = gson.toJson(historyData);
@@ -64,11 +62,15 @@ public class Friend {
 				return;
 			}
 		}
-		
-		
+
 		Session receiverSession = sessionsMap.get(receiver);
 		if (receiverSession != null && receiverSession.isOpen()) {
 			receiverSession.getAsyncRemote().sendText(message);
+			userSession.getAsyncRemote().sendText(message);
+			JedisHandleMessage.saveChatMessage(sender, receiver, message);
+		}
+//////	離線訊息
+		if (receiverSession == null || !receiverSession.isOpen()) { // 判斷要確認一下
 			userSession.getAsyncRemote().sendText(message);
 			JedisHandleMessage.saveChatMessage(sender, receiver, message);
 		}

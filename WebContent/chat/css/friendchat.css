@@ -8,7 +8,8 @@ html, body {
 		Microsoft JhengHei;
 	width: 90%;
 	height: 90%;
-	background: #eeeeda;
+	background: linear-gradient(330deg, rgba(16, 24, 42, 1) 0%,
+		rgba(51, 161, 175, 1) 100%);
 }
 
 .panel {
@@ -70,48 +71,48 @@ h1 {
 }
 
 .column {
-  float: left;
-  width: 50%;
-  padding: 5%;
-  margin-bottom: 5px;
-  background-color: #ffffff;
+	float: left;
+	width: 50%;
+	padding: 5%;
+	margin-bottom: 5px;
+	background-color: #ffffff;
 }
 
-ul{
-  list-style: none;
-  margin: 0;
-  padding: 0;
+ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
 }
 
-ul li{
-  display:inline-block;
-  clear: both;
-  padding: 20px;
-  border-radius: 30px;
-  margin-bottom: 2px;
-  font-family: Helvetica, Arial, sans-serif;
+ul li {
+	display: inline-block;
+	clear: both;
+	padding: 20px;
+	border-radius: 30px;
+	margin-bottom: 2px;
+	font-family: Helvetica, Arial, sans-serif;
 }
 
-.friend{
-  background: #eee;
-  float: left;
+.friend {
+	background: #eee;
+	float: left;
 }
 
-.me{
-  float: right;
-  background: #0084ff;
-  color: #fff;
+.me {
+	float: right;
+	background: #0084ff;
+	color: #fff;
 }
 
-.friend + .me{
-  border-bottom-right-radius: 5px;
+.friend+.me {
+	border-bottom-right-radius: 5px;
 }
 
-.me + .me{
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
+.me+.me {
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
 }
 
 .me:last-of-type {
-  border-bottom-right-radius: 30px;
+	border-bottom-right-radius: 30px;
 }

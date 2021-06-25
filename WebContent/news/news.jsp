@@ -24,7 +24,10 @@
 <style>
 
 .newsContent {
+	background-color: #eee;
 	margin-top: 100px;
+	border:2px #ccc solid;
+	border-radius:10px;
 }
 
 .forinclude {
@@ -40,7 +43,7 @@ textarea {
 
 table {
 	margin: auto;
-	width: 800px;
+	width: 700px;
 }
 </style>
 </head>
@@ -53,7 +56,6 @@ table {
 				<th>新聞標題</th>
 				<th>新聞內容</th>
 				<th>上架日期</th>
-				<th>消息來源</th>
 				<th>新聞類型</th>
 				<th>詳細內容</th>
 			</tr>
@@ -64,12 +66,11 @@ table {
 				end="<%=pageIndex+rowsPerPage-1%>">
 
 				<tr>
-					<td>${newsVO.title}</td>
-					<td><textarea readonly rows="6" cols="40">${newsVO.content}</textarea></td>
+					<td>${newsVO.title.substring(0,10)}....</td>
+					<td>${newsVO.content.substring(0,10)}....</td>
 
 					<td><fmt:formatDate value="${newsVO.newsDate}"
 							pattern="yyyy-MM-dd" /></td>
-					<td>${newsVO.newsFrom}</td>
 					<td>${newsVO.newsType==0?"潛點":newsVO.newsType==1?"商品":"揪團"}</td>
 					<td>
 						<FORM METHOD="post"

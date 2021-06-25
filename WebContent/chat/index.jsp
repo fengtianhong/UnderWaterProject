@@ -9,7 +9,7 @@ html, body {
 	font: 15px verdana, Times New Roman, arial, helvetica, sans-serif, Microsoft JhengHei;
 	width: 90%;
 	height: 90%;
-	background: #eeeeda;
+  background: linear-gradient(330deg, rgba(16, 24, 42, 1) 0%, rgba(51, 161, 175, 1) 100%);
 }
 
 #userName {
