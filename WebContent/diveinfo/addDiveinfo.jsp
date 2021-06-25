@@ -5,12 +5,14 @@
 <%
 	DiveInfoVO diveinfoVO = (DiveInfoVO) request.getAttribute("diveinfoVO");
 %>
-<%=diveinfoVO == null%>
 <html>
 <head>
+
+<%@ include file="../share/backend/Bmeta.file" %>
 <title>新增潛點</title>
 </head>
 <body>
+<%@ include file="../share/backend/Bheader.file" %>
 <c:if test="${not empty errorMsgs}">
 	<font style="color:red">請修正以下錯誤:</font>
 	<ul>
@@ -88,6 +90,9 @@
 			type="submit" value="送出新增">
 
 	</FORM>
+	
+	<%@ include file="../share/backend/Bfooter.file" %>
+	<%@ include file="../share/backend/Bjs.file" %>
 	<script>
 		window.addEventListener("DOMContentLoaded", function() {
 
