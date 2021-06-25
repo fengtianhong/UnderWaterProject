@@ -32,7 +32,7 @@ public class ShowPhoto extends HttpServlet {
 			out.write(productPhoto);
 			
 		}catch(Exception e){
-			System.out.println(e);	// 給錯時錯誤會印在 console > 不優
+			System.out.println(e);	// 給錯時錯誤會印在 console
 
 			InputStream in = getServletContext().getResourceAsStream("/diveinfo/images/404_urchin&reef.PNG");
 			byte[] b = new byte[in.available()];

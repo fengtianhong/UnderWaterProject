@@ -85,7 +85,7 @@
 				<td>商品圖片:</td>
 				<td>
 					<div class="show_pic">
-						<img src="<%=request.getContextPath()%>/product/GetPhoto?productSN.do=${productVO.productSN}">
+						<img src="<%=request.getContextPath()%>/product/GetPhoto.do?productSN=${productVO.productSN}">
 					</div>
 				</td>
 	

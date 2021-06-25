@@ -16,8 +16,8 @@ import javax.servlet.http.HttpSession;
 import com.product.model.ProductService;
 import com.product.model.ProductVO;
 
-@WebServlet("/ProductServletFt")
 @MultipartConfig
+@WebServlet("/product/product_user.do")
 public class ProductServletFt extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -50,7 +50,9 @@ public class ProductServletFt extends HttpServlet {
 					failView.forward(request, response);
 					return;
 				}
+				
 				System.out.println(str);
+
 				ProductService productSvc = new ProductService();
 				List<ProductVO> list = productSvc.getOneClassProduct(str);
 
