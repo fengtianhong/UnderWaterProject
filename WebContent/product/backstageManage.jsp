@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>後台商品管理首頁</title>
+<title>後台商品管理頁面</title>
 
 </head>
 

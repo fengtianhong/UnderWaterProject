@@ -65,10 +65,9 @@
 				<td>${productVO.productPrice}</td>
 				<td>${productVO.productQuantity}</td>
 				<td>${productVO.productStatus}</td>
-				<td>${productVO.productPhoto}</td>
 				<td>
 					<div class="show_pic">
-						<img src="<%=request.getContextPath()%>/product/GetPhoto?productSN=${productVO.productSN}">
+						<img src="<%=request.getContextPath()%>/product/GetPhoto.do?productSN=${productVO.productSN}">
 					</div>
 				</td>
 				<td>${productVO.productDetail}</td>

@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +18,7 @@ import com.diveinfo.model.DiveInfoService;
 import com.diveinfo.model.DiveInfoVO;
 import com.product.model.ProductService;
 import com.product.model.ProductVO;
-
+@MultipartConfig
 public class ProductServletBk extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -31,39 +32,39 @@ public class ProductServletBk extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
-// 圖片		
+		
 		HttpSession session = request.getSession();
 		
-		if ("bk_getProductByClass".equals(action)) {
-
-			List<String> errorMsgs = new LinkedList<String>();
-			request.setAttribute("errorMsgs", errorMsgs);
-
-			try {
-				String str = request.getParameter("productClass");
-				if (str.trim().length() == 0) {
-					errorMsgs.add("請輸入查詢資料");
-				}
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failView = request.getRequestDispatcher("/product/bk_updateProduct_select.jsp");
-					failView.forward(request, response);
-					return;
-				}
-				
-				ProductService productSvc = new ProductService();
-				List<ProductVO> list = productSvc.getOneClassProduct(str);
-
-				request.setAttribute("list", list);	
-				String url = "/product/bk_listClassProduct.jsp";
-				RequestDispatcher successView = request.getRequestDispatcher(url);
-				successView.forward(request, response);
-
-			} catch (Exception e) {
-				errorMsgs.add("查無資料" + e.getMessage());
-				RequestDispatcher failView = request.getRequestDispatcher("/product/bk_updateProduct_select.jsp");
-				failView.forward(request, response);
-			}
-		}
+//		if ("getProductByClass".equals(action)) {
+//
+//			List<String> errorMsgs = new LinkedList<String>();
+//			request.setAttribute("errorMsgs", errorMsgs);
+//
+//			try {
+//				String str = request.getParameter("productClass");
+//				if (str.trim().length() == 0) {
+//					errorMsgs.add("請輸入查詢資料");
+//				}
+//				if (!errorMsgs.isEmpty()) {
+//					RequestDispatcher failView = request.getRequestDispatcher("/product/ft_searchProduct.jsp");
+//					failView.forward(request, response);
+//					return;
+//				}
+//				System.out.println(str);
+//				ProductService productSvc = new ProductService();
+//				List<ProductVO> list = productSvc.getOneClassProduct(str);
+//
+//				request.setAttribute("list", list);	
+//				String url = "/product/ft_listClassProduct.jsp";
+//				RequestDispatcher successView = request.getRequestDispatcher(url);
+//				successView.forward(request, response);
+//
+//			} catch (Exception e) {
+//				errorMsgs.add("查無資料" + e.getMessage());
+//				RequestDispatcher failView = request.getRequestDispatcher("/product/ft_searchProduct.jsp");
+//				failView.forward(request, response);
+//			}
+//		}
 
 		if ("bk_getOneProduct".equals(action)) {
 
@@ -181,7 +182,8 @@ public class ProductServletBk extends HttpServlet {
 				}
 				
 				String productStatus = request.getParameter("productStatus");
-// 看無
+				
+// 圖片看無
 				byte[] productPhoto = null;
 				Part FileToPhoto = request.getPart("productPhoto");
 				if (FileToPhoto.getSize() == 0) {
@@ -288,7 +290,7 @@ public class ProductServletBk extends HttpServlet {
 					productPrice = 0;
 					errorMsgs.add("商品單價請填數字");
 				}
-
+				
 				Integer productQuantity = null;
 				try {
 					productQuantity = new Integer(request.getParameter("productQuantity").trim());
@@ -302,6 +304,7 @@ public class ProductServletBk extends HttpServlet {
 
 				String productStatus = request.getParameter("productStatus");
 				if (productStatus == null) {
+					productStatus = "";
 					errorMsgs.add("商品狀態請勿空白");
 				}
 				
@@ -313,6 +316,8 @@ public class ProductServletBk extends HttpServlet {
 					productPhoto = new byte[in.available()];
 					in.read(productPhoto);
 					in.close();
+				}else {
+					errorMsgs.add("請選擇一張圖片");
 				}
 
 				String productDetail = request.getParameter("productDetail").trim();
@@ -327,17 +332,17 @@ public class ProductServletBk extends HttpServlet {
 					productCreateTime = new java.sql.Date(System.currentTimeMillis());
 					errorMsgs.add("請選擇日期");
 				}
-
 				String productDiscount = request.getParameter("productDiscount");
-				if (productDiscount.trim().length() == 0) {
+				if(productDiscount == null) {
+					productDiscount = "";
 					errorMsgs.add("優惠狀態請勿空白");
-				}				
-				
+				}
 				String productPrime = request.getParameter("productPrime");
-				if (productPrime.trim().length() == 0) {
+				if(productPrime == null) {
+					productPrime = "";
 					errorMsgs.add("精選狀態請勿空白");
 				}
-
+				
 				Integer ratingPoint = null;
 				try {
 					ratingPoint = new Integer(request.getParameter("ratingPoint").trim());
@@ -345,7 +350,7 @@ public class ProductServletBk extends HttpServlet {
 					ratingPoint = 0;
 					errorMsgs.add("評價總分請填數字");
 				}
-
+				
 				Integer ratingNumber = null;
 				try {
 					ratingNumber = new Integer(request.getParameter("ratingNumber").trim());
@@ -398,8 +403,9 @@ public class ProductServletBk extends HttpServlet {
 
 			List<String> errorMsgs = new LinkedList<String>();
 			request.setAttribute("errorMsgs", errorMsgs);
+			
 			try {
-				Integer productSN = new Integer(request.getParameter("productN"));
+				Integer productSN = new Integer(request.getParameter("productSN"));
 				ProductService productSvc = new ProductService();
 				ProductVO productVO = productSvc.getOneProduct(productSN);
 				if ("上架".equals(productVO.getProductStatus())) {
@@ -412,14 +418,15 @@ public class ProductServletBk extends HttpServlet {
 							productVO.getProductPrice(),productVO.getProductQuantity(), productVO.getProductStatus(),
 							productVO.getProductPhoto(), productVO.getProductDetail(), productVO.getProductCreateTime(),
 							productVO.getProductDiscount(), productVO.getProductPrime(), productVO.getRatingPoint(), productVO.getRatingNumber());
-						
-				RequestDispatcher failureView = request.getRequestDispatcher("");
-				failureView.forward(request, response);
+				
+				request.setAttribute("productVO", productVO);	
+				RequestDispatcher failView = request.getRequestDispatcher("/product/bk_listOneProduct.jsp");
+				failView.forward(request, response);
 				return;
 				
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failView = request.getRequestDispatcher("");
+				RequestDispatcher failView = request.getRequestDispatcher("/product/bk_listOneProduct.jsp");
 				failView.forward(request, response);
 			}
 

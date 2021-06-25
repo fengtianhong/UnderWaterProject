@@ -4,16 +4,12 @@
 <%@ page import="com.product.model.*"%>
 
 <% 
-	ProductService productSvc = new ProductService();
-	List<ProductVO> list = productSvc.getAll();
+	List<ProductVO> list = (List<ProductVO>) request.getAttribute("list");
 	pageContext.setAttribute("list", list);
 %>
 
-<!-- 抓不到List<ProductVO> list = productSvc.getOneClassProduct(str); -->
-<%--
-	List<ProductVO> list = (List<ProductVO>) request.getAttribute("list");
-	pageContext.setAttribute("list", list);
---%>
+	
+ 
 <html>
 <head>
 <meta charset="UTF-8">
@@ -28,7 +24,7 @@
 			<td>
 				<h3>所有商品資料</h3>
 				<h4>
-					<a href="bk_updateProduct_select.jsp">回修改~過濾方式</a>
+					<a href="ft_searchProduct.jsp">回商城查詢首頁</a>
 				</h4>
 			</td>
 		</tr>
@@ -70,10 +66,9 @@
 				<td>${productVO.productPrice}</td>
 				<td>${productVO.productQuantity}</td>
 				<td>${productVO.productStatus}</td>
-				<td>${productVO.productPhoto}</td>
 				<td>
 					<div class="show_pic">
-						<img src="<%=request.getContextPath()%>/product/GetPhoto?productSN=${productVO.productSN}">
+						<img src="<%=request.getContextPath()%>/product/GetPhoto.do?productSN=${productVO.productSN}">
 					</div>
 				</td>
 				<td>${productVO.productDetail}</td>
@@ -82,20 +77,6 @@
 				<td>${productVO.productPrime}</td>
 				<td>${productVO.ratingPoint}</td>
 				<td>${productVO.ratingNumber}</td>
-				<td>
-					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/product.do">
-						<input type="submit" value="上 /下架 變更"> 
-						<input type="hidden" name="productSN" value="${productVO.productSN}">
-						<input type="hidden" name="action" value="ChangeStatus">
-					</FORM>
-				</td>
-				<td>
-					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/product/product.do">
-						<input type="submit" value="資料變更">
-						<input type="hidden" name="productSN" value="${productVO.productSN}">
-						<input type="hidden" name="action" value="UpdateProduct">
-					</FORM>
-				</td>
 			</tr>
 		</c:forEach>
 	</table>

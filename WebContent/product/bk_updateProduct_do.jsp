@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.product.model.*"%>
 
+<!-- 圖片部分GG -->
 <%
 	ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 	byte[] photoTemp = null;
@@ -24,11 +25,7 @@
 <body>
 
 	<table id="table-1">
-
-		<h3>
-			<a href="bk_updateProduct_select.jsp">回修改~過濾方式</a>
-		</h3>
-
+		<tr><td><a href="bk_updateProduct_select.jsp">回修改~過濾方式</a></td></tr>
 	</table>
 
 	<h3>資料修改:</h3>
@@ -42,81 +39,110 @@
 		</ul>
 	</c:if>
 
-	<FORM METHOD="post" ACTION="product.do" name="form1">
-		<table>
-			
-			
-			商品編號:<font color=red><b>*</b></font>
-			<%=productVO.getProductSN()%><br>
-				
-			商品類別:
-			<select name="productClass">
-				<option value="蛙鞋"<%=(productVO.getProductClass()).contains("蛙鞋") ? "selected" : ""%>>蛙鞋</option>			
-				<option value="呼吸管"<%=(productVO.getProductClass()).contains("呼吸管") ? "selected" : ""%>>呼吸管</option>
-				<option value="面鏡"<%=(productVO.getProductClass()).contains("面鏡") ? "selected" : ""%>>面鏡</option>
-				<option value="防寒曬衣物"<%=(productVO.getProductClass()).contains("防寒曬衣物") ? "selected" : ""%>>防寒曬衣物</option>
-				<option value="氣瓶"<%=(productVO.getProductClass()).contains("氣瓶") ? "selected" : ""%>>氣瓶</option>
-				<option value="照明燈"<%=(productVO.getProductClass()).contains("照明燈") ? "selected" : ""%>>照明燈</option>
-				<option value="其他配件"<%=(productVO.getProductClass()).contains("其他配件") ? "selected" : ""%>>其他配件</option>
-			</select><br>
-			
-			商品名稱:
-			<input type="TEXT" name="productName"
-				value="<%=productVO.getProductName()%>" /><br>
-				
-			商品單價:
-			<input type="TEXT" name="productPrice"
-				value="<%=productVO.getProductPrice()%>" /><br>
-				
-			商品數量:
-			<input type="TEXT" name="productQuantity"
-				value="<%=productVO.getProductQuantity()%>" /><br>
-			
-			商品狀態:<font color=red><b>*</b></font>
-			<%=productVO.getProductStatus()%><br>
-			
-			商品圖片:
-			<div class="show_pic">
-				<img src="<%=request.getContextPath()%>/product/GetPhoto?productSN=${productVO.productSN}">
-			</div>
-
-			<input type="file" name="productPhoto" id="the_file" accept="productPhoto/*">
-			<div class="show_pic"></div>
-			<div class="picture"></div>
-			
-			商品說明:
-			<br>
-			<textarea name="productDetail" value="<%=productVO.getProductDetail()%>"><%=productVO.getProductDetail()%></textarea><br>
-					
-			上架時間:
-			<input name="productCreateTime" id="date" type="text"><br>
-
-			是否為優惠商品:
-			<input type="radio" name="productDiscount" id="op1" value="是" 
-			<%=(productVO.getProductDiscount()).contains("是") ? "checked" : ""%>/>
-<%-- 			<%=(productVO == null) ? "" : (productVO.getProductDiscount()).equals(true) ? "checked" : ""%>/> --%>
-			<label for="op1">是</label>
-			
-			<input type="radio" name="productDiscount" id="op2" value="否"
-			<%=(productVO.getProductDiscount()).contains("否") ? "checked" : ""%>/>
-<%-- 			<%=(productVO == null) ? "" : (productVO.getProductDiscount()).equals(false) ? "checked" : ""%>/> --%>
-			<label for="op2">否</label><br>
-
-			是否為精選商品:
-			<input type="radio" name="productPrime" id="op3" value="是"
-			<%=(productVO == null) ? "" : (productVO.getProductPrime()).contains("是") ? "checked" : ""%>/>
-			<label for="op3">是</label>
-			
-			<input type="radio" name="productPrime" id="op4" value="否"
-			<%=(productVO == null) ? "" : (productVO.getProductPrime()).contains("否") ? "checked" : ""%>/>
-			<label for="op4">否</label><br>
-			
-			評價總分:<font color=red><b>*</b></font>
-			<%=productVO.getRatingPoint()%><br>
-
-			評價人數:<font color=red><b>*</b></font>
-			<%=productVO.getRatingNumber()%><br>
-
+	<FORM METHOD="post" ACTION="product.do" name="form1" enctype="multipart/form-data">
+		<table>		
+			<tr>
+				<td>商品編號:<font color=red><b>*</b></font></td>
+				<td><%=productVO.getProductSN()%><br></td>
+			</tr>
+			<tr>		
+				<td>商品類別:
+					<select name="productClass">
+						<option value="蛙鞋"<%=(productVO.getProductClass()).contains("蛙鞋") ? "selected" : ""%>>蛙鞋</option>			
+						<option value="呼吸管"<%=(productVO.getProductClass()).contains("呼吸管") ? "selected" : ""%>>呼吸管</option>
+						<option value="面鏡"<%=(productVO.getProductClass()).contains("面鏡") ? "selected" : ""%>>面鏡</option>
+						<option value="防寒曬衣物"<%=(productVO.getProductClass()).contains("防寒曬衣物") ? "selected" : ""%>>防寒曬衣物</option>
+						<option value="氣瓶"<%=(productVO.getProductClass()).contains("氣瓶") ? "selected" : ""%>>氣瓶</option>
+						<option value="照明燈"<%=(productVO.getProductClass()).contains("照明燈") ? "selected" : ""%>>照明燈</option>
+						<option value="其他配件"<%=(productVO.getProductClass()).contains("其他配件") ? "selected" : ""%>>其他配件</option>
+					</select><br>
+				</td>
+			</tr>
+			<tr>	
+				<td>商品名稱:</td>
+				<td><input type="TEXT" name="productName"
+					value="<%=productVO.getProductName()%>" /><br>
+				</td>
+			</tr>
+			<tr>		
+				<td>商品單價:</td>
+				<td><input type="TEXT" name="productPrice"
+					value="<%=productVO.getProductPrice()%>" /><br>
+				</td>
+			</tr>
+			<tr>		
+				<td>商品數量:</td>
+				<td><input type="TEXT" name="productQuantity"
+					value="<%=productVO.getProductQuantity()%>" /><br>
+				</td>
+			</tr>
+			<tr>	
+				<td>商品狀態:<font color=red><b>*</b></font>
+					<%=productVO.getProductStatus()%><br>
+				</td>
+			</tr>	
+			<tr>	
+				<td>商品圖片:</td>
+				<td>
+					<div class="show_pic">
+						<img src="<%=request.getContextPath()%>/product/GetPhoto?productSN.do=${productVO.productSN}">
+					</div>
+				</td>
+	
+				<td><input type="file" name="productPhoto" id="the_file" accept="image/*"></td>
+				<td><div class="show_pic"></div></td>
+				<td><div class="picture"></div></td>
+			</tr>
+			<tr>
+				<td>商品說明:<br></td>
+				<td>
+					<textarea name="productDetail"><%=productVO.getProductDetail()%></textarea><br>
+				</td>
+			</tr>	
+			<tr>
+				<td>上架時間:</td>
+				<td>
+					<input name="productCreateTime" id="date" type="text"><br>
+				</td>
+			</tr>
+			<tr>
+				<td>是否為優惠商品:</td>
+				<td>
+					<input type="radio" name="productDiscount" id="op1" value="是" 
+					<%=(productVO.getProductDiscount()).contains("是") ? "checked" : ""%>/>
+					<label for="op1">是</label>
+				</td>
+				<td>
+					<input type="radio" name="productDiscount" id="op2" value="否"
+						<%=(productVO.getProductDiscount()).contains("否") ? "checked" : ""%>/>
+					<label for="op2">否</label><br>
+				</td>
+			</tr>
+			<tr>	
+				<td>是否為精選商品:</td>
+				<td>
+					<input type="radio" name="productPrime" id="op3" value="是"
+						<%=(productVO == null) ? "" : (productVO.getProductPrime()).contains("是") ? "checked" : ""%>/>
+					<label for="op3">是</label>
+				</td>
+				<td>
+					<input type="radio" name="productPrime" id="op4" value="否"
+						<%=(productVO == null) ? "" : (productVO.getProductPrime()).contains("否") ? "checked" : ""%>/>
+					<label for="op4">否</label><br>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					評價總分:<font color=red><b>*</b></font>
+					<%=productVO.getRatingPoint()%><br>
+				</td>
+			</tr>
+			<tr>	
+				<td>
+					評價人數:<font color=red><b>*</b></font>
+					<%=productVO.getRatingNumber()%><br>
+				</td>	
+			</tr>
 		</table>
 
 		<input type="hidden" name="action" value="getOne_To_Update">
