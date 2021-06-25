@@ -23,7 +23,7 @@
 			<td>
 				<h3>所有優惠商品</h3>
 				<h4>
-					<a href="selectProduct.jsp">回查詢首頁</a>
+					<a href="ft_searchProduct.jsp">回商城查詢首頁</a>
 				</h4>
 			</td>
 		</tr>
@@ -46,12 +46,13 @@
 			<td>商品單價</td>
 			<td>商品數量</td>
 			<td>商品狀態</td>
+			<td>商品圖片</td>
 			<td>商品說明</td>
 			<td>上架時間</td>
 			<td>優惠品</td>
 			<td>精選品</td>
-			<td>評價總分數</td>
-			<td>評價總人數</td>
+			<td>評價總分</td>
+			<td>評價人數</td>
 		</tr>
 
 		<%-- 	<%@ include file="page1.file" %>  --%>
@@ -64,6 +65,11 @@
 				<td>${productVO.productPrice}</td>
 				<td>${productVO.productQuantity}</td>
 				<td>${productVO.productStatus}</td>
+				<td>
+					<div class="show_pic">
+						<img src="<%=request.getContextPath()%>/product/GetPhoto.do?productSN=${productVO.productSN}">
+					</div>
+				</td>
 				<td>${productVO.productDetail}</td>
 				<td>${productVO.productCreateTime}</td>
 				<td>${productVO.productDiscount}</td>

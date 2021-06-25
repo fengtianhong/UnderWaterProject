@@ -14,10 +14,7 @@ import com.product.model.ProductService;
 import com.product.model.ProductVO;
 
 @WebServlet("/product/GetPhoto.do")
-public class GetPhoto extends HttpServlet {
-
-	public GetPhoto() {
-	}
+public class ShowPhoto extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
@@ -37,7 +34,7 @@ public class GetPhoto extends HttpServlet {
 		}catch(Exception e){
 			System.out.println(e);	// 給錯時錯誤會印在 console > 不優
 
-			InputStream in = getServletContext().getResourceAsStream("/NoData/null.jpg");
+			InputStream in = getServletContext().getResourceAsStream("/diveinfo/images/404_urchin&reef.PNG");
 			byte[] b = new byte[in.available()];
 			in.read(b);
 			out.write(b);
@@ -46,5 +43,5 @@ public class GetPhoto extends HttpServlet {
 			out.close();
 		}
 	}
-
 }
+
