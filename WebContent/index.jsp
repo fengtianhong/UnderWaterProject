@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Test Homepage2</title>
+	<title>UNDERWATER</title>
 	<!-- Bootstrap 的 CSS -->
     <link rel="stylesheet" href="vendors/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/homepage.css">
