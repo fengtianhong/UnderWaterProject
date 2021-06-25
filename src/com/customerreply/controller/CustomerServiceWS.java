@@ -22,8 +22,8 @@ import com.google.gson.Gson;
 import com.websocketchat.redis.JedisHandleMessage;
 
 
-@ServerEndpoint("/FriendWS/{userID}")
-public class FriendWS {
+@ServerEndpoint("/CustomerServiceWS/{userID}")
+public class CustomerServiceWS {
 	private static Map<String, Session> sessionsMap = new ConcurrentHashMap<>();
 	Gson gson = new Gson();
 
@@ -45,10 +45,30 @@ public class FriendWS {
 		String text = String.format("Session ID = %s, connected; userName = %s%nusers: %s", userSession.getId(),
 				userName, userNames);
 		System.out.println(text);
+		
+		////
+		if("Manager".equals(userName) &&  sessionsMap.get("Manager") != null) {
+			Set<String> managerKeySet= JedisHandleMessage.getManagerMsg();
+			for (String key : managerKeySet) {
+//				System.out.println("Manager key : "+key);	// Manager:1 
+				String receiver = key.substring(key.indexOf(":") + 1);
+//				System.out.println("receiver : "+ receiver);
+				
+				List<String> historyData = JedisHandleMessage.getHistoryMsg("Manager", receiver);
+				String historyMsg = gson.toJson(historyData);
+				ChatMessage cmHistory = new ChatMessage("history", "Manager", receiver, historyMsg);
+				if (userSession != null && userSession.isOpen()) {
+					userSession.getAsyncRemote().sendText(gson.toJson(cmHistory));
+					System.out.println("history = " + gson.toJson(cmHistory));	//OK
+				}	
+			}	// "兩組"歷史資料都要渲染到頁面上 OK
+		}
+		
 	}
 
 	@OnMessage
 	public void onMessage(Session userSession, String message) {
+		System.out.println("onMessage");/////////
 		ChatMessage chatMessage = gson.fromJson(message, ChatMessage.class);
 		String sender = chatMessage.getSender();
 		String receiver = chatMessage.getReceiver();
@@ -71,6 +91,13 @@ public class FriendWS {
 			userSession.getAsyncRemote().sendText(message);
 			JedisHandleMessage.saveChatMessage(sender, receiver, message);
 		}
+		
+////// 離線訊息		
+		if (receiverSession == null || !receiverSession.isOpen()) {
+			userSession.getAsyncRemote().sendText(message);
+			JedisHandleMessage.saveChatMessage(sender, receiver, message);
+		}
+		
 		System.out.println("Message received: " + message);
 	}
 

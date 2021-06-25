@@ -32,17 +32,16 @@
 		<td>評價總分</td>
 		<td>評價人數</td>
 	</tr>
-		<tr>
+	<tr>
 		<td><%=productVO.getProductSN() %></td>
 		<td><%=productVO.getProductClass() %></td>
 		<td><%=productVO.getProductName() %></td>
 		<td><%=productVO.getProductPrice() %></td>
 		<td><%=productVO.getProductQuantity() %></td>
 		<td><%=productVO.getProductStatus() %></td>
-		<td><%=productVO.getProductPhoto() %></td>
 		<td>
 			<div class="show_pic">
-				<img src="<%=request.getContextPath()%>/product/GetPhoto?productSN=${productVO.productSN}">
+				<img src="<%=request.getContextPath()%>/product/GetPhoto.do?productSN=${productVO.productSN}">
 			</div>
 		</td>
 		<td><%=productVO.getProductDetail() %></td>

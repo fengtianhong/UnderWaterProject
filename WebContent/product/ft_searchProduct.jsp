@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>商品查詢首頁</title>
+<title>商城首頁</title>
 
 </head>
 
@@ -21,50 +21,35 @@
 		</ul>
 	</c:if>
 
-	<ul>
-		
-	<li><a href='listDiscountProduct.jsp'>優惠專區</a><br><br></li>		
-	<li><a href='listAllProduct.jsp'>查詢所有商品</a><br><br></li>		
-	<jsp:useBean id="dao" scope="page" class="com.product.model.ProductDAO" />
-		
-	<li>
-		<form method="post" action="product.do">
-			<b>請輸入編號:</b>
-			<input type="text" name="productSN"> 
-			<input type="hidden" name="action" value="getOneProduct"> 
-			<input type="submit" value="送出">
-		</form>
-	</li>
-     			   
-	<li>
-	    <FORM METHOD="post" ACTION="product.do">
-	       <b>類別查詢:</b>
-	       <select size="1" name="productClass">
-	            <option value=""></option>
-				<option value="蛙鞋">蛙鞋</option>
-				<option value="呼吸器">呼吸器</option>
-				<option value="面鏡">面鏡</option>
-				<option value="防寒衣">防寒衣</option>
-				<option value="氣瓶">氣瓶</option>
-	       </select>
-	       <input type="hidden" name="action" value="getProductByClass">
-	       <input type="submit" value="送出">
-	    </FORM>
-	</li>
-		  	  
-<!-- 	<li> -->
-<!-- 	    <FORM METHOD="post" ACTION="product.do"> -->
-<!-- 	       <b>查詢優惠商品</b> -->
-<!-- 	       <select size="1" name="productSN"> -->
-<%-- 	         <c:forEach var="productVO" items="${dao.all}">  --%>
-<%-- 	          	<option value="${productVO.productSN}">${productVO.productDiscount} --%>
-<%-- 	         </c:forEach>    --%>
-<!-- 	       </select> -->
-<!-- 	       <input type="hidden" name="action" value="getOneProduct"> -->
-<!-- 	       <input type="submit" value="送出"> -->
-<!-- 	    </FORM> -->
-<!-- 	</li> -->
-				
+	<ul>		
+		<li><a href='ft_listDiscountProduct.jsp'>優惠專區</a><br><br></li>		
+		<li><a href='ft_listAllProduct.jsp'>查詢所有商品</a><br><br></li>    			   
+		<li>
+		    <b>依商品類別查詢:</b>
+		    <FORM METHOD="post" ACTION="product_user.do">
+		       <b>請選擇類別:</b>
+		       <select size="1" name="productClass">
+		       
+		       <jsp:useBean id="productVO" scope="page" class="com.product.model.ProductVO" />
+
+<%-- 		       		<c:forEach var="productVO" items="${productVO.productClass}">  --%>
+<%--           			<option value="${productVO.productClass}">${productVO.productClass} --%>
+<%--          			</c:forEach> --%>
+         			
+		            <option value=""></option>
+					<option value="蛙鞋">蛙鞋</option>
+					<option value="呼吸管">呼吸管</option>
+					<option value="面鏡">面鏡</option>
+					<option value="防寒曬衣物">防寒曬衣物</option>
+					<option value="氣瓶">氣瓶</option>
+					<option value="照明燈">照明燈</option>
+					<option value="其他配件">其他配件</option>
+												
+		       </select>
+		       <input type="hidden" name="action" value="getProductByClass">
+		       <input type="submit" value="送出">
+		    </FORM>
+		</li>					
 	</ul>
 
 </body>
