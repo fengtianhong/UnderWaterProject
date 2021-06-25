@@ -63,13 +63,13 @@
                         <h4 class="my-3">論壇</h4>
                         <p class="text-muted">眾多潛水愛好者發表的潛點分享、潛點心得，就算還沒親自去過，也能先一窺究竟。</p>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4" onclick="window.location.href='<%=request.getContextPath()%>/grouptour/frontendListAll.jsp;'">
                         <span class="fa-stack fa-4x">
                             <i class="fas fa-circle fa-stack-2x text-primary"></i>
                             <i class="fas fa-lock fa-stack-1x fa-inverse"></i>
                         </span>
-                        <h4 class="my-3">套裝行程</h4>
-                        <p class="text-muted">還在探索潛水這個新領域嗎？讓我們充滿熱情的團隊來帶領您一起加入潛水的大家庭！</p>
+                        <h4 class="my-3" style="cursor:pointer;">套裝行程</h4>
+                        <p class="text-muted" style="cursor:pointer;">還在探索潛水這個新領域嗎？讓我們充滿熱情的團隊來帶領您一起加入潛水的大家庭！</p>
                     </div>
                 </div>
                 <div class="text-center">

@@ -6,11 +6,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@ include file="../share/backend/Bmeta.file" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<!-- <link rel="stylesheet" href="./css/friendchat.css" type="text/css" /> -->
-<link rel="stylesheet" href="./css/csmanager.css" type="text/css" />
+<link rel="stylesheet" href="./css/friendchat.css" type="text/css" />
 <style type="text/css">
 .green{
 	border: 1px solid green;
@@ -19,17 +17,8 @@
 <title>客服 - 後台管理</title>
 </head>
 <body onload="connect();" onunload="disconnect();">
-<%@ include file="../share/backend/Bheader.file" %>
-
-<!-- <div onload="connect();" onunload="disconnect();"> -->
-<div class="container">
-
-<div class="col-lg-2">
-	<div id="row"></div>
-</div>
-
-<div class="col-lg-7">	
 	<h3 id="statusOutput" class="statusOutput"></h3>
+	<div id="row"></div>
 	<div id="messagesArea" class="panel message-area" ></div>
 	<div class="panel input-area">
 		<input id="message" class="text-field" type="text" placeholder="Message" onkeydown="if (event.keyCode == 13) sendMessage();" /> 
@@ -37,14 +26,7 @@
 		<input type="button" id="connect" class="button" value="Connect" onclick="connect();" /> 
 		<input type="button" id="disconnect" class="button" value="Disconnect" onclick="disconnect();" />
 	</div>
-</div>	
-	
-</div>	
-<!-- </div>	 -->
-	
-<%@ include file="../share/backend/Bfooter.file" %>
 </body>
-<%@ include file="../share/backend/Bjs.file" %>
 <script>
 	var MyPoint = "/CustomerServiceWS/${userID}";	// java EL，可以改成 roomID 跟 session 等，變成發送給特定對象(一對一的聊天室)
 	var host = window.location.host;  		// 取得目前造訪網頁的主機名稱(hostname), 包含port

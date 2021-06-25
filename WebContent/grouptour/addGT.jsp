@@ -87,7 +87,7 @@
 	<jsp:useBean id="diveInfoSvc" scope="page" class="com.diveinfo.model.DiveInfoService"></jsp:useBean>
 	<tr>
 		<td>潛點</td>
-		<td><select name="pointSN" size="1" >
+		<td><select class="input1" name="pointSN" size="1" >
 			<c:forEach var="diveInfoVO" items="${diveInfoSvc.all}">
 				<option value="${diveInfoVO.pointSN}" ${(groupTourVO.pointSN==diveInfoVO.pointSN)? 'selected':''}>${diveInfoVO.pointName}
 			</c:forEach>
@@ -196,8 +196,7 @@
 			</div>
 		<div class="col-auto">
 		<i class="fas fa-comments fa-2x text-gray-300"></i>
-	</div></div></div></div>
-			
+	</div></div></div></div></div>	
 </div>			
 
 </div>

@@ -13,7 +13,7 @@
 					<li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">潛水團</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                              <a class="dropdown-item" href="#">套裝行程</a>
+                              <a class="dropdown-item" href="<%=request.getContextPath()%>/grouptour/frontendListAll.jsp">套裝行程</a>
                               <a class="dropdown-item" href="party/party.do?action=party">揪團Go!</a>
                             </div>
                         </li>
