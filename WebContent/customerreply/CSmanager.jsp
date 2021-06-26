@@ -6,19 +6,30 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%@ include file="../share/backend/Bmeta.file" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<link rel="stylesheet" href="./css/friendchat.css" type="text/css" />
+<!-- <link rel="stylesheet" href="./css/friendchat.css" type="text/css" /> -->
+<link rel="stylesheet" href="./css/csmanager.css" type="text/css" />
 <style type="text/css">
 .green{
 	border: 1px solid green;
 }
 </style>
-<title>Manager 聊天室(幾乎不用動)</title>
+<title>客服 - 後台管理</title>
 </head>
 <body onload="connect();" onunload="disconnect();">
-	<h3 id="statusOutput" class="statusOutput"></h3>
+<%@ include file="../share/backend/Bheader.file" %>
+
+<!-- <div onload="connect();" onunload="disconnect();"> -->
+<div class="container">
+
+<div class="col-lg-2">
 	<div id="row"></div>
+</div>
+
+<div class="col-lg-7">	
+	<h3 id="statusOutput" class="statusOutput"></h3>
 	<div id="messagesArea" class="panel message-area" ></div>
 	<div class="panel input-area">
 		<input id="message" class="text-field" type="text" placeholder="Message" onkeydown="if (event.keyCode == 13) sendMessage();" /> 
@@ -26,7 +37,14 @@
 		<input type="button" id="connect" class="button" value="Connect" onclick="connect();" /> 
 		<input type="button" id="disconnect" class="button" value="Disconnect" onclick="disconnect();" />
 	</div>
+</div>	
+	
+</div>	
+<!-- </div>	 -->
+	
+<%@ include file="../share/backend/Bfooter.file" %>
 </body>
+<%@ include file="../share/backend/Bjs.file" %>
 <script>
 	var MyPoint = "/CustomerServiceWS/${userID}";	// java EL，可以改成 roomID 跟 session 等，變成發送給特定對象(一對一的聊天室)
 	var host = window.location.host;  		// 取得目前造訪網頁的主機名稱(hostname), 包含port
@@ -58,7 +76,7 @@
 				refreshFriendList(jsonObj);
 			} else if ("history" === jsonObj.type) {
 				
-				
+				// 存在redis的歷史訊息渲染至頁面上
 				var repeat = false;
 				var row = document.getElementById("row");
 				var receivers = row.childNodes;
@@ -161,44 +179,13 @@
 	
 	// 註冊列表點擊事件並抓取好友名字以取得歷史訊息
 	function addListener(jsonObj) {
-		var container = document.getElementById("row");	
-// 		heyYo();
-		
-// 		container.addEventListener("click", function(e) {
-// 			console.log("1 : 是你嗎");
-// 				var friend = e.srcElement.textContent;	///// div id 已有的值才可以
-// ///		
-// 				console.log(friend);
-// 				var check = document.getElementById("row").childNodes;
-// 				var exist = false;
-// 				for(var i = 0; i < container.childNodes.length; i++) {
-// 					if(check[i].getAttribute("id") != friend) {
-// 						console.log("2 : "+check[i].getAttribute("id"));
-// 						exist = true;
-// 					}
-// 				}
-// 				if(exist = true) {
-// 					console.log("3 : exist = true");
-// 					updateFriendName(friend);
-// 					var jsonObj = {
-// 							"type" : "history",		
-// 							"sender" : self,
-// 							"receiver" : friend,
-// 							"message" : ""
-// 						};
-// 					webSocket.send(JSON.stringify(jsonObj));
-					
-// 				}
-// 		});
+
 	}
 	
-	function heyYo(e) {
+	function heyYo(e) {		// 改寫addListener，已處理點擊row會長出奇怪歷史訊息 
 		console.log("heyYo");
 		console.log(e.id);
-// 		var container = document.getElementById("row");
-// 		var list = container.childNodes;
-// 		list.forEach(element =
-	//> element.addEventListener("click", function() {
+
 				var friend = e.id;
 				updateFriendName(friend);
 				var jsonObj = {
@@ -208,7 +195,6 @@
 						"message" : ""
 					};
 				webSocket.send(JSON.stringify(jsonObj));
-// 		}));
 	}
 	
 	

@@ -26,9 +26,9 @@ public class ManagerService {
 	
 	public Boolean loginManager(String account,String pwd) {
 		ManagerVO vo = new ManagerVO();
+		
 		vo.setAccount(account);
 		vo.setPwd(pwd);
-		
 		return dao.login(vo);
 	}
 }

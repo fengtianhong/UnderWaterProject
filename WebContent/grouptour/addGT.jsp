@@ -6,66 +6,88 @@
 <%  // 抓取新增失敗時回傳的VO
 	GroupTourVO groupTourVO = (GroupTourVO) request.getAttribute("groupTourVO");
 %>
-<%= groupTourVO==null %><%-- 確認有沒有抓到用(可刪) --%>
-
 
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<%@ include file="../share/backend/Bmeta.file" %>
 <title>Add Group Tour</title>
 <style>
+	.container{
+		margin: 0 auto;  
+ 		width: 1200px; 
+		display: flex;
+	}
 	img{
-		Width: 100%;
+		width: 100%;
+	}	
+	tr td{
+		padding: 5px;
+		padding-right: 20px;
 	}
-	.picture{
-		width: 400px;
+	.input1{
+		width: 420px;
 	}
-	.ckeditor{
- 		width: 45%; 
+	#editor{
+		width: 420px;
+		height: 100px;
 	}
+	.submit_btn{
+		padding-top: 20px;
+		padding-left: 50%;
+		margin-bottom: 20px;
+	}
+/* 	.ckeditor{ */
+/*  		width: 45%;  */
+/* 	} */
 
 </style>
 </head>
 <body>
+<%@ include file="../share/backend/Bheader.file" %>
 
-<div class="container" style="margin: 0 auto; width: 800px;">
+<div class="container">
+
+<div class="col-lg-7">
+<h1 class="h3 mb-2 text-gray-800">新增套裝行程</h1>
+<p class="mb-4">新增套裝行程商品，請留意必填欄位</p>
 
 <form method="post" action="grouptour.do" enctype="multipart/form-data">
 <table>
 	<tr>
-		<td>套裝行程名稱</td>	
-		<td><input type="TEXT" name="tourName" size="45" value="<%=(groupTourVO==null)?"":groupTourVO.getTourName()%>" /></td>
+		<td>行程名稱</td>	
+		<td><input class="input1" type="TEXT" name="tourName" value="<%=(groupTourVO==null)?"":groupTourVO.getTourName()%>" /></td>
 	</tr>
 	<tr>
-		<td>套裝行程圖片 NOT YET(IO)</td>
+		<td>行程圖片</td>
 		<td>
 			<input type="file" id="the_file" name="tourPic" accept="image/*">
-			<div class="picture"></div>
+<!-- 			<div class="picture"></div> -->
 		</td>
 		
 	</tr>
 	<tr>
-		<td>行程開始時間</td>
-		<td><input type="TEXT" class="startDate" name="startTime" autocomplete="off" value="<%=(groupTourVO==null)?"":groupTourVO.getStartTime()%>" /></td>
+		<td>行程時間</td>
+		<td>
+			<input type="TEXT" class="startDate" name="startTime" autocomplete="off" value="<%=(groupTourVO==null)?"":groupTourVO.getStartTime()%>" />
+			<span>  -  </span>
+			<input type="TEXT" class="endDate" name="endTime" autocomplete="off" value="<%= (groupTourVO==null)?"":groupTourVO.getEndTime()%>" />
+		
+		</td>
 	</tr>
 	<tr>
-		<td>行程結束時間</td>
-		<td><input type="TEXT" class="endDate" name="endTime" autocomplete="off" value="<%= (groupTourVO==null)?"":groupTourVO.getEndTime()%>" /></td>
-	</tr>
-	<tr>
-		<td>報名開始時間</td>
-		<td><input type="TEXT" class="startDate" name="regTime" autocomplete="off" value="<%= (groupTourVO==null)?"":groupTourVO.getRegTime()%>" /></td>
-	</tr>
-	<tr>
-		<td>報名結束時間</td>
-		<td><input type="TEXT" class="endDate" name="closeTime" autocomplete="off" value="<%= (groupTourVO==null)?"":groupTourVO.getCloseTime()%>" /></td>
+		<td>報名時間</td>
+		<td>
+			<input type="TEXT" class="startDate" name="regTime" autocomplete="off" value="<%= (groupTourVO==null)?"":groupTourVO.getRegTime()%>" />
+			<span>  -  </span>
+			<input type="TEXT" class="endDate" name="closeTime" autocomplete="off" value="<%= (groupTourVO==null)?"":groupTourVO.getCloseTime()%>" />
+		</td>
 	</tr>
 	
 	<jsp:useBean id="diveInfoSvc" scope="page" class="com.diveinfo.model.DiveInfoService"></jsp:useBean>
 	<tr>
 		<td>潛點</td>
-		<td><select name="pointSN" size="1" >
+		<td><select class="input1" name="pointSN" size="1" >
 			<c:forEach var="diveInfoVO" items="${diveInfoSvc.all}">
 				<option value="${diveInfoVO.pointSN}" ${(groupTourVO.pointSN==diveInfoVO.pointSN)? 'selected':''}>${diveInfoVO.pointName}
 			</c:forEach>
@@ -73,12 +95,15 @@
 	</tr>
 	<tr>
 		<td>售價</td>
-		<td><input type="TEXT" name="price" size="45" value="<%= (groupTourVO==null)?"":groupTourVO.getPrice()%>" /></td>
+		<td><input class="input1" type="TEXT" name="price" size="45" value="<%= (groupTourVO==null)?"":groupTourVO.getPrice()%>" /></td>
 	</tr>
+<!-- </table> -->
+<!-- 	<hr> -->
+<!-- <table> -->
 	<tr>
 		<td>人數限制</td>
 		<td>
-			<select name="limitNumder" size="1">
+			<select class="input1" name="limitNumder" size="1" >
 				<option value="1" ${(groupTourVO.limitNumder==1)? 'selected':'' }>1
 				<option value="2" ${(groupTourVO.limitNumder==2)? 'selected':'' }>2
 				<option value="3" ${(groupTourVO.limitNumder==3)? 'selected':'' }>3
@@ -96,7 +121,7 @@
 		<td>證照資格</td>
 		<td>
 <%-- 			<input type="TEXT" name="certificationLimit" size="45" value="<%= (groupTourVO==null)?"":groupTourVO.getCertificationLimit()%>" /> --%>
-			<select name="certificationLimit" size="1">
+			<select class="input1" name="certificationLimit" size="1">
 				<option value="0" ${(groupTourVO.certificationLimit==0)? 'selected':'' }>不須證照
 				<option value="1" ${(groupTourVO.certificationLimit==1)? 'selected':'' }>PADI OW / SSI OW
 				<option value="2" ${(groupTourVO.certificationLimit==2)? 'selected':'' }>PADI AOW / SSI AOW
@@ -105,44 +130,89 @@
 	</tr>
 	<tr>
 		<td>status</td>
-		<td><input type="TEXT" name="status" size="45" value="<%= (groupTourVO==null)?"":groupTourVO.getStatus()%>" /></td>
+		<td>
+<%-- 			<input class="input1" type="TEXT" name="status" value="<%= (groupTourVO==null)?"":groupTourVO.getStatus()%>" /> --%>
+			<select class="input1" name=status size="1">
+				<option value="0" ${(groupTourVO.status==0)? 'selected':'' }>上架行程
+				<option value="1" ${(groupTourVO.status==1)? 'selected':'' }>下架行程
+				<option value="2" ${(groupTourVO.status==2)? 'selected':'' }>取消行程
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>行程內容</td>
+		<td><div><textarea id="editor" name="content"></textarea></div></td>
 	</tr>
 
 </table>
-		<p>行程內容</p>
-<!-- 		<div class="ckeditor" id="editor"> -->
-<!-- 		<textarea name="content"><%-- (groupTourVO==null)?"":groupTourVO.getContent()--%></textarea> -->
-<!-- 		</div> -->
-		<div><textarea id="editor" name="content"></textarea></div>
-		
-		
-<input type="hidden" name="action" value="insert">
-<input type="submit" value="新增">
-<input type ="button" onclick="window.location.href='<%=request.getContextPath()%>/grouptour/backendListGT.jsp'" value="上一頁">
 
+<!-- 		<p>行程內容</p> -->
+<!--  		<div class="ckeditor" id="editor"> -->
+<%--<textarea name="content">(groupTourVO==null)?"":groupTourVO.getContent()</textarea>--%>
+<!--		</div> --> 
+<!-- 		<div><textarea id="editor" name="content"></textarea></div> -->
+		
+<div class="submit_btn">	
+	<input type="hidden" name="action" value="insert">
+	<input class="btn btn-primary btn-user" type="submit" value="新增">
+	<input class="btn btn-primary btn-user" type ="button" onclick="window.location.href='<%=request.getContextPath()%>/grouptour/backendListGT.jsp'" value="上一頁">
+</div>
 
 </form>
-<%-- 錯誤表列 --%>
-<c:if test="${not empty errMsg}">
-	<font style="color:red">請修正以下錯誤:</font>
-	<ul>
-		<c:forEach var="message" items="${errMsg}">
-			<li style="color:red">${message}</li>
-		</c:forEach>
-	</ul>
-</c:if>
+</div>
+
+<div class="col-lg-4">
+
+<!-- 圖片預覽 -->
+<div class="card shadow mb-4">
+   <!-- Card Header - Accordion -->
+	    <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+	    	<h6 class="m-0 font-weight-bold text-primary">Picture</h6>
+	    </a>
+   <!-- Card Content - Collapse -->
+	   <div class="collapse show" id="collapseCardExample" style="">
+	   		<div class="card-body">
+	   			<%-- 行程圖片 --%><div class="picture"></div>
+	   		</div>
+	   </div>
+ </div>
+ 
+<!-- Err msg -->
+ <div class="mb-4">
+<div class="card border-left-warning shadow h-100 py-2">
+	<div class="card-body">
+		<div class="row no-gutters align-items-center">
+			<div class="col mr-2">
+			
+						<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+							Error Messages</div>
+						<div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+						
+						<div class="card-body" style="color:LightCoral">
+                            <c:forEach var="message" items="${errMsg}">
+								- ${message}<br>
+							</c:forEach>
+                        </div>
+			</div>
+		<div class="col-auto">
+		<i class="fas fa-comments fa-2x text-gray-300"></i>
+	</div></div></div></div></div>	
+</div>			
 
 </div>
 
 
 <%-- 成功Alert --%>
 <c:if test="${not empty Msg}">
-	<script>alert("${Msg}");</script>
+	<script>
+		alert("${Msg}");
+	</script>
 </c:if>
 
-
+<%@ include file="../share/backend/Bfooter.file" %>
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<%@ include file="../share/backend/Bjs.file" %>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
@@ -156,7 +226,11 @@
 //         .catch( error => {
 //             console.error( error );
 //         } );
-	// dateTimePicker
+
+	      window.addEventListener("DOMContentLoaded", function(){
+	    	  
+// dateTimePicker  
+	
 	$.datetimepicker.setLocale('zh');
      var today = new Date();
      $('.startDate').datetimepicker({
@@ -184,9 +258,6 @@
 	          }
 	          return [true, ""];
   		}});
-
-	      window.addEventListener("DOMContentLoaded", function(){
-	    	  
 
 // 顯示圖片
 	    	        var the_file = document.getElementById("the_file");

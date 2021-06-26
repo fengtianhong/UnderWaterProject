@@ -93,16 +93,12 @@
 				<tr>
 					<td>淺水證照:</td>
 					<td><select name="certification" size="2">
-							<option value="" ${(memberVO.limitNumder==null)? 'selected':'' }>無
+							<option value="0" ${(memberVO.limitNumder==null)? 'selected':'' }>無
 							
-							<option value="A1" ${(memberVO.limitNumder==1)? 'selected':'' }>PADI
-								OW
-							<option value="A2" ${(memberVO.limitNumder==2)? 'selected':'' }>PADI
-								AOW
-							<option value="B1" ${(memberVO.limitNumder==3)? 'selected':'' }>SSI
-								OW
-							<option value="B2" ${(memberVO.limitNumder==4)? 'selected':'' }>SSI
-								AOW
+							<option value="1" ${(memberVO.limitNumder==1)? 'selected':'' }>PADI
+								OW / SSI OW
+							<option value="2" ${(memberVO.limitNumder==2)? 'selected':'' }>PADI
+								AOW / SSI AOW
 					</select></td>
 				</tr>
 
