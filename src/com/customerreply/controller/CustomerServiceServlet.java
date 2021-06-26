@@ -22,7 +22,6 @@ public class CustomerServiceServlet extends HttpServlet {
 		if("CSmanager".equals(action)) {
 			
 			// 後台管理訊息
-			// 後台管理者身分驗證(Filter? Param = userID????)
 			try {
 				String userID = req.getParameter("userID");
 				req.setAttribute("userID", "Manager");
@@ -40,7 +39,6 @@ public class CustomerServiceServlet extends HttpServlet {
 		if("CSchat".equals(action)) {
 			
 			// 使用者點擊聊天室視窗 確認UserID
-			// 是否要確認login?
 			try {
 				String userID = req.getParameter("userID");
 				req.setAttribute("userID", userID);

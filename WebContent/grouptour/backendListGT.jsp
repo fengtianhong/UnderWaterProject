@@ -16,7 +16,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<%@ include file="../share/backend/Bmeta.file" %>
 <title>Backend List for Group Tour</title>
 <style>
 	table{
@@ -37,6 +37,8 @@
 </style>
 </head>
 <body>
+<%@ include file="../share/backend/Bheader.file" %>
+
 
 	<h3>建立新行程 <a href='addGT.jsp'> +</a></h3>
 	
@@ -69,7 +71,9 @@
 		<script>alert("${Msg}");</script>
 	</c:if>
 
+<%@ include file="../share/backend/Bfooter.file" %>
 </body>
+<%@ include file="../share/backend/Bjs.file" %>
 <script>
 	// 輕量關鍵字搜索列表
 	!function(e){"use strict";var a,n,t=(a=Array.prototype,{init:function(){var t=e.getElementsByClassName("light-table-filter");a.forEach.call(t,function(t){t.oninput=o})}});function o(t){n=t.target;t=e.getElementsByClassName(n.getAttribute("data-table"));a.forEach.call(t,function(t){a.forEach.call(t.tBodies,function(t){a.forEach.call(t.rows,i)})})}function i(t){var e=t.textContent.toLowerCase(),a=n.value.toLowerCase();t.style.display=-1===e.indexOf(a)?"none":"table-row"}e.addEventListener("readystatechange",function(){"complete"===e.readyState&&t.init()})}(document);

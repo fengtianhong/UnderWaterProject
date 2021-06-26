@@ -1,3 +1,6 @@
+  <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+  
+  
    <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -84,6 +87,44 @@
                         <h6 class="collapse-header">Other Pages:</h6>
                         <a class="collapse-item" href="#">404 Page</a>
                         <a class="collapse-item" href="#">Blank Page</a>
+                    </div>
+                </div>
+            </li>
+            <!-------------------------- Nav 套裝行程 -------------------------->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGT"
+                    aria-expanded="true" aria-controls="collapseGT"> <!--collapseGT * 3 需要修改 -->
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>套裝行程</span>
+                </a>
+                <div id="collapseGT" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Backend:</h6>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/grouptour/backendListGT.jsp">行程列表</a>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/grouptour/addGT.jsp">新增行程</a>                 
+                        <div class="collapse-divider"></div>
+                        <h6 class="collapse-header">Other Pages:</h6>
+                        <a class="collapse-item" href="#">鮮奶茶</a>
+                        <a class="collapse-item" href="#">嘿嘿嘿</a>
+                    </div>
+                </div>
+            </li>
+            <!-------------------------- Nav 客服訊息管理 QA 管理-------------------------->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCS"
+                    aria-expanded="true" aria-controls="collapseCS"> <!--collapseCS * 3 需要修改 -->
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>客服管理</span>
+                </a>
+                <div id="collapseCS" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Customer Service:</h6>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/customerreply/CSmanager.jsp">客服訊息</a>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/customerreply/customerservice.do?action=CSmanager">客服訊息(TEST)</a>
+                        <div class="collapse-divider"></div>
+                        <h6 class="collapse-header">Q&A:</h6>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/qa/backendList.jsp">QA列表</a>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/qa/addQA.jsp">新增QA</a>
                     </div>
                 </div>
             </li>
