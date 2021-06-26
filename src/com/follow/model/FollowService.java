@@ -10,22 +10,16 @@ public class FollowService {
 		dao = new FollowDAO();
 	}
 	
-	public FollowVO addFollow(Integer followed,Integer follower) {
-		FollowVO followvo = new FollowVO();
-		
-		followvo.setFollowed(followed);
-		followvo.setFollower(follower);
-		dao.insert(followvo);
-		
-		return followvo;
+	public void addFollow(Integer follower,Integer followed) {
+		dao.insert(follower,followed);
 	}
 	public void deleteFollow(Integer follower,Integer followed) {
 		dao.delete(follower, followed);
 	}
-	public List<FollowVO> findFollower(Integer follower){
+	public List<Integer> findFollower(Integer follower){
 		return dao.findFollower(follower);
 	}
-	public List<FollowVO> findFollowed(Integer followed){
+	public List<Integer> findFollowed(Integer followed){
 		return dao.findFollower(followed);
 	}
 }

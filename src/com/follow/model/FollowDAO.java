@@ -21,14 +21,14 @@ public class FollowDAO implements FollowDAO_interface {
     private static final String GET_IFOLLOW_STMT = "SELECT * FROM FOLLOW WHERE Followed = ?";
 
 	@Override
-	public void insert(FollowVO FollowVO) {
+	public void insert(Integer follower,Integer followed) {
         Connection con = null;
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
             ps = con.prepareStatement(INSER_STMT);
-            ps.setInt(1, FollowVO.getFollower());
-            ps.setInt(2, FollowVO.getFollowed());
+            ps.setInt(1, follower);
+            ps.setInt(2, followed);
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -82,8 +82,8 @@ public class FollowDAO implements FollowDAO_interface {
 	}
 
 	@Override
-	public List<FollowVO> findFollower(Integer follower) {
-        List<FollowVO> list = new ArrayList<FollowVO>();
+	public List<Integer> findFollower(Integer follower) {
+        List<Integer> list = new ArrayList<Integer>();
         FollowVO followVO = null;
         
         Connection con = null;
@@ -97,10 +97,8 @@ public class FollowDAO implements FollowDAO_interface {
             rs= ps.executeQuery();
             
             while(rs.next()) {
-                followVO = new FollowVO();
-                followVO.setFollower(rs.getInt("Follower"));
-                followVO.setFollowed(rs.getInt("Followed"));
-                list.add(followVO);
+
+                list.add(rs.getInt("Followed"));
             }
             
         } catch (Exception e) {
@@ -133,8 +131,8 @@ public class FollowDAO implements FollowDAO_interface {
 	}
 
 	@Override
-	public List<FollowVO> findFollowed(Integer followed) {
-        List<FollowVO> list = new ArrayList<FollowVO>();
+	public List<Integer> findFollowed(Integer followed) {
+        List<Integer> list = new ArrayList<Integer>();
         FollowVO followVO = null;
         
         Connection con = null;
@@ -148,10 +146,7 @@ public class FollowDAO implements FollowDAO_interface {
             rs= ps.executeQuery();
             
             while(rs.next()) {
-                followVO = new FollowVO();
-                followVO.setFollower(rs.getInt("Follower"));
-                followVO.setFollowed(rs.getInt("Followed"));
-                list.add(followVO);
+                list.add(rs.getInt("Follower"));
             }
             
         } catch (Exception e) {

@@ -22,12 +22,11 @@
 <meta charset="UTF-8">
 <title>最新消息的啦</title>
 <style>
-
 .newsContent {
 	background-color: #eee;
 	margin-top: 100px;
-	border:2px #ccc solid;
-	border-radius:10px;
+	border: 2px #ccc solid;
+	border-radius: 10px;
 }
 
 .forinclude {
@@ -50,6 +49,12 @@ table {
 
 <body>
 	<jsp:include page="../share/navbar.jsp" flush="true" />
+	<select id="filterType" name="newsType" onchange="ShowType(this.value)">
+		<option value="all">全部</option>
+		<option value="divepoint">潛點</option>
+		<option value="product">商品</option>
+		<option value="party">揪團</option>
+	</select>
 	<div class="newsContent">
 		<table>
 			<tr>
@@ -65,7 +70,8 @@ table {
 			<c:forEach var="newsVO" items="${list}" begin="<%=pageIndex%>"
 				end="<%=pageIndex+rowsPerPage-1%>">
 
-				<tr>
+				<tr
+					class=${newsVO.newsType==0?"divepoint":newsVO.newsType==1?"product":"party"}>
 					<td>${newsVO.title.substring(0,10)}....</td>
 					<td>${newsVO.content.substring(0,10)}....</td>
 
@@ -89,5 +95,43 @@ table {
 	</div>
 	<%@ include file="page2frontend.file"%>
 	<jsp:include page="../share/footer.jsp" flush="true" />
+	<script type="text/javascript">
+		function ShowType(filterType) {
+
+			// 		$(".product")
+			// 		$(".party")
+
+			// 		 var Str=document.getElementById(filterType).value;
+			// 		 var divepoint = document.querySelectorAll(".divepoint");
+			// 		 var product= document.querySelectorAll(".product");
+			// 		 var party= document.querySelectorAll(".party");
+			switch (filterType) {
+			case 'divepoint':
+				$(".divepoint").show();
+				$(".product").hide();
+				$(".party").hide();
+				console.log(filterType);
+				break;
+			case 'product':
+				$(".divepoint").hide();
+				$(".product").show();
+				$(".party").hide();
+				console.log(filterType);
+				break;
+			case 'party':
+				$(".divepoint").hide();
+				$(".product").hide();
+				$(".party").show();
+				console.log(filterType);
+				break;
+			default:
+				$(".divepoint").show();
+				$(".product").show();
+				$(".party").show();
+				console.log(filterType);
+			}
+
+		}
+	</script>
 </body>
 </html>
