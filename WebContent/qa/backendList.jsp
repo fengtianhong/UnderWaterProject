@@ -16,13 +16,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<%@ include file="../share/backend/Bmeta.file" %>
 <title>List All QA</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/qa/css/backendListAll.css">
 </head>
 <body>
-	<h2>Q & A 後台管理</h2>
-	<h3>建立 Q A <a href='addQA.jsp'> +</a></h3>
+<%@ include file="../share/backend/Bheader.file" %>
+
+
+	<h2>Q & A 後台管理 - 全部列表</h2>
 	<h3>Q A 列表 </h3>
 			<span>請選擇系統分類</span>
 			<select name="system" class="system">
@@ -95,7 +97,9 @@
 	<script>alert("${Msg}");</script>
 </c:if>
 
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<%@ include file="../share/backend/Bfooter.file" %>
+</body>
+<%@ include file="../share/backend/Bjs.file" %>
 <script>
 
 	// 滾輪視窗
@@ -115,14 +119,12 @@
 		tdListUser.each(function(index, el) {
 			if (system == el.innerText) {
 				console.log(el);
-				$(el).closest('tr').show(); //
+				$(el).closest('tr').show();
 			} else {
-				$(el).closest('tr').hide(); //
+				$(el).closest('tr').hide();
 			}
 		})
 
 	})
 </script>
-    
-</body>
 </html>

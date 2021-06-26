@@ -239,20 +239,30 @@ public class GroupTourDAO implements GroupTourDAO_interface{
 		return list;
 	}
 
+	// for OderForGroup insert transaction
 	@Override
-	public void attendGroup(Integer groupTourSN) {
-		Connection con = null;
+	public void attendGroup(Integer groupTourSN, Connection con) {
+		
 		PreparedStatement ps = null;
 		
 		try {
-			con = ds.getConnection();
 			ps = con.prepareStatement(UPDATE_ATTEND_NUMBER_STMT);
 			ps.setInt(1, groupTourSN);			
-						
 			ps.executeUpdate();
 			
-		} catch (SQLException se) {
+		} catch (SQLException se) {			
+			if (con != null) {
+				try {
+					System.err.print("Transaction is being ");
+					System.err.println("attendGroup rolled back");
+					// Exception 發生時必須 rollback
+					con.rollback();
+				} catch (SQLException sqle) {
+					throw new RuntimeException("rollback error occured. " + sqle.getMessage());
+				}
+			}
 			throw new RuntimeException("A database error occured. " + se.getMessage());
+			
 		} finally {
 			if(ps != null) {
 				try {
@@ -260,14 +270,7 @@ public class GroupTourDAO implements GroupTourDAO_interface{
 				} catch (SQLException e) {
 					e.printStackTrace(System.err);
 				}
-			}
-//			if(con != null) {
-//				try {
-//					con.close();
-//				} catch (SQLException e) {
-//					e.printStackTrace(System.err);
-//				}
-//			}
+			}	// 連線不用關，呼叫的DAO或繼續做事
 		}	
 		
 	}

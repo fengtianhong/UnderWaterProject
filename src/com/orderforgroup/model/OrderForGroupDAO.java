@@ -12,7 +12,7 @@ import com.grouptour.model.GroupTourDAO;
 
 import util.Util;
 
-public class OderForGroupDAO implements OderForGroupDAO_interface{
+public class OrderForGroupDAO implements OrderForGroupDAO_interface{
 	
 	private static DataSource ds = null;
 	static {
@@ -29,9 +29,11 @@ public class OderForGroupDAO implements OderForGroupDAO_interface{
 	private static final String GET_ONE_STMT = "SELECT * FROM OderForGroup WHERE orderSN = ?";
 	private static final String GET_ByUSERID_STMT = "SELECT * FROM OderForGroup WHERE userID = ? ORDER BY purchaseDate";
 	private static final String GET_ALL_STMT = "SELECT * FROM OderForGroup ORDER BY purchaseDate";
-
+	private static final String GET_MEMBER_STMT = "SELECT * FROM OderForGroup WHERE groupTourSN = ?";
+	
+	
 	@Override
-	public void insert(OderForGroupVO oderForGroupVO) {
+	public void insert(OrderForGroupVO oderForGroupVO) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		
@@ -53,7 +55,7 @@ public class OderForGroupDAO implements OderForGroupDAO_interface{
 			
 			// 更新報名人數
 			GroupTourDAO dao = new GroupTourDAO();
-			dao.attendGroup(oderForGroupVO.getGroupTourSN());
+			dao.attendGroup(oderForGroupVO.getGroupTourSN(), con);	// 裡面有錯也要rollback
 			
 			con.commit();
 			con.setAutoCommit(true);
@@ -61,7 +63,7 @@ public class OderForGroupDAO implements OderForGroupDAO_interface{
 		} catch (SQLException se) {
 			if(con != null) {
 				try {
-					System.out.println("新增訂單之交易失敗");
+					System.out.println("insert rolled back");
 					con.rollback();
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -89,7 +91,7 @@ public class OderForGroupDAO implements OderForGroupDAO_interface{
 	}
 
 	@Override
-	public void update(OderForGroupVO oderForGroupVO) {
+	public void update(OrderForGroupVO oderForGroupVO) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		
@@ -127,8 +129,8 @@ public class OderForGroupDAO implements OderForGroupDAO_interface{
 	}
 
 	@Override
-	public OderForGroupVO findByPrimaryKey(Integer orderSN) {
-		OderForGroupVO oderForGroupVO = null;
+	public OrderForGroupVO findByPrimaryKey(Integer orderSN) {
+		OrderForGroupVO oderForGroupVO = null;
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -141,7 +143,7 @@ public class OderForGroupDAO implements OderForGroupDAO_interface{
 			rs = ps.executeQuery();
 			
 			while (rs.next()) {
-				oderForGroupVO = new OderForGroupVO();
+				oderForGroupVO = new OrderForGroupVO();
 				oderForGroupVO.setOrderSN(rs.getInt("orderSN"));
 				oderForGroupVO.setUserID(rs.getInt("userID"));
 				oderForGroupVO.setGroupTourSN(rs.getInt("groupTourSN"));
@@ -180,9 +182,9 @@ public class OderForGroupDAO implements OderForGroupDAO_interface{
 	}
 
 	@Override
-	public List<OderForGroupVO> getOrderByUserID(Integer userID) {
-		List<OderForGroupVO> list = new ArrayList<OderForGroupVO>();
-		OderForGroupVO oderForGroupVO = null;
+	public List<OrderForGroupVO> getOrderByUserID(Integer userID) {
+		List<OrderForGroupVO> list = new ArrayList<OrderForGroupVO>();
+		OrderForGroupVO oderForGroupVO = null;
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -194,7 +196,7 @@ public class OderForGroupDAO implements OderForGroupDAO_interface{
 				rs = ps.executeQuery();
 				
 				while(rs.next()) {
-					oderForGroupVO = new OderForGroupVO();
+					oderForGroupVO = new OrderForGroupVO();
 					oderForGroupVO.setOrderSN(rs.getInt("orderSN"));
 					oderForGroupVO.setUserID(rs.getInt("userID"));
 					oderForGroupVO.setGroupTourSN(rs.getInt("groupTourSN"));
@@ -227,9 +229,9 @@ public class OderForGroupDAO implements OderForGroupDAO_interface{
 	}
 
 	@Override
-	public List<OderForGroupVO> getAll() {
-		List<OderForGroupVO> list = new ArrayList<OderForGroupVO>();
-		OderForGroupVO oderForGroupVO = null;
+	public List<OrderForGroupVO> getAll() {
+		List<OrderForGroupVO> list = new ArrayList<OrderForGroupVO>();
+		OrderForGroupVO oderForGroupVO = null;
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -240,7 +242,7 @@ public class OderForGroupDAO implements OderForGroupDAO_interface{
 				rs = ps.executeQuery();
 				
 				while(rs.next()) {
-					oderForGroupVO = new OderForGroupVO();
+					oderForGroupVO = new OrderForGroupVO();
 					oderForGroupVO.setOrderSN(rs.getInt("orderSN"));
 					oderForGroupVO.setUserID(rs.getInt("userID"));
 					oderForGroupVO.setGroupTourSN(rs.getInt("groupTourSN"));
@@ -276,7 +278,6 @@ public class OderForGroupDAO implements OderForGroupDAO_interface{
 	@Override
 	public List<Integer> checkRepeatOrder(Integer userID) {
 		List<Integer> list = new ArrayList<Integer>();
-		OderForGroupVO oderForGroupVO = null;
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -289,6 +290,44 @@ public class OderForGroupDAO implements OderForGroupDAO_interface{
 				
 				while(rs.next()) {
 					list.add(rs.getInt("groupTourSN"));
+				}
+				
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. " + se.getMessage());
+			} finally {
+				if(ps != null) {
+					try {
+						ps.close();
+					} catch (SQLException e) {
+						e.printStackTrace(System.err);
+					}
+				}
+				if(con != null) {
+					try {
+						con.close();
+					} catch (SQLException e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}	
+		return list;
+	}
+
+	@Override
+	public List<Integer> getMember(Integer groupTourSN) {
+		List<Integer> list = new ArrayList<Integer>();
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+			try {
+				con = ds.getConnection();
+				ps = con.prepareStatement(GET_MEMBER_STMT);
+				ps.setInt(1, groupTourSN);
+				rs = ps.executeQuery();
+				
+				while(rs.next()) {
+					list.add(rs.getInt("userID"));
 				}
 				
 			} catch (SQLException se) {

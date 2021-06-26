@@ -29,7 +29,6 @@ public class GroupTourServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		
-		// GP BackEndlistAll.jsp (For 商品列表跟後台) > 這個好像不用
 		
 		// 套裝行程頁面 顯示單一商品
 		if ("getOne_ForDisplay".equals(action)) {
@@ -76,6 +75,24 @@ public class GroupTourServlet extends HttpServlet {
 					errMsg.add("圖片讀取錯誤"+e.getMessage());
 				}
 			
+// 時間線:  報名開始-報名結束-行程開始-行程結束
+				
+				Date regTime = null;
+				try {
+					regTime = Date.valueOf(req.getParameter("regTime").trim());
+				}catch(IllegalArgumentException e) {
+					regTime = new Date(System.currentTimeMillis());
+					errMsg.add("請輸入報名開始日期");
+				}
+				
+				
+				Date closeTime = null;
+				try {
+					closeTime = Date.valueOf(req.getParameter("closeTime").trim());
+				}catch(IllegalArgumentException e) {
+					closeTime = new Date(System.currentTimeMillis());
+					errMsg.add("請輸入報名結束日期");
+				}
 				
 				Date startTime = null;
 				try {
@@ -95,22 +112,16 @@ public class GroupTourServlet extends HttpServlet {
 				}
 				
 				
-				Date regTime = null;
-				try {
-					regTime = Date.valueOf(req.getParameter("regTime").trim());
-				}catch(IllegalArgumentException e) {
-					regTime = new Date(System.currentTimeMillis());
-					errMsg.add("請輸入報名開始日期");
+				if(regTime.after(closeTime)) {
+					errMsg.add("報名開始日期須早於結束日期");
+				}
+				if(startTime.after(endTime)) {
+					errMsg.add("行程開始日期須早於結束日期");
+				}
+				if(closeTime.after(startTime)) {
+					errMsg.add("報名結束日期須早於行程開始日期");
 				}
 				
-				
-				Date closeTime = null;
-				try {
-					closeTime = Date.valueOf(req.getParameter("closeTime").trim());
-				}catch(IllegalArgumentException e) {
-					closeTime = new Date(System.currentTimeMillis());
-					errMsg.add("請輸入報名結束日期");
-				}
 				
 				
 				Integer pointSN = new Integer (req.getParameter("pointSN").trim());
@@ -298,6 +309,17 @@ public class GroupTourServlet extends HttpServlet {
 				}catch(IllegalArgumentException e) {
 					closeTime = new Date(System.currentTimeMillis());
 					errMsg.add("請輸入報名結束日期");
+				}
+				
+				
+				if(regTime.after(closeTime)) {
+					errMsg.add("報名開始日期須早於結束日期");
+				}
+				if(startTime.after(endTime)) {
+					errMsg.add("行程開始日期須早於結束日期");
+				}
+				if(closeTime.after(startTime)) {
+					errMsg.add("報名結束日期須早於行程開始日期");
 				}
 				
 				

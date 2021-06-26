@@ -21,26 +21,44 @@
 <body onload="connect();" onunload="disconnect();">
 <%@ include file="../share/backend/Bheader.file" %>
 
-<!-- <div onload="connect();" onunload="disconnect();"> -->
+<!-- Title -->
+<div class="container">
+	<div class="col-lg-10">
+		<h1 class="h3 mb-2 text-gray-800">客服訊息管理</h1>
+		<p class="mb-4"> 統一管理線上客服訊息、解決使用者疑問，能保留歷史對話訊息</p>
+	</div>
+</div>
+
+
 <div class="container">
 
-<div class="col-lg-2">
+<!-- 右列聊天對象 -->
+<div class="col-lg-3">
 	<div id="row"></div>
 </div>
 
+<!-- 左列聊天視窗 -->
 <div class="col-lg-7">	
-	<h3 id="statusOutput" class="statusOutput"></h3>
+
+
+	<!-- 聊天室名稱 -->
+	<div id="statusOutput" class="statusOutput"></div>
+	<!-- 聊天框框 -->
 	<div id="messagesArea" class="panel message-area" ></div>
-	<div class="panel input-area">
-		<input id="message" class="text-field" type="text" placeholder="Message" onkeydown="if (event.keyCode == 13) sendMessage();" /> 
+	<div class="input-area">
+		<input id="message" class="text-field" type="text" placeholder="Message" onkeydown="if (event.keyCode == 13) sendMessage();" />
+		
+		 
 		<input type="submit" id="sendMessage" class="button" value="Send" onclick="sendMessage();" /> 
 		<input type="button" id="connect" class="button" value="Connect" onclick="connect();" /> 
 		<input type="button" id="disconnect" class="button" value="Disconnect" onclick="disconnect();" />
 	</div>
 </div>	
-	
+
+
+
+
 </div>	
-<!-- </div>	 -->
 	
 <%@ include file="../share/backend/Bfooter.file" %>
 </body>
@@ -81,7 +99,10 @@
 				var row = document.getElementById("row");
 				var receivers = row.childNodes;
 				if(row.childNodes.length == 0) {
-					row.innerHTML +='<div onclick="heyYo(this)" id='+ jsonObj.receiver +' class="column" name="friendName" value=' + jsonObj.receiver + ' ><h2>' + jsonObj.receiver + '</h2></div>';
+// 					row.innerHTML +='<div onclick="heyYo(this)" id='+ jsonObj.receiver +' class="column" name="friendName" value=' + jsonObj.receiver + ' ><h2>' + jsonObj.receiver + '</h2></div>';
+// 					row.innerHTML +='<div onclick="heyYo(this)" id='+ jsonObj.receiver +' class="card mb-4 py-3 border-left-info" name="friendName" value=' + jsonObj.receiver + ' ><strong>' + jsonObj.receiver + '</strong></div>';
+					row.innerHTML +='<div onclick="heyYo(this)" id='+ jsonObj.receiver +' class="card mb-2 border-left-info" name="friendName" value=' + jsonObj.receiver + ' ><div class="card-body">' + jsonObj.receiver + '</div></div>';
+
 				}
 				for(var i = 0; i < row.childNodes.length; i++) {
 					if(receivers[i].getAttribute("id") == jsonObj.receiver ) {
@@ -90,7 +111,7 @@
 					}
 				}
 				if(repeat == false) {
-					row.innerHTML +='<div onclick="heyYo(this)" id='+ jsonObj.receiver +' class="column" name="friendName" value=' + jsonObj.receiver + ' ><h2>' + jsonObj.receiver + '</h2></div>';
+					row.innerHTML +='<div onclick="heyYo(this)" id='+ jsonObj.receiver +' class="card mb-2 border-left-info" name="friendName" value=' + jsonObj.receiver + ' ><div class="card-body">' + jsonObj.receiver + '</div></div>';
 				}
 				
 				messagesArea.innerHTML = '';
@@ -167,7 +188,7 @@
 				if (receivers[j].getAttribute("id") == friends[i]) { repeat = true; }
 			}
 			if(repeat == false && isMe == false) {
-				row.innerHTML +='<div onclick="heyYo(this)" id=' + friends[i] + ' class="column" name="friendName" value=' + friends[i] + ' ><h2>' + friends[i] + '</h2></div>';
+				row.innerHTML +='<div onclick="heyYo(this)" id=' + friends[i] + ' class="card mb-2 border-left-info" value=' + friends[i] + ' ><div class="card-body">' + friends[i] + '</div></div>';
 			}else if(repeat == true) {
 				console.log("repeat");
 				document.getElementById(friends[i]).setAttribute("class","green column");

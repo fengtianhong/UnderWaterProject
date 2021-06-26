@@ -8,13 +8,13 @@
 
 <%  
 // 抓取新增失敗時回傳的VO
-OderForGroupVO oderForGroupVO = (OderForGroupVO) request.getAttribute("oderForGroupVO");
+OrderForGroupVO orderForGroupVO = (OrderForGroupVO) request.getAttribute("orderForGroupVO");
 
 //這東西應該會放在Session
 MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");	
 GroupTourVO groupTourVO = (GroupTourVO) request.getAttribute("groupTourVO");
 %>
-<%= oderForGroupVO==null %><%-- 確認有沒有抓到用(可刪) --%>
+<%= orderForGroupVO==null %><%-- 確認有沒有抓到用(可刪) --%>
 <%= groupTourVO==null %><%-- 確認有沒有抓到用(可刪) --%>
 
 <!DOCTYPE html>
@@ -52,7 +52,7 @@ GroupTourVO groupTourVO = (GroupTourVO) request.getAttribute("groupTourVO");
 	</tr>
 	
 	<tr>
-		<td>訂購人(這個梅蘭未不會被get)</td>	
+		<td>訂購人(這個沒欄位不會被get)</td>	
 		<td><input type="TEXT" size="45" value="${memberVO.userName}" />
 		</td>
 	</tr>	
