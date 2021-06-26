@@ -19,13 +19,15 @@ public class MemberServlet extends HttpServlet{
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
 	}
-	
+	//登入帳號使用
 	public void doPost(HttpServletRequest req, HttpServletResponse res)	throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		List<String> errorMsgs = new LinkedList<String>();
 		req.setAttribute("errorMsgs", errorMsgs);
+		
 		try {//帳號
+			Integer userID = new Integer(req.getParameter("userid").trim());
 			String account = null;
 			account = req.getParameter("account").trim();
 			if(account == null || account.length() == 0) {
@@ -62,13 +64,31 @@ public class MemberServlet extends HttpServlet{
 			birthDate = Date.valueOf(req.getParameter("birthDate").trim());
 			String phone = req.getParameter("phone").trim();
 			certification = req.getParameter("certification").trim();
-			Part part = req.getPart("certificationPic");
 			
+			
+			
+			//證照圖片===========================
 			byte[] certificationPic = null;
-			InputStream in = part.getInputStream();
-			certificationPic = new byte[in.available()];
-			in.read(certificationPic);
-			in.close();
+			InputStream in = null;
+			try {
+				Part part = req.getPart("certificationPic"); 
+				in = part.getInputStream();	
+				certificationPic = new byte[in.available()];
+				in.read(certificationPic);
+				
+				if(certificationPic.length == 0) { //未修正圖片存取原圖片
+					MemberService membersvc = new MemberService();
+					MemberVO originalVO= membersvc.getone(userID);
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+				errorMsgs.add("圖片讀取錯誤" + e.getLocalizedMessage());
+			}finally {
+				in.close();
+			}
+			
+			
+			
 			String personID = null;
 			personID = req.getParameter("personID").trim();
 			String  address = null;

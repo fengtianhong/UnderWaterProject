@@ -1,21 +1,14 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isErrorPage="true"%>
+<%@ page import=" com.member.model.*;" %>
 <%
 	request.setCharacterEncoding("UTF-8");
 	response.setCharacterEncoding("UTF-8");
+%>
 
-	if ("post".equals(request.getMethod())) {
-		System.out.println("2");
-		Cookie accountCookie = new Cookie("account", request.getParameter("account"));
-		Cookie visittimesCookie = new Cookie("visiTimes", "0");
-
-		response.addCookie(accountCookie);
-		response.addCookie(visittimesCookie);
-
-		response.sendRedirect(request.getContextPath() + "/cookie.jsp");
-
-		return;
-	}
+<%
+	
 %>
 <!DOCTYPE html>
 <html>

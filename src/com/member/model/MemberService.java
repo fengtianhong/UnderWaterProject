@@ -30,13 +30,12 @@ public class MemberService {
 		return vo;
 	}
 	
-	public MemberVO updateMember(Integer userID, String account, String pwd, String nickName, String userName, 
+	public MemberVO updateMember(Integer userID, String account, String nickName, String userName, 
 								String gender, Date birthDate, String phone, String certification, byte[] certificationPic, 
 								String personID, String address, Timestamp createTime, Integer status, Timestamp upDateTime, Integer ratePeople, Integer ratePoint) {
 		MemberVO vo = new MemberVO();
 		vo.setUserID(userID);
 		vo.setAccount(account);
-		vo.setPwd(pwd);
 		vo.setNickName(nickName);
 		vo.setUserName(userName);
 		vo.setGender(gender);
@@ -51,6 +50,7 @@ public class MemberService {
 		vo.setUpDateTime(upDateTime);
 		vo.setRatePeople(ratePeople);
 		vo.setRatePoint(ratePoint);
+		dao.update(vo);
 		return vo;
 	}
 	
@@ -58,7 +58,7 @@ public class MemberService {
 		return dao.findByPrimaryKey(userID);
 	}
 	
-	public List<MemberVO> findByAccount(String account){
+	public MemberVO findByAccount(String account){
 		return dao.findByAccount(account);
 	}
 	

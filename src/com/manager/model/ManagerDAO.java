@@ -131,15 +131,14 @@ public class ManagerDAO implements ManagerDAO_interface {
 			pstmt.setString(1, ManagerVO.getAccount());
 			pstmt.setString(2, ManagerVO.getPwd());
 			rs = pstmt.executeQuery();
-			
 			if(rs.next()) {
 				vo = new ManagerVO();
 				vo.setAccount(rs.getString("account"));
-				vo.setPwd(rs.getString("pwd"));
-				System.out.println("登入成功");
+//				vo.setPwd(rs.getString("pwd"));
+//				System.out.println("登入成功");
 				return true;
 			}else {
-				System.out.println("帳號密碼錯誤");
+//				System.out.println("帳號密碼錯誤");
 				return false;
 			}
 		}catch(Exception e) {

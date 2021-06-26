@@ -8,8 +8,8 @@ import util.Util;
 
 public class MemberDAO implements MemberDAO_interface{
 	
-	private static final String INSERT_STMT = "INSERT INTO Member (account, pwd,nickName, userName, gender, birthDate, phone, certification, certificationPic, personID, address) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	private static final String UPDATE_STMT = "UPDATE Member SET pwd=?, NickName=?, userName=?, gender=?, birthDate=?, phone=?, Certification=?, CertificationPic=?, personID=?, address=?, status=?, updateTime=?, ratePeople=?, ratePoint=? WHERE userID = ?";
+	private static final String INSERT_STMT = "INSERT INTO Member (account, pwd,nickName, userName, gender, birthDate, phone, certification, certificationPic, personID, address) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String UPDATE_STMT = "UPDATE Member SET NickName=?, userName=?, gender=?, birthDate=?, phone=?, Certification=?, CertificationPic=?, personID=?, address=?, status=?, updateTime=?, ratePeople=?, ratePoint=? WHERE userID = ?";
 	private static final String GET_ONE_STMT = "SELECT * FROM Member where userid=?";
 	private static final String FINDBYACCOUNT_STMT = "SELECT * FROM Member where account=?";
 	private static final String GET_ALL_STMT = "SELECT * FROM Member ORDER BY userID";
@@ -154,21 +154,21 @@ public class MemberDAO implements MemberDAO_interface{
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
 			pstmt = con.prepareStatement(UPDATE_STMT);
 		
-			pstmt.setString(1, MemberVO.getPwd());
-			pstmt.setString(2, MemberVO.getNickName());
-			pstmt.setString(3, MemberVO.getUserName());
-			pstmt.setString(4, MemberVO.getGender());
-			pstmt.setDate(5, MemberVO.getBirthDate());
-			pstmt.setString(6, MemberVO.getPhone());
-			pstmt.setString(7, MemberVO.getCertification());
-			pstmt.setBytes(8, MemberVO.getCertificationPic());
-			pstmt.setString(9, MemberVO.getPersonID());
-			pstmt.setString(10, MemberVO.getAddress());
-			pstmt.setInt(11, MemberVO.getStatus());
-			pstmt.setTimestamp(12, MemberVO.getUpDateTime());
-			pstmt.setInt(13, MemberVO.getRatePeople());
-			pstmt.setInt(14, MemberVO.getRatePoint());
-			pstmt.setInt(15, MemberVO.getUserID());
+			
+			pstmt.setString(1, MemberVO.getNickName());
+			pstmt.setString(2, MemberVO.getUserName());
+			pstmt.setString(3, MemberVO.getGender());
+			pstmt.setDate(4, MemberVO.getBirthDate());
+			pstmt.setString(5, MemberVO.getPhone());
+			pstmt.setString(6, MemberVO.getCertification());
+			pstmt.setBytes(7, MemberVO.getCertificationPic());
+			pstmt.setString(8, MemberVO.getPersonID());
+			pstmt.setString(9, MemberVO.getAddress());
+			pstmt.setInt(10, MemberVO.getStatus());
+			pstmt.setTimestamp(11, MemberVO.getUpDateTime());
+			pstmt.setInt(12, MemberVO.getRatePeople());
+			pstmt.setInt(13, MemberVO.getRatePoint());
+			pstmt.setInt(14, MemberVO.getUserID());
 			
 			pstmt.executeUpdate();
 			
@@ -252,12 +252,11 @@ public class MemberDAO implements MemberDAO_interface{
 	
 	
 //	@Override
-	public List<MemberVO> findByAccount(String account) {
+	public MemberVO findByAccount(String account) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		MemberVO a1 = null;
-		List<MemberVO> list1 = new ArrayList<>();
+		MemberVO vo = null;
 		
 		try {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
@@ -267,24 +266,24 @@ public class MemberDAO implements MemberDAO_interface{
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				a1 = new MemberVO();
-				a1.setUserID(rs.getInt("userId"));
-				a1.setPwd(rs.getString("pwd"));
-				a1.setNickName(rs.getString("nickName"));
-				a1.setUserName(rs.getString("userName"));
-				a1.setGender(rs.getString("gender"));
-				a1.setBirthDate(rs.getDate("birthDate"));
-				a1.setPhone(rs.getString("phone"));
-				a1.setCertification(rs.getString("Certification"));
-				a1.setCertificationPic(rs.getBytes("CertificationPic"));
-				a1.setPersonID(rs.getString("personID"));
-				a1.setAddress(rs.getString("address"));
-				a1.setCreateTime(rs.getTimestamp("CreateTime"));
-				a1.setStatus(rs.getInt("Status"));
-				a1.setUpDateTime(rs.getTimestamp("UpDateTime"));
-				a1.setRatePeople(rs.getInt("RatePeople"));
-				a1.setRatePoint(rs.getInt("RatePoint"));
-				list1.add(a1);
+				vo = new MemberVO();
+				vo.setUserID(rs.getInt("userId"));
+				vo.setPwd(rs.getString("pwd"));
+				vo.setNickName(rs.getString("nickName"));
+				vo.setUserName(rs.getString("userName"));
+				vo.setGender(rs.getString("gender"));
+				vo.setBirthDate(rs.getDate("birthDate"));
+				vo.setPhone(rs.getString("phone"));
+				vo.setCertification(rs.getString("Certification"));
+				vo.setCertificationPic(rs.getBytes("CertificationPic"));
+				vo.setPersonID(rs.getString("personID"));
+				vo.setAddress(rs.getString("address"));
+				vo.setCreateTime(rs.getTimestamp("CreateTime"));
+				vo.setStatus(rs.getInt("Status"));
+				vo.setUpDateTime(rs.getTimestamp("UpDateTime"));
+				vo.setRatePeople(rs.getInt("RatePeople"));
+				vo.setRatePoint(rs.getInt("RatePoint"));
+				
 			}
 		} catch (SQLException se) {
 			se.printStackTrace();
@@ -305,7 +304,7 @@ public class MemberDAO implements MemberDAO_interface{
 				}
 			}
 		}
-		return list1;
+		return vo;
 	}
 	
 //	@Override
@@ -390,10 +389,10 @@ public Boolean login(MemberVO MemberVO) {
 			vo = new MemberVO();
 			vo.setAccount(rs.getString("account"));
 //			vo.setPwd(rs.getString("pwd"));
-			System.out.println("登入成功");
+//			System.out.println("登入成功");
 			return true;
 		}else {
-			System.out.println("使用者帳號或密碼錯誤");
+//			System.out.println("使用者帳號或密碼錯誤");
 			return false;
 		}
 	}catch(Exception e) {
