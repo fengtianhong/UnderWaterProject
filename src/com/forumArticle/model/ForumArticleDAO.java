@@ -29,7 +29,7 @@ public class ForumArticleDAO implements ForumArticleDAO_interface{
 	private static final String INSERT_STMT = 
 			"INSERT INTO ForumArticle (articleTitle, articleText, userID, articleTitleOptSN) VALUES (?, ?, ?, ?)";
 		private static final String GET_ALL_STMT = 
-			"SELECT articlesN, articleTitle, publishedDate, articleText, articleStatus, userID, articleTitleOptSN, rateGCount, rateNGCount FROM ForumArticle order by articleSN";
+			"SELECT * FROM ForumArticle order by articleSN desc";
 		private static final String GET_ONE_STMT = 
 			"SELECT articlesN, articleTitle, publishedDate, articleText, articleStatus, userID, articleTitleOptSN, rateGCount, rateNGCount FROM ForumArticle where articleSN = ?";
 		private static final String mUPDATE = 

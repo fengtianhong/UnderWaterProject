@@ -7,10 +7,6 @@
 	ForumArticleVO forumArticleVO = (ForumArticleVO) request.getAttribute("forumArticleVO");
 %>
 
-
-
-
-
 <!DOCTYPE html>
 	<html>
 		<head>

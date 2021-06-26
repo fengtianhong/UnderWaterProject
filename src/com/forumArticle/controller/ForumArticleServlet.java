@@ -206,7 +206,7 @@ public class ForumArticleServlet extends HttpServlet {
 				
 				//	修改資料
 				ForumArticleService forumArticleSvc = new ForumArticleService();
-				forumArticleVO = forumArticleSvc.userUpdateForumArticle(articleSN, articleTitleReg, articleText);
+				forumArticleVO = forumArticleSvc.userUpdateForumArticle(articleSN, articleTitle, articleText);
 				
 				//	修改完成後轉交
 				req.setAttribute("forumArticleVO", forumArticleVO);
