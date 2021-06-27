@@ -2,7 +2,7 @@ package com.orderforgroup.model;
 
 import java.sql.Date;
 
-public class OderForGroupVO implements java.io.Serializable{
+public class OrderForGroupVO implements java.io.Serializable{
 	private Integer orderSN;
 	private Integer userID;
 	private Integer groupTourSN;

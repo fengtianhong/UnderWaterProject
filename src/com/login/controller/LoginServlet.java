@@ -45,12 +45,12 @@ public class LoginServlet extends HttpServlet {
 		if (vo == true) {
 			if(check.equals(checknum)){//驗證碼判斷
 				session = req.getSession();			
-				req.setAttribute("msg", "驗證碼正確");
+//				req.setAttribute("msg", "驗證碼正確");
 				req.setAttribute("account", account);
 				MemberVO memberVO = membersvc.findByAccount(account);
 				Integer userID =  memberVO.getUserID();
 				session.setAttribute("userID", userID);
-				
+				System.out.println("驗證碼正確");
 				try {
 					String location = (String) session.getAttribute("location");
 					if(location != null) {
@@ -58,7 +58,8 @@ public class LoginServlet extends HttpServlet {
 						res.sendRedirect(location);
 						return;
 					}
-				}catch(Exception e) {//若沒有導回index頁面
+				}catch(Exception e) {//若沒有,導回index頁面
+					System.out.println("沒有,導回index頁面");
 					req.getRequestDispatcher("index.jsp").forward(req, res);
 				}
 			}else {
@@ -66,6 +67,7 @@ public class LoginServlet extends HttpServlet {
 				req.getRequestDispatcher("login.jsp").forward(req, res);
 			}
 		} else {
+			req.setAttribute("msg", "帳號密碼錯誤");
 			req.getRequestDispatcher("login.jsp").forward(req, res);
 		}
 		

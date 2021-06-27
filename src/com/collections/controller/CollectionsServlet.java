@@ -28,7 +28,6 @@ public class CollectionsServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		
-// 載入網站時 要抓取愛心是否存在 > 寫在JSP但好像有點失敗
 		
 		
 		// 前端按了<3 

@@ -90,9 +90,9 @@
 		<td>證照資格</td>
 		<td>
 			<jsp:useBean id="memSvc" scope="page" class="com.member.model.MemberService"></jsp:useBean>
-	        <c:if test="${${groupTourVO.certificationLimit} == '0'}">不限</c:if>
-	        <c:if test="${${groupTourVO.certificationLimit} == '1'}">PADI OW / SSI OW</c:if>
-	        <c:if test="${${groupTourVO.certificationLimit} == '2'}">PADI AOW / SSI AOW</c:if>
+	        <c:if test="${groupTourVO.certificationLimit} == '0'">不限</c:if>
+	        <c:if test="${groupTourVO.certificationLimit} == '1'">PADI OW / SSI OW</c:if>
+	        <c:if test="${groupTourVO.certificationLimit} == '2'">PADI AOW / SSI AOW</c:if>
 		</td>
 	</tr>
 </table>
@@ -104,11 +104,10 @@
 </div>	
 
 		
-		<div style="display:none"><!-- 抓收藏、報名用(有空把他寫在DAO好了 好醜)   -->
-			<span class="groupTourSN">${groupTourVO.groupTourSN}</span>
+		<div><!-- 抓收藏、報名用(有空把他寫在DAO好了 好醜)   -->
 			<jsp:useBean id="colSvc" scope="page" class="com.collections.model.CollectionsService"></jsp:useBean>
 			<span class="favorite">${(userID == null)?"":colSvc.getCollectionsByUserid(userID)}</span>
-			<jsp:useBean id="orderSvc" scope="page" class="com.orderforgroup.model.OderForGroupService"></jsp:useBean>
+			<jsp:useBean id="orderSvc" scope="page" class="com.orderforgroup.model.OrderForGroupService"></jsp:useBean>
 			<span class="order_list">${(userID == null)?"":orderSvc.checkRepeatOrder(userID)}</span>
 		</div>
 		
@@ -117,8 +116,8 @@
 
 	
 	<FORM NAME="orderForm" METHOD="post" ACTION="<%=request.getContextPath()%>/orderforgroup/orderforgroup.do" >
-		<input type="hidden" name="userID" value="${userID}">
-		<input type="hidden" name="groupTourSN" value="${groupTourVO.groupTourSN}">
+		<input type="hidden" class="userID" name="userID" value="${userID}">
+		<input type="hidden" class="groupTourSN" name="groupTourSN" value="${groupTourVO.groupTourSN}">
 		<input type="hidden" name="action" value="getOne_ForOrder">
 		<input class="nonattend_btn" type="submit" value="我要報名" >
 		<input class="attend_btn" type="submit" value="已報名" disabled  style="display:none">
@@ -172,13 +171,20 @@ $(function () {
     $(".heart").on("click", function(){
         // confirm("ADD COLLECTIONS?");
         var that = this;
-        var userID = 3;		// 先寫死
+        var userID = $(".userID").val();		// 先寫死
         var groupTourSN = $(".groupTourSN").text();
+        console.log(userID, "+",groupTourSN);
     
         $.ajax({
-                url: "<%=request.getContextPath()%>/collections/collections.do?action=favorite&userID=" + userID + "&groupTourSN=" + groupTourSN,
+          		url: "<%=request.getContextPath()%>/collections/collections.do?action=favorite&userID=" + userID + "&groupTourSN=" + groupTourSN,
+<%--            url: "<%=request.getContextPath()%>/collections/collections.do", --%>
                 type: "GET",
                 dataType: "text",
+//                 data: {
+//                 	"action": "favorite",
+//                 	"userID": userID,
+//                 	"groupTourSN": groupTourSN,
+//                 },
                 success: function(data){
                     console.log(data);
                     if(data == "delete") {
