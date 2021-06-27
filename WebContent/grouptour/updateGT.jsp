@@ -168,6 +168,25 @@
            </div>
      </div>
      
+     <!-- 團員預覽 -->
+     <div class="card shadow mb-4">
+       <!-- Card Header - Accordion -->
+            <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                <h6 class="m-0 font-weight-bold text-primary">已報名團員</h6>
+            </a>
+       <!-- Card Content - Collapse -->
+		<jsp:useBean id="orderForGroupSvc" scope="page" class="com.orderforgroup.model.OrderForGroupService"></jsp:useBean>
+		<jsp:useBean id="memSvc" scope="page" class="com.member.model.MemberService"></jsp:useBean>
+
+           <div class="collapse show" id="collapseCardExample" style="">
+                   <div class="card-body">
+                   	<p><c:forEach var="userID" items="${orderForGroupSvc.getMember(groupTourVO.groupTourSN)}">
+                       ${memSvc.getone(userID).userName}<br>
+                     </c:forEach></p>
+                   </div>
+           </div>
+     </div>
+     
     <!-- Err msg -->
      <div class="mb-4">
     <div class="card border-left-warning shadow h-100 py-2">

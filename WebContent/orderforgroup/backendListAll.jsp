@@ -6,8 +6,8 @@
 <%@ page import="com.orderforgroup.model.*"%>
 
 <%	
-	OderForGroupService oderForGroupSvc = new OderForGroupService();
-	List<OderForGroupVO> list = oderForGroupSvc.getAll();
+	OrderForGroupService orderForGroupSvc = new OrderForGroupService();
+	List<OrderForGroupVO> list = orderForGroupSvc.getAll();
 	pageContext.setAttribute("list", list);	// WHY
 
 %>
@@ -44,19 +44,19 @@
         <div class="tbl-content">
           <table cellpadding="0" cellspacing="0" border="0">
             <tbody>
-            <c:forEach var="oderForGroupVO" items="${list}">
+            <c:forEach var="orderForGroupVO" items="${list}">
                 
               <tr>
-				<td>${oderForGroupVO.orderSN}</td>
+				<td>${orderForGroupVO.orderSN}</td>
 				<jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService"></jsp:useBean>          
-				<td>${memberSvc.getone(oderForGroupVO.userID).userName}</td>
+				<td>${memberSvc.getone(orderForGroupVO.userID).userName}</td>
            		<jsp:useBean id="groupTourSvc" scope="page" class="com.grouptour.model.GroupTourService"></jsp:useBean>
-				<td width="30%">${oderForGroupVO.groupTourSN} - ${groupTourSvc.getOne(oderForGroupVO.groupTourSN).tourName}</td>
-				<td>$ ${oderForGroupVO.totalPrice}</td>
+				<td width="30%">${orderForGroupVO.groupTourSN} - ${groupTourSvc.getOne(orderForGroupVO.groupTourSN).tourName}</td>
+				<td>$ ${orderForGroupVO.totalPrice}</td>
 				<td>Pending(NY)</td>
 				<td>
 					<form method="post" action="orderforgroup.do">
-						<input type="hidden" name="orderSN" value="${oderForGroupVO.orderSN}">
+						<input type="hidden" name="orderSN" value="${orderForGroupVO.orderSN}">
 						<input type="hidden" name="action" value="getOne_ForUpdate">
                         <button type="submit" class="custom-btn btn-2">Update</button>
 					</FORM>

@@ -19,53 +19,79 @@
 <%@ include file="../share/backend/Bmeta.file" %>
 <title>Backend List for Group Tour</title>
 <style>
-	table{
-	  border: solid 1px black;
-	  border-collapse: collapse;
-	  border-radius: 20%;
-	  width: 80%;
+	.container{
+		margin: 0 auto;  
+ 		width: 1000px; 
+/* 		display: flex; */
 	}
-	.tourlist{
-		margin: 20px;
-		
-		weight: 60%;
+	.card-header{
+		padding: 0.7rem 1.25rem 0.5rem !important;
+	}
+	.text-xs{
+		margin-bottom: 0rem !important;
+	}
+	.card-body{
+		padding: 0.5rem 1.25rem !important;
 	}
 	.title{
 		border-bottom: 2px solid #000;
 	}
+	div.button{
+		position: absolute;
+    	bottom: 50px;
+    	right: 5%;
+	}
+	#filter{
+		position: absolute;
+    	right: 14%;
+    	top: 90px;
+	}
+	
 
 </style>
 </head>
 <body>
 <%@ include file="../share/backend/Bheader.file" %>
+<div class="container">
 
+<!-- <div>	 -->
+<h1 class="h3 mb-2 text-gray-800">套裝行程列表</h1>
 
-	<h3>建立新行程 <a href='addGT.jsp'> +</a></h3>
-	
-	<h3>套裝行程列表</h3>
-	<input type="search" class="light-table-filter" data-table="order-table" placeholder="請輸入關鍵字">
-	<c:forEach var="groupTourVO" items="${list}">
-		<table class="tourlist order-table">
-			<tr>
-				<td class="tour">
-					<div class="title">${groupTourVO.tourName}</div>
-					<jsp:useBean id="diveInfoSvc" scope="page" class="com.diveinfo.model.DiveInfoService"></jsp:useBean>
-					<div class="pointname">${diveInfoSvc.getOneDiveInfo(groupTourVO.pointSN).pointName}</div>
-					
-					<div class="tourTime">行程時間: ${groupTourVO.startTime} ~ ${groupTourVO.endTime}</div>
-					<div class="regTime">報名時間: ${groupTourVO.regTime} ~ ${groupTourVO.closeTime}</div>
-					<div class="number">報名人數: ${groupTourVO.attendNumber} / ${groupTourVO.limitNumder}</div>
-				</td>
-				<td class="button">
+<select id="filter" class="system" onchange="filter(this.value)">
+	<option value="0">ALL
+	<option value="1">北部
+	<option value="2">南部
+	<option value="3">離島
+</select>
+<!-- </div> -->
+<hr>
+
+		<c:forEach var="groupTourVO" items="${list}">
+		<jsp:useBean id="diveInfoSvc" scope="page" class="com.diveinfo.model.DiveInfoService"></jsp:useBean>
+		<div class="card shadow mb-4 ">
+		<input class="forFilter" type="hidden" value="${diveInfoSvc.getOneDiveInfo(groupTourVO.pointSN).local}">
+			<div class="card-header py-3">
+				<h6 class="m-0 font-weight-bold text-primary">${groupTourVO.tourName}</h6>
+				<p class="text-xs">${diveInfoSvc.getOneDiveInfo(groupTourVO.pointSN).pointName}</p>
+			</div>
+			<div class="card-body">
+			<p>行程時間: ${groupTourVO.startTime} ~ ${groupTourVO.endTime}<br>
+				報名時間: ${groupTourVO.regTime} ~ ${groupTourVO.closeTime}<br>
+				報名人數: ${groupTourVO.attendNumber} / ${groupTourVO.limitNumder}</p>
+<!-- 				<p class="text-xs">.text-xs</p> -->
+<!-- 				<p class="text-lg mb-0">.text-lg</p> -->
+				<div class="button">
 					<form method="post" action="grouptour.do">
 						<input type="hidden" name="groupTourSN" value="${groupTourVO.groupTourSN}"> 
 						<input type="hidden" name="action" value="getOne_ForUpdate"> 
-						<input type="submit" value="修改">
+						<input  class="btn btn-primary btn-user" type="submit" value="更新">
 					</form>
-				</td>
-			</tr>
-		</table>
-	</c:forEach>
+				</div>
+			</div>
+		</div>
+		</c:forEach>
+		
+</div>
 <!-- 成功新增Msg -->
 	<c:if test="${not empty Msg}">
 		<script>alert("${Msg}");</script>
@@ -75,8 +101,43 @@
 </body>
 <%@ include file="../share/backend/Bjs.file" %>
 <script>
-	// 輕量關鍵字搜索列表
-	!function(e){"use strict";var a,n,t=(a=Array.prototype,{init:function(){var t=e.getElementsByClassName("light-table-filter");a.forEach.call(t,function(t){t.oninput=o})}});function o(t){n=t.target;t=e.getElementsByClassName(n.getAttribute("data-table"));a.forEach.call(t,function(t){a.forEach.call(t.tBodies,function(t){a.forEach.call(t.rows,i)})})}function i(t){var e=t.textContent.toLowerCase(),a=n.value.toLowerCase();t.style.display=-1===e.indexOf(a)?"none":"table-row"}e.addEventListener("readystatechange",function(){"complete"===e.readyState&&t.init()})}(document);
-	
+
+// 	// 搜索列表
+	function filter(value) {
+    console.log(value);
+		switch(value) {
+			case "1":
+				$(".forFilter").each(function(i, e) {
+                    if($(e).val()=="北部") {
+                        $(e).closest("div").show();
+                    }else{
+                        $(e).closest("div").hide();
+                    }
+				})
+				break;
+			case "2":
+                 $(".forFilter").each(function(i, e) {
+                    if($(e).val()=="南部") {
+                        $(e).closest("div").show();
+                    }else{
+                        $(e).closest("div").hide();
+                    }
+				})
+				break;
+			case "3":
+                $(".forFilter").each(function(i, e) {
+                    if($(e).val()=="離島") {
+                        $(e).closest("div").show();
+                    }else{
+                        $(e).closest("div").hide();
+                    }
+				})
+				break;
+			default:
+                $(".forFilter").closest("div").show();
+				break;
+		}
+	}
+
 </script>
 </html>

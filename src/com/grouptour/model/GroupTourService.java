@@ -65,7 +65,4 @@ public class GroupTourService {
 		return dao.getAll();
 	}
 	
-	public void attendGroup(Integer groupTourSN) {
-		dao.attendGroup(groupTourSN);
-	}
 }
