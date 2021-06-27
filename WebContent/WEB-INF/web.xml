@@ -20,6 +20,21 @@
 		<res-auth>Container</res-auth>
 	</resource-ref>
 
+	<filter>
+		<filter-name>LoginFilter</filter-name>
+		<filter-class>com.login.controller.LoginFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>LoginFilter</filter-name>
+		<url-pattern>/diveinfo/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+		<dispatcher>ASYNC</dispatcher>
+	</filter-mapping>
+
 	<servlet>
 		<servlet-name>DiveInfoServlet</servlet-name>
 		<servlet-class>com.diveinfo.controller.DiveinfoServlet</servlet-class>
@@ -51,7 +66,7 @@
 	</servlet-mapping>
 
 
-	
+
 	<servlet>
 		<servlet-name>ArticleTitleOptServlet</servlet-name>
 		<servlet-class>com.articleTitleOpt.controller.ArticleTitleOptServlet</servlet-class>
@@ -61,7 +76,7 @@
 		<servlet-name>ArticleTitleOptServlet</servlet-name>
 		<url-pattern>/articleTitleOpt/articleTitleOpt.do</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>ForumArticleServlet</servlet-name>
 		<servlet-class>com.forumArticle.controller.ForumArticleServlet</servlet-class>
@@ -97,57 +112,57 @@
 		<servlet-name>IdentityServlet</servlet-name>
 		<servlet-class>com.member.controller.IdentityServlet</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>IdentityServlet</servlet-name>
 		<url-pattern>/member/IdentityServlet</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>CheckAccountServlet</servlet-name>
 		<servlet-class>com.member.controller.CheckAccountServlet</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>CheckAccountServlet</servlet-name>
 		<url-pattern>/member/CheckAccountServlet.do</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>ProductServlet</servlet-name>
 		<servlet-class>com.product.controller.ProductServlet</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>ProductServlet</servlet-name>
 		<url-pattern>/product/product.do</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>OrderForProductServlet</servlet-name>
 		<servlet-class>com.orderforproduct.controller.OrderForProductServlet</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>OrderForProductServlet</servlet-name>
 		<url-pattern>/orderforproduct/orderforproduct.do</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>OrderListServlet</servlet-name>
 		<servlet-class>com.orderlist.controller.OrderListServlet</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>OrderListServlet</servlet-name>
 		<url-pattern>/orderlist/orderlist.do</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>ShoppingCarServlet</servlet-name>
 		<servlet-class>com.shoppingcar.controller.ShoppingCarServlet</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>ShoppingCarServlet</servlet-name>
 		<url-pattern>/shoppingcar/shoppingcar.do</url-pattern>
@@ -157,19 +172,21 @@
 		<servlet-name>WebManagerSystemServlet</servlet-name>
 		<servlet-class>com.manager.controller.WebManagerSystemServlet</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>WebManagerSystemServlet</servlet-name>
 		<url-pattern>/member/WebManagerSystem.do</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>MemberListServlet</servlet-name>
 		<servlet-class>com.member.controller.MemberListServlet</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>MemberListServlet</servlet-name>
 		<url-pattern>/member/MemberListServlet.do</url-pattern>
 	</servlet-mapping>
+
+
 </web-app>
