@@ -7,8 +7,8 @@
 <%
 	
 	// Integer userID = (Integer) session.getAttribute("userID");	// userID 存在session
-	OderForGroupService oderForGroupSvc = new OderForGroupService();
-	List<OderForGroupVO> list = oderForGroupSvc.getOrderByUserID(1);	// UserID先寫死
+	OrderForGroupService orderForGroupSvc = new OrderForGroupService();
+	List<OrderForGroupVO> list = orderForGroupSvc.getOrderByUserID(1);	// UserID先寫死
 	pageContext.setAttribute("list", list);	// WHY
 	
 %>
@@ -35,20 +35,20 @@
           </li>
 
 	<%@ include file="page1.file" %>
-    <c:forEach var="oderForGroupVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">          
+    <c:forEach var="orderForGroupVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">          
           <li class="table-row">
-            <div class="col col-1" data-label="Order SN">${oderForGroupVO.orderSN}</div>
+            <div class="col col-1" data-label="Order SN">${orderForGroupVO.orderSN}</div>
   			<jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService"></jsp:useBean>          
-            <div class="col col-2" data-label="Customer Name">${memberSvc.getone(oderForGroupVO.userID).userName}</div>
+            <div class="col col-2" data-label="Customer Name">${memberSvc.getone(orderForGroupVO.userID).userName}</div>
             
             <jsp:useBean id="groupTourSvc" scope="page" class="com.grouptour.model.GroupTourService"></jsp:useBean>
-            <div class="col col-3" data-label="Group Tour">${oderForGroupVO.groupTourSN} - ${groupTourSvc.getOne(oderForGroupVO.groupTourSN).tourName}</div>
+            <div class="col col-3" data-label="Group Tour">${orderForGroupVO.groupTourSN} - ${groupTourSvc.getOne(orderForGroupVO.groupTourSN).tourName}</div>
             
-            <div class="col col-4" data-label="Amount Due">${oderForGroupVO.totalPrice}</div>
+            <div class="col col-4" data-label="Amount Due">${orderForGroupVO.totalPrice}</div>
             <div class="col col-5" data-label="Payment Status">Pending(NY)</div>
             <div class="col col-6" data-label="Modified">
                 <form method="post" action="orderforgroup.do">
-                    <input type="hidden" name="orderSN" value="${oderForGroupVO.orderSN}">
+                    <input type="hidden" name="orderSN" value="${orderForGroupVO.orderSN}">
                     <input type="hidden" name="action" value="getOne_ForUpdate">
                     <input type="submit" value="UPDATE">
                 </FORM>
