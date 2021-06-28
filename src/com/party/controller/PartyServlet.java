@@ -117,12 +117,12 @@ public class PartyServlet extends HttpServlet {
 		}
 		
 		
-//未完成	//會員 從報名 提交報名表
+//未完成	//會員 從報名頁面 提交報名表
 		if ("submitRegistration".equals(action)) {
 			
 			Integer partySN = Integer.parseInt(req.getParameter("partySN"));
 //**** 需改寫動態帶入
-			Integer partyMember = 4;
+			Integer partyMember = 5;
 //**** String partyMember = req.getParameter("partyMember");
 			String gender = req.getParameter("gender");
 			String email = req.getParameter("email");
@@ -164,8 +164,9 @@ public class PartyServlet extends HttpServlet {
 			out.println("<h2>***待做*** 重複報名抓不住例外</h2>");
 		}
 		
-		// 使用者(會員) 發起揪團
+// 未完成  // 使用者(會員) 發起揪團
 		if ("readyToHost".equals(action)) {
+// 需動態帶入會員
 			Integer partyHost = Integer.parseInt(req.getParameter("partyHost"));
 			String partyTitle = req.getParameter("partyTitle");
 			Date regDate = Date.valueOf(req.getParameter("regDate"));
@@ -297,29 +298,35 @@ public class PartyServlet extends HttpServlet {
 			successView.forward(req, res);
 		}
 		
-//未完成     //使用者 放棄修改 自己主揪的團
-		if ("goBackToPartyIHost".equals(action)) {
-			RequestDispatcher successView = req.getRequestDispatcher("/party/partyIHost.jsp");
-			successView.forward(req, res);
-		}
+		//使用者 放棄修改 自己主揪的團 => 用前端處理 history.back()
+//		if ("goBackToPartyIHost".equals(action)) {
+//			RequestDispatcher successView = req.getRequestDispatcher("/party/partyIHost.jsp");
+//			successView.forward(req, res);
+//		}
 		
 		//使用者 審核自己主揪的團
 		if ("updatePartyMemberStatus".equals(action)) {
 			Integer partyMemberSN = Integer.parseInt(req.getParameter("partyMemberSN"));
 			String status = req.getParameter("status");
 			partyMemberSvc.updateStatus(partyMemberSN, status);
+
+			//以下改用AJAX
+//			Integer partySN = Integer.parseInt(req.getParameter("partySN"));
+//			PartyVO partyVO = partySvc.findByPartySN(partySN);
+//			req.setAttribute("partyVO", partyVO);
 			
-			Integer partySN = Integer.parseInt(req.getParameter("partySN"));
-			PartyVO partyVO = partySvc.findByPartySN(partySN);
-			req.setAttribute("partyVO", partyVO);
+//			List<PartyMemberVO> partyMembers = partyMemberSvc.findByPartySN(partySN);
+//			req.setAttribute("partyMembers", partyMembers);
 			
-			List<PartyMemberVO> partyMembers = partyMemberSvc.findByPartySN(partySN);
-			req.setAttribute("partyMembers", partyMembers);
-			
-			RequestDispatcher successView = req.getRequestDispatcher("/party/partyIHostDetail.jsp");
-			successView.forward(req, res);
+//			RequestDispatcher successView = req.getRequestDispatcher("/party/partyIHostDetail.jsp");
+//			successView.forward(req, res);
+
+//如果需要錯誤判斷  out.print("qq"); 
 			
 		}
+
+		
+		
 		
 	}
 

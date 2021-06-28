@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=BIG5" pageEncoding="BIG5" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.partymember.model.*" %>
 <jsp:useBean id="diveInfoSvc" class="com.diveinfo.model.DiveInfoService" />
@@ -8,44 +8,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="BIG5">
-<title>§ÚÁ|¿ìªº´ª¹Î ­×§ï¤º®e¼f®Ö³ø¦W¸ê®æ</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>æˆ‘èˆ‰è¾¦çš„æªåœ˜ ä¿®æ”¹å…§å®¹å¯©æ ¸å ±åè³‡æ ¼</title>
+	
+    <!-- Bootstrap çš„ CSS -->
+    <link rel="stylesheet" href="../vendors/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/partyIHostDetail.css">
+    
 </head>
+
 <body>
 
-<h2>§ÚÁ|¿ìªº´ª¹Î: ${partyVO.partySN}</h2>
-<h2>­×§ï¤º®e / ¼f®Ö³ø¦W¸ê®æ</h2>
+<jsp:include page="../share/navbar.jsp" flush="true" />
 
+<h4>æˆ‘èˆ‰è¾¦çš„æªåœ˜: ${partyVO.partySN}</h4>
+<h4>ä¿®æ”¹å…§å®¹ / å¯©æ ¸å ±åè³‡æ ¼</h4>
+
+<section class="party">
 <form method="post" action="<%=request.getContextPath()%>/party/party.do">
 	<table>
 		<tr>
-			<td class="partySN">´ª¹Î½s¸¹¡G </td>
+			<td class="partySN">æªåœ˜ç·¨è™Ÿï¼š </td>
 			<td><input type="text" name="partySN" value="${partyVO.partySN}" readonly></td>
 		</tr>
 		<tr>
-			<td class="partyHost">¥D´ª¤H¡G </td>
+			<td class="partyHost">ä¸»æªäººï¼š </td>
 			<td><input type="text" name="partyHost" value="${partyVO.partyHost}" readonly></td>
 		</tr>
 		<tr>
-			<td class="partyTitle">´ª¹Î¥D¦®: </td>
+			<td class="partyTitle">æªåœ˜ä¸»æ—¨: </td>
 			<td><input type="text" name="partyTitle" value="${partyVO.partyTitle}"></td>
 		</tr>
 		<tr>
-			<td class="date">¬¡°Ê¤é´Á: </td>
+			<td class="date">æ´»å‹•æ—¥æœŸ: </td>
 			<td>
-				<input type="date" name="startDate" value="${partyVO.startDate}"> ¦Ü  <input type="date" name="endDate" value="${partyVO.endDate}">
+				<input type="date" name="startDate" value="${partyVO.startDate}"> è‡³  <input type="date" name="endDate" value="${partyVO.endDate}">
 			</td>
 		</tr>
 		<tr>
-			<td class="regDate">³ø¦W¶}©ñ¤é´Á: </td>
+			<td class="regDate">å ±åé–‹æ”¾æ—¥æœŸ: </td>
 			<td><input type="date" name="regDate" value="${partyVO.regDate}"></td>
 		</tr>
 		<tr>
-			<td class="closeDate">³ø¦WºI¤î¤é´Á: </td>
+			<td class="closeDate">å ±åæˆªæ­¢æ—¥æœŸ: </td>
 			<td><input type="date" name="closeDate" value="${partyVO.closeDate}"></td>
 		</tr>
 		<tr>
-			<td class="partyLocation">´ª¹Î¼çÂI: </td>
+			<td class="partyLocation">æªåœ˜æ½›é»: </td>
 			<td>
 				<select size="" name="partyLocation">
 				<c:forEach var="diveInfoVO" items="${diveInfoSvc.getAll()}">
@@ -55,155 +65,259 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="partyMinSize">³Ì§C¦¨¹Î¤H¼Æ(«İ­×§ï): </td>
+			<td class="partyMinSize">æœ€ä½æˆåœ˜äººæ•¸(å¾…ä¿®æ”¹): </td>
 			<td><input type="number" min="${partyMemberSvc.findByPartySN(partyVO.partySN).size()}" max="20" name="partyMinSize" value="${partyVO.partyMinSize}"></td>
 		</tr>
 		<tr>
-			<td class="sizenow">¥Ø«e¤w³q¹L¼f®Ö¤H¼Æ(«İ­×§ï): </td>
+			<td class="sizenow">ç›®å‰å·²é€šéå¯©æ ¸äººæ•¸(å¾…ä¿®æ”¹): </td>
 			<td>${partyMemberSvc.findByPartySN(partyVO.partySN).size()}</td>
 		</tr>
 		<tr>
-			<td class="status">´ª¹Îª¬ºA: </td>
+			<td class="status">æªåœ˜ç‹€æ…‹: </td>
 			<c:if test="${partyVO.status == 0}">
 				<td>
 					<select size="" name="status">
-						<option value="0" selected>¼ö¯P³ø¦W¤¤
-						<option value="2">µ²§ô
-						<option value="3">¨ú®ø
+						<option value="0" selected>ç†±çƒˆå ±åä¸­
+						<option value="2">çµæŸ
+						<option value="3">å–æ¶ˆ
 					</select>
 				</td>
 			</c:if>
 			<c:if test="${partyVO.status == 1}">
 				<td>
 					<select size="" name="status">
-						<option value="1" selected>¤wÃBº¡
-						<option value="4">¤w¦¨¹Î(¤´¥i³ø¦W)
+						<option value="1" selected>å·²é¡æ»¿
+						<option value="4">å·²æˆåœ˜(ä»å¯å ±å)
 					</select>
 				</td>
 			</c:if>
 			<c:if test="${partyVO.status == 2}">
 				<td>
 					<select size="" name="status">
-						<option value="2" selected>¤wµ²§ô
+						<option value="2" selected>å·²çµæŸ
 					</select>
 				</td>
 			</c:if>
 			<c:if test="${partyVO.status == 3}">
 				<td>
 					<select size="" name="status">
-						<option value="3" selected>¤w¨ú®ø
+						<option value="3" selected>å·²å–æ¶ˆ
 					</select>
 				</td>
 			</c:if>
 			<c:if test="${partyVO.status == 4}">
 				<td>
 					<select size="" name="status">
-						<option value="1" ${partyVO.status == "1"? "selected": ""}>ÃBº¡
-						<option value="3" ${partyVO.status == "3"? "selected": ""}>¨ú®ø
-						<option value="4" selected>¤w¦¨¹Î(¤´¥i³ø¦W)
+						<option value="1" ${partyVO.status == "1"? "selected": ""}>é¡æ»¿
+						<option value="3" ${partyVO.status == "3"? "selected": ""}>å–æ¶ˆ
+						<option value="4" selected>å·²æˆåœ˜(ä»å¯å ±å)
 					</select>
 				</td>
 			</c:if>
 			<c:if test="${partyVO.status == 5}">
 				<td>
 					<select size="" name="status">
-						<option value="5" selected>¦¹´ª¹Î¤w³Q¤U¬[
+						<option value="5" selected>æ­¤æªåœ˜å·²è¢«ä¸‹æ¶
 					</select>
 				</td>
 			</c:if>
 		</tr>
 		<tr>
-			<td class="partyDetail">¸Ô²Ó¤º®e: (CKEditorÁÙ¨S´ú) </td>
+			<td class="partyDetail">è©³ç´°å…§å®¹: (CKEditoré‚„æ²’æ¸¬) </td>
 			<td><textarea name="partyDetail" maxlength=100>${partyVO.partyDetail}</textarea></td>
 		</tr>
 	</table>
 	
-	<button type="submit" name="action" value="submitUpdate">½T»{­×§ï</button>
-	<button type="submit" name="action" value="goBackToPartyIHost">ªğ¦^«e­¶(«İ°µ)</button>
-<!-- «İ§ó·sgoBack¥\¯à -->
+<!-- å¾…æ¸¬è©¦ -->
+	<button type="button" onclick="<%=request.getContextPath()%>/party/partyIHost.jsp">å›ä¸Šé (æ¸¬è©¦buttoné€£çµ)</button>
+	<input type="button" onclick="history.back()" value="å›ä¸Šé " class="btn btn-outline-info btn-sm">
+	<button type="submit" name="action" value="submitUpdate" class="btn btn-outline-info btn-sm">ç¢ºèªä¿®æ”¹</button>
 </form>
+</section>
 
-<h2>³ø¦Wª¬ªp</h2>
-<c:if test="${empty partyMembers}">
-	<div style="color:red">¥Ø«e©|µL·|­û³ø¦W³á!</div>
-</c:if>
 
-<c:if test="${not empty partyMembers}">
-	<table>
-		<tr>
-			<td>³ø¦W§Ç¸¹</td>
-			<td>³ø¦W·|­û</td>
-			<td>©Ê§O</td>
-			<td>E-mail</td>
-			<td>¤â¾÷</td>
-			<td>¥X¥Í¦~¤ë¤é</td>
-			<td>¨­¥÷ÃÒ¦r¸¹</td>
-			<td>³Ì°ªÃÒ·Ó</td>
-			<td>ÃÒ·Ó¹Ï¤ù</td>
-			<td>³ø¦W®É¶¡(«İ­×)</td>
-			<td>¨ä¥L³Æµù</td>
-			<td>³ø¦Wª¬ºA</td>
-			<td>½T»{«á¤£¥i­×§ï</td>
-		</tr>
-	<c:forEach var="partyMember" items="${partyMembers}">
-		<form method="post" action="<%=request.getContextPath()%>/party/party.do">
+<!-- ======================== å ±åç‹€æ³  ============================== -->
+
+<h4>å ±åç‹€æ³(æŒ‰å ±åå…ˆå¾Œ)</h4>
+<section class="registration">
+	<c:if test="${empty partyMembers}">
+		<div id="alertqq">ç›®å‰å°šç„¡æœƒå“¡å ±åå–”!</div>
+	</c:if>
+	
+	<c:if test="${not empty partyMembers}">
+		<table>
 			<tr>
-				<td>
-					${partyMember.partyMemberSN}
-					<input type="hidden" name="partyMemberSN" value="${partyMember.partyMemberSN}">
-					<input type="hidden" name="partySN" value="${partyVO.partySN}">
-				</td>
-				<td>${memberSvc.getone(partyMember.partyMember).userName}</td>
-				<td>${partyMember.gender == 0? "¨k" : "¤k"}</td>
-				<td>${partyMember.email}</td>
-				<td>${partyMember.phone}</td>
-				<td>${partyMember.birthDate}</td>
-				<td>${partyMember.personID}</td>
-				<c:if test="${partyMember.certification == 'A1'}">
-					<td>PADI OW</td>
-				</c:if>
-				<c:if test="${partyMember.certification == 'A2'}">
-					<td>PADI AOW</td>
-				</c:if>
-				<c:if test="${partyMember.certification == 'B1'}">
-					<td>SSI OW</td>
-				</c:if>
-				<c:if test="${partyMember.certification == 'B2'}">
-					<td>SSI AOW</td>
-				</c:if>
-				<c:if test="${partyMember.certification == null}">
-					<td>µL</td>
-				</c:if>
-				<td><button>(«İ°µ)</button></td>
-				<td>${partyMember.appliedTime}</td>
-				<td>${partyMember.comment}</td>
-				<c:if test="${partyMember.status == '0'}">
-					<td>
-						<select size="" name="status">
-								<option value="0" selected>«İ¼f®Ö
-								<option value="1">¼f®Ö³q¹L
-								<option value="2">¼f®Ö¤£³q¹L
-						</select>
-					</td>
-					<td><button type="submit" name="action" value="updatePartyMemberStatus">½T»{</button></td>
-				</c:if>
-				<c:if test="${partyMember.status == '1'}">
-					<td>¼f®Ö³q¹L</td>
-					<td>
-						<button disabled>¤w½T»{</button>
-					</td>
-				</c:if>
-				<c:if test="${partyMember.status == '2'}">
-					<td>¼f®Ö¤£³q¹L</td>
-					<td>
-						<button disabled>¤w½T»{</button>
-					</td>
-				</c:if>
+				<td>å ±ååºè™Ÿ</td>
+				<td>å ±åæœƒå“¡</td>
+				<td>æœ€é«˜è­‰ç…§</td>
+				<td>å ±åæ™‚é–“(å¾…ä¿®)</td>
+				<td>å ±åç‹€æ…‹</td>
 			</tr>
-		</form>
-	</c:forEach>
-	</table>
-</c:if>
+		<c:forEach var="partyMember" items="${partyMembers}">
+			<form method="post" action="<%=request.getContextPath()%>/party/party.do">
+				<tr>
+					<td>${partyMember.partyMemberSN}
+						<input class="partyMemberSN" type="hidden" name="partyMemberSN" value="${partyMember.partyMemberSN}">
+						<input type="hidden" name="partySN" value="${partyVO.partySN}">
+					</td>
+					<td><button type="button" data-toggle="modal" href="#show${partyMember.partyMemberSN}" class="btn btn-warning btn-sm">${memberSvc.getone(partyMember.partyMember).userName}</button>
+						<div class="modal" tabindex="-1" id="show${partyMember.partyMemberSN}">
+						  <div class="modal-dialog">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <h5 class="modal-title">æœƒå“¡å ±åè³‡æ–™</h5>
+						        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						          <span aria-hidden="true">&times;</span>
+						        </button>
+						      </div>
+						      <div class="modal-body">
+							      <table>
+							        <tr>
+							        	<td>å§“å 	</td>
+							        	<td>${memberSvc.getone(partyMember.partyMember).userName}</td>
+							        </tr>
+							        <tr>
+							        	<td>ç¶½è™Ÿ  </td>
+							        	<td>${memberSvc.getone(partyMember.partyMember).nickName}</td>
+							        </tr>
+							        <tr>
+							        	<td>æ€§åˆ¥  </td>
+							        	<td>${partyMember.gender == '0'? "ç”·" : "å¥³"}</td>
+							        </tr>
+							        <tr>
+							       		<td>E-mail  </td>
+							       		<td>${partyMember.email}</td>
+							       	</tr>
+							       	<tr>
+								        <td>é€£çµ¡é›»è©±  </td>
+								        <td>${partyMember.phone}</td>
+								    </tr>
+							        <tr>
+							        	<td>æœ€é«˜æ½›æ°´è­‰ç…§  </td>
+								        <c:if test="${partyMember.certification == '1'}">
+											<td>PADI OW / SSI OW</td>
+										</c:if>
+										<c:if test="${partyMember.certification == '2'}">
+											<td>PADI AOW / SSI AIW</td>
+										</c:if>
+										<c:if test="${partyMember.certification == '0' or partyMember.certification == null}">
+											<td>ç„¡</td>
+										</c:if>
+									</tr>
+							        <tr>
+							        	<td>è­‰ç…§åœ–ç‰‡  </td>
+							        	<td><img class="showpic" src="<%=request.getContextPath()%>/party/partyPic.do?action=certificationPic&&sn=${partyMember.partyMemberSN}"></td>
+									</tr>
+									<tr>
+								        <td>å‚™è¨»  </td>
+								        <td>${partyMember.comment}</td>
+								    </tr>
+							      </table>
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+					</td>
+					<c:if test="${partyMember.certification == '1'}">
+						<td>PADI OW / SSI OW</td>
+					</c:if>
+					<c:if test="${partyMember.certification == '2'}">
+						<td>PADI AOW / SSI AIW</td>
+					</c:if>
+					
+					<c:if test="${partyMember.certification == '0' or partyMember.certification == null}">
+						<td>ç„¡</td>
+					</c:if>
+					<td>${partyMember.appliedTime}</td>
+					<c:if test="${partyMember.status == '0'}">
+						<td>
+							<button type="button" name="status" value="1" class="btn btn-outline-success btn-sm accept">æ¥å—</button>
+							<button type="button" name="status" value="2" class="btn btn-outline-danger btn-sm reject">ä¸æ¥å—</button>
+						</td>
+					</c:if>
+					<c:if test="${partyMember.status == '1'}">
+						<td><button disabled class="btn btn-outline-success btn-sm">å·²æ¥å—</button></td>
+					</c:if>
+					<c:if test="${partyMember.status == '2'}">
+						<td><button disabled class="btn btn-secondary btn-sm">å·²æ‹’çµ•</button></td>
+					</c:if>
+				</tr>
+			</form>
+		</c:forEach>
+		</table>
+	</c:if>
+</section>
 
-</body>
-</html>
+<script src="../vendors/jquery/jquery-3.5.1.min.js"></script>
+<script>
+	let accept = $('.accept');
+	let reject = $('.reject');
+	
+	accept.on('click', function(){
+		let that = this;
+		
+		let input1 = $(this.closest('tr')).find('input[name="partyMemberSN"]')[0];
+		let partyMemberSN = $(input1).val();
+		
+		let input2 = $(this.closest('tr')).find('input[name="partySN"]')[0];
+		let partySN = $(input2).val();
+		
+		if (confirm('ç¢ºå®šæ¥å—å ±ååºè™Ÿ' + partyMemberSN + 'æˆç‚ºåœ˜å“¡? æé†’æ‚¨: ç¢ºèªå¾Œç„¡æ³•ä¿®æ”¹!')) {
+			let status = '1';
+			
+			$.ajax({
+				url:"<%=request.getContextPath()%>/party/party.do",
+				type: "get",
+				dataType: "text",	// æŒ‡é æœŸå¾serverå›å‚³çš„æ–‡å­—
+				data: {
+					"action":  "updatePartyMemberStatus",
+					"partyMemberSN": partyMemberSN,
+					"status": status,
+				},
+				success: function(data) {
+					let new_html = `<button disabled class="btn btn-outline-success btn-sm">å·²æ¥å—</button>`;
+					$(that.closest('td')).html(new_html);
+				}
+			});
+		} else {
+			return;
+		}
+		
+	});
+	
+	reject.on('click', function(){
+		let that = this;
+		
+		let input1 = $(this.closest('tr')).find('input[name="partyMemberSN"]')[0];
+		let partyMemberSN = $(input1).val();
+		
+		let input2 = $(this.closest('tr')).find('input[name="partySN"]')[0];
+		let partySN = $(input2).val();
+		
+		if (confirm('ç¢ºå®šæ‹’çµ•å ±ååºè™Ÿ' + partyMemberSN + 'æˆç‚ºåœ˜å“¡? æé†’æ‚¨: ç¢ºèªå¾Œç„¡æ³•ä¿®æ”¹!')) {
+			let status = '2';
+			
+			$.ajax({
+				url:"<%=request.getContextPath()%>/party/party.do",
+				type: "get",
+				dataType: "text",
+				data: {
+					"action":  "updatePartyMemberStatus",
+					"partyMemberSN": partyMemberSN,
+					"status": status,
+				},
+				success: function(data) {
+					let new_html = `<button disabled class="btn btn-secondary btn-sm">å·²æ‹’çµ•</button>`;
+					$(that.closest('td')).html(new_html);
+				}
+			});
+		} else {
+			return;
+		}
+		
+	});
+</script>
+<jsp:include page="../share/footer.jsp" flush="true" />

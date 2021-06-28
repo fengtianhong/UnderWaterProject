@@ -22,5 +22,7 @@ public interface PartyMemberDAO_interface {
 	
 	public int deleteByPartyMemberSN(Integer partyMemberSN);	//done
 
+	// 0626 added
+	public List<PartyMemberVO> findByPartySNAndStatus(Integer partySN, String status);
 
 }

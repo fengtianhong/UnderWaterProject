@@ -32,7 +32,6 @@
 		<td><i class="fas fa-glass-cheers"></i></td>
 		<td class="partyHost">揪團編號： </td>
 		<td><sup>PartyNo.</sup>${partyVO.partySN}</td>
-<%-- 		<td>${partyVO.partySN == null? "partyVO1.getPartySN": "partyVO.partySN"}</td> --%>
 	</tr>
 	<tr>
 		<td><i class="far fa-user-circle"></i></td>
@@ -84,7 +83,5 @@
 	</form>
 </section>
 	
-<!-- 如果是返回上頁來的(有資料)	 -->
-<%-- 		<h2>hello~~${partySN}</h2> --%>
 
 <jsp:include page="../share/footer.jsp" flush="true" />
