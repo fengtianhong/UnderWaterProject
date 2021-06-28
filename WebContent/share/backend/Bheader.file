@@ -71,25 +71,44 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
+    
+             <!-------------------------- 潛水地點 -------------------------->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#diveinfo"
+                    aria-expanded="true" aria-controls="diveinfo"> 
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Pages</span>
+                    <span>潛水地點</span>
                 </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div id="diveinfo" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="#">Login</a>
-                        <a class="collapse-item" href="#">Register</a>
-                        <a class="collapse-item" href="#">Forgot Password</a>
+                        <h6 class="collapse-header">潛點管理:</h6>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/diveinfo/diveinfolist.jsp">潛點列表</a>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/diveinfo/addDiveinfo.jsp">新增潛點</a>                 
                         <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="#">404 Page</a>
-                        <a class="collapse-item" href="#">Blank Page</a>
                     </div>
                 </div>
             </li>
+            
+             <!--------------------------end of  潛水地點 -------------------------->
+             
+             <!-------------------------- 最新消息 -------------------------->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#news"
+                    aria-expanded="true" aria-controls="news"> 
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>最新消息</span>
+                </a>
+                <div id="news" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">新聞管理:</h6>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/news/newslist.jsp">新聞列表</a>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/news/addNews.jsp">新增新聞</a>                 
+                        <div class="collapse-divider"></div>
+                    </div>
+                </div>
+            </li>      
+             <!--------------------------end of  最新消息 -------------------------->
+             
             <!-------------------------- Nav 套裝行程 -------------------------->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGT"
@@ -108,7 +127,10 @@
                         <a class="collapse-item" href="#">嘿嘿嘿</a>
                     </div>
                 </div>
-            </li>
+            </li>   
+             <!--------------------------end of  Nav 套裝行程 -------------------------->
+             
+             
             <!-------------------------- Nav 客服訊息管理 QA 管理-------------------------->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCS"
@@ -127,7 +149,8 @@
                         <a class="collapse-item" href="<%=request.getContextPath()%>/qa/addQA.jsp">新增QA</a>
                     </div>
                 </div>
-            </li>
+            </li>	
+            <!-------------------------- end of Nav 客服訊息管理 QA 管理 -------------------------->
             <!-------------------------- Nav 揪團  -------------------------->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseParty"
@@ -147,6 +170,7 @@
                 </div>
             </li>
 
+ 		
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="#">

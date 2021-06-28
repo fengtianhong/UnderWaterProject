@@ -8,64 +8,124 @@
 <%=newsVO == null%>
 <html>
 <head>
+
+<%@ include file="../share/backend/Bmeta.file"%>
+<style type="text/css">
+.container {
+	margin: 0 auto;
+	width: 1200px;
+	display: flex;
+}
+
+.preview {
+	width: 100%;
+}
+</style>
 <title>新增最新消息</title>
 </head>
 <body>
-	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">請修正以下錯誤:</font>
-		<ul>
-			<c:forEach var="message" items="${errorMsgs}">
-				<li style="color: red">${message}</li>
-			</c:forEach>
-		</ul>
-	</c:if>
-	<FORM METHOD="post" ACTION="news.do" enctype="multipart/form-data">
-		<table>
-			<tr>
-				<td>標題:</td>
-				<td><input type="TEXT" name="title" size="45"
-					placeholder="請輸入最新消息標題"
-					value="<%=(newsVO == null) ? "" : newsVO.getTitle()%>"></td>
-			</tr>
-			<tr>
-				<td>內容:</td>
-				<td><textarea name="content" rows="6" cols="40"><%=(newsVO == null) ? "" : newsVO.getContent()%></textarea>
-				</td>
-			</tr>
-			<tr>
-				<td>圖片:</td>
-				<td>
-					<div class="picture"></div> <input type="file" name="image"
-					id="the_file" accept="image/*">
-				</td>
-			</tr>
-			<tr>
-				<td>新聞上架日期:</td>
-				<td><input name="newsDate" id="f_date1" type="text"></td>
-			</tr>
-			<tr>
-				<td>資料來源:</td>
-				<td><input type="TEXT" name="newsFrom" size="45"
-					placeholder="請輸入資料來源"
-					value="<%=(newsVO == null) ? "" : newsVO.getNewsFrom()%>"></td>
-			</tr>
-			<tr>
-				<td>類型:</td>
-				<td><select name="newsType">
-						<option value="0"
-							<%=(newsVO == null) ? "" : ("0".equals(newsVO.getNewsType())) ? "selected" : ""%>>潛點</option>
-						<option value="1"
-							<%=(newsVO == null) ? "" : ("1".equals(newsVO.getNewsType())) ? "selected" : ""%>>商品</option>
-						<option value="2"
-							<%=(newsVO == null) ? "" : ("2".equals(newsVO.getNewsType())) ? "selected" : ""%>>揪團</option>
-				</select></td>
-			</tr>
-		</table>
-		<br> <input type="hidden" name="action" value="insert"> <input
-			type="submit" value="送出新增">
+	<%@ include file="../share/backend/Bheader.file"%>
+	<div class="container">
+		<div class="col-lg-7">
 
-	</FORM>
+			<FORM METHOD="post" ACTION="news.do" enctype="multipart/form-data">
+				<table>
+					<tr>
+						<td>標題:</td>
+						<td><input type="TEXT" name="title" size="45"
+							placeholder="請輸入最新消息標題"
+							value="<%=(newsVO == null) ? "" : newsVO.getTitle()%>"></td>
+					</tr>
+					<tr>
+						<td>內容:</td>
+						<td><textarea name="content" rows="6" cols="40"><%=(newsVO == null) ? "" : newsVO.getContent()%></textarea>
+						</td>
+					</tr>
+					<tr>
+						<td>圖片:</td>
+						<td>
+							 <input type="file" name="image"
+							id="the_file" accept="image/*">
+						</td>
+					</tr>
+					<tr>
+						<td>新聞上架日期:</td>
+						<td><input name="newsDate" id="f_date1" type="text"></td>
+					</tr>
+					<tr>
+						<td>資料來源:</td>
+						<td><input type="TEXT" name="newsFrom" size="45"
+							placeholder="請輸入資料來源"
+							value="<%=(newsVO == null) ? "" : newsVO.getNewsFrom()%>"></td>
+					</tr>
+					<tr>
+						<td>類型:</td>
+						<td><select name="newsType">
+								<option value="0"
+									<%=(newsVO == null) ? "" : ("0".equals(newsVO.getNewsType())) ? "selected" : ""%>>潛點</option>
+								<option value="1"
+									<%=(newsVO == null) ? "" : ("1".equals(newsVO.getNewsType())) ? "selected" : ""%>>商品</option>
+								<option value="2"
+									<%=(newsVO == null) ? "" : ("2".equals(newsVO.getNewsType())) ? "selected" : ""%>>揪團</option>
+						</select></td>
+					</tr>
+				</table>
+				<br> <input type="hidden" name="action" value="insert">
+				<input class="btn btn-primary btn-user" type="submit" value="送出新增">
 
+			</FORM>
+		</div>
+		<div class="col-lg-4">
+
+			<!-- 圖片預覽 -->
+			<div class="card shadow mb-4">
+				<!-- Card Header - Accordion -->
+				<a href="#collapseCardExample" class="d-block card-header py-3"
+					data-toggle="collapse" role="button" aria-expanded="true"
+					aria-controls="collapseCardExample">
+					<h6 class="m-0 font-weight-bold text-primary">Picture</h6>
+				</a>
+				<!-- Card Content - Collapse -->
+				<div class="collapse show" id="collapseCardExample" style="">
+					<div class="card-body">
+						<%-- 行程圖片 --%>
+						<div class="picture"></div>
+					</div>
+				</div>
+			</div>
+
+			<c:if test="${not empty errorMsgs}">
+
+				<div class="mb-4">
+					<div class="card border-left-warning shadow py-2">
+						<div class="card-body">
+							<div class="row no-gutters align-items-center">
+								<div class="col mr-2">
+
+									<div
+										class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+										Error Messages</div>
+									<div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+
+									<div class="card-body" style="color: LightCoral">
+										<c:forEach var="message" items="${errorMsgs}">
+								- ${message}<br>
+										</c:forEach>
+									</div>
+								</div>
+								<div class="col-auto">
+									<i class="fas fa-comments fa-2x text-gray-300"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</c:if>
+
+		</div>
+	</div>
+	<%@ include file="../share/backend/Bfooter.file"%>
+	<%@ include file="../share/backend/Bjs.file"%>
 </body>
 
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
@@ -100,7 +160,7 @@
 	       timepicker:false,       //timepicker:true,
 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
-		   value: '<%=newsDate%>' // value:   new Date(),
+		   value: '<%=newsDate%>'  // value:   new Date(),
 	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
 	//startDate:	            '2017/07/10',  // 起始日
 	//minDate:               '-1970-01-01', // 去除今日(不含)之前
