@@ -11,7 +11,7 @@
         <A href="<%=request.getRequestURI()%>?whichPage=<%=pageNumber%>">至最後一頁</A>&nbsp;
     <%}%>
   <%}%>  
-
+<b> 共<font color=blue><%=rowNumber%></font>筆</b>
 <br><br>
 
   <%if (pageNumber>1) {%>
@@ -24,3 +24,4 @@
        <input type="submit" value="確定" >  
     </FORM>
   <%}%>
+  

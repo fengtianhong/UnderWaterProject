@@ -27,15 +27,14 @@ html, body {
 }
 
 #map-canvas {
-	height: 100%
+	height: 100%;
 }
 
 .show_pic{
-	width:400px
+	height:250px;
 }
 img {
-	
-	width: 100%;
+	height: 100%;
 }
 </style>
 
@@ -64,12 +63,12 @@ img {
 			lat: ${diveinfoVO.latitude},
 			lng: ${diveinfoVO.longitude},
 			content:'<h2>${diveinfoVO.pointName}</h2>'+
-		    '<span>${diveinfoVO.view}</span><br/>'+
+		    '<span>${diveinfoVO.view}</span><hr>'+
 		    '<div class="show_pic"><img src="<%=request.getContextPath()%>/diveinfo/ShowPic?pointSN=${diveinfoVO.pointSN}"><br></div>'+
-			((${diveinfoVO.pic==null})?'<i>找不到圖片</i>':'<i>圖片取自網路</i>')+
-			'<br><span>${diveinfoVO.introduction}</span><br>'+
-			'<span>適合季節:${diveinfoVO.season}</sapn><br>'+
-			'<span>評價平均分數:'+(isNaN(${diveinfoVO.ratePoint/diveinfoVO.ratePeople})?0:${diveinfoVO.ratePoint/diveinfoVO.ratePeople})+'</span>'
+			((${diveinfoVO.pic==null})?'<i>找不到圖片</i>':'<i></i><hr>')+
+			'<span>適合季節 : ${diveinfoVO.season}</sapn><hr>'+
+			'<span>評價平均分數 : '+(isNaN(${diveinfoVO.ratePoint/diveinfoVO.ratePeople})?0:${diveinfoVO.ratePoint/diveinfoVO.ratePeople})+'</span>'
+			+'<hr><span>${diveinfoVO.introduction}</span>'
 	
 		});
 		</c:forEach>
