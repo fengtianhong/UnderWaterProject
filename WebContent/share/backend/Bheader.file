@@ -128,6 +128,24 @@
                     </div>
                 </div>
             </li>
+            <!-------------------------- Nav 揪團  -------------------------->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseParty"
+                    aria-expanded="true" aria-controls="collapseGT">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>揪團管理</span>
+                </a>
+                <div id="collapseParty" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Backend:</h6>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/party/partyManage.jsp">揪團管理</a>
+                        <a class="collapse-item" href="#">其他</a>                 
+                    	<div class="collapse-divider"></div>
+                        <h6 class="collapse-header">Other Pages:</h6>
+                        <a class="collapse-item" href="#">其他</a>
+                    </div>
+                </div>
+            </li>
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
