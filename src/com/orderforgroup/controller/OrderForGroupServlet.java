@@ -249,7 +249,15 @@ public class OrderForGroupServlet extends HttpServlet {
 			List<String> errMsg = new LinkedList<String>();
 			req.setAttribute("errMsg", errMsg);
 			try {
-				Integer userID = new Integer(req.getParameter("userID"));
+				
+				Integer userID = null;
+				try{
+					userID = new Integer(req.getParameter("userID"));
+				}catch(Exception e) {
+					errMsg.add("請確認是否已登入");
+				}
+
+				
 				Integer groupTourSN = new Integer(req.getParameter("groupTourSN"));
 				
 				GroupTourService groupTourSvc = new GroupTourService();

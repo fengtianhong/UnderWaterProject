@@ -45,7 +45,7 @@
 <div class="col-lg-7">
 <form method="post" action="qa.do">
 <table>
-	<h1 class="h3 mb-2 text-gray-800">新增問與答</h1>
+	<h1 class="h3 mb-2 text-gray-800">新增 Q A</h1>
 	<p class="mb-4">針對使用者可能提出的問題進行解答，務必詳述</p>
 	<tr>
 		<td>問題</td>	
@@ -98,6 +98,7 @@
 
 <div class="col-lg-4">
 <%-- 錯誤表列 --%>
+<c:if test="${not empty errMsg}">
  <div class="mb-4">
 <div class="card border-left-warning shadow h-100 py-2">
 	<div class="card-body">
@@ -116,7 +117,7 @@
 			</div>
 		<div class="col-auto">
 		<i class="fas fa-comments fa-2x text-gray-300"></i>
-	</div></div></div></div></div>
+	</div></div></div></div></div></c:if>
 
 
 </div>
