@@ -12,6 +12,9 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.orderlist.model.OrderListDAO;
+import com.orderlist.model.OrderListVO;
+
 public class OrderForProductDAO implements OrderForProductDAO_interface {
 
 	private static final String INSERT_STMT = "INSERT INTO OrderForProduct (userID, totalPrice, orderStatus) VALUES (?, ?, ?)";
@@ -246,6 +249,81 @@ public class OrderForProductDAO implements OrderForProductDAO_interface {
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public void insertWithOrderList(OrderForProductVO orderForProductVO, List<OrderListVO> list) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String nextOrderSN = null;
+
+		try {
+			con = ds.getConnection();
+
+			// 關閉自動交易控制
+			con.setAutoCommit(false);
+
+			// 先新增訂單
+			String cols[] = { "productSN" };
+			pstmt = con.prepareStatement(INSERT_STMT, cols);
+			pstmt.setInt(1, orderForProductVO.getUserID());
+			pstmt.setInt(2, orderForProductVO.getTotalPrice());
+			pstmt.setString(3, orderForProductVO.getOrderStatus());
+			pstmt.executeUpdate();
+
+			// 取得對應的自增主鍵值
+			rs = pstmt.getGeneratedKeys();
+			if (rs.next()) {
+				nextOrderSN = rs.getString("productSN");
+				System.out.println("自增主鍵值= " + nextOrderSN + "(剛剛新增的訂單編號)");
+			} else {
+				System.out.println("未取得自增主鍵值");
+			}
+			rs.close();
+
+			// 同時新增該訂單主檔內的明細
+			OrderListDAO orderListDAO = new OrderListDAO();
+			for (OrderListVO orderListVO : list) {
+				orderListVO.setOrderSN(new Integer(nextOrderSN));
+				orderListDAO.insertWithOrderForProduct(orderListVO, con);
+			}
+
+			con.commit();
+			con.setAutoCommit(true);
+
+			System.out.println("新增訂單編號" + nextOrderSN + "時，共有明細" + list.size() + "筆同時被新增");
+
+		} catch (SQLException e) {
+			if (con != null) {
+				try {
+					con.rollback();
+				} catch (SQLException e1) {
+					throw new RuntimeException("rollback error occured. " + e1.getMessage());
+				}
+			}
+			
+			throw new RuntimeException("A database error occured. "
+					+ e.getMessage());
+			
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+
+		}
+
 	}
 
 }
