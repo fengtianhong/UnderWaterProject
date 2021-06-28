@@ -44,8 +44,10 @@
 						<div class="css_td" style="text-align: center;"><h3>${forumArticleVO.articleTitle}</h3></div>
 						<div class="css_td"><h6>${forumArticleVO.articleText}</h6></div>
 						<span class="css_td" style="text-align: center;"><fmt:formatDate value="${forumArticleVO.publishedDate}" pattern="yyyy-MM-dd"/></span>
+						
 						<jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
 						<span class="css_td" style="text-align: center;">作者：${memberSvc.getone(forumArticleVO.userID).nickName}</span>
+						
 						<span class="css_td" style="text-align: center;">文章好評：${forumArticleVO.rateGCount}</span>
 						<span class="css_td" style="text-align: center;">文章負評：${forumArticleVO.rateNGCount}</span>
 					</div>
