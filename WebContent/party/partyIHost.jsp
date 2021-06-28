@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=BIG5" pageEncoding="BIG5"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.party.model.*"  %>
 <%@ page import="java.util.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -8,77 +8,91 @@
 		List<PartyVO> listAll = partySvc.findByPartyHost(partyHost);
 		pageContext.setAttribute("listAll", listAll);
 %>
-<!-- ╚щ╟й╨A╠a╓J╥|╜Ш╫s╦╧ -->
+<jsp:useBean id="partyMemberSvc" class="com.partymember.model.PartyMemberService"/>
+<!-- Е╬┘Е▀∙Ф┘▀Е╦╤Е┘╔Ф°┐Е⌠║Г╥╗Х≥÷ -->
 
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="BIG5">
-<title>╖з╘ра|©Л╙╨╢╙╧н(╚щ╖О╪g╟й╨A╠a╓J╥|╜Ш╫s╦╧)</title>
-
-<style>
-.partyShort {
-	background-color: lightgrey;
-	width: 500px;
-	margin: 10px auto;
-}
-</style>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Ф┬▒Ф┴─Х┬┴Х╬╕Г └Ф▐╙Е°≤(Е╬┘Ф■╧Е╞╚Е▀∙Ф┘▀Е╦╤Е┘╔Ф°┐Е⌠║Г╥╗Х≥÷)</title>
+	<link rel="stylesheet" href="../share/index.css">
+    <!-- Bootstrap Г └ CSS -->
+    <link rel="stylesheet" href="../vendors/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/partyIHost.css">
 </head>
+
 <body>
 
-<h2>╖з╘ра|©Л╙╨╢╙╧н(╚щ╖О╪g╟й╨A╠a╓J╥|╜Ш╫s╦╧)</h2>
+<jsp:include page="../share/navbar.jsp" flush="true" />
 
+<h4>Ф┬▒Ф┴─Х┬┴Х╬╕Г └Ф▐╙Е°≤(Е╬┘Ф■╧Е╞╚Е▀∙Ф┘▀Е╦╤Е┘╔Ф°┐Е⌠║Г╥╗Х≥÷)</h4>
+
+<section class="party">
 <c:if test="${empty listAll}">
-	<div style="color:red">╠z╗ц╗S╕Ёа|©Л╔Т╕С╢╙╧н╛║╟йЁА!</div>
+	<div style="color:red">Ф┌╗Д╦╕Ф╡▓Ф°┴Х┬┴Х╬╕Д╩╩Д╫∙Ф▐╙Е°≤Ф╢╩Е▀∙Е√■!</div>
 </c:if>
 
+<%@ include file="page1.file" %>
 <c:forEach var="partyVO" items="${listAll}">
-	<div class="partyShort">
+	<div class="partyintro">
 		<form method="post" action="<%=request.getContextPath()%>/party/party.do">
 			<table>
 				<tr>
-					<td>╢╙╧н╫s╦╧: </td>
+					<td>Ф▐╙Е°≤Г╥╗Х≥÷: </td>
 					<td>${partyVO.partySN}</td>
 				</tr>
 				<tr>
-					<td>╔D╢╙╓H(╓╖╚А╔i╖R╟ё): </td>
+					<td>Д╦╩Ф▐╙Д╨╨(Д╧▀Е╬▄Е▐╞Е┬╙И≥╓): </td>
 					<td>${partyVO.partyHost}</td>
 				</tr>
 				<tr>
-					<td>╢╙╧н╔D╕╝: </td>
+					<td>Ф▐╙Е°≤Д╦╩Ф≈╗: </td>
 					<td>${partyVO.partyTitle}</td>
 				</tr>
 				<tr>
-					<td>╢╙╧н╙╛╨A: </td>
+					<td>Ф▐╙Е°≤Г▀─Ф┘▀: </td>
 					<c:if test="${partyVO.status == '0'}">
-						<td class="status">╪Ж╞PЁЬ╕W╓╓</td>
+						<td class="status">Г├╠Г┐┬Е═╠Е░█Д╦╜</td>
 					</c:if>
 					<c:if test="${partyVO.status == '1'}">
-						<td class="status">╓wцB╨║</td>
+						<td class="status">Е╥╡И║█Ф╩©</td>
 					</c:if>
 					<c:if test="${partyVO.status == '2'}">
-						<td class="status">╓w╣╡╖Т</td>
+						<td class="status">Е╥╡Г╣░Ф²÷</td>
 					</c:if>
 					<c:if test="${partyVO.status == '3'}">
-						<td class="status">╓w╗З╝Ь</td>
+						<td class="status">Е╥╡Е▐√Ф╤┬</td>
 					</c:if>
 					<c:if test="${partyVO.status == '4'}">
-						<td class="status">╓w╕╗╧н(╓╢╔iЁЬ╕W)</td>
+						<td class="status">Е╥╡Ф┬░Е°≤(Д╩█Е▐╞Е═╠Е░█)</td>
 					</c:if>
 					<c:if test="${partyVO.status == '5'}">
-						<td class="status">╓w╓U╛[</td>
+						<td class="status">Е╥╡Д╦▀Ф·╤</td>
 					</c:if>
 				</tr>
 				<tr>
-					<td>╚щ╪f╝ж╓H╪ф(╚щ╖╧╣╫): </td>
-					<td>partyMemberSvc.xxxxxx</td>
+					<td>Ф°─Д╫▌Ф┬░Е°≤Д╨╨Ф∙╦: </td>
+					<td>${partyVO.partyMinSize}</td>
+				</tr>
+				<tr>
+					<td>Е╥╡Ф▌╔Е▐≈Д╨╨Ф∙╦: </td>
+					<td>${partyMemberSvc.findByPartySNAndStatus(partyVO.partySN, "1").size()}</td>
+				</tr>
+				<tr>
+					<td>Ф°╙Е╞╘Ф═╦Д╨╨Ф∙╦: </td>
+					<td>${partyMemberSvc.findByPartySNAndStatus(partyVO.partySN, "0").size()}</td>
 				</tr>
 			</table>
-			<input type="hidden" name="partySN" value="${partyVO.partySN}">
-			<button type="submit" name="action" value="partyIHostDetail">╛d╛щ╦т╠║ / ╜в╖О╓╨╝e / ╪f╝жЁЬ╕W╦Й╝Ф</button>
+			<div class="next">
+				<input type="hidden" name="partySN" value="${partyVO.partySN}">
+				<button type="submit" name="action" value="partyIHostDetail" class="btn btn-outline-info btn-sm">Ф÷╔Г°▀Х╘ЁФ┐┘ / Д©╝Ф■╧Е┘╖Е╝╧ / Е╞╘Ф═╦Е═╠Е░█ХЁ┤Ф═╪</button>
+			</div>
 		</form>
 	</div>
 </c:forEach>
+<%@ include file="page2.file" %>
+</section>
 
-</body>
-</html>
+<jsp:include page="../share/footer.jsp" flush="true" />

@@ -1,22 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="diveInfoSvc" class="com.diveinfo.model.DiveInfoService" />
+<!-- 需動態帶入(發起揪團)會員資料 -->
 
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>發起揪團</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>發起揪團</title>
+	
+    <link rel="stylesheet" href="../share/index.css">
+    <link rel="stylesheet" href="css/hostParty.css">
+     <!-- Bootstrap 的 CSS -->
+    <link rel="stylesheet" href="../vendors/bootstrap/css/bootstrap.min.css">
+<!--     <link rel="stylesheet" href="css/partyDetail.css"> -->
+    
 </head>
 <body>
 
-<h2>發起揪團</h2>
+<jsp:include page="../share/navbar.jsp" flush="true" />
 
+<h4>發起揪團</h4>
+
+<section class="party">
 <form method="post" action="<%=request.getContextPath()%>/party/party.do">
 	<table>
 		<tr>
 			<td>主揪人: </td>
-			<td><input type="text" name="partyHost" value="5" readonly> (待替換動態帶入)</td>
+			<td><input type="text" name="partyHost" value="1" readonly> (待替換動態帶入)</td>
 		</tr>
 		<tr>
 			<td class="partyTitle">揪團主旨: </td>
@@ -56,10 +68,11 @@
 		</tr>
 	</table>
 	
-	<button type="submit" name="action" value="readyToHost">確認發起揪團</button>
-	<button type="submit" name="action" value="goBackToList">返回(揪團列表)</button> 
-	
+	<button type="submit" name="action" value="readyToHost" class="btn btn-outline-info btn-sm">確認發起揪團</button>
+	<button type="submit" name="action" value="goBackToList" class="btn btn-outline-info btn-sm">返回(揪團列表)</button>
+<!-- 待測試 -->
+	<button type="button" onclick="history.back()" class="btn btn-outline-info btn-sm">回上頁(待測試button)</button>
 </form>
+</section>
 
-</body>
-</html>
+<jsp:include page="../share/footer.jsp" flush="true" />
