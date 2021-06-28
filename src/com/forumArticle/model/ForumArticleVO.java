@@ -70,7 +70,5 @@ public class ForumArticleVO implements java.io.Serializable{
 		this.rateNGCount = rateNGCount;
 	}
 	
-	
-	
 }
 

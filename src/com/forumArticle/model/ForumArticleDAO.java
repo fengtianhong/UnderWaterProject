@@ -31,7 +31,7 @@ public class ForumArticleDAO implements ForumArticleDAO_interface{
 		private static final String GET_ALL_STMT = 
 			"SELECT * FROM ForumArticle order by articleSN desc";
 		private static final String GET_ONE_STMT = 
-			"SELECT articlesN, articleTitle, publishedDate, articleText, articleStatus, userID, articleTitleOptSN, rateGCount, rateNGCount FROM ForumArticle where articleSN = ?";
+			"SELECT * FROM ForumArticle where articleSN = ?";
 		private static final String mUPDATE = 
 			"UPDATE ForumArticle set articleStatus = ? where articleSN = ?";
 		private static final String userUPDATE = 
@@ -51,7 +51,9 @@ public class ForumArticleDAO implements ForumArticleDAO_interface{
 //			pstmt.setTimestamp(2, forumArticleVO.getPublishedDate());
 			pstmt.setString(2, forumArticleVO.getArticleText());
 //			pstmt.setBoolean(4, forumArticleVO.getArticleStatus());
-			pstmt.setInt(3, forumArticleVO.getUserID());
+//			會員先用寫死的方法
+//			pstmt.setInt(3, forumArticleVO.getUserID());
+			pstmt.setInt(3, 1);
 			pstmt.setInt(4, forumArticleVO.getArticleTitleOptSN());
 //			pstmt.setInt(7, forumArticleVO.getRateGCount());
 //			pstmt.setInt(8, forumArticleVO.getRateNGCount());
@@ -168,7 +170,7 @@ public class ForumArticleDAO implements ForumArticleDAO_interface{
 			
 			while (rs.next()) {
 				forumArticleVO = new ForumArticleVO();
-				forumArticleVO.setArticleSN(rs.getInt("article"));
+				forumArticleVO.setArticleSN(rs.getInt("articleSN"));
 				forumArticleVO.setArticleTitle(rs.getString("articleTitle"));
 				forumArticleVO.setPublishedDate(rs.getTimestamp("publishedDate"));
 				forumArticleVO.setArticleText(rs.getString("articleText"));
@@ -221,7 +223,7 @@ public class ForumArticleDAO implements ForumArticleDAO_interface{
 			
 			while (rs.next()) {
 				forumArticleVO = new ForumArticleVO();
-				forumArticleVO.setArticleSN(rs.getInt("article"));
+				forumArticleVO.setArticleSN(rs.getInt("articleSN"));
 				forumArticleVO.setArticleTitle(rs.getString("articleTitle"));
 				forumArticleVO.setPublishedDate(rs.getTimestamp("publishedDate"));
 				forumArticleVO.setArticleText(rs.getString("articleText"));

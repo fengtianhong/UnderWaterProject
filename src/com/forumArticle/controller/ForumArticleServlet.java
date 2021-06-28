@@ -226,6 +226,8 @@ public class ForumArticleServlet extends HttpServlet {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			
+			System.out.println("test");
+			
 			try {
 				//接收請求參數 以及 錯誤格式處理
 				
@@ -246,12 +248,17 @@ public class ForumArticleServlet extends HttpServlet {
 	            }
 				
 				Integer userID = new Integer(req.getParameter("userID").trim());
+				String nickName = new String(req.getParameter("nickName"));
 				Integer articleTitleOptSN = new Integer(req.getParameter("articleTitleOptSN").trim());
 				
 				ForumArticleVO forumArticleVO = new ForumArticleVO();
 				forumArticleVO.setArticleTitle(articleTitle);
 				forumArticleVO.setArticleText(articleText);
-				forumArticleVO.setUserID(userID);
+				
+//				會員先用寫死的
+				forumArticleVO.setUserID(1);
+//				forumArticleVO.setUserID(userID);
+				
 				forumArticleVO.setArticleTitleOptSN(articleTitleOptSN);
 				
 				if (!errorMsgs.isEmpty()) {

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+	<Resource auth="Container"
+		driverClassName="com.mysql.cj.jdbc.Driver" maxIdle="10" maxTotal="20"
+		maxWaitMillis="-1" name="jdbc/UnderWater" password="55688"
+		type="javax.sql.DataSource"
+		url="jdbc:mysql://114.34.127.72:3306/UNDERWATER?serverTimezone=Asia/Taipei"
+		username="katy" />
+</Context>

@@ -67,6 +67,10 @@
 			<FORM METHOD="post" ACTION="forumArticle.do" name="form1"  enctype="multipart/form-data">
 				<table>
 					<tr>
+						<td>發文作者</td>
+						<td><input type="text" name="userID" value="1" readonly>(先寫死，等動態來換掉)</td>
+					</tr>
+					<tr>
 						<jsp:useBean id="articleTitleOptSvc" scope="page" class="com.articleTitleOpt.model.ArticleTitleOptService"></jsp:useBean>
 						<td>文章分類<font color=red><b>*</b></font></td>
 						<td>
@@ -100,7 +104,7 @@
 		    tinymce.init({
 		      selector: 'textarea',
 		      plugins: 'a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',
-		      toolbar: 'a11ycheck addcomment showcomments casechange checklist code formatpainter pageembed permanentpen table',
+		      toolbar: 'a11ycheck casechange checklist formatpainter permanentpen table',
 		      toolbar_mode: 'floating',
 		      tinycomments_mode: 'embedded',
 		      tinycomments_author: 'Author name',
