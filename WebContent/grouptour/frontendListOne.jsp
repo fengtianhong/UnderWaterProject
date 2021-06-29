@@ -8,7 +8,7 @@
 
 <%  
 	// DisplayOne的頁面會拿到 userID, groupTourSN
-	request.setAttribute("userID", 2);	// 先寫死
+// 	request.setAttribute("userID", 2);	// 先寫死
 	GroupTourVO groupTourVO = (GroupTourVO) request.getAttribute("groupTourVO"); //listAll給的(KEEP)
 %>
 
@@ -17,120 +17,222 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Group Tour</title>
+<link rel="stylesheet" href="../share/index.css">
+<link rel="stylesheet" href="../vendors/bootstrap/css/bootstrap.min.css">
 <style>
-	.picture{
-		width: 100%;
-	}
-	.preview{
-		max-width: 100%;
-	}
-    h2{
-      display: inline-block;
-    }
-	.heart{
-	    cursor: pointer;
-	    color: pink;
-	 }
-	.heart.-on{
-	    color: red;
-	 }
-  
+.main {
+	width: 900px !important;
+	height: 2000px;
+}
+
+.main-container {
+	margin: 0 auto;
+	width: 900px;
+	/* 		display: flex; */
+	background-color: snow;
+	border-radius: 10px;
+	box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.4);
+	padding: 30px;
+	opacity: .9;
+}
+
+.row{
+	margin-bottom: 20px;
+
+
+}
+.top {
+	height: 50px;
+}
+
+.picture {
+	width: 550px;
+	height: 310px;
+	overflow: hidden;
+}
+
+.preview {
+	width: 550px;
+	height: 310px;
+	/*圖片撐滿 */
+	object-fit: cover;
+	object-position: center;
+}
+
+.content1 {
+	padding-top: 20px;
+}
+
+.price {
+	display: inline-block;
+	padding: 60px 35px 10px 0;
+}
+
+.heart {
+	cursor: pointer;
+	color: pink;
+	position: relative;
+	bottom: 180px;
+	left: 191px;
+	font-size: 45px;
+}
+.heart.-on {
+	color: red;
+	
+}
+.notice{
+	padding: 20px;
+	background-color: LightGoldenrodYellow;	
+	border-radius: 10px;
+}
+.notice-content{
+	font-size: 10px;
+}
+
 </style>
 </head>
 <body>
+<jsp:include page="../share/navbar.jsp" flush="true" />
 
-		<h2>${groupTourVO.tourName}</h2>
-		
-<div>
-<table>
+<div class="top"></div>
+<div class="main-container">
 
 
-	<tr>
-		<td>套裝行程圖片</td>
-		<td>
-			<div class="picture">
-			<img class='preview' src="<%=request.getContextPath()%>/grouptour/GetImage.do?id=${groupTourVO.groupTourSN}">
-			</div>
-		</td>
-	</tr>
-	<tr>
-		<td>行程開始時間</td>
-		<td>${groupTourVO.startTime}</td>
-	</tr>
-	<tr>
-		<td>行程結束時間</td>
-		<td>${groupTourVO.endTime}</td>	
-	</tr>
-	<tr>
-		<td>報名開始時間</td>
-		<td>${groupTourVO.regTime}</td>
-	</tr>
-	<tr>
-		<td>報名結束時間(要做倒數)</td>
-		<td>${groupTourVO.closeTime}</td>
-	</tr>
+<div class="row">	
+
+<div class="picture col-xl-8 col-lg-7">
+	<img class='preview' src="<%=request.getContextPath()%>/grouptour/GetImage.do?id=${groupTourVO.groupTourSN}">
+</div>
+
+<div class="picture col-xl-4 col-lg-5">
+
+
+	<div class="content1">
+	<h2>${groupTourVO.tourName}</h2>
+	</div>
 	
-	<tr>
-		<td>潛點</td>
-		<td>
-			<jsp:useBean id="diveInfoSvc" scope="page" class="com.diveinfo.model.DiveInfoService"></jsp:useBean>
-			${diveInfoSvc.getOneDiveInfo(groupTourVO.pointSN).pointName}
-		</td>
-	</tr>
-	<tr>
-		<td>售價</td>
-		<td>price</td>
-	</tr>
-	<tr>
-		<td>人數限制</td>
-		<td><span class="attendNumber">${groupTourVO.attendNumber}</span> / <span class="limitNumder">${groupTourVO.limitNumder}</span></td>
-	</tr>
-	<tr>
-		<td>證照資格</td>
-		<td>
-			<jsp:useBean id="memSvc" scope="page" class="com.member.model.MemberService"></jsp:useBean>
-	        <c:if test="${groupTourVO.certificationLimit} == '0'">不限</c:if>
-	        <c:if test="${groupTourVO.certificationLimit} == '1'">PADI OW / SSI OW</c:if>
-	        <c:if test="${groupTourVO.certificationLimit} == '2'">PADI AOW / SSI AOW</c:if>
-		</td>
-	</tr>
-</table>
-		<p>行程內容</p>
+	<div class="content1">
+		<i class="fas fa-map-marker-alt"></i>
+		<jsp:useBean id="diveInfoSvc" scope="page" class="com.diveinfo.model.DiveInfoService"></jsp:useBean>
+		${diveInfoSvc.getOneDiveInfo(groupTourVO.pointSN).pointName}
+	</div>
+	
+	<div>
+		<h2 class="price">$ ${groupTourVO.price}</h2>
+		人數限制 :<span class="attendNumber">${groupTourVO.attendNumber}</span> / <span class="limitNumder">${groupTourVO.limitNumder}</span>
+	</div>
+
+	<FORM NAME="orderForm" METHOD="post" ACTION="<%=request.getContextPath()%>/orderforgroup/orderforgroup.do" >
+		<input type="hidden" class="userID" name="userID" value="${userID}">
+		<input type="hidden" class="groupTourSN" name="groupTourSN" value="${groupTourVO.groupTourSN}">
+		<input type="hidden" name="action" value="getOne_ForOrder">
+		<input class="nonattend_btn btn btn-primary btn-block" type="submit" value="我要報名" >
+		<input class="attend_btn btn btn-secondary btn-block" type="submit" value="已報名" disabled style="display:none">
+	</FORM>
+	
+	<div class="collection"><!-- 收藏資料(ajax) -->
+		<span class="heart btn" ><i class="fas fa-heart"></i></span>
+	</div>
+</div>
+
+<!-- row end --></div>
+<hr>
+<div class="row">	
+	<div class="col-xl-6 col-lg-6">行程時間  :  ${groupTourVO.startTime} - ${groupTourVO.endTime}</div>
+	<div class="col-xl-6 col-lg-6">報名時間  :  ${groupTourVO.regTime} - ${groupTourVO.closeTime}</div>
+	<div class="col-xl-6 col-lg-6">證照資格  :  
+	        <c:if test="${groupTourVO.certificationLimit==0}">不限</c:if>
+	        <c:if test="${groupTourVO.certificationLimit==1}">PADI OW / SSI OW</c:if>
+	        <c:if test="${groupTourVO.certificationLimit==2}">PADI AOW / SSI AOW</c:if>
+	</div>
+<!-- row end --></div>
+<hr>
+<div class="row">
+<div class="col-xl-12 col-lg-12">
+		<p>潛點評價</p><jsp:useBean id="locationrateSvc" scope="page" class="com.locationrate.model.LocationrateService"></jsp:useBean>
+		<div>
+		<p>${locationrateSvc.getByPointSN(groupTourVO.pointSN)}</p>
+		</div>
+</div>	
+<!-- row end --></div>	 
+<hr>
+<div class="row">
+	<div class="col-xl-12 col-lg-12">
+		<h3>行程內容</h3>
 		<div>
 		<p>${groupTourVO.content}</p>
 		</div>
+	</div>	
+	
+	
+	
+	<div class="col-xl-12 col-lg-12">	
+	<div class="notice">
+	
+
+				<div class="notice-title">
+					<h4>注意事項</h4>
+					<hr>
+					<div class="notice-content">
+						<ul>
+							<li>
+								<p style="color=red;">因應 嚴重特殊傳染性肺炎（COVID-19) 肆虐配合中央流行疫情指揮中心政策三級警戒到7/12，
+								為保障旅客健康及安全，宣布取消至7月12日出發之團體行程，旅客可以選擇退費、改期。
+								後續將視疫情發展狀況，配合中央流行疫情指揮中心政策滾動式調整因應，以旅客最大權益為優先考量。</p>
+							</li>
+							<li>
+								<p>若遇颱風、暴風雪等天候不佳的情況，將於出發前 3 天（當地時間 20:00
+									）決定此團是否取消出發，之後將隨時以電子郵件形式通知。</p>
+							</li>
+							<li><p>不建議患有下列疾病或其他不宜受到過度刺激的旅客參加此項目</p>
+								<p>高血壓、心臟病、懼高症、氣喘、癲癇、懷孕婦女</p></li>
+							<li>
+								<p>潛水後需要超過24到48小時才可以搭乘飛機，請特別注意。</p>
+							</li>
+							<li>
+								<p>體驗結束後之照片檔案將會透過雲端連結提供。</p>
+							</li>
+							<li>
+								<p>請於預訂日期之集合時間準時報到，逾時 30 分鐘即視同放棄體驗，並請提早10分鐘抵達以免耽誤行程時間。</p>
+							</li>
+							<li>
+								<p>請自備泳衣、換洗衣物、盥洗用品、毛巾、容器及環保餐具。</p>
+							</li>
+							<li>
+								<p>每次的潛點位置並非固定，教練會依當日天氣海象、參與者之程度決定路線。</p>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+			</div>
 		
-</div>	
+		</div>
+<!-- row end --></div>		
+
+
+
+<div class="row">
 
 		
+		<!-- 有空改寫 -->
 		<div><!-- 抓收藏、報名用(有空把他寫在DAO好了 好醜)   -->
 			<jsp:useBean id="colSvc" scope="page" class="com.collections.model.CollectionsService"></jsp:useBean>
 			<span class="favorite">${(userID == null)?"":colSvc.getCollectionsByUserid(userID)}</span>
 			<jsp:useBean id="orderSvc" scope="page" class="com.orderforgroup.model.OrderForGroupService"></jsp:useBean>
 			<span class="order_list">${(userID == null)?"":orderSvc.checkRepeatOrder(userID)}</span>
 		</div>
+<!-- row end --></div>		
 		
-		<!-- 收藏資料(ajax) -->
-		<span class="heart btn" ><i class="fas fa-heart"></i></span>
+<!-- container end --></div>
 
-	
-	<FORM NAME="orderForm" METHOD="post" ACTION="<%=request.getContextPath()%>/orderforgroup/orderforgroup.do" >
-		<input type="hidden" class="userID" name="userID" value="${userID}">
-		<input type="hidden" class="groupTourSN" name="groupTourSN" value="${groupTourVO.groupTourSN}">
-		<input type="hidden" name="action" value="getOne_ForOrder">
-		<input class="nonattend_btn" type="submit" value="我要報名" >
-		<input class="attend_btn" type="submit" value="已報名" disabled  style="display:none">
-	</FORM>
-
-<!-- 成功新增Msg -->   
+<!-- Msg -->   
 <c:if test="${not empty errMsg}">
 	<script>alert("${errMsg}");</script>
 </c:if>
-<!-- 成功新增Msg -->   
-<c:if test="${not empty Msg}">
-	<script>alert("${Msg}");</script>
-</c:if>
+
+<jsp:include page="../share/footer.jsp" flush="true" />
 
 <script src="https://kit.fontawesome.com/d3e24e4d81.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

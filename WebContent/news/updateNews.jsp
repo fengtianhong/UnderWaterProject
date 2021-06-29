@@ -18,78 +18,145 @@
 img {
 	width: 100%;
 }
+
+#the_file {
+	float: right;
+	width: 200px;
+}
+
+tr, td {
+	padding-bottom: 10px;
+}
+
+.container {
+	margin: 0 auto;
+	width: 1200px;
+	display: flex;
+}
+
+.preview {
+	width: 100%;
+}
 </style>
+<%@ include file="../share/backend/Bmeta.file"%>
 </head>
 <body>
-	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">請修正以下錯誤:</font>
-		<ul>
-			<c:forEach var="message" items="${errorMsgs}">
-				<li style="color: red">${message}</li>
-			</c:forEach>
-		</ul>
-	</c:if>
+	<%@ include file="../share/backend/Bheader.file"%>
+
+	<div class="container">
+		<div class="col-lg-7">
+
+			<FORM METHOD="post" ACTION="news.do" name="form1"
+				enctype="multipart/form-data">
+				<table>
+					<tr>
+						<td>新聞編號:<font color=red><b>*</b></font></td>
+						<td><%=newsVO.getNewsSN()%><input type="file" name="image"
+							id="the_file" accept="image/*"></td>
+					</tr>
+					<tr>
+						<td>標題:</td>
+						<td><input type="TEXT" name="title" size="45"
+							value="<%=newsVO.getTitle()%>" /></td>
+					</tr>
+					<tr>
+						<td>內容:</td>
+						<td><textarea name="content" rows="6" cols="40"><%=newsVO.getContent()%></textarea></td>
+					</tr>
+					<tr>
+						<td>上架日期:</td>
+						<td><input name="newsDate" id="f_date1" type="text"></td>
+					</tr>
+					<tr>
+						<td>消息來源:</td>
+						<td><input type="TEXT" name="newsFrom" size="45"
+							value="<%=newsVO.getNewsFrom()%>" /></td>
+					</tr>
+
+					<tr>
+						<td>類型:</td>
+						<td><select name="newsType">
+								<option value="0"
+									<%=(newsVO == null) ? "" : ("0".equals(newsVO.getNewsType())) ? "selected" : ""%>>潛點</option>
+								<option value="1"
+									<%=(newsVO == null) ? "" : ("1".equals(newsVO.getNewsType())) ? "selected" : ""%>>商品</option>
+								<option value="2"
+									<%=(newsVO == null) ? "" : ("2".equals(newsVO.getNewsType())) ? "selected" : ""%>>揪團</option>
+						</select></td>
+					</tr>
+					<tr>
+						<td>圖片:</td>
+
+						<td><div class="show_pic">
+								<img
+									src="<%=request.getContextPath()%>/news/ShowPic?newsSN=${newsVO.newsSN}">
+							</div></td>
 
 
-	<FORM METHOD="post" ACTION="news.do" name="form1" enctype="multipart/form-data">
-		<table>
-			<tr>
-				<td>新聞編號:<font color=red><b>*</b></font></td>
-				<td><%=newsVO.getNewsSN()%></td>
-			</tr>
-			<tr>
-				<td>標題:</td>
-				<td><input type="TEXT" name="title" size="45"
-					value="<%=newsVO.getTitle()%>" /></td>
-			</tr>
-			<tr>
-				<td>內容:</td>
-				<td><textarea name="content" rows="6" cols="40"><%=newsVO.getContent()%></textarea></td>
-			</tr>
-			<tr>
-				<td>上架日期:</td>
-				<td><input name="newsDate" id="f_date1" type="text"></td>
-			</tr>
-			<tr>
-				<td>消息來源:</td>
-				<td><input type="TEXT" name="newsFrom" size="45"
-					value="<%=newsVO.getNewsFrom()%>" /></td>
-			</tr>
+					</tr>
 
-			<tr>
-				<td>類型:</td>
-				<td><select name="newsType">
-						<option value="0"
-							<%=(newsVO == null) ? "" : ("0".equals(newsVO.getNewsType())) ? "selected" : ""%>>潛點</option>
-						<option value="1"
-							<%=(newsVO == null) ? "" : ("1".equals(newsVO.getNewsType())) ? "selected" : ""%>>商品</option>
-						<option value="2"
-							<%=(newsVO == null) ? "" : ("2".equals(newsVO.getNewsType())) ? "selected" : ""%>>揪團</option>
-				</select></td>
-			</tr>
-			<tr>
-				<td>圖片:</td>
 
-				<td><div class="show_pic">
-						<img
-							src="<%=request.getContextPath()%>/news/ShowPic?newsSN=${newsVO.newsSN}">
-					</div></td>
 
-				<td><input type="file" name="image" id="the_file"
-					accept="image/*"></td>
-				<td><div class="show_pic">
+
+				</table>
+				<br> <input type="hidden" name="action" value="update">
+				<input type="hidden" name="newsSN" value="<%=newsVO.getNewsSN()%>">
+				<input class="btn btn-primary btn-user" type="submit" value="送出修改">
+			</FORM>
+		</div>
+
+		<div class="col-lg-4">
+
+			<!-- 圖片預覽 -->
+			<div class="card shadow mb-4">
+				<!-- Card Header - Accordion -->
+				<a href="#collapseCardExample" class="d-block card-header py-3"
+					data-toggle="collapse" role="button" aria-expanded="true"
+					aria-controls="collapseCardExample">
+					<h6 class="m-0 font-weight-bold text-primary">新預覽圖</h6>
+				</a>
+				<!-- Card Content - Collapse -->
+				<div class="collapse show" id="collapseCardExample" style="">
+					<div class="card-body">
+						<%-- 行程圖片 --%>
 						<div class="picture"></div>
-					</div></td>
-			</tr>
+					</div>
+				</div>
+			</div>
 
+			<!-- Err msg -->
+			<c:if test="${not empty errorMsgs}">
 
+				<div class="mb-4">
+					<div class="card border-left-warning shadow py-2">
+						<div class="card-body">
+							<div class="row no-gutters align-items-center">
+								<div class="col mr-2">
 
+									<div
+										class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+										Error Messages</div>
+									<div class="h5 mb-0 font-weight-bold text-gray-800"></div>
 
-		</table>
-		<br> <input type="hidden" name="action" value="update"> <input
-			type="hidden" name="newsSN" value="<%=newsVO.getNewsSN()%>"> <input
-			type="submit" value="送出修改">
-	</FORM>
+									<div class="card-body" style="color: LightCoral">
+										<c:forEach var="message" items="${errorMsgs}">
+								- ${message}<br>
+										</c:forEach>
+									</div>
+								</div>
+								<div class="col-auto">
+									<i class="fas fa-comments fa-2x text-gray-300"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</c:if>
+		</div>
+	</div>
+	<%@ include file="../share/backend/Bfooter.file"%>
+	<%@ include file="../share/backend/Bjs.file"%>
+
 </body>
 
 <link rel="stylesheet" type="text/css"
@@ -169,26 +236,27 @@ img {
 	//      }});
 </script>
 <script>
-		window.addEventListener("DOMContentLoaded", function() {
+	window.addEventListener("DOMContentLoaded", function() {
 
-			// 顯示圖片
-			var the_file = document.getElementById("the_file");
-			the_file.addEventListener("change", function(e) {
+		// 顯示圖片
+		var the_file = document.getElementById("the_file");
+		the_file.addEventListener("change", function(e) {
 
-				var picture = document.getElementsByClassName("picture")[0];
-				picture.innerHTML = ""; // 清空東西 
+			var picture = document.getElementsByClassName("picture")[0];
+			picture.innerHTML = ""; // 清空東西 
 
-				let reader = new FileReader();
-				reader.readAsDataURL(this.files[0]);
-				reader.addEventListener("load", function() {
+			let reader = new FileReader();
+			reader.readAsDataURL(this.files[0]);
+			reader.addEventListener("load",
+					function() {
 
-					var pic_src = reader.result; // 取得圖片編碼
-					picture.innerHTML = "<img class='preview'>";
-					document.querySelector(".preview").setAttribute('src',
-							pic_src);
-				})
-			});
-
+						var pic_src = reader.result; // 取得圖片編碼
+						picture.innerHTML = "<img class='preview'>";
+						document.querySelector(".preview").setAttribute('src',
+								pic_src);
+					})
 		});
-	</script>
+
+	});
+</script>
 </html>

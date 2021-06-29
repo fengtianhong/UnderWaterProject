@@ -3,13 +3,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>報名資訊</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>報名資訊</title>
+    <link rel="stylesheet" href="../share/index.css">
+    <!-- Bootstrap 的 CSS -->
+    <link rel="stylesheet" href="../vendors/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/partyRegister.css">
 </head>
+
 <body>
 
-<h2>報名揪團頁面</h2>
+<jsp:include page="../share/navbar.jsp" flush="true" />
 
+<h4>報名揪團頁面</h4>
+
+<section class="party">
 <form action="<%=request.getContextPath()%>/party/party.do" method="post" enctype="multipart/form-data">
 	<div>*****需改成動態帶入預設值*****</div>
 	<table>
@@ -54,11 +63,9 @@
 		<td>最高證照: </td>
 		<td>
 			<select size="" name="certification">
-				<option value="none">無相關證照(待確認是否有代碼)
-				<option value="A1">PADI OW
-				<option value="A2">PADI AOW
-				<option value="B1">SSI OW
-				<option value="B2">SSI AOW
+				<option value="0">無相關證照(待確認是否有代碼)
+				<option value="1">PADI OW / SSI OW
+				<option value="2">PADI AOW / SSI AOW
 			</select>
 		</td>
 	</tr>
@@ -75,11 +82,15 @@
 	</tr>
 	</table>
 	
-	<td><button type="submit" name="action" value="submitRegistration">提交報名表</button></td>
-	<td><button type="submit" name="action" value="goBackToDetail">回上頁(還沒做好)</button></td>
+	<div class="page">
+		<input type="button" onclick="history.back()" class="btn btn-outline-info btn-sm" value="回上頁">
+		<button type="submit" name="action" value="submitRegistration" class="btn btn-outline-info btn-sm">提交報名表(未完成)</button>
+	</div>
 <!-- 看goBack可否直接動態 -->
 
 </form>
+
+</section>
 
 <script>
 	document.querySelector('#p_file').addEventListener('change', function() {

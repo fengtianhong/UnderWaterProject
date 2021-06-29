@@ -23,6 +23,11 @@ table#table-1 h4 {
 	margin-bottom: 1px;
 }
 
+th {
+	white-space: nowrap;
+	text-align: center;
+}
+
 h4 {
 	color: blue;
 	display: inline;
@@ -41,34 +46,37 @@ table, th, td {
 .show_pic {
 	width: 200px;
 }
-img{
-width:100%;}
+
+img {
+	width: 100%;
+}
+
 th, td {
 	padding: 5px;
-	/*     text-align: center; */
+	text-align: center;
 }
 </style>
 
 
 <html>
 <head>
+<%@ include file="../share/backend/Bmeta.file"%>
 <title>潛點資訊列表</title>
 </head>
 <body>
-<c:if test="${not empty errorMsgs}">
-	<font style="color:red">請修正以下錯誤:</font>
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li style="color:red">${message}</li>
-		</c:forEach>
-	</ul>
-</c:if>
+	<%@ include file="../share/backend/Bheader.file"%>
+	<c:if test="${not empty errorMsgs}">
+		<font style="color: red">請修正以下錯誤:</font>
+		<ul>
+			<c:forEach var="message" items="${errorMsgs}">
+				<li style="color: red">${message}</li>
+			</c:forEach>
+		</ul>
+	</c:if>
 	<table>
 		<tr>
 			<th>潛點編號</th>
-			<th>潛點名稱</th>
-			<th>緯度</th>
-			<th>經度</th>
+			<th>潛點名稱<br>經緯度</th>
 			<th>簡介</th>
 			<th>詳細介紹</th>
 			<th>適合季節</th>
@@ -84,9 +92,7 @@ th, td {
 
 			<tr>
 				<td>${diveinfoVO.pointSN}</td>
-				<td>${diveinfoVO.pointName}</td>
-				<td>${diveinfoVO.latitude}</td>
-				<td>${diveinfoVO.longitude}</td>
+				<td>${diveinfoVO.pointName}<br>${diveinfoVO.latitude}<br>${diveinfoVO.longitude}</td>
 				<td>${diveinfoVO.view}</td>
 				<td>${diveinfoVO.introduction}</td>
 				<td>${diveinfoVO.season}</td>
@@ -97,29 +103,27 @@ th, td {
 					</div></td>
 				<td>${diveinfoVO.ratePoint}</td>
 				<td>${diveinfoVO.ratePeople}</td>
-				<td>${diveinfoVO.status}</td>
-				<td>
+				<td>${diveinfoVO.status}中<br><br>
 					<FORM METHOD="post"
 						ACTION="<%=request.getContextPath()%>/diveinfo/diveinfo.do"
 						style="margin-bottom: 0px;">
-						<input type="submit" value="修改"> <input type="hidden"
-							name="pointSN" value="${diveinfoVO.pointSN}"> <input
-							type="hidden" name="action" value="getOne_For_Update">
-					</FORM>
-				</td>
-				<td>
+						<input class="btn btn-primary btn-user" type="submit"
+							value="${(diveinfoVO.status=='上架')?'下架':'上架'}"> <input
+							type="hidden" name="pointSN" value="${diveinfoVO.pointSN}">
+						<input type="hidden" name="action" value="changeStatus">
+					</FORM><br>
 					<FORM METHOD="post"
 						ACTION="<%=request.getContextPath()%>/diveinfo/diveinfo.do"
 						style="margin-bottom: 0px;">
-						<input type="submit" value="上/下架"> <input type="hidden"
-							name="pointSN" value="${diveinfoVO.pointSN}"> <input
-							type="hidden" name="action" value="changeStatus">
-					</FORM>
-				</td>
+						<input class="btn btn-primary btn-user" type="submit" value="修改">
+						<input type="hidden" name="pointSN" value="${diveinfoVO.pointSN}">
+						<input type="hidden" name="action" value="getOne_For_Update">
+					</FORM></td>
 			</tr>
 		</c:forEach>
 	</table>
 	<%@ include file="page2.file"%>
-
+	<%@ include file="../share/backend/Bfooter.file"%>
+	<%@ include file="../share/backend/Bjs.file"%>
 </body>
 </html>

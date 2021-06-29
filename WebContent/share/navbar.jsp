@@ -3,7 +3,7 @@
 <div id="container">
 	<!-- navbar navbar-expand-lg navbar-light bg-light -->
 	<nav class="navbar fixed-top navbar-expand-md navbar-light">
-		<div class="container"><a class="navbar-brand">UnderWater</a>
+		<div class="container"><a href="<%=request.getContextPath()%>" class="navbar-brand">UnderWater</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle naviation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
@@ -33,5 +33,8 @@
         <span class="howDive"></span>
     </div>
 </div>
+<aside class="aside1">
+	廣告欄位<br>(暫放 W150 x H300)
+</aside>
 
-<main class="main">
+<!-- <main class="main"> -->

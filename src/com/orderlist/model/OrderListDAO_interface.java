@@ -1,5 +1,6 @@
 package com.orderlist.model;
 
+import java.sql.Connection;
 import java.util.List;
 
 public interface OrderListDAO_interface {
@@ -13,5 +14,8 @@ public interface OrderListDAO_interface {
 	public OrderListVO getOneByOrderListSN(Integer orderListSN);
 
 	public List<OrderListVO> getAll();
+	
+	// 同時新增訂單主檔與明細
+	public void insertWithOrderForProduct(OrderListVO orderListVO, Connection con);
 
 }
