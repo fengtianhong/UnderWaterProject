@@ -10,25 +10,24 @@ public class ForumCommentService {
 		dao = new ForumCommentDAO();
 	}
 	
-	public ForumCommentVO addForumComment(Integer articleSN, Integer userID, Timestamp cmtDate, String cmtText) {
+	public ForumCommentVO addForumComment(Integer articleSN, Integer userID, String cmtText) {
 		ForumCommentVO forumCommentvo = new ForumCommentVO();
 		
 		forumCommentvo.setArticleSN(articleSN);
 		forumCommentvo.setUserID(userID);
-		forumCommentvo.setCmtDate(cmtDate);
+//		forumCommentvo.setCmtDate(cmtDate);
 		forumCommentvo.setCmtText(cmtText);
 		dao.insert(forumCommentvo);
 		
 		return forumCommentvo;
 	}
 	
-	public ForumCommentVO updateForumComment(Integer cmtSN, Integer articleSN, Integer userID, Timestamp cmtDate, String cmtText) {
+	public ForumCommentVO updateForumComment(Integer cmtSN, Integer articleSN, Integer userID, String cmtText) {
 		ForumCommentVO forumCommentvo = new ForumCommentVO();
 		
 		forumCommentvo.setCmtSN(cmtSN);
 		forumCommentvo.setArticleSN(articleSN);
 		forumCommentvo.setUserID(userID);
-		forumCommentvo.setCmtDate(cmtDate);
 		forumCommentvo.setCmtText(cmtText);
 		dao.update(forumCommentvo);
 		

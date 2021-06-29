@@ -15,6 +15,7 @@ import com.forumArticle.model.ForumArticleService;
 import com.forumArticle.model.ForumArticleVO;
 
 public class ForumArticleServlet extends HttpServlet {
+	
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
 	}
@@ -226,8 +227,6 @@ public class ForumArticleServlet extends HttpServlet {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			
-			System.out.println("test");
-			
 			try {
 				//接收請求參數 以及 錯誤格式處理
 				
@@ -248,7 +247,6 @@ public class ForumArticleServlet extends HttpServlet {
 	            }
 				
 				Integer userID = new Integer(req.getParameter("userID").trim());
-				String nickName = new String(req.getParameter("nickName"));
 				Integer articleTitleOptSN = new Integer(req.getParameter("articleTitleOptSN").trim());
 				
 				ForumArticleVO forumArticleVO = new ForumArticleVO();

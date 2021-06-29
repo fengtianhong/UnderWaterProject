@@ -19,14 +19,14 @@ public class ArticleReportService {
 		return articleReportvo;
 	}
 	
-	public ArticleReportVO updateArticleReport(Integer rptSN, Integer userID, Integer articleSN, String rptReason, String rptResult, String reRptResult) {
+	public ArticleReportVO updateArticleReport(Integer rptSN, String reRptResult) {
 		ArticleReportVO articleReportvo = new ArticleReportVO();
 		
 		articleReportvo.setRptSN(rptSN);
-		articleReportvo.setUserID(userID);
-		articleReportvo.setArticleSN(articleSN);
-		articleReportvo.setRptReason(rptReason);
-		articleReportvo.setRptResult(reRptResult);
+//		articleReportvo.setUserID(userID);
+//		articleReportvo.setArticleSN(articleSN);
+//		articleReportvo.setRptReason(rptReason);
+//		articleReportvo.setRptResult(rptResult);
 		articleReportvo.setReRptResult(reRptResult);
 		dao.update(articleReportvo);
 		

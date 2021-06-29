@@ -30,7 +30,7 @@ public class ArticleReportDAO implements ArticleReportDAO_interface{
 	private static final String GET_ONE_STMT = 
 			"SELECT rptSN, userID, articleSN, rptReason, rptResult,reRptResult FROM ArticleReport where rptSN = ?";
 	private static final String UPDATE = 
-			"UPDATE ArticleReport set rptSN = ?, rptReason = ?, userID = ?, articleSN = ?, rptResult = ?, reRptResult = ? where rptSN = ?";
+			"UPDATE ArticleReport set reRptResult = ? where rptSN = ?";
 	
 	
 
@@ -82,12 +82,12 @@ public class ArticleReportDAO implements ArticleReportDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 			
-			pstmt.setString(1, articleReportVO.getRptReason());
-			pstmt.setInt(2, articleReportVO.getUserID());
-			pstmt.setInt(3, articleReportVO.getArticleSN());
-			pstmt.setString(4, articleReportVO.getRptResult());
-			pstmt.setString(5, articleReportVO.getReRptResult());
-			pstmt.setInt(6, articleReportVO.getRptSN());
+//			pstmt.setString(1, articleReportVO.getRptReason());
+//			pstmt.setInt(2, articleReportVO.getUserID());
+//			pstmt.setInt(3, articleReportVO.getArticleSN());
+//			pstmt.setString(4, articleReportVO.getRptResult());
+			pstmt.setString(1, articleReportVO.getReRptResult());
+			pstmt.setInt(2, articleReportVO.getRptSN());
 			
 			pstmt.executeUpdate();
 		} catch (SQLException se) {
