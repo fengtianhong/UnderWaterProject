@@ -20,24 +20,61 @@
 
 
 <meta charset="UTF-8">
-<title>最新消息的啦</title>
+<title>最新消息</title>
 <style>
+tr:nth-child(even) {
+	background: #eee
+}
+
+tr:nth-child(odd) {
+	background: #FFF
+}
+
+#detail {
+	background-color: #017f9d;
+	color: #fff;
+	border-radius: 10px;
+	cursor: pointer;
+	transition-duration: 0.4s;
+	border: 2px #017f9d solid;
+}
+
+#detail:hover {
+	color: #017f9d;
+	background-color: #fff;
+	border: 2px #017f9d solid;
+}
+
+body {
+	font-family: Nunito, -apple-system, BlinkMacSystemFont, "Segoe UI",
+		Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"
+}
+
 .newsContent {
 	background-color: #eee;
-	margin-top: 100px;
+	margin-top: 50px;
 	border: 2px #ccc solid;
 	border-radius: 10px;
 }
-
+.filterType{
+	margin-top:50px;
+}
 .forinclude {
 	margin: 0 auto;
-	width: 300px;
+	width: 190px;
+	margin-bottom: 10px;
 }
 
 textarea {
 	border: none;
 	resize: none;
 	cursor: pointer;
+}
+
+tr, td {
+	padding: 10px 2px;
+	text-align:center; 
 }
 
 table {
@@ -82,7 +119,7 @@ table {
 						<FORM METHOD="post"
 							ACTION="<%=request.getContextPath()%>/news/news.do"
 							style="margin-bottom: 0px;">
-							<input type="submit" value="詳細資訊"> <input type="hidden"
+							<input id="detail" type="submit" value="詳細資訊"> <input type="hidden"
 								name="newsSN" value="${newsVO.newsSN}"> <input
 								type="hidden" name="action" value="getOne_For_Show">
 						</FORM>

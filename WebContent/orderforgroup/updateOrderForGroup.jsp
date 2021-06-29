@@ -5,7 +5,7 @@
 
 <%  
 // 抓取新增失敗時回傳的VO
-OderForGroupVO oderForGroupVO = (OderForGroupVO) request.getAttribute("oderForGroupVO");
+OrderForGroupVO orderForGroupVO = (OrderForGroupVO) request.getAttribute("orderForGroupVO");
 %>
 
 <!DOCTYPE html>
@@ -23,31 +23,31 @@ OderForGroupVO oderForGroupVO = (OderForGroupVO) request.getAttribute("oderForGr
 <table>
 	<tr>
 		<td>訂購人userID</td>	
-		<td>${oderForGroupVO.userID}</td>
+		<td>${orderForGroupVO.userID}</td>
 	</tr>
 	<tr>
 		<td>套裝行程SN名稱(列出訂購資訊)</td>	
-		<td>${oderForGroupVO.groupTourSN}</td>
+		<td>${orderForGroupVO.groupTourSN}</td>
 	</tr>
 	<tr>
 		<td>總金額</td>	
-		<td><input type="TEXT" name="phone" size="45" value="${oderForGroupVO.totalPrice}" /></td>
+		<td><input type="TEXT" name="phone" size="45" value="${orderForGroupVO.totalPrice}" /></td>
 	</tr>
 	<tr>
 		<td>購買日期</td>	
-		<td><input type="TEXT" class="date" name="purchaseDate" size="45" value="${oderForGroupVO.purchaseDate}" /></td>
+		<td><input type="TEXT" class="date" name="purchaseDate" size="45" value="${orderForGroupVO.purchaseDate}" /></td>
 	</tr>
 	<tr>
 		<td>連絡電話</td>	
-		<td><input type="TEXT" name="phone" size="45" value="${oderForGroupVO.phone}" /></td>
+		<td><input type="TEXT" name="phone" size="45" value="${orderForGroupVO.phone}" /></td>
 	</tr>
 	<tr>
 		<td>身分證字號</td>	
-		<td><input type="TEXT" name="personID" size="45" value="${oderForGroupVO.userID}" /></td>
+		<td><input type="TEXT" name="personID" size="45" value="${orderForGroupVO.userID}" /></td>
 	</tr>
 	<tr>
 		<td>出生日期</td>	
-		<td><input type="TEXT" class="date" name="birthdate" size="45" value="${oderForGroupVO.birthdate}" /></td>
+		<td><input type="TEXT" class="date" name="birthdate" size="45" value="${orderForGroupVO.birthdate}" /></td>
 	</tr>
 </table>
 	<input type="hidden" name="action" value="update">

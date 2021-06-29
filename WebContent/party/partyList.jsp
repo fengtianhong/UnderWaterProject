@@ -54,7 +54,7 @@
 			</select> 
 			<button type="submit" class="btn btn-outline-light btn-sm" name="action" value="getAllBy">送出</button>
 			<button type="reset" class="btn btn-outline-light btn-sm">清空</button>
-			<button class="btn btn-outline-light btn-sm" onclick="location.href='<%=request.getContextPath()%>/party/HostParty.jsp'">發起揪團</button>
+			<button type="button" class="btn btn-outline-light btn-sm" onclick="location.href='<%=request.getContextPath()%>/party/HostParty.jsp'">發起揪團</button>
 		</section>
 	</form>
 	

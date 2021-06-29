@@ -7,13 +7,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>揪團後台修改</title>
+	<%@ include file="../share/backend/Bmeta.file" %>
+	<title>揪團後台修改</title>
 </head>
 <body>
+<%@ include file="../share/backend/Bheader.file" %>
 
 <h2>揪團後台修改</h2>
-
 <form method="post" action="<%=request.getContextPath()%>/party/party.do">
 	<table>
 		<tr>
@@ -26,7 +26,7 @@
 		</tr>
 		<tr>
 			<td class="partyTitle">揪團主旨: </td>
-			<td><input type="text" name="partyTitle" value=${partyVO.partyTitle}></td>
+			<td><input type="text" name="partyTitle" value="${partyVO.partyTitle}"></td>
 		</tr>
 		<tr>
 			<td class="date">活動日期: </td>
@@ -53,12 +53,12 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="partyMinSize">最低成團人數(待修改): </td>
-			<td><input type="number" min="${partyMemberSvc.findByPartySN(partyVO.partySN).size()}" max="20" name="partyMinSize" value="${partyVO.partyMinSize}"></td>
+			<td class="partyMinSize">最低成團人數: </td>
+			<td><input type="number" min="${partyMemberSvc.findByPartySNAndStatus(partyVO.partySN, '1').size()}" max="20" name="partyMinSize" value="${partyVO.partyMinSize}"></td>
 		</tr>
 		<tr>
-			<td class="sizenow">目前報名人數(待修改): </td>
-			<td>${partyMemberSvc.findByPartySN(partyVO.partySN).size()}</td>
+			<td class="sizenow">目前已通過審核人數: </td>
+			<td>${partyMemberSvc.findByPartySNAndStatus(partyVO.partySN, "1").size()}</td>
 		</tr>
 		<tr>
 			<td class="status">揪團狀態: </td>
@@ -79,10 +79,15 @@
 		</tr>
 	</table>
 	
-	<button type="submit" name="action" value="submitUpdate">確認修改</button>
-	<button type="submit" name="action" value="goBackToManage">放棄修改(返回)</button>
-<!-- 待更新goBack功能 -->
+	<button type="button" onclick="location.href='<%=request.getContextPath()%>/party/partyManage.jsp'" class="btn btn-primary btn-sm">回上頁(放棄修改)</button>
+	<button type="submit" name="action" value="submitUpdate" class="btn btn-primary btn-sm">確認修改</button>
 </form>
+
+<%@ include file="../share/backend/Bfooter.file" %>
+<%@ include file="../share/backend/Bjs.file" %>
+
+<!-- 待更新js click browser goBack功能 -->
+
 
 </body>
 </html>
