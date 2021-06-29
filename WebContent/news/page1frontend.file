@@ -36,4 +36,4 @@
   <b><font color=blue>第<%=whichPage%>/<%=pageNumber%>頁</font></b>
 <%}%>
 
-<b>最 新 消 息 共<font color=blue><%=rowNumber%></font>筆</b>
+<b>UnderWater 共<font color=blue><%=rowNumber%></font>筆</b>

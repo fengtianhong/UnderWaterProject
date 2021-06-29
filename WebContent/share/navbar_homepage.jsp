@@ -3,7 +3,7 @@
 <div id="container">
 	<!-- navbar navbar-expand-lg navbar-light bg-light -->
 	<nav class="navbar fixed-top navbar-expand-md navbar-light">
-		<div class="container"><a class="navbar-brand">UnderWater</a>
+		<div class="container"><a href="<%=request.getContextPath()%>" class="navbar-brand">UnderWater</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle naviation">
 				<span class="navbar-toggler-icon"></span>
 			</button>

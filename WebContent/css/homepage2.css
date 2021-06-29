@@ -65,7 +65,6 @@ nav.navbar.fixed-top.navbar-expand-md.navbar-light a:hover {
   margin: 0px;
 }
 #footerGroup {
-  position: absolute;
   bottom: 0;
 }
 #footerGroup>img {
@@ -101,4 +100,74 @@ nav.navbar.fixed-top.navbar-expand-md.navbar-light a:hover {
 	bottom: 20px;
 }
 
+/* ¶]°¨¿O¥Î */
+
+.words {
+	height:50px;
+	width:1100px;
+	text-align:center;
+  transform: translateY(-50%);
+  margin: 0 auto 50px;
+  font-size: 20px;
+  position:relative;
+}
+
+.words a {
+	text-align:center;
+	width:1100px;
+	position:absolute;
+  top: 0;
+  opacity: 0;
+  color:white;
+  animation: animate 24s linear infinite;
+  margin-left: -50%;
+  white-space: nowrap;
+}
+
+.words a:nth-child(2) {
+  animation-delay: 4s;
+}
+
+.words a:nth-child(3) {
+  animation-delay: 8s;
+}
+
+.words a:nth-child(4) {
+  animation-delay: 12s;
+}
+
+.words a:nth-child(5) {
+  animation-delay: 16s;
+}
+
+.words a:nth-child(6) {
+  animation-delay: 20s;
+}
+
+@keyframes animate {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  2% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  12% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+}
 

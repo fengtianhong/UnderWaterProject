@@ -30,16 +30,17 @@ tr:nth-child(odd) {
 	background: #FFF
 }
 
-#detail {
+.detail {
 	background-color: #017f9d;
 	color: #fff;
 	border-radius: 10px;
 	cursor: pointer;
 	transition-duration: 0.4s;
 	border: 2px #017f9d solid;
+	display:none;
 }
 
-#detail:hover {
+.detail:hover {
 	color: #017f9d;
 	background-color: #fff;
 	border: 2px #017f9d solid;
@@ -52,20 +53,54 @@ body {
 }
 
 .newsContent {
-	width:800px;
-	margin:0 auto;
+	width: 800px;
+	margin: 0 auto;
 	background-color: #eee;
 	margin-top: 50px;
 	border: 2px #ccc solid;
 	border-radius: 10px;
+	padding-bottom: 70px;
 }
-.filterType{
-	margin-top:50px;
+
+.show_pic {
+	height: 150px;
+	width: 200px;
+	overflow: hidden;
 }
-.forinclude {
+
+.show_pic>img {
+	cursor: pointer;
+	transition-duration: 0.5s;
+	height: 100%;
+	width: 100%;
+	transition-duration: 0.5s;
+}
+
+.show_pic>img:hover {
+	transform: scale(1.2);
+}
+
+#filterType {
+	margin-right: 50px;
+	margin-top: 5px;
+	float: right;
+}
+
+.forincludeTop {
 	margin: 0 auto;
-	width: 190px;
+	width: 200px;
 	margin-bottom: 10px;
+}
+
+.forincludeBottom {
+	float: right;
+	margin: 0 auto;
+	width: 180px;
+	margin-right: 20px;
+}
+
+#newsTitle {
+	font-size: 28px;
 }
 
 textarea {
@@ -74,9 +109,13 @@ textarea {
 	cursor: pointer;
 }
 
+.inside {
+	text-align: left;
+}
+
 tr, td {
 	padding: 10px 2px;
-	text-align:center; 
+	text-align: center;
 }
 
 table {
@@ -88,22 +127,20 @@ table {
 
 <body>
 	<jsp:include page="../share/navbar.jsp" flush="true" />
-	<select id="filterType" name="newsType" onchange="ShowType(this.value)">
-		<option value="all">全部</option>
-		<option value="divepoint">潛點</option>
-		<option value="product">商品</option>
-		<option value="party">揪團</option>
-	</select>
+
 	<div class="newsContent">
+		<select id="filterType" name="newsType"
+			onchange="ShowType(this.value)">
+			<option value="all">全部</option>
+			<option value="divepoint">潛點</option>
+			<option value="product">商品</option>
+			<option value="party">揪團</option>
+		</select>
 		<table>
 			<tr>
-				<th>新聞標題</th>
-				<th>新聞內容</th>
-				<th>上架日期</th>
-				<th>新聞類型</th>
-				<th>詳細內容</th>
+				<th colspan="10">最新消息</th>
 			</tr>
-			<div class="forinclude">
+			<div class="forincludeTop">
 				<%@ include file="page1frontend.file"%>
 			</div>
 			<c:forEach var="newsVO" items="${list}" begin="<%=pageIndex%>"
@@ -111,39 +148,49 @@ table {
 
 				<tr
 					class=${newsVO.newsType==0?"divepoint":newsVO.newsType==1?"product":"party"}>
-					<td>${newsVO.title.substring(0,10)}....</td>
-					<td>${newsVO.content.substring(0,10)}....</td>
-
-					<td><fmt:formatDate value="${newsVO.newsDate}"
-							pattern="yyyy-MM-dd" /></td>
-					<td>${newsVO.newsType==0?"潛點":newsVO.newsType==1?"商品":"揪團"}</td>
 					<td>
+					<td><div class="show_pic">
+							<img onclick="goDetail(${newsVO.newsSN})" 
+								src="<%=request.getContextPath()%>/news/ShowPic?newsSN=${newsVO.newsSN}">
+						</div></td>
+
+					<td class="inside">
 						<FORM METHOD="post"
 							ACTION="<%=request.getContextPath()%>/news/news.do"
-							style="margin-bottom: 0px;">
-							<input id="detail" type="submit" value="詳細資訊"> <input type="hidden"
-								name="newsSN" value="${newsVO.newsSN}"> <input
+							id="${newsVO.newsSN}">
+							<a href="javascript:void(0)" onclick="goDetail(${newsVO.newsSN})"
+								id="newsTitle">${newsVO.title}</a>
+<%-- 							<a href="<%=request.getContextPath()%>/news/news.do?newsSN=${newsVO.newsSN}&action=getOne_For_Show" --%>
+<%-- 								id="newsTitle">${newsVO.title}</a> --%>
+								
+								<br>${newsVO.content.substring(0,50)}....<br>
+							<fmt:formatDate value="${newsVO.newsDate}" pattern="yyyy-MM-dd" />
+							<br>${newsVO.newsType==0?"潛點":newsVO.newsType==1?"商品":"揪團"}
+
+							<input class="detail" type="submit" value="詳細資訊"> <input
+								type="hidden" name="newsSN" value="${newsVO.newsSN}"> <input
 								type="hidden" name="action" value="getOne_For_Show">
 						</FORM>
 					</td>
+
 
 				</tr>
 
 			</c:forEach>
 		</table>
+		<div class="forincludeBottom">
+			<%@ include file="page2frontend.file"%>
+		</div>
 	</div>
-	<%@ include file="page2frontend.file"%>
+
 	<jsp:include page="../share/footer.jsp" flush="true" />
 	<script type="text/javascript">
+		function goDetail(newsSN) {
+			document.getElementById(newsSN).submit();
+		}
 		function ShowType(filterType) {
 
-			// 		$(".product")
-			// 		$(".party")
 
-			// 		 var Str=document.getElementById(filterType).value;
-			// 		 var divepoint = document.querySelectorAll(".divepoint");
-			// 		 var product= document.querySelectorAll(".product");
-			// 		 var party= document.querySelectorAll(".party");
 			switch (filterType) {
 			case 'divepoint':
 				$(".divepoint").show();
