@@ -93,17 +93,6 @@ nav.navbar.fixed-top.navbar-expand-md.navbar-light a:hover {
   margin-bottom: -30%;
   margin-left: 50%;
 }
-
-
-/* .main { */
-/* 	margin: 150px auto 150px; */
-/* 	width: 750px; */
-/* 	height: 1600px; */
-/* 	overflow: hidden; */
-/* /* 	border: solid 2px red; */ */
-/* }	 */
-
-/* 有廣告才要用  */
 .aside1 {
 	width: 150px !important;
 	height: 300px !important;
@@ -112,3 +101,5 @@ nav.navbar.fixed-top.navbar-expand-md.navbar-light a:hover {
 	bottom: 50px !important;
 	background-color: #ffffff;
 }
+
+
