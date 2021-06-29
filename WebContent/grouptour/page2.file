@@ -9,7 +9,7 @@
 
     <%}%>
     <%-- Recent Page --%>
-  		<input class="btn btn-outline-info" style="background-color: #0dcaf0; color: #ffffff;" type="submit" value="<%=whichPage%>" onclick="window.location.href='<%=request.getRequestURI()%>?whichPage=<%=whichPage%>'" >
+  		<input class="btn btn-outline-info" style="background-color: teal; color: #ffffff;" type="submit" value="<%=whichPage%>" onclick="window.location.href='<%=request.getRequestURI()%>?whichPage=<%=whichPage%>'" >
   
     <%if(pageIndex<pageIndexArray[pageNumber-1]){%>
     <%-- 第二頁 --%>

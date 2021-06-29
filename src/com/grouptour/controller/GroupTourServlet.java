@@ -39,7 +39,11 @@ public class GroupTourServlet extends HttpServlet {
 				GroupTourService groupTourSvc = new GroupTourService();
 				GroupTourVO groupTourVO = groupTourSvc.getOne(groupTourSN);
 				
+				String oldContent = groupTourVO.getContent();
+				String content = oldContent.replace("\n", "<br>");
+				
 				req.setAttribute("groupTourVO", groupTourVO);
+				req.setAttribute("content", content);
 				RequestDispatcher successView = req.getRequestDispatcher("/grouptour/frontendListOne.jsp");
 				successView.forward(req, res);
 				

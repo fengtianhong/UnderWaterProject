@@ -8,7 +8,7 @@
 
 <%
 	GroupTourService groupTourSvc = new GroupTourService();
-	List<GroupTourVO> list = groupTourSvc.getAll();
+	List<GroupTourVO> list = groupTourSvc.getFrontendAll();
 	pageContext.setAttribute("list", list);
 %>
 <!DOCTYPE html>
@@ -17,18 +17,18 @@
 <meta charset="UTF-8">   
 <title>套裝行程列表</title>
 <link rel="stylesheet" href="../share/index.css">
-<link rel="stylesheet" href="../vendors/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="../vendors/bootstrap/css/bootstrap.min.css">	
 <%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/grouptour/css/frontendListAll.css"> --%>
 
 <style>
-	.main {
-		width: 1000px !important;
- 		height: 1600px; 
-	}	
+
 	.container{
 		margin: 0 auto;  
  		width: 1200px; 
 		display: flex;
+	}
+	.filter{
+		
 	}
  	.item{ 
  		margin: 18px; 
@@ -79,6 +79,9 @@
 /* 上方搜尋欄 */
 	.bar{
 		height: 100px;
+		margin: 0 auto;  
+ 		width: 1200px; 
+		display: flex;
 	}
 	.page2{
 		margin-top: 50px;
@@ -88,23 +91,25 @@
     	position: relative;
     	bottom: 45px;
     	left: 96px;
+    	cursor: default !important;
 	}
+	
 		
 </style>
 </head>
 
 <body>
 <jsp:include page="../share/navbar.jsp" flush="true" />
-	<div class="bar">
-	<input type="search" class="light-table-filter" data-table="order-table" placeholder="請輸入關鍵字">
-    </div>
+
+	<div class="bar"></div>
+	
     
+    <div class="filter"><input type="search" class="light-table-filter" data-table="order-table" placeholder="請輸入關鍵字"></div>   
     <div class="container">
         
         
-        
 	<hr>
-        <div id="products" class="row justify-content-left">
+        <div id="products" class="row justify-content-center">
 
 <%@ include file="page1.file"%>	
             <c:forEach var="groupTourVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
@@ -141,7 +146,6 @@
                             </div>
                         </div>
                         <c:if test="${groupTourVO.attendNumber >= groupTourVO.limitNumder}">
-<!--                         		<span style="color:LightCoral;">已額滿</span> -->
                         		<input class="btn btn-danger attend_btn" style="color: white; background-color: LightCoral; border: LightCoral;" type="button" value="已額滿" >
                         </c:if>
                 </div>

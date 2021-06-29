@@ -75,7 +75,7 @@ public class OrderForGroupServlet extends HttpServlet {
 				if(personID == null || personID.length() == 0) {
 					errMsg.add("請確認身分證字號");
 				}else if(!personID.matches(personIDReg)) {
-					errMsg.add("請確認身分證字號是否正確，開頭需大寫");
+					errMsg.add("請確認身分證字號是否正確，請注意開頭需大寫");
 				}
 				
 				
@@ -98,9 +98,41 @@ public class OrderForGroupServlet extends HttpServlet {
 				orderForGroupVO.setPersonID(personID);
 				orderForGroupVO.setBirthdate(birthdate);
 				
+				//
+				GroupTourService groupTourSvc = new GroupTourService();
+				GroupTourVO groupTourVO = groupTourSvc.getOne(groupTourSN);
+				
+				MemberService memberSvc = new MemberService();
+				MemberVO memberVO = memberSvc.getone(userID);
+				HttpSession session = req.getSession();
+				
+				session.setAttribute("memberVO", memberVO);
+				req.setAttribute("groupTourVO", groupTourVO);
+				
+				// 證照資格判斷 (測會員資格null會發生甚麼事 0:無證照 1:OW 2:AOW)
+				try {
+					Integer certification = Integer.parseInt(memberVO.getCertification());	// 可能null
+					Integer certificationLimit = Integer.parseInt(groupTourVO.getCertificationLimit());
+					if(certification < certificationLimit) {
+						errMsg.add("資格不符，請確認您的證照資訊");
+					}
+				}catch(Exception e) {
+					e.printStackTrace();
+					errMsg.add("資格不符，請確認您的證照資訊");
+				}
+				
+				// 以及判斷是否有報名過(同步在套裝行程顯示頁面)
+				OrderForGroupService orderForGroupSvc = new OrderForGroupService();
+				List<OrderForGroupVO> list = orderForGroupSvc.getOrderByUserID(userID);
+				
+				
+				for(OrderForGroupVO vo : list) {
+					if(groupTourSN.equals(vo.getGroupTourSN())) {
+						errMsg.add("您已報名過此行程");
+					}
+				}
+				
 				if(!errMsg.isEmpty()) {
-					GroupTourService groupTourSvc = new GroupTourService();
-					GroupTourVO groupTourVO = groupTourSvc.getOne(groupTourSN);
 					
 					req.setAttribute("orderForGroupVO", orderForGroupVO);
 					req.setAttribute("groupTourVO", groupTourVO);
@@ -109,11 +141,10 @@ public class OrderForGroupServlet extends HttpServlet {
 					return;
 				}
 				
-				OrderForGroupService orderForGroupSvc = new OrderForGroupService();
 				orderForGroupSvc.insertOrderForGroup(userID, groupTourSN, totalPrice, purchaseDate, phone, personID, birthdate);
 				
 				req.setAttribute("Msg", "報名成功");
-				RequestDispatcher successView = req.getRequestDispatcher("/collections/addSuccess.jsp");	// 訂單成功頁面 待確認
+				RequestDispatcher successView = req.getRequestDispatcher("/orderforgroup/addSuccess.jsp");	// 訂單成功頁面 待確認
 				successView.forward(req, res);
 				
 				
@@ -203,7 +234,7 @@ public class OrderForGroupServlet extends HttpServlet {
 				
 				OrderForGroupService orderForGroupSvc = new OrderForGroupService();
 				orderForGroupSvc.insertOrderForGroup(userID, groupTourSN, totalPrice, purchaseDate, phoneReg, personIDReg, birthdate);
-				RequestDispatcher successView = req.getRequestDispatcher("/orderforgroup/test_collections.jsp");	// 訂單成功頁面 待確認(先回listOne)
+				RequestDispatcher successView = req.getRequestDispatcher("/orderforgroup/");	// 訂單成功頁面 待確認(先回listOne)
 				successView.forward(req, res);
 				
 				
@@ -237,9 +268,9 @@ public class OrderForGroupServlet extends HttpServlet {
 				
 			}catch(Exception e) {
 				e.printStackTrace();   //
-				System.out.println("update failure");
+				System.out.println("get update failure");
 				errMsg.add("取得資料失敗，"+e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/orderforgroup/backendListAll");	// 回到選擇訂單頁面
+				RequestDispatcher failureView = req.getRequestDispatcher("/orderforgroup/backendListAll.jsp");	// 回到選擇訂單頁面
 				failureView.forward(req, res);
 			}
 		}
@@ -285,9 +316,10 @@ public class OrderForGroupServlet extends HttpServlet {
 				// 以及判斷是否有報名過(同步在套裝行程顯示頁面)
 				OrderForGroupService orderForGroupSvc = new OrderForGroupService();
 				List<OrderForGroupVO> list = orderForGroupSvc.getOrderByUserID(userID);
-							
+				
+				
 				for(OrderForGroupVO vo : list) {
-					if(groupTourSN == vo.getGroupTourSN()) {
+					if(groupTourSN.equals(vo.getGroupTourSN())) {
 						errMsg.add("您已報名過此行程");
 					}
 				}
