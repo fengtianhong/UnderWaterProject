@@ -52,6 +52,8 @@ body {
 }
 
 .newsContent {
+	width:800px;
+	margin:0 auto;
 	background-color: #eee;
 	margin-top: 50px;
 	border: 2px #ccc solid;
