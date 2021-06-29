@@ -15,22 +15,15 @@ import javax.servlet.http.HttpSession;
 import com.member.model.MemberService;
 import com.member.model.MemberVO;
 
-@WebServlet("/loginservlet")
 public class LoginServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	
-	
-	public LoginServlet() {
-		super();
-	}
-	
+
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
 		
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-//		System.out.println("有跑到");
+		System.out.println("有跑到");
 		
 		HttpSession session = req.getSession();
 		req.setCharacterEncoding("UTF-8");
@@ -47,15 +40,16 @@ public class LoginServlet extends HttpServlet {
 				session = req.getSession();			
 //				req.setAttribute("msg", "驗證碼正確");
 //				req.setAttribute("account", account);
-//				MemberVO memberVO = membersvc.findByAccount(account);
-//				Integer userID =  memberVO.getUserID();
-//				session.setAttribute("userID", userID);
+				MemberVO memberVO = membersvc.findByAccount(account);
+				Integer userID =  memberVO.getUserID();
+				session.setAttribute("userID", userID);
 				System.out.println("驗證碼正確");
 				try {
 					String location = (String) session.getAttribute("location");
+					System.out.println(location);
 					if(location != null) {
-						session.removeAttribute("location");//有無來源網頁，若有導回原網頁
 						res.sendRedirect(location);
+						session.removeAttribute("location");//有無來源網頁，若有導回原網頁
 						return;
 					}
 				}catch(Exception e) {//若沒有,導回index頁面

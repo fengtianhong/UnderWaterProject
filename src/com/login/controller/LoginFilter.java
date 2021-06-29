@@ -33,6 +33,7 @@ public class LoginFilter implements Filter{
 		if(userID == null) {
 			//若帳號是空值，則導回登入畫面
 			session.setAttribute("location", req.getRequestURI());
+
 			res.sendRedirect(req.getContextPath() + "/member/login.jsp");
 			return;
 		}else {
