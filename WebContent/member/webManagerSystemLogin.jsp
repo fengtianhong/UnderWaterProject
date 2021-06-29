@@ -8,7 +8,7 @@
 </head>
 
 <body>
-	<form action="WebManagerSystem.do" method="post" onsubmit="return checkform(this)">
+	<form action="WebManagerSystemLogin.do" method="post" onsubmit="return checkform(this)">
 		<div class="container">
 			<div class="loginBox col-md-offset-4 col-md-3">
 				<div style="text-align: center;">
@@ -23,7 +23,7 @@
 						placeholder="輸入密碼"  onblur="pwd(this.value)">
 				</div>
 				<div style="margin-top: 5px;">
-					<p style="height: 10px">${msg}</p>
+					<p style="height: 10px;" >${msg}</p>
 				</div>
 				<div style="margin-top: 10px; float: right;">
 					<button class="btn btn-primary" id="loginBtn">登入</button>

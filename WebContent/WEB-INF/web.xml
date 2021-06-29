@@ -34,7 +34,22 @@
 		<dispatcher>ERROR</dispatcher>
 		<dispatcher>ASYNC</dispatcher>
 	</filter-mapping>
+	
+	<filter>
+		<filter-name>WebManagerSystemLoginFilter</filter-name>
+		<filter-class>com.manager.controller.WebManagerSystemLoginFilter</filter-class>
+	</filter>
 
+	<filter-mapping>
+		<filter-name>WebManagerSystemLoginFilter</filter-name>
+		<url-pattern>/diveinfo/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+		<dispatcher>ASYNC</dispatcher>
+	</filter-mapping>
+	
 	<servlet>
 		<servlet-name>DiveInfoServlet</servlet-name>
 		<servlet-class>com.diveinfo.controller.DiveinfoServlet</servlet-class>
@@ -169,13 +184,13 @@
 	</servlet-mapping>
 
 	<servlet>
-		<servlet-name>WebManagerSystemServlet</servlet-name>
-		<servlet-class>com.manager.controller.WebManagerSystemServlet</servlet-class>
+		<servlet-name>WebManagerSystemLoginServlet</servlet-name>
+		<servlet-class>com.manager.controller.WebManagerSystemLoginServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>WebManagerSystemServlet</servlet-name>
-		<url-pattern>/member/WebManagerSystem.do</url-pattern>
+		<servlet-name>WebManagerSystemLoginServlet</servlet-name>
+		<url-pattern>/member/WebManagerSystemLogin.do</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
@@ -188,5 +203,14 @@
 		<url-pattern>/member/MemberListServlet.do</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>WebManagerSystemLogoutServlet</servlet-name>
+		<servlet-class>com.manager.controller.WebManagerSystemLogoutServlet</servlet-class>
+	</servlet>
 
+	<servlet-mapping>
+		<servlet-name>WebManagerSystemLogoutServlet</servlet-name>
+		<url-pattern>/member/WebManagerSystemLogoutServlet.do</url-pattern>
+	</servlet-mapping>
+	
 </web-app>

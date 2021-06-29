@@ -8,7 +8,7 @@ import util.Util;
 
 public class MemberDAO implements MemberDAO_interface{
 	
-	private static final String INSERT_STMT = "INSERT INTO Member (account, pwd,nickName, userName, gender, birthDate, phone, certification, certificationPic, personID, address) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_STMT = "INSERT INTO Member (account, pwd,nickName, userName, gender, birthDate, phone, certification, certificationPic, personID, address) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String UPDATE_STMT = "UPDATE Member SET NickName=?, userName=?, gender=?, birthDate=?, phone=?, Certification=?, CertificationPic=?, personID=?, address=?, status=?, updateTime=?, ratePeople=?, ratePoint=? WHERE userID = ?";
 	private static final String GET_ONE_STMT = "SELECT * FROM Member where userid=?";
 	private static final String FINDBYACCOUNT_STMT = "SELECT * FROM Member where account=?";
@@ -30,7 +30,7 @@ public class MemberDAO implements MemberDAO_interface{
 //		vo.setCertificationPic(null);
 //		vo.setPersonID("F123456788");
 //		vo.setAddress("花蓮縣壽豐鄉中山路6X號");
-
+//
 //		
 //		MemberDAO dao = new MemberDAO();
 //		dao.insert(vo);
@@ -81,11 +81,11 @@ public class MemberDAO implements MemberDAO_interface{
 		//測試getall ok
 		
 		//測試login
-		MemberVO vo = new MemberVO();
-		MemberDAO dao = new MemberDAO();
-		vo.setAccount("12312");
-		vo.setPwd("qweqwe");
-		dao.login(vo);
+//		MemberVO vo = new MemberVO();
+//		MemberDAO dao = new MemberDAO();
+//		vo.setAccount("12312");
+//		vo.setPwd("qweqwe");
+//		dao.login(vo);
 		//測試login
 	}	
 	
