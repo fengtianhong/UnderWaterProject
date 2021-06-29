@@ -247,4 +247,41 @@ public class OrderListDAO implements OrderListDAO_interface {
 		return list;
 	}
 
+	@Override
+	public void insertWithOrderForProduct(OrderListVO orderListVO, Connection con) {
+		PreparedStatement pstmt = null;
+
+		try {
+			pstmt = con.prepareStatement(INSERT_STMT);
+			pstmt.setInt(1, orderListVO.getProductSN());
+			pstmt.setInt(2, orderListVO.getOrderSN());
+			pstmt.setInt(3, orderListVO.getPurchaseQuantity());
+			pstmt.setInt(4, orderListVO.getProductPrice());
+			pstmt.setInt(5, orderListVO.getRating());
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			if (con != null) {
+				try {
+					con.rollback();
+				} catch (SQLException e1) {
+					throw new RuntimeException("rollback error occured. " + e1.getMessage());
+
+				}
+			}
+			
+			throw new RuntimeException("A database error occured. "
+					+ e.getMessage());
+			
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
 }
