@@ -10,6 +10,7 @@
 	List<MemberVO> list = memberSvc.getAll();
 	pageContext.setAttribute("list", list);
 	MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
+	
 %>
 
 
@@ -107,13 +108,15 @@
             </div>
 
             <div class="col-lg-1" >
-                <button class="btn btn-primary" type="button" id="logout">登出</button>
+            	<form action="WebManagerSystemLogoutServlet.do" method="post">
+            		<button class="btn btn-primary" type="submit" id="logout" >登出</button>
+            	</form>
             </div>
         </div>
 		
 		<table class="table table-striped table-bordered">
                 <tr>
-                    <td>編號</td>
+					<td>編號</td>
                     <td>帳號</td>
                     <td>暱稱</td>
                     <td>姓名</td>
@@ -122,13 +125,13 @@
                     <td>電話</td>
                     <td>證照</td>
                     <td>證照照片</td>
-		    <td>身分證字號</td>
-		    <td>地址</td>
-		    <td>加入時間</td>
-		    <td>帳號狀態</td>
-		    <td>更新時間</td>
-		    <td>評價人數</td>
-		    <td>評價總分</td>
+		   			<td>身分證字號</td>
+					<td>地址</td>
+					<td>加入時間</td>
+					<td>帳號狀態</td>
+					<td>更新時間</td>
+					<td>評價人數</td>
+					<td>評價總分</td>
                 </tr>
             <%@ include file="page1.file" %> 
            <c:forEach var="memberVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
@@ -141,7 +144,7 @@
 			<td>${memberVO.birthDate}</td>
 			<td>${memberVO.phone}</td>
 			<td>${memberVO.certification}</td>
-			<td>${memberVO.certificationPic}</td>
+			<td><div class="picture"><img class="preview" src="GetImage.do?userid=${memberVO.userID}"></div></td>
 			<td>${memberVO.personID}</td>
 			<td>${memberVO.address}</td>
 			<td>${memberVO.createTime}</td>
@@ -188,7 +191,10 @@
 				<td>姓名<input name="username" type="text" value="${memberVO.userName}"></td>
 			</tr>
 			<tr>	
-				<td>性別<input name="gender" type="text" value="${memberVO.gender}"></td>
+				<td>性別
+					<input name="gender" type="radio" value="男"${(memberVO.gender=="男")? 'checked' : ''}>男
+					<input name="gender" type="radio" value="女"${(memberVO.gender=="女")? 'checked' : ''}>女
+				</td>
 			</tr>
 			<tr>	
 				<td>生日<input name="birthdate" type="text" value="${memberVO.birthDate}" class="birthdate"></td>

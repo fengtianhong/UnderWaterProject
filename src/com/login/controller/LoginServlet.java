@@ -46,10 +46,10 @@ public class LoginServlet extends HttpServlet {
 			if(check.equals(checknum)){//驗證碼判斷
 				session = req.getSession();			
 //				req.setAttribute("msg", "驗證碼正確");
-				req.setAttribute("account", account);
-				MemberVO memberVO = membersvc.findByAccount(account);
-				Integer userID =  memberVO.getUserID();
-				session.setAttribute("userID", userID);
+//				req.setAttribute("account", account);
+//				MemberVO memberVO = membersvc.findByAccount(account);
+//				Integer userID =  memberVO.getUserID();
+//				session.setAttribute("userID", userID);
 				System.out.println("驗證碼正確");
 				try {
 					String location = (String) session.getAttribute("location");

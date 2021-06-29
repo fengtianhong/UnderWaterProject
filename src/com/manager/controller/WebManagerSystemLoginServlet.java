@@ -11,12 +11,12 @@ import javax.servlet.http.HttpSession;
 import com.manager.model.ManagerService;
 
 
-@WebServlet("/WebManagerSystemServlet")
-public class WebManagerSystemServlet extends HttpServlet {
+@WebServlet("/WebManagerSystemLoginServlet")
+public class WebManagerSystemLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
    
-    public WebManagerSystemServlet() {
+    public WebManagerSystemLoginServlet() {
         super();
     }
 
@@ -33,15 +33,20 @@ public class WebManagerSystemServlet extends HttpServlet {
 		res.setContentType("text/html;charset=UTF-8");
 		String account = req.getParameter("account");
 		String pwd = req.getParameter("pwd");
-		System.out.println(account);
-		System.out.println(pwd);
+//		System.out.println(account);
+//		System.out.println(pwd);
 		ManagerService managersvc = new ManagerService();
 		Boolean vo = managersvc.loginManager(account, pwd);
-		System.out.println(vo);
+//		System.out.println(vo);
 //		System.out.println("有跑到");
 		
 		if(vo == true) {
-//			System.out.println("登入成功");
+			String location = (String)session.getAttribute("location");
+			if(location != null) {
+				session.removeAttribute("location");
+				res.sendRedirect(location);
+				return;
+			}
 			req.getRequestDispatcher("webManagerSystem.jsp").forward(req, res);			
 		}else {
 //			System.out.println("錯誤");
