@@ -102,7 +102,7 @@
 <%@ include file="../share/backend/Bjs.file" %>
 <script>
 
-// 	// 搜索列表
+// 	搜索列表
 	function filter(value) {
     console.log(value);
 		switch(value) {

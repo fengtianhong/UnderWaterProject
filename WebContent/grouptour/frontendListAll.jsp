@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.grouptour.model.*"%>
 <%@ page import="com.diveinfo.model.*"%>
@@ -13,39 +14,118 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
- <title>套裝行程列表</title>
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/grouptour/css/frontendListAll.css">
+<meta charset="UTF-8">   
+<title>套裝行程列表</title>
+<link rel="stylesheet" href="../share/index.css">
+<link rel="stylesheet" href="../vendors/bootstrap/css/bootstrap.min.css">
+<%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/grouptour/css/frontendListAll.css"> --%>
+
+<style>
+	.main {
+		width: 1000px !important;
+ 		height: 1600px; 
+	}	
+	.container{
+		margin: 0 auto;  
+ 		width: 1200px; 
+		display: flex;
+	}
+ 	.item{ 
+ 		margin: 18px; 
+ 		border: 1px solid white;
+		background-color: #eee;
+ 		padding: 5px; 
+ 		border-radius: 20px;
+ 		box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.4);
+ 		
+ 	} 
+ 	.item:hover{
+ 		opacity: 0.99;
+ 		transform: scale(1.01);
+ 		box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.7);
+ 	}
+	.picture{
+		border: 1px solid white;
+		height: 180px;
+		overflow: hidden;
+		margin: 8px;
+		margin-top: 15px;
+ 		border-radius: 50% 20% / 10% 40%; 
+	}
+	.list-group-image{
+		width: 257px;
+		height: 200px;
+		/*圖片撐滿 */
+		object-fit: cover;		
+    	object-position: center;
+	}
+	.caption{
+		padding: 15px;
+		
+	}
+	.pointName{
+		color: DarkSlateGray;
+	}
+	
+	.btn-success{
+		float: right;
+	}
+	.inner-text{
+		padding-left: 9px;
+	}
+	.detail{
+		margin-top: 7px;
+	}
+/* 上方搜尋欄 */
+	.bar{
+		height: 100px;
+	}
+	.page2{
+		margin-top: 50px;
+		text-align: center;
+	}
+	.attend_btn{
+    	position: relative;
+    	bottom: 45px;
+    	left: 96px;
+	}
+		
+</style>
 </head>
-<%-- 	<%@ include file="../util/meta.html" %> --%>
+
 <body>
-
-<%-- 	<%@ include file="../util/header.html" %> --%>
-
+<jsp:include page="../share/navbar.jsp" flush="true" />
+	<div class="bar">
+	<input type="search" class="light-table-filter" data-table="order-table" placeholder="請輸入關鍵字">
+    </div>
+    
     <div class="container">
         
         
         
-	<input type="search" class="light-table-filter" data-table="order-table" placeholder="請輸入關鍵字">
 	<hr>
-        <div id="products" class="row list-group">
+        <div id="products" class="row justify-content-left">
 
-
-            <c:forEach var="groupTourVO" items="${list}">
-            <div class="item  col-xs-4 col-lg-4">
+<%@ include file="page1.file"%>	
+            <c:forEach var="groupTourVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+            <div class="item col-lg-3 col-md-6 col-sm-6">
                 <div class="thumbnail">
-                		<img class="group list-group-image" src="GetImage.do?id=${groupTourVO.groupTourSN}" />
-                    	<div class="caption">
-                        <h4 class="group inner list-group-item-heading">${groupTourVO.tourName}</h4>
+                
+                <div class="picture">
+                		<img class="list-group-image" src="GetImage.do?id=${groupTourVO.groupTourSN}" />
+                </div>
+                <div class="caption">
+                        <h6><b>${groupTourVO.tourName}</b></h6>
 
                         <jsp:useBean id="diveInfoSvc" scope="page" class="com.diveinfo.model.DiveInfoService"></jsp:useBean>
-                        <p class="group inner list-group-item-text">
-                            ${diveInfoSvc.getOneDiveInfo(groupTourVO.pointSN).pointName}</p>
+                        <small class="pointName">
+                            ${diveInfoSvc.getOneDiveInfo(groupTourVO.pointSN).pointName}</small>
                         
-                        <p class="group inner list-group-item-text">
-                            ${groupTourVO.startTime} ~ ${groupTourVO.endTime}</p>
-                        <p class="group inner list-group-item-text">
-                           	 報名人數: ${groupTourVO.attendNumber} / ${groupTourVO.limitNumder}</p>
+                        <p class="detail">
+                            <i class="fas fa-calendar-day"></i><span class="inner-text">${groupTourVO.startTime} ~ ${groupTourVO.endTime}</span>
+                            <br>
+                        	<i class="fas fa-child"></i><span class="inner-text">${groupTourVO.attendNumber} / ${groupTourVO.limitNumder}</span>
+                        </p>
                             
                         <div class="row">
                             <div class="col-xs-12 col-md-6">
@@ -60,7 +140,11 @@
                                 </form>
                             </div>
                         </div>
-                    </div>
+                        <c:if test="${groupTourVO.attendNumber >= groupTourVO.limitNumder}">
+<!--                         		<span style="color:LightCoral;">已額滿</span> -->
+                        		<input class="btn btn-danger attend_btn" style="color: white; background-color: LightCoral; border: LightCoral;" type="button" value="已額滿" >
+                        </c:if>
+                </div>
                 </div>
             </div>
             </c:forEach>
@@ -68,10 +152,13 @@
 
         </div>
     </div>
-<%--     <%@ include file="../util/footer.html" %> --%>
-
-	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    
+ 
+<div class="page2"><%@ include file="page2.file"%></div>
+<jsp:include page="../share/footer.jsp" flush="true" />
+<script src="https://kit.fontawesome.com/d3e24e4d81.js" crossorigin="anonymous"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
         
 </body>

@@ -178,6 +178,7 @@
  </div>
  
 <!-- Err msg -->
+<c:if test="${not empty errMsg}">
  <div class="mb-4">
 <div class="card border-left-warning shadow h-100 py-2">
 	<div class="card-body">
@@ -197,7 +198,9 @@
 		<div class="col-auto">
 		<i class="fas fa-comments fa-2x text-gray-300"></i>
 	</div></div></div></div></div>	
+</c:if>
 </div>			
+
 
 </div>
 

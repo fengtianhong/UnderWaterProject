@@ -1,0 +1,31 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+  <%if (rowsPerPage<rowNumber) {%>
+     <%if(pageIndex>=rowsPerPage){%>  
+     <%-- 上頁 --%>
+        <input class="btn btn-outline-info" type="submit" value="<" onclick="window.location.href='<%=request.getRequestURI()%>?whichPage=<%=whichPage-1%>'" >
+	 <%-- 第一頁 --%>
+        <input class="btn btn-outline-info" type="submit" value="1" onclick="window.location.href='<%=request.getRequestURI()%>?whichPage=1'" >
+
+    <%}%>
+    <%-- Recent Page --%>
+  		<input class="btn btn-outline-info" style="background-color: #0dcaf0; color: #ffffff;" type="submit" value="<%=whichPage%>" onclick="window.location.href='<%=request.getRequestURI()%>?whichPage=<%=whichPage%>'" >
+  
+    <%if(pageIndex<pageIndexArray[pageNumber-1]){%>
+    <%-- 第二頁 --%>
+        <input class="btn btn-outline-info" type="submit" value="<%=whichPage+1%>" onclick="window.location.href='<%=request.getRequestURI()%>?whichPage=<%=whichPage+1%>'" >
+
+    	<input class="btn btn-outline-info" type="submit" value=">" onclick="window.location.href='<%=request.getRequestURI()%>?whichPage=<%=whichPage+1%>'" >
+	<%-- 下一頁 --%>
+
+	<%-- Last Page --%>
+    <%--     <%if(pageNumber!=whichPage){%> --%>
+    <%--     <input class="btn btn-outline-info" type="submit" value="Last Page" onclick="window.location.href='<%=request.getRequestURI()%>?whichPage=<%=pageNumber%>'" > --%>
+    <%--     <%}%> --%>
+    <%}%>
+    	
+  <%}%>  
+
+<br><br>
+
+  
