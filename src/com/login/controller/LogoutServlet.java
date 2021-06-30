@@ -22,9 +22,9 @@ public class LogoutServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		System.out.println("logout doPost");
+//		System.out.println("logout doPost");
 		
-		req.getSession().removeAttribute("account");
+		req.getSession().removeAttribute("userID");
 		res.sendRedirect(req.getContextPath()+"/member/login.jsp");
 	}
 

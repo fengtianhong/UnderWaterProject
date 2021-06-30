@@ -28,12 +28,14 @@
 	<filter-mapping>
 		<filter-name>LoginFilter</filter-name>
 		<url-pattern>/orderforgroup/*</url-pattern>
+		<url-pattern>/member/successLogin.jsp</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
 		<dispatcher>ERROR</dispatcher>
 		<dispatcher>ASYNC</dispatcher>
 	</filter-mapping>
+	
 	
 	<filter>
 		<filter-name>WebManagerSystemLoginFilter</filter-name>

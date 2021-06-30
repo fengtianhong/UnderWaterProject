@@ -8,11 +8,8 @@
 <body>
 	已經回到首頁
 	<input type="button" value="回上一頁" onclick="history.back()">
-	<input type="button" value="註冊" onclick="window.location='register.jsp'">
+	<input type="button" value="註冊" onclick="window.location='login.jsp#toregister'">
 	<input type="button" value="登入" onclick="window.location='login.jsp'">
-	<form action="LogoutServlet.do" method="post">
-		<button >登出</button>
-	</form>
 	
 </body>
 </html>
