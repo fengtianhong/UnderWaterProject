@@ -8,6 +8,6 @@
             <option value="<%=i%>">跳至第<%=i%>頁
          <%}%> 
        </select>
-       <input class="detail" type="submit" value="確定" >  
+       <input class="page2btn" type="submit" value="確定" >  
     </FORM>
   <%}%>

@@ -8,8 +8,11 @@
 
 <%  
 	// DisplayOne的頁面會拿到 userID, groupTourSN
-// 	request.setAttribute("userID", 2);	// 先寫死
-	GroupTourVO groupTourVO = (GroupTourVO) request.getAttribute("groupTourVO"); //listAll給的(KEEP)
+	request.setAttribute("userID", 2);	// 先寫死
+// 	GroupTourVO groupTourVO = (GroupTourVO) request.getAttribute("groupTourVO"); //listAll給的(KEEP)
+	GroupTourService groupTourSvc = new GroupTourService();
+	List<GroupTourVO> list = groupTourSvc.getFrontendAll();
+	pageContext.setAttribute("list", list);
 %>
 
 
@@ -21,10 +24,6 @@
 <link rel="stylesheet" href="../share/index.css">
 <link rel="stylesheet" href="../vendors/bootstrap/css/bootstrap.min.css">
 <style>
-.main {
-	width: 900px !important;
-	height: 2000px;
-}
 
 .main-container {
 	margin: 0 auto;
@@ -36,11 +35,8 @@
 	padding: 30px;
 	opacity: .9;
 }
-
 .row{
 	margin-bottom: 20px;
-
-
 }
 .top {
 	height: 50px;
@@ -89,6 +85,77 @@
 .notice-content{
 	font-size: 10px;
 }
+.footer{
+	padding-bottom: 200px;
+}
+
+/* recommend */
+	.recommend{
+	/* 	border: 1px sold red; */
+	/* 	height: 100px; */
+		margin: 0 auto;
+		width: 1100px;
+		display: flex;
+	}
+	.recommend-title{
+		padding-left: 10%;
+    	padding-top: 40px;
+    	color: white;
+	}
+	.item{ 
+ 		margin: 18px; 
+ 		border: 1px solid white;
+		background-color: #eee;
+ 		padding: 5px; 
+ 		border-radius: 20px;
+ 		box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.4);
+ 		
+ 	} 
+ 	.item:hover{
+ 		opacity: 0.99;
+ 		transform: scale(1.01);
+ 		box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.7);
+ 	}
+	.picture1{
+		border: 1px solid white;
+		height: 180px;
+		overflow: hidden;
+		margin: 8px;
+		margin-top: 15px;
+ 		border-radius: 50% 20% / 10% 40%; 
+	}
+	.list-group-image{
+		width: 257px;
+		height: 200px;
+		/*圖片撐滿 */
+		object-fit: cover;		
+    	object-position: center;
+	}
+	.caption{
+		padding: 15px;
+		
+	}
+	.pointName{
+		color: DarkSlateGray;
+	}
+	
+	.btn-success{
+		float: right;
+	}
+	.inner-text{
+		padding-left: 9px;
+	}
+	.detail{
+		margin-top: 7px;
+	}
+	.attend_btn1{
+    	position: relative;
+    	bottom: 65px;
+    	left: 91px;
+    	cursor: default !important;
+	}
+
+
 
 </style>
 </head>
@@ -161,7 +228,7 @@
 	<div class="col-xl-12 col-lg-12">
 		<h3>行程內容</h3>
 		<div>
-		<p>${groupTourVO.content}</p>
+		<p>${content}</p>
 		</div>
 	</div>	
 	
@@ -226,12 +293,59 @@
 <!-- row end --></div>		
 		
 <!-- container end --></div>
+<div class="row recommend  justify-content-center">
+<div class="col-lg-12 col-md-12 col-sm-12"><h4 class="recommend-title">推薦行程</h4></div>
+<hr style="background-color:white; height:1px; border:none;">
+            <c:forEach var="groupTourVO" items="${list}" begin="0" end="2">
+            <div class="item col-lg-3 col-md-6 col-sm-6">
+                <div class="thumbnail">
+                
+                <div class="picture1">
+                		<img class="list-group-image" src="GetImage.do?id=${groupTourVO.groupTourSN}" />
+                </div>
+                <div class="caption">
+                        <h6><b>${groupTourVO.tourName}</b></h6>
+                        <small class="pointName">
+                            ${diveInfoSvc.getOneDiveInfo(groupTourVO.pointSN).pointName}</small>
+                        
+                        <p class="detail">
+                            <i class="fas fa-calendar-day"></i><span class="inner-text">${groupTourVO.startTime} ~ ${groupTourVO.endTime}</span>
+                            <br>
+                        	<i class="fas fa-child"></i><span class="inner-text">${groupTourVO.attendNumber} / ${groupTourVO.limitNumder}</span>
+                        </p>
+                            
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <p class="lead">
+                                    $ ${groupTourVO.price}</p>
+                         </div>
+                            <div class="col-xs-12 col-md-6">
+                                <form method="post" action="grouptour.do" class="btn-div">
+                                <input type="hidden" name="action" value="getOne_ForDisplay">
+                                <input type="hidden" name="groupTourSN" value="${groupTourVO.groupTourSN}">
+                                <input class="btn btn-success" type="submit" value="More">
+                                </form>
+                            </div>
+                        </div>
+                        <c:if test="${groupTourVO.attendNumber >= groupTourVO.limitNumder}">
+                        		<input class="btn btn-danger attend_btn1" style="color: white; background-color: LightCoral; border: LightCoral;" type="button" value="已額滿" >
+                        </c:if>
+                </div>
+                </div>
+            </div>
+            </c:forEach>
+
+
+
+</div>
+
+
+
 
 <!-- Msg -->   
 <c:if test="${not empty errMsg}">
 	<script>alert("${errMsg}");</script>
 </c:if>
-
 <jsp:include page="../share/footer.jsp" flush="true" />
 
 <script src="https://kit.fontawesome.com/d3e24e4d81.js" crossorigin="anonymous"></script>
@@ -239,29 +353,36 @@
 <script>
 
 function init() {
+	console.log("userID="+$(".userID").val())
+	console.log("groupTourSN="+$(".groupTourSN").val());
+	console.log("favorite="+$(".favorite").text());
+	console.log("order_list="+$(".order_list").text());
+	console.log("favorite="+$(".favorite").text());
+	
 	
 	// 抓取收藏
 	var favorite = $(".favorite").text();
-	var groupTourSN = $(".groupTourSN").text();
+	var groupTourSN = $(".groupTourSN").val();
 	if(favorite.indexOf(groupTourSN) > 0) {
 		$(".heart").addClass("-on");
 	}
+// 	// 抓取是否已額滿	>>上面三駝都可以寫在 c:if
+// 	var attendNumber = $(".attendNumber").text();
+// 	var limitNumder = $(".limitNumder").text();
+// 	console.log(attendNumber+"/"+limitNumder);
+// 	if(attendNumber>=limitNumder) {
+// 		$(".attend_btn").val("已額滿");
+// 		$(".attend_btn").show();
+// 		$(".nonattend_btn").hide();
+// 	}
 	
-	// 抓取訂單
-	var orderList = $(".order_list").text();
-	if(orderList.indexOf(groupTourSN) > 0) {
-		$(".attend_btn").show();
-		$(".nonattend_btn").hide();
-	}
+// 	// 抓取訂單
+// 	var orderList = $(".order_list").text();
+// 	if(orderList.indexOf(groupTourSN) > 0) {
+// 		$(".attend_btn").show();
+// 		$(".nonattend_btn").hide();
+// 	}
 	
-	// 抓取是否已額滿	>>上面三駝都可以寫在 c:if
-	var attendNumber = $(".attendNumber").text();
-	var limitNumder = $(".limitNumder").text();
-	if(attendNumber>=limitNumder) {
-		$(".attend_btn").val("已額滿");
-		$(".attend_btn").show();
-		$(".nonattend_btn").hide();
-	}
 	
 }
 
@@ -274,7 +395,7 @@ $(function () {
         // confirm("ADD COLLECTIONS?");
         var that = this;
         var userID = $(".userID").val();		// 先寫死
-        var groupTourSN = $(".groupTourSN").text();
+        var groupTourSN = $(".groupTourSN").val();
         console.log(userID, "+",groupTourSN);
     
         $.ajax({

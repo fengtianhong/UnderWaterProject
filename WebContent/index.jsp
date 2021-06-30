@@ -89,7 +89,7 @@
 					<h4 class="my-3">論壇</h4>
 					<p class="text-muted">眾多潛水愛好者發表的潛點分享、潛點心得，就算還沒親自去過，也能先一窺究竟。</p>
 				</div>
-				<div class="col-md-4"
+				<div class="col-md-4" style="cursor:pointer"
 					onclick="window.location.href='<%=request.getContextPath()%>/grouptour/frontendListAll.jsp;'">
 					<span class="fa-stack fa-4x"> <i
 						class="fas fa-circle fa-stack-2x text-primary"></i> <i

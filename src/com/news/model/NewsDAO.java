@@ -18,6 +18,7 @@ public class NewsDAO implements NewsDAO_interface {
 	private static final String INSERT_STMT = "INSERT INTO News (title, content, image,newsDate, newsFrom, newsType) VALUES (?, ?, ?, ?, ?, ?)";
 	private static final String UPDATE_STMT = "UPDATE News set title=?, content=?, image=?, newsDate=?, newsFrom=?, newsType=? where newsSN = ?";
 	private static final String GET_ONE_STMT = "SELECT * FROM News WHERE newsSN = ?";
+	private static final String GET_TYPE_STMT = "SELECT * FROM News WHERE newsType = ? order by newsDate desc";
 	private static final String GET_ALL_STMT = "SELECT * FROM News order by newsDate desc";
 	private static final String DELETE_STMT = "DELETE FROM News WHERE newsSN = ?";
 
@@ -235,6 +236,64 @@ public class NewsDAO implements NewsDAO_interface {
 			}
 		}
 
+		return list;
+	}
+
+	@Override
+	public List<NewsVO> getType(Integer newsType) {
+		List<NewsVO> list = new ArrayList<NewsVO>();
+		NewsVO newsVO = null;
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			con = ds.getConnection();
+			ps = con.prepareStatement(GET_TYPE_STMT);
+			ps.setInt(1, newsType);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				newsVO = new NewsVO();
+				newsVO.setNewsSN(rs.getInt("newsSN"));
+				newsVO.setTitle(rs.getString("title"));
+				newsVO.setImage(rs.getBytes("image"));
+				newsVO.setContent(rs.getString("content"));
+				newsVO.setNewsDate(rs.getDate("newsDate"));
+				newsVO.setNewsFrom(rs.getString("newsFrom"));
+				newsVO.setNewsType(rs.getString("newsType"));
+				list.add(newsVO);
+			}
+
+		} catch (Exception e) {
+			e.getMessage();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		
+		
 		return list;
 	}
 

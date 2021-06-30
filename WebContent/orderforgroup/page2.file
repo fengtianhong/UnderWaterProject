@@ -1,21 +1,31 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<%if (pageNumber>0){%>
-  <div class="pageNumber"><font color=red>第 <%=whichPage%> / <%=pageNumber%> 頁</font></div>
-<%}%>
-
- <div class="pageNumber">
   <%if (rowsPerPage<rowNumber) {%>
-    <%if(pageIndex>=rowsPerPage){%>
-        <A href="<%=request.getRequestURI()%>?whichPage=1">至第一頁</A>&nbsp;
-        <A href="<%=request.getRequestURI()%>?whichPage=<%=whichPage-1%>">上一頁 </A>&nbsp;
+     <%if(pageIndex>=rowsPerPage){%>  
+     <%-- 上頁 --%>
+        <input class="btn btn-outline-info" type="submit" value="<" onclick="window.location.href='<%=request.getRequestURI()%>?whichPage=<%=whichPage-1%>'" >
+	 <%-- 第一頁 --%>
+        <input class="btn btn-outline-info" type="submit" value="1" onclick="window.location.href='<%=request.getRequestURI()%>?whichPage=1'" >
+
     <%}%>
+    <%-- Recent Page --%>
+  		<input class="btn btn-outline-info" style="background-color: teal; color: #ffffff;" type="submit" value="<%=whichPage%>" onclick="window.location.href='<%=request.getRequestURI()%>?whichPage=<%=whichPage%>'" >
   
     <%if(pageIndex<pageIndexArray[pageNumber-1]){%>
-        <A  href="<%=request.getRequestURI()%>?whichPage=<%=whichPage+1%>">下一頁 </A>&nbsp;
-        <A href="<%=request.getRequestURI()%>?whichPage=<%=pageNumber%>">至最後一頁</A>&nbsp;
+    <%-- 第二頁 --%>
+        <input class="btn btn-outline-info" type="submit" value="<%=whichPage+1%>" onclick="window.location.href='<%=request.getRequestURI()%>?whichPage=<%=whichPage+1%>'" >
+
+    	<input class="btn btn-outline-info" type="submit" value=">" onclick="window.location.href='<%=request.getRequestURI()%>?whichPage=<%=whichPage+1%>'" >
+	<%-- 下一頁 --%>
+
+	<%-- Last Page --%>
+    <%--     <%if(pageNumber!=whichPage){%> --%>
+    <%--     <input class="btn btn-outline-info" type="submit" value="Last Page" onclick="window.location.href='<%=request.getRequestURI()%>?whichPage=<%=pageNumber%>'" > --%>
+    <%--     <%}%> --%>
     <%}%>
+    	
   <%}%>  
-  </div>
+
+<br><br>
+
   
-  <div class="pageNumber">共 <font color=red><%=rowNumber%></font> 筆</div>

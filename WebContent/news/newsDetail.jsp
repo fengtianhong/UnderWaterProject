@@ -5,12 +5,13 @@
 <%
 	NewsVO newsVO = (NewsVO) request.getAttribute("newsVO");
 %>
+<!DOCTYPE html>
 <html>
 <head>
 <link rel="stylesheet" href="../share/index.css">
 <link rel="stylesheet" href="../vendors/bootstrap/css/bootstrap.min.css">
 
-<style type="text/css">
+<style>
 input {
 	background-color: #017f9d;
 	color: #fff;
@@ -62,7 +63,7 @@ textarea {
 	resize: none;
 }
 </style>
-<title><%=newsVO.getTitle()%></title>
+<title> <%=newsVO.getTitle()%>	</title>
 </head>
 <body>
 	<jsp:include page="../share/navbar.jsp" flush="true" />
@@ -80,8 +81,6 @@ textarea {
 				<td class="title">內容:</td>
 				<td><textarea readonly rows="6" cols="40"><%=newsVO.getContent()%></textarea></td>
 			</tr>
-
-
 
 			<tr>
 				<td class="title">圖片:</td>
@@ -107,6 +106,5 @@ textarea {
 
 
 	<jsp:include page="../share/footer.jsp" flush="true" />
-
 </body>
 </html>

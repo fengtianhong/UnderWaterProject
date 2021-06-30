@@ -8,4 +8,5 @@ public interface NewsDAO_interface {
     public void delete(Integer newsSN);
     public NewsVO findByPrimaryKey(Integer newsSN);
     public List<NewsVO> getAll();
+    public List<NewsVO> getType(Integer newsType);
 }

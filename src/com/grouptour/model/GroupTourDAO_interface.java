@@ -8,5 +8,6 @@ public interface GroupTourDAO_interface {
 	public void update(GroupTourVO groupTourVO);
 	public GroupTourVO findByPrimaryKey(Integer groupTourSN);
 	public List<GroupTourVO> getAll();
+	public List<GroupTourVO> getFrontendAll();
 	public void attendGroup(Integer groupTourSN, Connection con);
 }

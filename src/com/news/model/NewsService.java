@@ -49,4 +49,7 @@ public class NewsService {
 	public List<NewsVO> getAll(){
 		return dao.getAll();
 	}
+	public List<NewsVO> getType(Integer newsType){
+		return dao.getType(newsType);
+	}
 }

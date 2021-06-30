@@ -26,6 +26,7 @@ public class GroupTourDAO implements GroupTourDAO_interface{
 	private static final String UPDATE_STMT = "UPDATE GroupTour SET tourName=?, tourPic=?, startTime=?, endTime=?, regTime=?, closeTime=?, pointSN=?, price=?, attendNumber=?, limitNumder=?, certificationLimit=?, status=?, content=? WHERE groupTourSN=?";
 	private static final String GET_ONE_STMT = "SELECT * FROM GroupTour WHERE groupTourSN=?";
 	private static final String GET_All_LIST_STMT = "SELECT * FROM GroupTour ORDER BY status, startTime";
+	private static final String GET_FRONTEND_All_LIST_STMT = "SELECT * FROM GroupTour WHERE status=0 ORDER BY regTime";
 	private static final String UPDATE_ATTEND_NUMBER_STMT = "UPDATE GroupTour SET attendNumber=attendNumber+1 WHERE groupTourSN=?";
 
 	@Override
@@ -273,6 +274,68 @@ public class GroupTourDAO implements GroupTourDAO_interface{
 			}	// 連線不用關，呼叫的DAO或繼續做事
 		}	
 		
+	}
+
+	@Override
+	public List<GroupTourVO> getFrontendAll() {
+		
+		List<GroupTourVO> list = new ArrayList<GroupTourVO>();
+		GroupTourVO groupTourVO = null;
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = ds.getConnection();
+			ps = con.prepareStatement(GET_FRONTEND_All_LIST_STMT);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				groupTourVO = new GroupTourVO();
+				groupTourVO.setGroupTourSN(rs.getInt("groupTourSN"));
+				groupTourVO.setTourName(rs.getString("tourName"));
+				groupTourVO.setTourPic(rs.getBytes("tourPic"));
+				groupTourVO.setStartTime(rs.getDate("startTime"));
+				groupTourVO.setEndTime(rs.getDate("endTime"));
+				groupTourVO.setRegTime(rs.getDate("regTime"));
+				groupTourVO.setCloseTime(rs.getDate("closeTime"));
+				groupTourVO.setCreateTime(rs.getTimestamp("createTime"));
+				groupTourVO.setPointSN(rs.getInt("pointSN"));
+				groupTourVO.setPrice(rs.getInt("price"));
+				groupTourVO.setAttendNumber(rs.getInt("attendNumber"));
+				groupTourVO.setLimitNumder(rs.getInt("limitNumder"));
+				groupTourVO.setCertificationLimit(rs.getString("certificationLimit"));
+				groupTourVO.setStatus(rs.getString("status"));
+//				groupTourVO.setContent(rs.getString("content"));	// 此方法僅為套裝行程商品列表用，因此不取內文部分
+				list.add(groupTourVO);
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if(rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if(ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if(con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
 	}
 }
 
