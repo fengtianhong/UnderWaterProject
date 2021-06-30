@@ -35,7 +35,6 @@
 		<dispatcher>ASYNC</dispatcher>
 	</filter-mapping>
 	
-<!-- 先暫停, 還不能用
 	<filter-mapping>
 		<filter-name>LoginFilter</filter-name>
 		<url-pattern>/party/HostParty.jsp</url-pattern>
@@ -45,7 +44,7 @@
 		<dispatcher>ERROR</dispatcher>
 		<dispatcher>ASYNC</dispatcher>
 	</filter-mapping>
-	
+
 	<filter-mapping>
 		<filter-name>LoginFilter</filter-name>
 		<url-pattern>/party/partyRegister.jsp</url-pattern>
@@ -55,7 +54,6 @@
 		<dispatcher>ERROR</dispatcher>
 		<dispatcher>ASYNC</dispatcher>
 	</filter-mapping>
- -->	
 	
 	<filter>
 		<filter-name>WebManagerSystemLoginFilter</filter-name>
