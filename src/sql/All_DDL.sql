@@ -59,6 +59,7 @@ CREATE TABLE `Member` (
   `upDateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '帳號更新時間',
   `ratePeople` int NOT NULL DEFAULT '0' COMMENT '被評價總人數',
   `ratePoint` int NOT NULL DEFAULT '0' COMMENT '被評價總分',
+  `personPhoto` blob COMMENT '個人照片',
   PRIMARY KEY (`userID`),
   UNIQUE KEY `UK_MEMBER_account` (`account`)
 ) COMMENT='會員';
