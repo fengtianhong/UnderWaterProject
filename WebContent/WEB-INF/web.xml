@@ -255,4 +255,14 @@
 		<url-pattern>/member/WebManagerSystemLogoutServlet.do</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>MemberInfoServlet</servlet-name>
+		<servlet-class>com.member.controller.MemberInfoServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>MemberInfoServlet</servlet-name>
+		<url-pattern>/member/MemberInfoServlet.do</url-pattern>
+	</servlet-mapping>
+	
 </web-app>

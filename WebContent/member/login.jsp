@@ -18,19 +18,19 @@
         <title>Login</title>
         <link rel="stylesheet" type="text/css" href="css/demo.css" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
-	<link rel="stylesheet" type="text/css" href="css/animate-custom.css" />
+		<link rel="stylesheet" type="text/css" href="css/animate-custom.css" />
     </head>
-    <body>
-        <div class="container">
-            <section>				
-                <div id="container_demo" >
-                    <a class="hiddenanchor" id="toregister"></a>
-                    <a class="hiddenanchor" id="tologin"></a>
-                    <div id="wrapper">
+<body>
+	<div class="container">
+		<section>				
+			<div id="container_demo" >
+				<a class="hiddenanchor" id="toregister"></a>
+				<a class="hiddenanchor" id="tologin"></a>
+					<div id="wrapper">
                         <div id="login" class="animate form">
                             <form  action="login.do" method="post" name="form" > 
                                 <h1>登 入</h1> 
-				<p><input type="hidden" name="test" id="randomstring" value="<%=session.getAttribute("randomString")%>" onblur="VerificationCode(this.value)"><p>
+								<p><input type="hidden" name="test" id="randomstring" value="<%=session.getAttribute("randomString")%>" onblur="VerificationCode(this.value)"><p>
                                 <p> 
                                     <label for="username" class="uname"> 帳號 </label>
                                     <input id="username" name="account" required="required" onblur="Email(this.value)" type="text" placeholder="myemail@mail.com"/>
@@ -39,28 +39,27 @@
                                     <label for="password" class="youpasswd"> 密碼 </label>
                                     <input id="password" name="pwd" required="required" type="password" placeholder="password" /> 
                                 </p>
-							<div>驗證碼：
-								<input type="text" name="checknum" id="checknum" onblur="Manual_VerificationCode(this.value)"/>
-								<img src="<%=request.getContextPath()%>/member/IdentityServlet" id="identity" onload="btn.disabled=false;" /> 
-								<input type="button" value=" 換個圖片 " id="btn" onclick="reloadImage()">
-								<div id="wrap-inline">
+								<div>驗證碼：
+									<input type="text" name="checknum" id="checknum" onblur="Manual_VerificationCode(this.value)"/>
+									<img src="<%=request.getContextPath()%>/member/IdentityServlet" id="identity" onload="btn.disabled=false;" /> 
+									<input type="button" value=" 換個圖片 " id="btn" onclick="reloadImage()">
+									<div id="wrap-inline">
 										<p>${msg}</p>
                             			<p class="login button"> <input type="submit" value="登入" /> </p>
+									</div>
 								</div>
-							</div>
-                <p class="change_link">還沒成為會員 ?
-					<a href="#toregister" class="to_register">註冊</a>
-					<a href="getaccount.jsp" class="to_register">忘記密碼</a>
-				</p>
+                				<p class="change_link">還沒成為會員 ?
+									<a href="#toregister" class="to_register">註冊</a>
+									<a href="getaccount.jsp" class="to_register">忘記密碼</a>
+								</p>
                             </form>
                         </div>
 
-                       <div id="register" class="animate form">
-                            <form  autocomplete="on" action="member.do" onsubmit="checkform(this)" method=""> 
+                      	<div id="register" class="animate form">
+                            <form  autocomplete="on" action="member.do" onsubmit="checkform(this)" method="post"> 
                                 <h1> 會員註冊 </h1> 
                                 <p> 
                                     <label for="Emailsignup" class="youmail" >帳號:</label>
-					
                                     <input id="Emailsignup" name="account" required="required" type="email" value="<%=(memberVO == null) ? "" : memberVO.getAccount()%>"/> 
                                 </p>
 								<p>
@@ -88,8 +87,8 @@
                                 </p>
 								<p> 
                                     <label for="sex">性別:</label>
-                                    <input id="sex" type="radio" name="gender" value="男"  placeholder="必填"  ${memberVO.equals("男") ? 'selected' : ''}>男 
-				    				<input 	    type="radio" name="gender" value="女" ${memberVO.equals("女") ? 'selected' : ''}>女
+                                    <input id="sex" type="radio" name="gender" value="男"  placeholder="必填"  ${memberVO.equals("0") ? 'selected' : ''}>男 
+				    				<input 	    type="radio" name="gender" value="女" ${memberVO.equals("1") ? 'selected' : ''}>女
                                 </p>
 								<p> 
                                     <label for="Birthdate">生日:</label>
@@ -106,13 +105,13 @@
 								<p> 
                                     <label for="Certification">潛水證照:</label>
                                     <select name="certification" size="2">
-									<option value="0" ${(memberVO.limitNumder==null)? 'selected':'' }>無
+										<option value="0" ${(memberVO.limitNumder==null)? 'selected':'' }>無
 							
-									<option value="1" ${(memberVO.limitNumder==1)? 'selected':'' }>PADI
+										<option value="1" ${(memberVO.limitNumder==1)? 'selected':'' }>PADI
 										OW / SSI OW
-									<option value="2" ${(memberVO.limitNumder==2)? 'selected':'' }>PADI
+										<option value="2" ${(memberVO.limitNumder==2)? 'selected':'' }>PADI
 										AOW / SSI AOW
-					</select>
+									</select>
                                 </p>
 								<p> 
 									<div>
