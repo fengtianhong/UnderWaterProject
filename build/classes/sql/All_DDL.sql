@@ -59,6 +59,7 @@ CREATE TABLE `Member` (
   `upDateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '帳號更新時間',
   `ratePeople` int NOT NULL DEFAULT '0' COMMENT '被評價總人數',
   `ratePoint` int NOT NULL DEFAULT '0' COMMENT '被評價總分',
+  `personPhoto` blob COMMENT '個人照片',
   PRIMARY KEY (`userID`),
   UNIQUE KEY `UK_MEMBER_account` (`account`)
 ) COMMENT='會員';
@@ -94,22 +95,22 @@ insert into Diveinfo(pointName,latitude,longitude,`view`,introduction,season,
 values
 ("澎湖仙島",23.249750, 119.674783,"蚵仔嫂的故鄉",
 "澎湖南方四島國家公園海域遊憩區擁有美麗壯闊的珊瑚生態和魚群，歡迎民眾來親近海洋，雖然目前交通仍然不方便，但也因此保留了更多原始風貌",
-"春夏秋冬","離島",null,5,1,上架),
+"春夏秋冬","離島",null,5,1,"上架"),
 ("墾丁獨立礁",21.563336, 120.45536,"海蛞蝓與豆丁海馬朝聖地",
 "獨立礁是墾丁船潛最受歡迎，也是潛水員們最喜歡的潛點。獨立礁是一顆矗立在空曠沙地上的巨大礁石。狀似龍頭的礁岩面南而立，磐頂約8米，置底30米。這個潛點最受歡迎的明星生物，是棲息於24米海扇上的豆丁海馬。迷你而圓滾滾的迷人身形是潛水員們不能錯過的探訪對象，真的是太可愛了 !",
-"春夏秋冬","南部",null,5,1,上架),
+"春夏秋冬","南部",null,5,1,"上架"),
 ("墾丁合界沈船",21.959135, 120.710401,"行駛在海底的船",
 "合界，建議船潛，如果要岸潛的話，可以在水面移動到位置再下潛。必來打卡的點是這裡水下32米只剩下船骨的沉船，因為長得很像肋骨，大家都稱之為「排骨」！下水點的兩邊都有公車站牌很好找～這裡最深有大約有34米，加上有時水流湍急、浪大，適合中高階的大家來參觀！船骨成了魚礁，也有豐富的生態可以觀看。",
-"春夏秋冬","南部",null,5,1,上架),
+"春夏秋冬","南部",null,5,1,"上架"),
 ("小琉球美人洞",22.353668, 120.37315,"海龜集會所",
 "堪稱海龜數量最多的潛點，下水時要注意溝槽地形，時而有浪。有時水質清澈，能見度可達20米以上。",
-"春夏秋冬","離島",null,5,1,上架),
+"春夏秋冬","離島",null,5,1,"上架"),
 ("東北角龍洞",25.112701, 121.919074,"龍洞1號",
 "位在龍洞灣公園內，有大型室內停車場，停車及著裝方便，亦有潛水步道，是東北角潛水最輕鬆的潛點。",
-"春夏秋冬","北部",null,5,1,上架),
+"春夏秋冬","北部",null,5,1,"上架"),
 ("綠島石朗",22.65577,121.47454,"浮潛與水肺都可以的地方",
 "綠島是國際級的潛水天堂，而位於西岸沿海一帶的石朗海域，則是綠島最受歡迎的潛水勝地，和柴口、大白沙並列為綠島三大潛水區。這裡靠近島內商家雲集的南寮村，浮潛後徒步走去用餐只要十分鐘，非常方便；南寮漁港也在不遠處，飽餐一頓再搭船出海賞鯨，多麼悠閒愜意！",
-"春夏秋冬","離島",null,5,1,上架);
+"春夏秋冬","離島",null,5,1,"上架");
 
 -- --------------------------------------套裝行程----------------------------------------
 
@@ -507,24 +508,28 @@ create table `ForumArticle` (
 	-- `publishedDate` timestamp not null comment '發文時間',
 	`publishedDate` timestamp not null default current_timestamp comment '發文時間',
 	`articleText` longText not null comment '發文內容',
-	`articleStatus` int not null comment '文章狀態',
+--	`articleStatus` int not null comment '文章狀態',
+	-- 註解是更改資料欄位嘗試，下一行是更改後的作法。
+	`articleStatus` boolean not null default 1 comment '文章狀態',
 	`userID` int not null comment '會員編號',
 	`articleTitleOptSN` int not null comment '發文選項編號',
-	`rateGCount` int not null comment '文章好評',
-	`rateNGCount` int not null comment '文章負評',
+	`rateGCount` int not null default '0' comment '文章好評',
+	`rateNGCount` int not null default '0' comment '文章負評',
 	CONSTRAINT `ForumArticle_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`),
 	CONSTRAINT `ForumArticle_articleTitleOptSN` FOREIGN KEY (`articleTitleOptSN`) REFERENCES `ArticleTitleOpt` (`articleTitleOptSN`)
 )AUTO_INCREMENT = 30001 COMMENT='討論區文章';
 
 INSERT INTO ForumArticle (articleTitle, articleText, articleStatus, userID, articleTitleOptSN, rateGCount, rateNGCount) VALUES ("關於浮潛", '浮潛 Snorkeling	為熱帶度假海域或海島極為普及的水上休閒活動，使用呼吸管在水面上游泳，不需要複雜的裝備，也不需要像水肺潛水那樣複雜訓練就可以在自然環境中觀賞水下生物，且不會受呼氣出來的氣泡干擾視線，但僅限深度約10公尺以內、生物豐富的海域，較能以浮潛欣賞海底之美。', 1, 1, 31, 87, 2);
 INSERT INTO ForumArticle (articleTitle, articleText, articleStatus, userID, articleTitleOptSN, rateGCount, rateNGCount) VALUES ("新手須知的小事", '下水前請確保身心健康，感冒、鼻塞都不能下水。 潛水後24小時內不得搭飛機，空中低壓會導致低氧，可能會引發潛水伕病（減壓症），潛水前後一天也不建議飲酒。', 1, 2, 32, 20, 1);
-INSERT INTO ForumArticle (articleTitle, articleText, articleStatus, userID, articleTitleOptSN, rateGCount, rateNGCount) VALUES ("福澤深厚湯姆貓可以潛水嗎？", 'as title', 3, 2, 33, 0, 99);
+INSERT INTO ForumArticle (articleTitle, articleText, articleStatus, userID, articleTitleOptSN, rateGCount, rateNGCount) VALUES ("福澤深厚湯姆貓可以潛水嗎？", 'as title', 1, 2, 33, 0, 99);
 
 create table `ForumRate` (
 	`articleRateSN` int not null auto_increment comment '文章評價編號' primary key,
 	`userID` int not null comment '會員編號',
 	`articleSN` int not null comment '文章編號',
-	`articleRate` tinyint(1) not null comment '評價',
+--	`articleRate` tinyint(1) not null comment '評價',
+	-- 更改資料欄位測試，下一行是新的。
+	`articleRate` boolean not null default 0 comment '評價',
 	CONSTRAINT `ForumRate_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`),
 	CONSTRAINT `ForumRate_articleSN` FOREIGN KEY (`articleSN`) REFERENCES `ForumArticle` (`articleSN`)
 )AUTO_INCREMENT = 30000001 COMMENT='文章評價';
@@ -538,8 +543,8 @@ create table `ArticleReport` (
 	`rptReason` varchar(150) not null comment '檢舉原因',
 	`userID` int not null comment '會員編號',
 	`articleSN` int not null comment '文章編號',
-	`rptResult` char(1) comment '檢舉處理狀態',
-	`reRptResult` varchar(150) comment '檢舉處理回覆',
+	`rptResult` varchar(9) comment '檢舉處理狀態',
+	`reRptResult` varchar(150) comment '檢舉處理回報',
 	CONSTRAINT `ArticleReport_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`),
 	CONSTRAINT `ArticleReport_articleSN` FOREIGN KEY (`articleSN`) REFERENCES `ForumArticle` (`articleSN`)
 )AUTO_INCREMENT = 3001 COMMENT='文章檢舉';
@@ -600,7 +605,7 @@ CREATE TABLE `News` (
   `content` longtext NOT NULL COMMENT '內文',
   `image` longblob  COMMENT '照片',
   `newsDate` date NOT NULL COMMENT '新聞日期',
-  `newsFrom` varchar(20) NOT NULL COMMENT '新聞來源',
+  `newsFrom` varchar(100) NOT NULL COMMENT '新聞來源',
   `newsType` char(1) NOT NULL COMMENT '新聞類型',
   PRIMARY KEY (`newsSN`)
 ) COMMENT='最新消息' AUTO_INCREMENT = 500001;
