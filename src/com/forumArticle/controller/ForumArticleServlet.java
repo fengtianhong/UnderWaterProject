@@ -25,7 +25,7 @@ public class ForumArticleServlet extends HttpServlet {
 		
 		//	****************************** 1.查詢單一個 (getOne_For_Display)******************************
 		//	可用在查詢檢舉文章的時候
-		//	fASelect.jsp的請求
+		//	forumArticle.jsp的請求
 		if ("getOne_For_Display".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -63,7 +63,7 @@ public class ForumArticleServlet extends HttpServlet {
 					errorMsgs.add("查無資料");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/fASelect.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/forumArticle.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -75,7 +75,7 @@ public class ForumArticleServlet extends HttpServlet {
 				//	其他錯誤處理
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/fASelect.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/forumArticle.jsp");
 				failureView.forward(req, res);
 			}			
 		}
