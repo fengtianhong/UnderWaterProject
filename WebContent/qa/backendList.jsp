@@ -91,9 +91,6 @@
 				<option value="4" ${(qaVO.system==4)? 'selected':'' }>4: 潛水分享
 				<option value="5" ${(qaVO.system==5)? 'selected':'' }>5: 會員相關
 			</select>
-<!-- 			<button type="button" class="filter">Search</button> -->
-<%-- 			<button type="button" onclick="window.location.href='<%=request.getContextPath()%>/qa/backendList.jsp'">Refresh</button> --%>
-			
 			
 		<section>
    		<div class="main">

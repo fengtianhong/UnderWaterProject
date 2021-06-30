@@ -64,5 +64,8 @@ public class GroupTourService {
 	public List<GroupTourVO> getAll() {
 		return dao.getAll();
 	}
+	public List<GroupTourVO> getFrontendAll() {
+		return dao.getFrontendAll();
+	}
 	
 }
