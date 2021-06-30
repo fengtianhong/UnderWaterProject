@@ -36,7 +36,7 @@ public class WebManagerSystemLoginFilter implements Filter{
 		
 		if(account == null) {
 			session.setAttribute("location", req.getRequestURI());
-			res.sendRedirect(req.getContextPath() + "/webManagerSystemLogin.jsp");
+			res.sendRedirect(req.getContextPath() + "/member/webManagerSystemLogin.jsp");
 			return;
 		}else {
 			chain.doFilter(req, res);

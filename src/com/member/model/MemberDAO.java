@@ -8,8 +8,8 @@ import util.Util;
 
 public class MemberDAO implements MemberDAO_interface{
 	
-	private static final String INSERT_STMT = "INSERT INTO Member (account, pwd,nickName, userName, gender, birthDate, phone, certification, certificationPic, personID, address) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	private static final String UPDATE_STMT = "UPDATE Member SET NickName=?, userName=?, gender=?, birthDate=?, phone=?, Certification=?, CertificationPic=?, personID=?, address=?, status=?, updateTime=?, ratePeople=?, ratePoint=? WHERE userID = ?";
+	private static final String INSERT_STMT = "INSERT INTO Member (account, pwd,nickName, userName, gender, birthDate, phone, certification, certificationPic, personID, address, personphoto) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String UPDATE_STMT = "UPDATE Member SET NickName=?, userName=?, gender=?, birthDate=?, phone=?, Certification=?, CertificationPic=?, personID=?, address=?, status=?, updateTime=?, ratePeople=?, ratePoint=?, personphoto=? WHERE userID = ?";
 	private static final String GET_ONE_STMT = "SELECT * FROM Member where userid=?";
 	private static final String FINDBYACCOUNT_STMT = "SELECT * FROM Member where account=?";
 	private static final String GET_ALL_STMT = "SELECT * FROM Member ORDER BY userID";
@@ -119,7 +119,7 @@ public class MemberDAO implements MemberDAO_interface{
 			pstmt.setBytes(9, MemberVO.getCertificationPic());
 			pstmt.setString(10, MemberVO.getPersonID());
 			pstmt.setString(11, MemberVO.getAddress());
-//			pstmt.setInt(12, MemberVO.getStatus());
+			pstmt.setBytes(12, MemberVO.getPersonPhoto());
 			
 			pstmt.executeUpdate();
 			
@@ -169,7 +169,7 @@ public class MemberDAO implements MemberDAO_interface{
 			pstmt.setInt(12, MemberVO.getRatePeople());
 			pstmt.setInt(13, MemberVO.getRatePoint());
 			pstmt.setInt(14, MemberVO.getUserID());
-			
+			pstmt.setBytes(15, MemberVO.getPersonPhoto());
 			pstmt.executeUpdate();
 			
 		} catch (Exception e) {
@@ -226,7 +226,7 @@ public class MemberDAO implements MemberDAO_interface{
 				vo.setUpDateTime(rs.getTimestamp("upDateTime"));
 				vo.setRatePeople(rs.getInt("ratePeople"));
 				vo.setRatePoint(rs.getInt("ratePoint"));
-				
+				vo.setPersonPhoto(rs.getBytes("personPhoto"));
 			}
 			
 		} catch (Exception e) {
@@ -283,7 +283,7 @@ public class MemberDAO implements MemberDAO_interface{
 				vo.setUpDateTime(rs.getTimestamp("UpDateTime"));
 				vo.setRatePeople(rs.getInt("RatePeople"));
 				vo.setRatePoint(rs.getInt("RatePoint"));
-				
+				vo.setPersonPhoto(rs.getBytes("personPhoto"));
 			}
 		} catch (SQLException se) {
 			se.printStackTrace();
@@ -338,6 +338,7 @@ public class MemberDAO implements MemberDAO_interface{
 				vo.setUpDateTime(rs.getTimestamp("UpDateTime"));
 				vo.setRatePeople(rs.getInt("RatePeople"));
 				vo.setRatePoint(rs.getInt("RatePoint"));
+				vo.setPersonPhoto(rs.getBytes("personPhoto"));
 				list.add(vo);
 			}
 			

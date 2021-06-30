@@ -38,20 +38,26 @@ public class WebManagerSystemLoginServlet extends HttpServlet {
 		ManagerService managersvc = new ManagerService();
 		Boolean vo = managersvc.loginManager(account, pwd);
 //		System.out.println(vo);
-//		System.out.println("有跑到");
+		
 		
 		if(vo == true) {
+			session.setAttribute("account", account);
 			String location = (String)session.getAttribute("location");
+			System.out.println("有跑到");
 			if(location != null) {
 				session.removeAttribute("location");
 				res.sendRedirect(location);
 				return;
+			}else{
+				System.out.println("進系統");
+				req.getRequestDispatcher("/member/webManagerSystem.jsp").forward(req, res);
 			}
-			req.getRequestDispatcher("webManagerSystem.jsp").forward(req, res);			
+			
+						
 		}else {
 //			System.out.println("錯誤");
 			req.setAttribute("msg", "帳號密碼錯誤 請重新輸入");
-			req.getRequestDispatcher("webManagerSystemLogin.jsp").forward(req, res);
+			req.getRequestDispatcher("/member/webManagerSystemLogin.jsp").forward(req, res);
 		}
 	}
 

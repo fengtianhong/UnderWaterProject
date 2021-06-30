@@ -50,7 +50,7 @@ CREATE TABLE `Member` (
   `certificationPic` blob COMMENT '證照圖片',
   `personID` char(10) DEFAULT NULL COMMENT '身份證字號',
   `address` varchar(100) DEFAULT NULL COMMENT '地址',
--- 註解是原本的，下一行是因為要在DDL塞假資料改動的，到時候如果有問題請注意這邊
+-- 註解是原本的，下一行是因為要在DDL塞假資料改動的，到時候如果有問題請注意這邊y
   -- `createTime` timestamp NOT NULL COMMENT '帳號建立時間',
   `createTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '帳號建立時間',
   `status` int NOT NULL DEFAULT '2' COMMENT '帳號狀態',
@@ -59,6 +59,7 @@ CREATE TABLE `Member` (
   `upDateTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '帳號更新時間',
   `ratePeople` int NOT NULL DEFAULT '0' COMMENT '被評價總人數',
   `ratePoint` int NOT NULL DEFAULT '0' COMMENT '被評價總分',
+  `personPhoto` blob COMMENT '個人照片',
   PRIMARY KEY (`userID`),
   UNIQUE KEY `UK_MEMBER_account` (`account`)
 ) COMMENT='會員';
