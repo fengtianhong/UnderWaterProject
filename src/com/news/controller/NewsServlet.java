@@ -22,6 +22,7 @@ public class NewsServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+		System.out.println("test:"+action);
 		HttpSession session = req.getSession();
 		if ("insert".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
@@ -144,6 +145,43 @@ public class NewsServlet extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/news/news.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		if ("showType".equals(action)) { // 來自update_emp_input.jsp的請求
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/*************************** 1.接收請求參數 ****************************************/
+				String newsTypeS = new String(req.getParameter("newsType"));
+				System.out.println(newsTypeS);
+				NewsService newsSvc = new NewsService();
+				List<NewsVO> listnew=null;
+				if("product".equals(newsTypeS)) {
+					 listnew = newsSvc.getType(1);
+				}else if("divepoint".equals(newsTypeS)) {
+					listnew = newsSvc.getType(0);
+				}else if("party".equals(newsTypeS)) {
+					listnew = newsSvc.getType(2);
+				}
+				
+				/*************************** 2.開始查詢資料 ****************************************/
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+				req.setAttribute("newsTypeS", newsTypeS);
+				req.setAttribute("listNew", listnew); // 資料庫取出的empVO物件,存入req
+				String url = "/news/news.jsp";
+
+				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
+
+				successView.forward(req, res);
+
+			} catch (Exception e) {
+				errorMsgs.add("修改資料失敗:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/news/news.jsp");
 				failureView.forward(req, res);
 			}

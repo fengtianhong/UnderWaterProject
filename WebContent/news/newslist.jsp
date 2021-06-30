@@ -85,7 +85,7 @@ textarea {
 			<th>新聞內容</th>
 			<th>照片</th>
 			<th>上架日期</th>
-			<th>消息來源<br>新聞類型</th>
+			<th>消息來源<hr>新聞類型</th>
 			<th></th>
 		</tr>
 		<%@ include file="page1.file"%>
@@ -102,7 +102,7 @@ textarea {
 					</div></td>
 				<td><fmt:formatDate value="${newsVO.newsDate}"
 						pattern="yyyy-MM-dd" /></td>
-				<td>${newsVO.newsFrom}<br>${newsVO.newsType==0?"潛點":newsVO.newsType==1?"商品":"揪團"}</td>
+				<td>${newsVO.newsFrom}<hr>${newsVO.newsType==0?"潛點":newsVO.newsType==1?"商品":"揪團"}</td>
 					<td>
 					<FORM METHOD="post"
 						ACTION="<%=request.getContextPath()%>/news/news.do"
@@ -110,10 +110,7 @@ textarea {
 						<input class="btn btn-primary btn-user" type="submit" value="修改"> <input type="hidden"
 							name="newsSN" value="${newsVO.newsSN}"> <input
 							type="hidden" name="action" value="getOne_For_Update">
-					</FORM>
-				</td>
-				<td>
-					<FORM METHOD="post"
+					</FORM><br><FORM METHOD="post"
 						ACTION="<%=request.getContextPath()%>/news/news.do"
 						style="margin-bottom: 0px;">
 						<input class="btn btn-primary btn-user" type="submit" value="刪除"> <input type="hidden"
@@ -121,6 +118,7 @@ textarea {
 							type="hidden" name="action" value="delete">
 					</FORM>
 				</td>
+			
 			</tr>
 		</c:forEach>
 	</table>
