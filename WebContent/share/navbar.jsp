@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div id="container">
 	<!-- navbar navbar-expand-lg navbar-light bg-light -->
@@ -21,6 +22,16 @@
                         <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/forumArticle/forumArticle.jsp">論壇</a></li>
                         <li class="nav-item"><a class="nav-link">會員中心</a></li>
                         <li class="nav-item"><a class="nav-link">購物車?</a></li>
+                        <c:if test="${userID==null}">
+                        <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/member/login.jsp">登入</a></li>
+                        </c:if>
+                        <c:if test="${userID!=null}">
+                        	<form id="logout" action="<%=request.getContextPath()%>/member/LogoutServlet.do" method="post">
+					        <li class="nav-item">
+					        <a class="nav-link" href="#" onclick='document.getElementById("logout").submit();'>登出</a>
+					        </li>
+					     	</form>
+                        </c:if>
 				</ul>
 			</div>
 		</div>

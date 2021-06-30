@@ -114,10 +114,14 @@
 									</select>
                                 </p>
 								<p> 
-									<div>
-                                    	<label for="Certificationpic">證照照片:</label>
-                                    	<input id="Certificationpic" name="certificationPic" required="required" type="file" accept="image/*" /> 
-                                	</div>	
+								<div>
+                                    <label for="Certificationpic">證照照片:</label>
+                                    <input id="Certificationpic" name="certificationPic" required="required" type="file" accept="image/*" /> 
+                                </div>
+                                <div>
+                                    <label for="PersonPhoto">個人照片:</label>
+                                    <input id="PersonPhoto" name="personPhoto" required="required" type="file" accept="image/*" /> 
+                                </div>	
 								<p> 
                                     <label for="CertificationPic">驗證碼:</label>
                                     <input type="text" name="checknum" id="checknum" onblur="Manual_VerificationCode(this.value)"/>

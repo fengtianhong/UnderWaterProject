@@ -36,7 +36,7 @@ public class MemberServlet extends HttpServlet{
 				account = "";
 				errorMsgs.add("請輸入帳號");
 			}
-			System.out.println(account);
+//			System.out.println(account);
 			
 			//密碼
 			String pwd = null;
@@ -45,7 +45,7 @@ public class MemberServlet extends HttpServlet{
 				pwd = "";
 				errorMsgs.add("請輸入密碼");
 			}
-			System.out.println(pwd);			
+//			System.out.println(pwd);			
 			
 			//姓名
 			String userName = null;
@@ -54,7 +54,7 @@ public class MemberServlet extends HttpServlet{
 				userName = "";
 				errorMsgs.add("請輸入姓名");
 			}
-			System.out.println(userName);
+//			System.out.println(userName);
 			
 			//暱稱
 			String nickName = null;
@@ -63,7 +63,7 @@ public class MemberServlet extends HttpServlet{
 				nickName = "";
 				errorMsgs.add("請輸入暱稱");
 			}
-			System.out.println(nickName);
+//			System.out.println(nickName);
 			
 			//身分證字號
 			String personID = null;
@@ -71,7 +71,7 @@ public class MemberServlet extends HttpServlet{
 			//性別
 			String gender = null;
 			gender = req.getParameter("gender").trim();
-			System.out.println(gender);
+//			System.out.println(gender);
 			
 			//生日
 			Date birthDate = null;
@@ -90,6 +90,8 @@ public class MemberServlet extends HttpServlet{
 			
 			
 			
+			
+			
 			//證照圖片===========================
 			byte[] certificationPic = null;
 			InputStream in = null;
@@ -105,16 +107,30 @@ public class MemberServlet extends HttpServlet{
 //				}
 			}catch(Exception e) {
 				e.printStackTrace();
-				errorMsgs.add("圖片讀取錯誤" + e.getLocalizedMessage());
+				errorMsgs.add("證照圖片讀取錯誤" + e.getLocalizedMessage());
 			}finally {
 				in.close();
 			}
 			
-			
-			
-			
-			
-			
+			//個人照片
+			byte[] personPhoto = null;
+			try {
+				Part part = req.getPart("personPhoto"); 
+				in = part.getInputStream();	
+				personPhoto = new byte[in.available()];
+				in.read(personPhoto);
+				
+//				if(certificationPic.length == 0) { //未修正圖片存取原圖片
+//					MemberService membersvc = new MemberService();
+//					MemberVO originalVO= membersvc.getone(userID);
+//				}
+			}catch(Exception e) {
+				e.printStackTrace();
+				errorMsgs.add("個人照片讀取錯誤" + e.getLocalizedMessage());
+			}finally {
+				in.close();
+			}
+						
 			MemberVO memberVO = new MemberVO();
 			memberVO.setAccount(account);
 			memberVO.setPwd(pwd);
@@ -127,6 +143,7 @@ public class MemberServlet extends HttpServlet{
 			memberVO.setCertificationPic(certificationPic);
 			memberVO.setPersonID(personID);
 			memberVO.setAddress(address);
+			memberVO.setPersonPhoto(personPhoto);
 			
 			if(!errorMsgs.isEmpty()) {
 				req.setAttribute("MemberVO", memberVO);
@@ -134,9 +151,9 @@ public class MemberServlet extends HttpServlet{
 				res.sendRedirect(req.getContextPath()+"/member/login.jsp#toregister");
 				return;
 			}
-			System.out.println();
+//			System.out.println();
 			MemberService memberService = new MemberService();
-			memberVO = memberService.insertMember(account, pwd, nickName, userName, gender, birthDate, phone, certification, certificationPic, personID, address);
+			memberVO = memberService.insertMember(account, pwd, nickName, userName, gender, birthDate, phone, certification, certificationPic, personID, address, personPhoto);
 			req.getRequestDispatcher("/member/index.jsp").forward(req, res);
 			
 			
