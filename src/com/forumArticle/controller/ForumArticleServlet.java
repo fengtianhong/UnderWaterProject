@@ -254,8 +254,8 @@ public class ForumArticleServlet extends HttpServlet {
 				forumArticleVO.setArticleText(articleText);
 				
 //				會員先用寫死的
-				forumArticleVO.setUserID(1);
-//				forumArticleVO.setUserID(userID);
+//				forumArticleVO.setUserID(1);
+				forumArticleVO.setUserID(userID);
 				
 				forumArticleVO.setArticleTitleOptSN(articleTitleOptSN);
 				

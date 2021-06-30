@@ -37,7 +37,7 @@ public class ForumCommentServlet extends HttpServlet{
 				}
 				
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("留言查詢網頁.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/fAListOne.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -51,7 +51,7 @@ public class ForumCommentServlet extends HttpServlet{
 				}
 				
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("評論查詢網頁.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/fAListOne.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -65,14 +65,14 @@ public class ForumCommentServlet extends HttpServlet{
 				}
 				
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("評論查詢網頁.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/fAListOne.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				
 //				查詢轉交
 				req.setAttribute("forumCommentVO", forumCommentVO);
-				String url = "列出該筆查詢.jsp";
+				String url = "/forumArticle/fAListOne.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);				
 
@@ -175,9 +175,9 @@ public class ForumCommentServlet extends HttpServlet{
 				
 				ForumCommentVO forumCommentVO = new ForumCommentVO();
 				forumCommentVO.setCmtText(cmtText);
-//				forumCommentVO.setUserID(userID);
+				forumCommentVO.setUserID(userID);
 //				會員先寫死試試看功能
-				forumCommentVO.setUserID(2);
+//				forumCommentVO.setUserID(2);
 				forumCommentVO.setArticleSN(articleSN);
 				
 				if (!errorMsgs.isEmpty()) {

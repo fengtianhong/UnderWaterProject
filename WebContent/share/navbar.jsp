@@ -18,7 +18,7 @@
                             </div>
                         </li>
                         <li class="nav-item"><a class="nav-link">商城</a></li>
-                        <li class="nav-item"><a class="nav-link">論壇</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/forumArticle/forumArticle.jsp">論壇</a></li>
                         <li class="nav-item"><a class="nav-link">會員中心</a></li>
                         <li class="nav-item"><a class="nav-link">購物車?</a></li>
 				</ul>

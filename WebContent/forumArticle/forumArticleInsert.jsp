@@ -67,8 +67,9 @@
 			<FORM METHOD="post" ACTION="forumArticle.do" name="form1"  enctype="multipart/form-data">
 				<table>
 					<tr>
+						<jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
 						<td>發文作者</td>
-						<td><input type="text" name="userID" value="1" readonly>(先寫死，等動態來換掉)</td>
+						<td>${memberSvc.getone(forumArticleVO.userID).nickName}</td>	
 					</tr>
 					<tr>
 						<jsp:useBean id="articleTitleOptSvc" scope="page" class="com.articleTitleOpt.model.ArticleTitleOptService"></jsp:useBean>

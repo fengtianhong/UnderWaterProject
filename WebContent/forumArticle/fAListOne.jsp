@@ -30,14 +30,6 @@
 				border: 2px white double;
 				margin-bottom: 10px;
 			}
-		
-/* 			＃comment {
-				width: 75%;
-				margin: 0 auto;
-				border: 1px white solid;
-				
-			} */
-		
 		</style>
 		
 		
@@ -46,7 +38,7 @@
 		<jsp:include page="../share/navbar.jsp" flush="true" />
 			<div id="showbox">
 				<div id="bar" style="margin-left: 20px; margin-top: 20px; box-shadow: 0 1px; padding-bottom:5px;">
-					<span class="css_td" style="text-align: center;"><fmt:formatDate value="${forumArticleVO.publishedDate}" pattern="yyyy-MM-dd"/></span>		
+					<span class="css_td" style="text-align: center;"><fmt:formatDate value="${forumArticleVO.publishedDate}" pattern="yyyy-MM-dd HH:mm:ss "/></span>		
 					<jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
 					<span class="css_td" style="text-align: center;">作者：${memberSvc.getone(forumArticleVO.userID).nickName}</span>
 					<span class="css_td" style="text-align: center;">文章好評：${forumArticleVO.rateGCount}</span>
@@ -55,26 +47,22 @@
 				<div id="title" style="margin-left: 20px; margin-top: 20px;"><h3>${forumArticleVO.articleTitle}</h3></div>
 				<div id="text" style="margin-left: 20px; margin-top: 20px;"><h5>${forumArticleVO.articleText}</h5></div>
 				
-			<div style="width:100px; height:100px; border:3px #cccccc dashed; margin: 20px"></div>	
-				
-			<div id="comment" style="margin-left: 20px; margin-top: 20px;">
-			<%@ include file="page1frontend.file" %>
+				<%@ include file="page1frontend.file" %>
 				<c:forEach var="forumCommentVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 				
-					<div class="commentShowbox">
+					<div class="commentShowbox" style="margin-left: 20px">
 						<span class="css_td" style="text-align: center;">From：${memberSvc.getone(forumArticleVO.userID).nickName}</span>
-						<span class="css_td" style="text-align: center;">在<fmt:formatDate value="${forumCommentVO.cmtDate}" pattern="yyyy-MM-dd"/>寫下：</span>
+						<span class="css_td" style="text-align: center;">在<fmt:formatDate value="${forumCommentVO.cmtDate}" pattern="yyyy-MM-dd HH:mm:ss "/>寫下：</span>
+						<div class="cmtarea" style="margin-left: 20px;"><p>${forumCommentVO.cmtText}</p></div>
 					</div>
-					<div class="cmtarea"><p>${forumCommentVO.cmtText}</p></div>
+					
 				</c:forEach>
-			</div>
-			
+				
+					<input type="button" onclick="window.location.href='<%=request.getContextPath()%>/forumArticle/forumArticle.jsp'"
+							value="回文章列表" style="border-radius: 7px; margin-bottom: 20px;">
+			</div>	
+				
 
-			</div>
-
-
-		
-		
 		<jsp:include page="../share/footer.jsp" flush="true" />
 	</body>
 </html>
