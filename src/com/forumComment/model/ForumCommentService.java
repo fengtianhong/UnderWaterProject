@@ -38,7 +38,7 @@ public class ForumCommentService {
 		dao.delete(cmtSN);
 	}
 	
-	public ForumCommentVO getOneForumComment(Integer articleSN) {
+	public List<ForumCommentVO> getOneForumComment(Integer articleSN) {
 		return dao.findByPrimaryKey(articleSN);
 	}
 	

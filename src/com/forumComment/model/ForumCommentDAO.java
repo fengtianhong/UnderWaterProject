@@ -29,7 +29,7 @@ public class ForumCommentDAO implements ForumCommentDAO_interface{
 		private static final String GET_ALL_STMT = 
 			"SELECT cmtSN, cmtDate, cmtText, userID, articleSN FROM ForumComment order by cmtSN";
 		private static final String GET_ONE_STMT = 
-			"SELECT cmtSN, cmtDate, cmtText, userID, articleSN FROM ForumComment where articleSN = ?";
+			"SELECT  * FROM ForumComment where articleSN = ?";
 		private static final String DELETE = 
 			"DELETE FROM ForumComment where cmtSN = ?";
 		private static final String UPDATE = 
@@ -149,8 +149,9 @@ public class ForumCommentDAO implements ForumCommentDAO_interface{
 
 	
 	@Override
-	public ForumCommentVO findByPrimaryKey(Integer articleSN) {
+	public List<ForumCommentVO> findByPrimaryKey(Integer articleSN) {
 		
+		List<ForumCommentVO> list = new ArrayList<ForumCommentVO>();
 		ForumCommentVO forumCommentVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -171,6 +172,9 @@ public class ForumCommentDAO implements ForumCommentDAO_interface{
 				forumCommentVO.setCmtText(rs.getString("cmtText"));
 				forumCommentVO.setUserID(rs.getInt("userID"));
 				forumCommentVO.setArticleSN(rs.getInt("articleSN"));
+				
+				list.add(forumCommentVO);
+				
 			}
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "	+ se.getMessage());
@@ -197,7 +201,7 @@ public class ForumCommentDAO implements ForumCommentDAO_interface{
 				}
 			}
 		}
-		return forumCommentVO;
+		return list;
 	}
 
 	

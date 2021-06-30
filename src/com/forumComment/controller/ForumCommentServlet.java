@@ -31,7 +31,7 @@ public class ForumCommentServlet extends HttpServlet{
 			
 			try {
 //				接收參數
-				String str = req.getParameter("cmtSN");
+				String str = req.getParameter("articleSN");
 				if (str == null || (str.trim()).length() == 0) {
 					errorMsgs.add("請輸入留言編號");
 				}
@@ -42,10 +42,10 @@ public class ForumCommentServlet extends HttpServlet{
 					return;
 				}
 				
-				Integer cmtSN = null;
+				Integer articleSN = null;
 				
 				try {
-					cmtSN = new Integer(str);
+					articleSN = new Integer(str);
 				} catch (Exception e){
 					errorMsgs.add("評價編號格式不正確");
 				}
@@ -58,9 +58,9 @@ public class ForumCommentServlet extends HttpServlet{
 				
 //				查詢資料
 				ForumCommentService forumCommentSvc = new ForumCommentService();
-				ForumCommentVO forumCommentVO = forumCommentSvc.getOneForumComment(cmtSN);
+				List<ForumCommentVO> forumCommentVO = forumCommentSvc.getOneForumComment(articleSN);
 				
-				if (cmtSN == null) {
+				if (articleSN == null) {
 					errorMsgs.add("查無資料");
 				}
 				
@@ -72,6 +72,7 @@ public class ForumCommentServlet extends HttpServlet{
 				
 //				查詢轉交
 				req.setAttribute("forumCommentVO", forumCommentVO);
+//				req.setAttribute("articleSN", articleSN);
 				String url = "/forumArticle/fAListOne.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);				
@@ -91,10 +92,10 @@ public class ForumCommentServlet extends HttpServlet{
 			
 			try {
 //				接收
-				Integer cmtSN = new Integer(req.getParameter("cmtSN"));
+				Integer articleSN = new Integer(req.getParameter("articleSN"));
 //				查詢
 				ForumCommentService forumCommentSvc = new ForumCommentService();
-				ForumCommentVO forumCommentVO = forumCommentSvc.getOneForumComment(cmtSN);
+				List<ForumCommentVO> forumCommentVO = forumCommentSvc.getOneForumComment(articleSN);
 //				成功後轉交
 				req.setAttribute("forumCommentVO", forumCommentVO);
 				String url = "列出該筆查詢.jsp";

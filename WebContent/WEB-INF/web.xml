@@ -129,6 +129,19 @@
 		<servlet-name>ForumArticleServlet</servlet-name>
 		<url-pattern>/forumArticle/forumArticle.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ForumCommentServlet</servlet-name>
+		<servlet-class>com.forumComment.controller.ForumCommentServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ForumCommentServlet</servlet-name>
+		<url-pattern>/forumComment/forumComment.do</url-pattern>
+	</servlet-mapping>
+	
+	
+	
 
 	<servlet>
 

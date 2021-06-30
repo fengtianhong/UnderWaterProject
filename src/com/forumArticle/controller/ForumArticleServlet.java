@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.forumArticle.model.ForumArticleService;
 import com.forumArticle.model.ForumArticleVO;
 
+
+
 public class ForumArticleServlet extends HttpServlet {
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -36,12 +38,14 @@ public class ForumArticleServlet extends HttpServlet {
 				if (str == null || (str.trim()).length() == 0) {
 					errorMsgs.add("請輸入文章編號");
 				}
-
+				
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/fASelect.jsp");
 					failureView.forward(req, res);
 					return;
 				}
+				
+				
 				
 				Integer articleSN = null;
 				try {
@@ -69,6 +73,7 @@ public class ForumArticleServlet extends HttpServlet {
 				}
 				//	查詢完成轉交
 				req.setAttribute("forumArticleVO", forumArticleVO); // 資料庫取出的forumArticleVO物件,存入req
+				req.setAttribute("articleSN", articleSN);
 				String url = "/forumArticle/fAListOne.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 fAListOne.jsp
 				successView.forward(req, res);
@@ -222,7 +227,7 @@ public class ForumArticleServlet extends HttpServlet {
 			}
 		}
 //		****************************** 4.新增 (insert)******************************			
-		//	來自fAListOne.jsp的新增發文請求
+		
 		if ("insert".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -232,49 +237,58 @@ public class ForumArticleServlet extends HttpServlet {
 				
 				String articleTitle = req.getParameter("articleTitle");
 				String articleTitleReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,15}$";
+				
+				System.out.println(articleTitle);
+				
+				String articleText = req.getParameter("articleText");
+				
+				System.out.println(articleText);
+				
+				
+				
 				if (articleTitle == null || articleTitle.trim().length() == 0) {
 					errorMsgs.add("文章標題：請勿空白");
 				} else if(!articleTitle.trim().matches(articleTitleReg)) {
 					errorMsgs.add("文章標題：只能是中、英文字母、數字和_ , 且長度必需在2到15之間");
 	            }
 				
-				String articleText = req.getParameter("articleText");
-				String articleTextReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]$";
+				
+				
 				if (articleText == null || articleText.trim().length() == 0) {
 					errorMsgs.add("文章內容：請勿空白");
-				} else if(!articleText.trim().matches(articleTextReg)) {
-					errorMsgs.add("文章內容：只能是中、英文字母、數字和_。");
-	            }
+				} 
 				
-				Integer userID = new Integer(req.getParameter("userID").trim());
+//				Integer userID = new Integer(req.getParameter("userID").trim());
+				Integer userID = 2;
+				
+				
+				
 				Integer articleTitleOptSN = new Integer(req.getParameter("articleTitleOptSN").trim());
 				
 				ForumArticleVO forumArticleVO = new ForumArticleVO();
 				forumArticleVO.setArticleTitle(articleTitle);
 				forumArticleVO.setArticleText(articleText);
-				
-//				會員先用寫死的
-//				forumArticleVO.setUserID(1);
+				System.out.println("11");
 				forumArticleVO.setUserID(userID);
 				
 				forumArticleVO.setArticleTitleOptSN(articleTitleOptSN);
-				
+				System.out.println("0");
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("forumArticleVO", forumArticleVO);
 					RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/forumArticleInsert.jsp");
 					failureView.forward(req, res);
 					return;
 				}
-				
+				System.out.println("1");
 				//	新增
 				ForumArticleService forumArticleSvc = new ForumArticleService();
 				forumArticleVO = forumArticleSvc.addForumArticle(articleTitle, articleText, userID, articleTitleOptSN);
-				
+				System.out.println("2");
 				//	新增完成後轉交到forumArticle.jsp(文章列表)
 				String url = "/forumArticle/forumArticle.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);
-				
+				System.out.println("3");
 				//	其他錯誤處理
 			} catch  (Exception e) {
 				errorMsgs.add(e.getMessage());

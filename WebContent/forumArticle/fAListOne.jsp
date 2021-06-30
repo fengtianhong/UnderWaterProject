@@ -7,8 +7,9 @@
 <%@ page import="com.forumComment.model.*" %>
 
 <%
+	Integer articleSN = (Integer)request.getAttribute("articleSN");
 	ForumCommentService forumCommentSvc = new ForumCommentService();
-	List<ForumCommentVO> list = forumCommentSvc.getAll();
+	List<ForumCommentVO> list = forumCommentSvc.getOneForumComment(articleSN);
 	pageContext.setAttribute("list", list);
 
 %>
@@ -59,7 +60,7 @@
 				</c:forEach>
 				
 					<input type="button" onclick="window.location.href='<%=request.getContextPath()%>/forumArticle/forumArticle.jsp'"
-							value="回文章列表" style="border-radius: 7px; margin-bottom: 20px;">
+							value="回文章列表" style="border-radius: 7px; margin-bottom: 20px; margin-left: 20px;">
 			</div>	
 				
 
