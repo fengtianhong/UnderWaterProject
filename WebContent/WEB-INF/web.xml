@@ -28,26 +28,10 @@
 	<filter-mapping>
 		<filter-name>LoginFilter</filter-name>
 		<url-pattern>/orderforgroup/*</url-pattern>
-		<dispatcher>REQUEST</dispatcher>
-		<dispatcher>FORWARD</dispatcher>
-		<dispatcher>INCLUDE</dispatcher>
-		<dispatcher>ERROR</dispatcher>
-		<dispatcher>ASYNC</dispatcher>
-	</filter-mapping>
-	
-	<filter-mapping>
-		<filter-name>LoginFilter</filter-name>
 		<url-pattern>/party/HostParty.jsp</url-pattern>
-		<dispatcher>REQUEST</dispatcher>
-		<dispatcher>FORWARD</dispatcher>
-		<dispatcher>INCLUDE</dispatcher>
-		<dispatcher>ERROR</dispatcher>
-		<dispatcher>ASYNC</dispatcher>
-	</filter-mapping>
-
-	<filter-mapping>
-		<filter-name>LoginFilter</filter-name>
 		<url-pattern>/party/partyRegister.jsp</url-pattern>
+		<url-pattern>/party/partyIHost.jsp</url-pattern>
+		<url-pattern>/party/partyIJoin.jsp</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
