@@ -154,7 +154,7 @@
 			<td>${memberVO.ratePoint}</td>
 			<td>
 				<form method="post"  action="<%=request.getContextPath()%>/member/MemberListServlet.do" >
-					<input class="update" type="submit" value="修改">
+					<input type="submit" class="update" value="修改">
 					<input type="hidden" name="userid"  value="${memberVO.userID}">
 					<input type="hidden" name="action" value="getOne_For_Update">
 				</form>
@@ -192,8 +192,8 @@
 			</tr>
 			<tr>	
 				<td>性別
-					<input name="gender" type="radio" value="男"${(memberVO.gender=="男")? 'checked' : ''}>男
-					<input name="gender" type="radio" value="女"${(memberVO.gender=="女")? 'checked' : ''}>女
+					<input name="gender" type="radio" value="男"${(memberVO.gender=="0")? 'checked' : ''}>男
+					<input name="gender" type="radio" value="女"${(memberVO.gender=="1")? 'checked' : ''}>女
 				</td>
 			</tr>
 			<tr>	

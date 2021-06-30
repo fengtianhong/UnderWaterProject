@@ -28,12 +28,17 @@
 	<filter-mapping>
 		<filter-name>LoginFilter</filter-name>
 		<url-pattern>/orderforgroup/*</url-pattern>
+		<url-pattern>/party/HostParty.jsp</url-pattern>
+		<url-pattern>/party/partyRegister.jsp</url-pattern>
+		<url-pattern>/party/partyIHost.jsp</url-pattern>
+		<url-pattern>/party/partyIJoin.jsp</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
 		<dispatcher>ERROR</dispatcher>
 		<dispatcher>ASYNC</dispatcher>
 	</filter-mapping>
+	
 	
 	<filter>
 		<filter-name>WebManagerSystemLoginFilter</filter-name>
@@ -80,6 +85,28 @@
 		<url-pattern>/party/party.do</url-pattern>
 	</servlet-mapping>
 
+<!-- 改成Annotation註冊
+	<servlet>
+		<servlet-name>PartyPic</servlet-name>
+		<servlet-class>com.party.controller.PartyPic</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>PartyPic</servlet-name>
+		<url-pattern>/party/partyPic.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>PartySchedule</servlet-name>
+		<servlet-class>com.party.controller.PartySchedule</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>PartySchedule</servlet-name>
+		<url-pattern>/PartySchedule</url-pattern>
+	</servlet-mapping>
+ -->
 
 
 	<servlet>
@@ -204,6 +231,16 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>LogoutServlet</servlet-name>
+		<servlet-class>com.login.controller.LogoutServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>LogoutServlet</servlet-name>
+		<url-pattern>/member/LogoutServlet.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>WebManagerSystemLogoutServlet</servlet-name>
 		<servlet-class>com.manager.controller.WebManagerSystemLogoutServlet</servlet-class>
 	</servlet>
@@ -211,6 +248,16 @@
 	<servlet-mapping>
 		<servlet-name>WebManagerSystemLogoutServlet</servlet-name>
 		<url-pattern>/member/WebManagerSystemLogoutServlet.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>MemberInfoServlet</servlet-name>
+		<servlet-class>com.member.controller.MemberInfoServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>MemberInfoServlet</servlet-name>
+		<url-pattern>/member/MemberInfoServlet.do</url-pattern>
 	</servlet-mapping>
 	
 </web-app>
