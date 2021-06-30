@@ -204,6 +204,16 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>LogoutServlet</servlet-name>
+		<servlet-class>com.login.controller.LogoutServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>LogoutServlet</servlet-name>
+		<url-pattern>/member/LogoutServlet.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>WebManagerSystemLogoutServlet</servlet-name>
 		<servlet-class>com.manager.controller.WebManagerSystemLogoutServlet</servlet-class>
 	</servlet>
