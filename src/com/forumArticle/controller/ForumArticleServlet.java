@@ -222,7 +222,7 @@ public class ForumArticleServlet extends HttpServlet {
 			}
 		}
 //		****************************** 4.新增 (insert)******************************			
-		//	來自forumArticle.jsp的新增發文請求
+		//	來自fAListOne.jsp的新增發文請求
 		if ("insert".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -254,8 +254,8 @@ public class ForumArticleServlet extends HttpServlet {
 				forumArticleVO.setArticleText(articleText);
 				
 //				會員先用寫死的
-				forumArticleVO.setUserID(1);
-//				forumArticleVO.setUserID(userID);
+//				forumArticleVO.setUserID(1);
+				forumArticleVO.setUserID(userID);
 				
 				forumArticleVO.setArticleTitleOptSN(articleTitleOptSN);
 				
