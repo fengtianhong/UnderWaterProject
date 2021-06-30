@@ -222,7 +222,7 @@ public class ForumArticleServlet extends HttpServlet {
 			}
 		}
 //		****************************** 4.新增 (insert)******************************			
-		//	來自forumArticle.jsp的新增發文請求
+		//	來自fAListOne.jsp的新增發文請求
 		if ("insert".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
