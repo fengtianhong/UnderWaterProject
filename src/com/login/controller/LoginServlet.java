@@ -53,12 +53,12 @@ public class LoginServlet extends HttpServlet {
 						session.removeAttribute("location");//有無來源網頁，若有導回原網頁
 						return;
 					}else {
-//						System.out.println("測試,導回index頁面");
-						req.getRequestDispatcher("index.jsp").forward(req, res);
+//						System.out.println("若沒有來源網頁,導回index頁面");
+						req.getRequestDispatcher("personinfo.jsp").forward(req, res);
 					}
 				}catch(Exception e) {//若沒有,導回index頁面
 //					System.out.println("沒有,導回index頁面");
-					req.getRequestDispatcher("index.jsp").forward(req, res);
+					req.getRequestDispatcher("personinfo.jsp").forward(req, res);
 				}
 			}else {
 				System.out.println("驗證碼不正確");
