@@ -32,6 +32,7 @@
 		<url-pattern>/party/partyRegister.jsp</url-pattern>
 		<url-pattern>/party/partyIHost.jsp</url-pattern>
 		<url-pattern>/party/partyIJoin.jsp</url-pattern>
+		<url-pattern>/chat/*</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
