@@ -35,6 +35,28 @@
 		<dispatcher>ASYNC</dispatcher>
 	</filter-mapping>
 	
+<!-- 先暫停, 還不能用
+	<filter-mapping>
+		<filter-name>LoginFilter</filter-name>
+		<url-pattern>/party/HostParty.jsp</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+		<dispatcher>ASYNC</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>LoginFilter</filter-name>
+		<url-pattern>/party/partyRegister.jsp</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+		<dispatcher>ASYNC</dispatcher>
+	</filter-mapping>
+ -->	
+	
 	<filter>
 		<filter-name>WebManagerSystemLoginFilter</filter-name>
 		<filter-class>com.manager.controller.WebManagerSystemLoginFilter</filter-class>
@@ -80,6 +102,28 @@
 		<url-pattern>/party/party.do</url-pattern>
 	</servlet-mapping>
 
+<!-- 改成Annotation註冊
+	<servlet>
+		<servlet-name>PartyPic</servlet-name>
+		<servlet-class>com.party.controller.PartyPic</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>PartyPic</servlet-name>
+		<url-pattern>/party/partyPic.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>PartySchedule</servlet-name>
+		<servlet-class>com.party.controller.PartySchedule</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>PartySchedule</servlet-name>
+		<url-pattern>/PartySchedule</url-pattern>
+	</servlet-mapping>
+ -->
 
 
 	<servlet>
