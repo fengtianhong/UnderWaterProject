@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="814" height="210" viewBox="0 0 814 210">
+  <g id="Group_123" data-name="Group 123" transform="translate(-830 -391)">
+    <circle id="Ellipse_44" data-name="Ellipse 44" cx="59" cy="59" r="59" transform="translate(855 391)" fill="#fff"/>
+    <circle id="Ellipse_45" data-name="Ellipse 45" cx="59" cy="59" r="59" transform="translate(1501 391)" fill="#fff"/>
+    <circle id="Ellipse_46" data-name="Ellipse 46" cx="59" cy="59" r="59" transform="translate(1178 391)" fill="#fff"/>
+    <g id="Group_121" data-name="Group 121" transform="translate(283 -0.5)">
+      <line id="Line_43" data-name="Line 43" x2="17" y2="17" transform="translate(1102.5 433.5)" fill="none" stroke="#fff" stroke-width="5"/>
+      <line id="Line_44" data-name="Line 44" y1="18.5" x2="19" transform="translate(1102.5 449)" fill="none" stroke="#fff" stroke-width="5"/>
+    </g>
+    <text id="填寫商品資訊" transform="translate(830 594)" fill="#fff" font-size="28" font-family="YuGothicUI-Regular, Yu Gothic UI"><tspan x="0" y="0">填寫商品資訊</tspan></text>
+    <text id="選擇付款方式" transform="translate(1153 594)" fill="#fff" font-size="28" font-family="YuGothicUI-Regular, Yu Gothic UI"><tspan x="0" y="0">選擇付款方式</tspan></text>
+    <text id="確認個人資訊" transform="translate(1476 594)" fill="#fff" font-size="28" font-family="YuGothicUI-Regular, Yu Gothic UI"><tspan x="0" y="0">確認個人資訊</tspan></text>
+    <text id="_1" data-name="1" transform="translate(905 465)" fill="#5f8c94" font-size="36" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">1</tspan></text>
+    <text id="_3" data-name="3" transform="translate(1551 465)" fill="#5f8c94" font-size="36" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">3</tspan></text>
+    <text id="_2" data-name="2" transform="translate(1228 465)" fill="#5f8c94" font-size="36" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">2</tspan></text>
+    <g id="Group_122" data-name="Group 122" transform="translate(-40 -4)">
+      <line id="Line_43-2" data-name="Line 43" x2="17" y2="17" transform="translate(1102.5 433.5)" fill="none" stroke="#fff" stroke-width="5"/>
+      <line id="Line_44-2" data-name="Line 44" y1="18.5" x2="19" transform="translate(1102.5 449)" fill="none" stroke="#fff" stroke-width="5"/>
+    </g>
+    <path id="Path_66" data-name="Path 66" d="M3039.766,407.992s16.573,2.617,21.806,24.423" transform="translate(-1452.913 1.172)" fill="none" stroke="#5f8c94" stroke-width="2"/>
+    <path id="Path_67" data-name="Path 67" d="M3063.991,440.837a19.417,19.417,0,0,1,1.069,4.491" transform="translate(-1454.913 1.172)" fill="none" stroke="#5f8c94" stroke-width="2"/>
+  </g>
+</svg>

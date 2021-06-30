@@ -188,6 +188,7 @@
      </div>
      
     <!-- Err msg -->
+    <c:if test="${not empty errMsg}">
      <div class="mb-4">
     <div class="card border-left-warning shadow h-100 py-2">
         <div class="card-body">
@@ -208,7 +209,7 @@
             <i class="fas fa-comments fa-2x text-gray-300"></i>
         </div></div></div></div>
                 
-    </div><%-- col-lg-4 end --%>	
+    </div></c:if></div><%-- col-lg-4 end --%>	
 
 
 
@@ -216,7 +217,7 @@
     <%-- 錯誤表列 --%>
     <c:if test="${not empty errMsg}">
         <script>
-            alert("請修正以下錯誤: "+ "${errMsg}");
+            alert("內容有誤，請再確認");
         </script>
     </c:if>
     

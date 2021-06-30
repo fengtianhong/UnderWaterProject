@@ -27,7 +27,7 @@
 
 	<filter-mapping>
 		<filter-name>LoginFilter</filter-name>
-		<url-pattern>/diveinfo/*</url-pattern>
+		<url-pattern>/orderforgroup/*</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
@@ -42,7 +42,7 @@
 
 	<filter-mapping>
 		<filter-name>WebManagerSystemLoginFilter</filter-name>
-		<url-pattern>/diveinfo/*</url-pattern>
+		<url-pattern>/news/*</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>

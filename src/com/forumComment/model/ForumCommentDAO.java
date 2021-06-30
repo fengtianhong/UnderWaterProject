@@ -25,7 +25,7 @@ public class ForumCommentDAO implements ForumCommentDAO_interface{
 	}
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO ForumComment (cmtDate, cmtText, userID, articleSN) VALUES (?, ?, ?, ?)";
+			"INSERT INTO ForumComment (cmtText, userID, articleSN) VALUES (?, ?, ?)";
 		private static final String GET_ALL_STMT = 
 			"SELECT cmtSN, cmtDate, cmtText, userID, articleSN FROM ForumComment order by cmtSN";
 		private static final String GET_ONE_STMT = 
@@ -33,7 +33,7 @@ public class ForumCommentDAO implements ForumCommentDAO_interface{
 		private static final String DELETE = 
 			"DELETE FROM ForumComment where cmtSN = ?";
 		private static final String UPDATE = 
-			"UPDATE ForumComment set cmtDate = ?, cmtText = ? , userID = ?, articleSN = ?  where cmtSN = ?";
+			"UPDATE ForumComment set cmtText = ? , userID = ?, articleSN = ?  where cmtSN = ?";
 
 		
 	@Override
@@ -46,10 +46,10 @@ public class ForumCommentDAO implements ForumCommentDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
-			pstmt.setTimestamp(1, forumCommentVO.getCmtDate());
-			pstmt.setString(2, forumCommentVO.getCmtText());
-			pstmt.setInt(3, forumCommentVO.getUserID());
-			pstmt.setInt(4, forumCommentVO.getArticleSN());
+//			pstmt.setTimestamp(1, forumCommentVO.getCmtDate());
+			pstmt.setString(1, forumCommentVO.getCmtText());
+			pstmt.setInt(2, forumCommentVO.getUserID());
+			pstmt.setInt(3, forumCommentVO.getArticleSN());
 			
 			pstmt.executeUpdate();
 			
@@ -84,11 +84,11 @@ public class ForumCommentDAO implements ForumCommentDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 	
-			pstmt.setTimestamp(1, forumCommentVO.getCmtDate());
-			pstmt.setString(2, forumCommentVO.getCmtText());
-			pstmt.setInt(3, forumCommentVO.getUserID());
-			pstmt.setDouble(4, forumCommentVO.getArticleSN());
-			pstmt.setInt(5, forumCommentVO.getCmtSN());
+//			pstmt.setTimestamp(1, forumCommentVO.getCmtDate());
+			pstmt.setString(1, forumCommentVO.getCmtText());
+			pstmt.setInt(2, forumCommentVO.getUserID());
+			pstmt.setDouble(3, forumCommentVO.getArticleSN());
+			pstmt.setInt(4, forumCommentVO.getCmtSN());
 			
 			pstmt.executeUpdate();
 			

@@ -38,12 +38,13 @@ public class GetImage extends HttpServlet {
 			out.write(b);
 			
 		} catch (Exception e) {
-			System.out.println(e);	// 給錯時錯誤會印在 console > 不優
-//			InputStream in = getServletContext().getResourceAsStream("/NoData/null.jpg");
+//			InputStream in = getServletContext().getResourceAsStream("404_urchin&reef.PNG");
 //			byte[] b = new byte[in.available()];
 //			in.read(b);
 //			out.write(b);
 //			in.close();
+		}finally {
+			out.close();
 		}
 	}
 

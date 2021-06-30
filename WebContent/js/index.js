@@ -20,14 +20,18 @@ $(function () {
       $(".divePosition").css({
         "margin-top": (scrollVal/1.3)-130
       });
+      
       var pos = $(this).scrollTop();  //卷軸位置
       var wh = $(window).height();  //視窗高度(底下)
       var dh = $(document).innerHeight()  //html文件高度
       var percentage = (pos/(dh-wh));
-      
-
+      console.log(pos);
+      console.log(wh);
+      console.log(dh);
+      console.log(percentage);
       $(".divePosition").css({
         "bottom": wh*0.7*(1-percentage) 
+        
       });
     });
   });

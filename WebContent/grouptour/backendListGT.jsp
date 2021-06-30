@@ -38,7 +38,13 @@
 	}
 	div.button{
 		position: absolute;
-    	bottom: 50px;
+    	bottom: 110px;
+    	right: 5%;
+	}
+	div.status{
+		cursor: default;
+		position: absolute;
+    	bottom: 39px;
     	right: 5%;
 	}
 	#filter{
@@ -65,8 +71,8 @@
 </select>
 <!-- </div> -->
 <hr>
-
-		<c:forEach var="groupTourVO" items="${list}">
+<%@ include file="page1.file"%>	
+		<c:forEach var="groupTourVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 		<jsp:useBean id="diveInfoSvc" scope="page" class="com.diveinfo.model.DiveInfoService"></jsp:useBean>
 		<div class="card shadow mb-4 ">
 		<input class="forFilter" type="hidden" value="${diveInfoSvc.getOneDiveInfo(groupTourVO.pointSN).local}">
@@ -80,6 +86,13 @@
 				報名人數: ${groupTourVO.attendNumber} / ${groupTourVO.limitNumder}</p>
 <!-- 				<p class="text-xs">.text-xs</p> -->
 <!-- 				<p class="text-lg mb-0">.text-lg</p> -->
+				<div class="status btn btn-outline-danger">
+						<c:if test="${groupTourVO.status==0}">上架中</c:if>
+				        <c:if test="${groupTourVO.status==1}">已下架</c:if>
+				        <c:if test="${groupTourVO.status==2}">已取消</c:if>
+				</div>
+	
+				
 				<div class="button">
 					<form method="post" action="grouptour.do">
 						<input type="hidden" name="groupTourSN" value="${groupTourVO.groupTourSN}"> 
@@ -90,7 +103,7 @@
 			</div>
 		</div>
 		</c:forEach>
-		
+		<%@ include file="page2.file"%>
 </div>
 <!-- 成功新增Msg -->
 	<c:if test="${not empty Msg}">
@@ -102,7 +115,7 @@
 <%@ include file="../share/backend/Bjs.file" %>
 <script>
 
-// 	// 搜索列表
+// 	搜索列表
 	function filter(value) {
     console.log(value);
 		switch(value) {

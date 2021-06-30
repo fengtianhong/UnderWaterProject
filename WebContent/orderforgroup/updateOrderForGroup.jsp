@@ -11,14 +11,44 @@ OrderForGroupVO orderForGroupVO = (OrderForGroupVO) request.getAttribute("orderF
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<%@ include file="../share/backend/Bmeta.file" %>
 <title>Update Order For Group 後台修改訂單</title>
 <style>
-
+	.container{
+		margin: 0 auto;  
+ 		width: 1200px; 
+		display: flex;
+	}
+	img{
+		width: 100%;
+	}	
+	tr td{
+		padding: 5px;
+		padding-right: 20px;
+	}
+	.input1{
+		width: 420px;
+	}
+	#editor{
+		width: 420px;
+		height: 100px;
+	}
+	.submit_btn{
+		padding-top: 20px;
+		padding-left: 50%;
+		margin-bottom: 20px;
+	}
 
 </style>
 </head>
 <body>
+    <%@ include file="../share/backend/Bheader.file" %>
+	<div class="container">
+	<div class="col-lg-7">
+        <h1 class="h3 mb-2 text-gray-800">套裝行程訂單修改</h1>
+        <p class="mb-4">訂單資訊請勿隨意變更</p>
+
+
 <form method="post" action="<%=request.getContextPath()%>/orderforgroup/orderforgroup.do">
 <table>
 	<tr>
@@ -26,8 +56,8 @@ OrderForGroupVO orderForGroupVO = (OrderForGroupVO) request.getAttribute("orderF
 		<td>${orderForGroupVO.userID}</td>
 	</tr>
 	<tr>
-		<td>套裝行程SN名稱(列出訂購資訊)</td>	
-		<td>${orderForGroupVO.groupTourSN}</td>
+		<td>訂購商品(套裝行程)</td>	
+		<td>${orderForGroupVO.groupTourSN} - ${groupTourSvc.getOne(orderForGroupVO.groupTourSN).tourName}</td>
 	</tr>
 	<tr>
 		<td>總金額</td>	
@@ -51,20 +81,35 @@ OrderForGroupVO orderForGroupVO = (OrderForGroupVO) request.getAttribute("orderF
 	</tr>
 </table>
 	<input type="hidden" name="action" value="update">
-	<input type="submit" value="修改">
+	<input class="btn btn-primary btn-user" type="submit" value="修改">
 </form>
+</div><%-- col-lg-7 end --%>
 
-<%-- 錯誤表列 --%>
-<c:if test="${not empty errMsg}">
-	<font style="color:red">請修正以下錯誤:</font>
-	<ul>
-		<c:forEach var="message" items="${errMsg}">
-			<li style="color:red">${message}</li>
-		</c:forEach>
-	</ul>
-</c:if>
-</body>
-
+<div class="col-lg-4">
+  <!-- Err msg -->
+    <c:if test="${not empty errMsg}">
+     <div class="mb-4">
+    <div class="card border-left-warning shadow h-100 py-2">
+        <div class="card-body">
+            <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Error Messages</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                            
+                            <div class="card-body" style="color:LightCoral">
+                                <c:forEach var="message" items="${errMsg}">
+                                    - ${message}<br>
+                                </c:forEach>
+                            </div>
+                </div>
+            <div class="col-auto">
+            <i class="fas fa-comments fa-2x text-gray-300"></i>
+        </div></div></div></div>
+                
+    </div></c:if></div><%-- col-lg-4 end --%>	
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>

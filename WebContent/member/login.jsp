@@ -28,7 +28,7 @@
 				<a class="hiddenanchor" id="tologin"></a>
 					<div id="wrapper">
                         <div id="login" class="animate form">
-                            <form  action="login.do" autocomplete="on" method="post" name="form" > 
+                            <form  action="login.do" method="post" name="form" > 
                                 <h1>登 入</h1> 
 								<p><input type="hidden" name="test" id="randomstring" value="<%=session.getAttribute("randomString")%>" onblur="VerificationCode(this.value)"><p>
                                 <p> 

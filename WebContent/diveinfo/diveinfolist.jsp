@@ -76,7 +76,7 @@ th, td {
 	<table>
 		<tr>
 			<th>潛點編號</th>
-			<th>潛點名稱&經緯度</th>
+			<th>潛點名稱<hr>經緯度</th>
 			<th>簡介</th>
 			<th>詳細介紹</th>
 			<th>適合季節</th>
@@ -92,7 +92,7 @@ th, td {
 
 			<tr>
 				<td>${diveinfoVO.pointSN}</td>
-				<td>${diveinfoVO.pointName}<br>${diveinfoVO.latitude}<br>${diveinfoVO.longitude}</td>
+				<td>${diveinfoVO.pointName}<hr>${diveinfoVO.latitude}<br>${diveinfoVO.longitude}</td>
 				<td>${diveinfoVO.view}</td>
 				<td>${diveinfoVO.introduction}</td>
 				<td>${diveinfoVO.season}</td>
@@ -108,7 +108,7 @@ th, td {
 						ACTION="<%=request.getContextPath()%>/diveinfo/diveinfo.do"
 						style="margin-bottom: 0px;">
 						<input class="btn btn-primary btn-user" type="submit"
-							value="${(diveinfoVO.status=="上架")?"下架":"上架"}"> <input
+							value="${(diveinfoVO.status=='上架')?'下架':'上架'}"> <input
 							type="hidden" name="pointSN" value="${diveinfoVO.pointSN}">
 						<input type="hidden" name="action" value="changeStatus">
 					</FORM><br>
