@@ -25,7 +25,6 @@ $(function () {
       var wh = $(window).height();  //視窗高度(底下)
       var dh = $(document).innerHeight()  //html文件高度
       var percentage = (pos/(dh-wh));
-      console.log(percentage);
       $(".divePosition").css({
         "bottom": wh*0.7*(1-percentage) 
         
