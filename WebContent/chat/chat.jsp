@@ -150,12 +150,12 @@
 			inputMessage.focus();
 		}
 	}
-
+	var totalLast;
 	// 有好友上線或離線就更新列表
 	function refreshFriendList(jsonObj) {
-		var friends = jsonObj.users;
+		var friends = jsonObj.users;  //當前在線的人
 		var row = document.getElementById("row");
-		var receivers = row.childNodes;
+		var receivers = row.childNodes;  //顯示在畫面上的人
 		var repeat = false;
 		// 		row.innerHTML = '';
 		for (var i = 0; i < friends.length; i++) {
