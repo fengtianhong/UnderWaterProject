@@ -23,7 +23,7 @@ public class LoginServlet extends HttpServlet {
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		System.out.println("有跑到");
+//		System.out.println("有跑到");
 		
 		HttpSession session = req.getSession();
 		req.setCharacterEncoding("UTF-8");
@@ -43,24 +43,30 @@ public class LoginServlet extends HttpServlet {
 				MemberVO memberVO = membersvc.findByAccount(account);
 				Integer userID =  memberVO.getUserID();
 				session.setAttribute("userID", userID);
-				System.out.println("驗證碼正確");
+//				System.out.println("驗證碼正確");
 				try {
 					String location = (String) session.getAttribute("location");
-					System.out.println(location);
+//					System.out.println(location);
 					if(location != null) {
+//						System.out.println("有無來源網頁，若有導回原網頁");
 						res.sendRedirect(location);
 						session.removeAttribute("location");//有無來源網頁，若有導回原網頁
 						return;
+					}else {
+//						System.out.println("測試,導回index頁面");
+						req.getRequestDispatcher("index.jsp").forward(req, res);
 					}
 				}catch(Exception e) {//若沒有,導回index頁面
-					System.out.println("沒有,導回index頁面");
+//					System.out.println("沒有,導回index頁面");
 					req.getRequestDispatcher("index.jsp").forward(req, res);
 				}
 			}else {
+				System.out.println("驗證碼不正確");
 				req.setAttribute("msg", "驗證碼不正確");
 				req.getRequestDispatcher("login.jsp").forward(req, res);
 			}
 		} else {
+			System.out.println("帳號密碼錯誤");
 			req.setAttribute("msg", "帳號密碼錯誤");
 			req.getRequestDispatcher("login.jsp").forward(req, res);
 		}

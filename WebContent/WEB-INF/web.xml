@@ -39,6 +39,7 @@
 		<dispatcher>ASYNC</dispatcher>
 	</filter-mapping>
 	
+	
 	<filter>
 		<filter-name>WebManagerSystemLoginFilter</filter-name>
 		<filter-class>com.manager.controller.WebManagerSystemLoginFilter</filter-class>
@@ -227,6 +228,16 @@
 	<servlet-mapping>
 		<servlet-name>MemberListServlet</servlet-name>
 		<url-pattern>/member/MemberListServlet.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>LogoutServlet</servlet-name>
+		<servlet-class>com.login.controller.LogoutServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>LogoutServlet</servlet-name>
+		<url-pattern>/member/LogoutServlet.do</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
