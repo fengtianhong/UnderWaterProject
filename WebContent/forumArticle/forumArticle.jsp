@@ -28,7 +28,7 @@
 				display:table;
 				background-color: paleturquoise;
 				border: 2px dashed white;
-				width: 75%;
+				width: 60%;
 				font-family:"Microsoft JhengHei", "Apple LiGothic Medium", Arial;
 				margin-top: 10px;
 				margin: 0 auto;
@@ -56,7 +56,7 @@
 									<input class="btn btn-success" type="submit" value="(...閱讀更多)">
 								</form>
 							</div>
-						<span class="css_td" style="text-align: center;"><fmt:formatDate value="${forumArticleVO.publishedDate}" pattern="yyyy-MM-dd"/></span>
+						<span class="css_td" style="text-align: center;"><fmt:formatDate value="${forumArticleVO.publishedDate}" pattern="yyyy-MM-dd HH:mm:ss "/></span>
 						
 						<jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
 						<span class="css_td" style="text-align: center;">作者：${memberSvc.getone(forumArticleVO.userID).nickName}</span>

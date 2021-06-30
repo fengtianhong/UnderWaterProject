@@ -26,6 +26,9 @@
 		<input type="button" id="connect" class="button" value="Connect" onclick="connect();" /> 
 		<input type="button" id="disconnect" class="button" value="Disconnect" onclick="disconnect();" />
 	</div>
+<jsp:useBean id="memSvc" scope="page" class="com.member.model.MemberService"></jsp:useBean>
+<input type="hidden" value="">
+	
 </body>
 <script>
 	var MyPoint = "/CustomerServiceWS/${userID}";	// java EL，可以改成 roomID 跟 session 等，變成發送給特定對象(一對一的聊天室)

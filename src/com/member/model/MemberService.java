@@ -13,7 +13,7 @@ public class MemberService {
 	}
 	
 	public MemberVO insertMember(String account, String pwd, String nickName, String userName, String gender, Date birthDate, String phone, 
-					String certification, byte[] certificationPic, String personID, String address) {
+					String certification, byte[] certificationPic, String personID, String address, byte[] personPhoto) {
 		MemberVO vo = new MemberVO();
 		vo.setAccount(account);
 		vo.setPwd(pwd);
@@ -26,13 +26,15 @@ public class MemberService {
 		vo.setCertificationPic(certificationPic);
 		vo.setPersonID(personID);
 		vo.setAddress(address);
+		vo.setPersonPhoto(personPhoto);
 		dao.insert(vo);
 		return vo;
 	}
 	
 	public MemberVO updateMember(Integer userID, String account, String nickName, String userName, 
 								String gender, Date birthDate, String phone, String certification, byte[] certificationPic, 
-								String personID, String address, Timestamp createTime, Integer status, Timestamp upDateTime, Integer ratePeople, Integer ratePoint) {
+								String personID, String address, Timestamp createTime, Integer status, Timestamp upDateTime,
+								Integer ratePeople, Integer ratePoint, byte[] personPhoto) {
 		MemberVO vo = new MemberVO();
 		vo.setUserID(userID);
 		vo.setAccount(account);
@@ -50,6 +52,7 @@ public class MemberService {
 		vo.setUpDateTime(upDateTime);
 		vo.setRatePeople(ratePeople);
 		vo.setRatePoint(ratePoint);
+		vo.setPersonPhoto(personPhoto);
 		dao.update(vo);
 		return vo;
 	}

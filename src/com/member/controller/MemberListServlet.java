@@ -157,6 +157,8 @@ public class MemberListServlet extends HttpServlet {
 						errorMsgs.add("請確認證照");
 					}
 					
+					
+					//證照圖片
 					byte[] certificationPic = null;
 					InputStream in = null;
 					
@@ -173,11 +175,32 @@ public class MemberListServlet extends HttpServlet {
 						}
 					}catch(Exception e) {
 						e.printStackTrace();
-						errorMsgs.add("圖片讀取錯誤" + e.getMessage());
+						errorMsgs.add("證照讀取錯誤" + e.getMessage());
 					}finally{
 						in.close();
 					}
 					
+					//個人照片
+					byte[] personPhoto = null;
+					
+					
+					try {
+						Part part = req.getPart("personPhoto");
+						in = part.getInputStream();
+						certificationPic = new byte[in.available()];
+						in.read(personPhoto);
+						
+						if(certificationPic.length == 0) {//未修正則存取原圖
+							MemberService membersvc = new MemberService();
+							MemberVO originalVO = membersvc.getone(userId);
+							personPhoto = originalVO.getPersonPhoto();
+						}
+					}catch(Exception e) {
+						e.printStackTrace();
+						errorMsgs.add("個人照片讀取錯誤" + e.getMessage());
+					}finally{
+						in.close();
+					}
 					
 					String personId = null;
 					try {
@@ -243,6 +266,7 @@ public class MemberListServlet extends HttpServlet {
 					memberVO.setUpDateTime(updateTime);
 					memberVO.setRatePeople(ratepeople);
 					memberVO.setRatePeople(ratepoint);
+					memberVO.setPersonPhoto(personPhoto);
 					
 					if(!errorMsgs.isEmpty()) {
 						System.out.println("我有跑到isEmpty");
@@ -257,7 +281,7 @@ public class MemberListServlet extends HttpServlet {
 					MemberService memberSvc = new MemberService();
 					memberVO = memberSvc.updateMember(userId, account, nickName, userName, gender,
 							birthDate, phone, certification, certificationPic, personId, address,
-							createTime, status, updateTime, ratepeople, ratepoint);
+							createTime, status, updateTime, ratepeople, ratepoint, personPhoto);
 					req.setAttribute("membervo", memberVO);
 					System.out.println("我有跑到membersvc");
 					String url = "/member/webManagerSystem.jsp";

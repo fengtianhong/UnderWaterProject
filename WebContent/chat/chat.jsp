@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="com.member.model.*"%>
+<%
+	int userid =(Integer)session.getAttribute("userID");
+	System.out.print(userid);
+	MemberService MemberSvc = new MemberService();
+	MemberVO memberVO = MemberSvc.getone(userid);
+	 pageContext.setAttribute("memberVO",memberVO);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +17,7 @@
 <link rel="stylesheet" href="css/friendchat.css" type="text/css" />
 <style type="text/css">
 </style>
-<title>最大私人聊天室</title>
+<title>潛水客聊天室-${memberVO.nickName}</title>
 </head>
 <body onload="connect();" onunload="disconnect();">
 	<h3 id="statusOutput" class="statusOutput"></h3>
@@ -56,29 +64,29 @@
 			} else if ("history" === jsonObj.type) {
 
 				// 				=========================
-// 				var repeat = false;
-// 				var row = document.getElementById("row");
-// 				var receivers = row.childNodes;
-// 				if (row.childNodes.length == 0) {
-// 					row.innerHTML += '<div onclick="HtmlClick(this)" id='
-// 							+ jsonObj.receiver
-// 							+ ' class="column" name="friendName" value='
-// 							+ jsonObj.receiver + ' ><h2>' + jsonObj.receiver
-// 							+ '</h2></div>';
-// 				}
-// 				for (var i = 0; i < row.childNodes.length; i++) {
-// 					if (receivers[i].getAttribute("id") == jsonObj.receiver) {
-// 						repeat = true;
-// 						break;
-// 					}
-// 				}
-// 				if (repeat == false) {
-// 					row.innerHTML += '<div onclick="HtmlClick(this)" id='
-// 							+ jsonObj.receiver
-// 							+ ' class="column" name="friendName" value='
-// 							+ jsonObj.receiver + ' ><h2>' + jsonObj.receiver
-// 							+ '</h2></div>';
-// 				}
+				// 				var repeat = false;
+				// 				var row = document.getElementById("row");
+				// 				var receivers = row.childNodes;
+				// 				if (row.childNodes.length == 0) {
+				// 					row.innerHTML += '<div onclick="HtmlClick(this)" id='
+				// 							+ jsonObj.receiver
+				// 							+ ' class="column" name="friendName" value='
+				// 							+ jsonObj.receiver + ' ><h2>' + jsonObj.receiver
+				// 							+ '</h2></div>';
+				// 				}
+				// 				for (var i = 0; i < row.childNodes.length; i++) {
+				// 					if (receivers[i].getAttribute("id") == jsonObj.receiver) {
+				// 						repeat = true;
+				// 						break;
+				// 					}
+				// 				}
+				// 				if (repeat == false) {
+				// 					row.innerHTML += '<div onclick="HtmlClick(this)" id='
+				// 							+ jsonObj.receiver
+				// 							+ ' class="column" name="friendName" value='
+				// 							+ jsonObj.receiver + ' ><h2>' + jsonObj.receiver
+				// 							+ '</h2></div>';
+				// 				}
 				// 				===========================
 
 				messagesArea.innerHTML = '';
@@ -99,13 +107,16 @@
 				}
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			} else if ("chat" === jsonObj.type) {
-				var li = document.createElement('li');
-				jsonObj.sender === self ? li.className += 'me'
-						: li.className += 'friend';
-				li.innerHTML = jsonObj.message;
-				console.log(li);
-				document.getElementById("area").appendChild(li);
-				messagesArea.scrollTop = messagesArea.scrollHeight;
+				if ((statusOutput.textContext == jsonObj.sender)
+						|| jsonObj.sender == self) {
+					var li = document.createElement('li');
+					jsonObj.sender === self ? li.className += 'me'
+							: li.className += 'friend';
+					li.innerHTML = jsonObj.message;
+					console.log(li);
+					document.getElementById("area").appendChild(li);
+					messagesArea.scrollTop = messagesArea.scrollHeight;
+				}
 			} else if ("close" === jsonObj.type) {
 				refreshFriendList(jsonObj);
 			}
@@ -139,12 +150,12 @@
 			inputMessage.focus();
 		}
 	}
-
+	var totalLast;
 	// 有好友上線或離線就更新列表
 	function refreshFriendList(jsonObj) {
-		var friends = jsonObj.users;
+		var friends = jsonObj.users;  //當前在線的人
 		var row = document.getElementById("row");
-		var receivers = row.childNodes;
+		var receivers = row.childNodes;  //顯示在畫面上的人
 		var repeat = false;
 		// 		row.innerHTML = '';
 		for (var i = 0; i < friends.length; i++) {

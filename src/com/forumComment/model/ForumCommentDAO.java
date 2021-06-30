@@ -29,7 +29,7 @@ public class ForumCommentDAO implements ForumCommentDAO_interface{
 		private static final String GET_ALL_STMT = 
 			"SELECT cmtSN, cmtDate, cmtText, userID, articleSN FROM ForumComment order by cmtSN";
 		private static final String GET_ONE_STMT = 
-			"SELECT cmtSN, cmtDate, cmtText, userID, articleSN FROM ForumComment where cmtSN = ?";
+			"SELECT cmtSN, cmtDate, cmtText, userID, articleSN FROM ForumComment where articleSN = ?";
 		private static final String DELETE = 
 			"DELETE FROM ForumComment where cmtSN = ?";
 		private static final String UPDATE = 
@@ -149,7 +149,7 @@ public class ForumCommentDAO implements ForumCommentDAO_interface{
 
 	
 	@Override
-	public ForumCommentVO findByPrimaryKey(Integer cmtSN) {
+	public ForumCommentVO findByPrimaryKey(Integer articleSN) {
 		
 		ForumCommentVO forumCommentVO = null;
 		Connection con = null;
@@ -160,7 +160,7 @@ public class ForumCommentDAO implements ForumCommentDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
-			pstmt.setInt(1, cmtSN);
+			pstmt.setInt(1, articleSN);
 
 			rs = pstmt.executeQuery();
 

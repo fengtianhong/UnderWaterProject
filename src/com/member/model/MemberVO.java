@@ -22,6 +22,7 @@ public class MemberVO implements Serializable{
 	private Timestamp upDateTime;//更新時間ˇX
 	private Integer ratePeople;//被評價總人數ˇ
 	private Integer ratePoint;//被評價總分ˇ
+	private byte[] personPhoto;//個人照片
 	
 	public Integer getUserID() {
 		return userID;
@@ -124,5 +125,11 @@ public class MemberVO implements Serializable{
 	}
 	public void setUpDateTime(Timestamp upDateTime) {
 		this.upDateTime = upDateTime;
+	}
+	public byte[] getPersonPhoto() {
+		return personPhoto;
+	}
+	public void setPersonPhoto(byte[] personPhoto) {
+		this.personPhoto = personPhoto;
 	}
 }
