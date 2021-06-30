@@ -22,7 +22,7 @@ public class LoginFilter implements Filter{
 	
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws ServletException, IOException {
-		System.out.println("doFilter");
+//		System.out.println("doFilter");
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		
@@ -37,7 +37,7 @@ public class LoginFilter implements Filter{
 			res.sendRedirect(req.getContextPath() + "/member/login.jsp");
 			return;
 		}else {
-			chain.doFilter(request, response);
+			chain.doFilter(req, res);
 		}
 	}
 	

@@ -132,6 +132,7 @@
 					<td>更新時間</td>
 					<td>評價人數</td>
 					<td>評價總分</td>
+					<td>個人照片</td>
                 </tr>
             <%@ include file="page1.file" %> 
            <c:forEach var="memberVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
@@ -152,6 +153,7 @@
 			<td>${memberVO.upDateTime}</td>
 			<td>${memberVO.ratePeople}</td>
 			<td>${memberVO.ratePoint}</td>
+			<td><div class="picture"><img class="preview" src="GetImagepersonPhoto.do?userid=${memberVO.userID}"></div></td>
 			<td>
 				<form method="post"  action="<%=request.getContextPath()%>/member/MemberListServlet.do" >
 					<input type="submit" class="update" value="修改">
@@ -230,6 +232,10 @@
 			</tr>
 			<tr>	
 				<td>評價總分<input type="text" name="ratepoint" value="${memberVO.ratePoint}"></td>			
+			</tr>
+			<tr>	
+				<td><input type="file" id="the_file" name="personPhoto" accept="image/*"></td>
+				<td><div class="picture"><img class="preview" src="GetImagepersonPhoto.do?userid=${memberVO.userID}"></div></td>
 			</tr>
 	</table>
 	<br>
