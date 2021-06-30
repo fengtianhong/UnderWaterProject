@@ -37,7 +37,22 @@ tr:nth-child(odd) {
 	cursor: pointer;
 	transition-duration: 0.4s;
 	border: 2px #017f9d solid;
-	display:none;
+	display: none;
+}
+
+.page2btn {
+	background-color: #017f9d;
+	color: #fff;
+	border-radius: 10px;
+	cursor: pointer;
+	transition-duration: 0.4s;
+	border: 2px #017f9d solid;
+}
+
+.page2btn:hover {
+	color: #017f9d;
+	background-color: #fff;
+	border: 2px #017f9d solid;
 }
 
 .detail:hover {
@@ -129,13 +144,17 @@ table {
 	<jsp:include page="../share/navbar.jsp" flush="true" />
 
 	<div class="newsContent">
-		<select id="filterType" name="newsType"
-			onchange="ShowType(this.value)">
-			<option value="all">全部</option>
-			<option value="divepoint">潛點</option>
-			<option value="product">商品</option>
-			<option value="party">揪團</option>
-		</select>
+		<FORM METHOD="post"
+			ACTION="<%=request.getContextPath()%>/news/news.do" id="showType">
+			<select id="filterType" name="newsType"
+				onchange="ShowType(this.value)">
+				<option value="all" ${(newsTypeS=='all')?"selected":""}>全部</option>
+				<option value="divepoint" ${(newsTypeS=='divepoint')?"selected":""}>潛點</option>
+				<option value="product" ${(newsTypeS=='product')?"selected":""}>商品</option>
+				<option value="party" ${(newsTypeS=='party')?"selected":""}>揪團</option>
+			</select>
+			<input type="hidden" name="action" value="showType">
+		</FORM>
 		<table>
 			<tr>
 				<th colspan="10">最新消息</th>
@@ -143,14 +162,14 @@ table {
 			<div class="forincludeTop">
 				<%@ include file="page1frontend.file"%>
 			</div>
-			<c:forEach var="newsVO" items="${list}" begin="<%=pageIndex%>"
-				end="<%=pageIndex+rowsPerPage-1%>">
+			<c:forEach var="newsVO" items="${(listNew==null)?list:listNew}"
+				begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 
 				<tr
 					class=${newsVO.newsType==0?"divepoint":newsVO.newsType==1?"product":"party"}>
 					<td>
 					<td><div class="show_pic">
-							<img onclick="goDetail(${newsVO.newsSN})" 
+							<img onclick="goDetail(${newsVO.newsSN})"
 								src="<%=request.getContextPath()%>/news/ShowPic?newsSN=${newsVO.newsSN}">
 						</div></td>
 
@@ -160,10 +179,10 @@ table {
 							id="${newsVO.newsSN}">
 							<a href="javascript:void(0)" onclick="goDetail(${newsVO.newsSN})"
 								id="newsTitle">${newsVO.title}</a>
-<%-- 							<a href="<%=request.getContextPath()%>/news/news.do?newsSN=${newsVO.newsSN}&action=getOne_For_Show" --%>
-<%-- 								id="newsTitle">${newsVO.title}</a> --%>
-								
-								<br>${newsVO.content.substring(0,50)}....<br>
+							<%-- 							<a href="<%=request.getContextPath()%>/news/news.do?newsSN=${newsVO.newsSN}&action=getOne_For_Show" --%>
+							<%-- 								id="newsTitle">${newsVO.title}</a> --%>
+
+							<br>${newsVO.content.substring(0,50)}....<br>
 							<fmt:formatDate value="${newsVO.newsDate}" pattern="yyyy-MM-dd" />
 							<br>${newsVO.newsType==0?"潛點":newsVO.newsType==1?"商品":"揪團"}
 
@@ -189,34 +208,7 @@ table {
 			document.getElementById(newsSN).submit();
 		}
 		function ShowType(filterType) {
-
-
-			switch (filterType) {
-			case 'divepoint':
-				$(".divepoint").show();
-				$(".product").hide();
-				$(".party").hide();
-				console.log(filterType);
-				break;
-			case 'product':
-				$(".divepoint").hide();
-				$(".product").show();
-				$(".party").hide();
-				console.log(filterType);
-				break;
-			case 'party':
-				$(".divepoint").hide();
-				$(".product").hide();
-				$(".party").show();
-				console.log(filterType);
-				break;
-			default:
-				$(".divepoint").show();
-				$(".product").show();
-				$(".party").show();
-				console.log(filterType);
-			}
-
+			document.getElementById("showType").submit();
 		}
 	</script>
 </body>
