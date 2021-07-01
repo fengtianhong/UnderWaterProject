@@ -5,12 +5,10 @@
 <%@ page import="com.orderforgroup.model.*"%>
 
 <%
-	
-	// Integer userID = (Integer) session.getAttribute("userID");	// userID 存在session
+	Integer userID = (Integer) session.getAttribute("userID");
 	OrderForGroupService orderForGroupSvc = new OrderForGroupService();
-	List<OrderForGroupVO> list = orderForGroupSvc.getOrderByUserID(1);	// UserID先寫死
-	pageContext.setAttribute("list", list);	// WHY
-	
+	List<OrderForGroupVO> list = orderForGroupSvc.getOrderByUserID(userID);
+	pageContext.setAttribute("list", list);
 %>
 
 <!DOCTYPE html>
@@ -20,15 +18,10 @@
 <title>List All for back</title>
 <link rel="stylesheet" href="../share/index.css">
 <link rel="stylesheet" href="../vendors/bootstrap/css/bootstrap.min.css">
+<jsp:include page="../share/member/Mmeta.html" flush="true"/>
 <style>
 	.main-container{
-		margin: 0 auto;
-		width: 600px;
-		background-color: snow;
-		border-radius: 10px;
-		box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.4);
 		padding: 30px;
-		opacity: .9;
 	}
 	.picture{
 		width: 100px;
@@ -53,10 +46,13 @@
 		padding-right: 10px;
 	}
 	.orderSN{
-		color: teal;
+		color: cadetblue;
 	}
 	.header_orderSN{
 		text-decoration: none !important;
+	}
+	table{
+	    width: 100%;
 	}
 	tr,td{
 		padding: 0 5px;
@@ -68,11 +64,17 @@
 	.totalPrice{
 		text-align: end;
 	}
+/* 	PUT IN SHARE */
+	.content{
+	    width: 1000px;
+    	margin: 0 auto;
+	}
 
 </style>
 </head>
 <body>
 <jsp:include page="../share/navbar.jsp" flush="true" />
+<jsp:include page="../share/member/Mheader.jsp" flush="true"/>
     <div class="main-container">
         <h5>套裝行程訂單查詢</h5><hr>
 
@@ -121,7 +123,7 @@
 
     
 <!-- container end --></div>
-      
+<jsp:include page="../share/member/Mfooter.html" flush="true"/>    
 <jsp:include page="../share/footer.jsp" flush="true" />
 <script>
 //cancel

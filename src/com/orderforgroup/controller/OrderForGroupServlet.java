@@ -136,7 +136,7 @@ public class OrderForGroupServlet extends HttpServlet {
 					
 					req.setAttribute("orderForGroupVO", orderForGroupVO);
 					req.setAttribute("groupTourVO", groupTourVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/orderforgroup/addOrderForGroup.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/orderforgroup/AddGTOrder.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -144,7 +144,7 @@ public class OrderForGroupServlet extends HttpServlet {
 				orderForGroupSvc.insertOrderForGroup(userID, groupTourSN, totalPrice, purchaseDate, phone, personID, birthdate);
 				
 				req.setAttribute("Msg", "報名成功");
-				RequestDispatcher successView = req.getRequestDispatcher("/orderforgroup/addSuccess.jsp");	// 訂單成功頁面 待確認
+				RequestDispatcher successView = req.getRequestDispatcher("/orderforgroup/Success.jsp");	// 訂單成功頁面 待確認
 				successView.forward(req, res);
 				
 				
@@ -152,7 +152,7 @@ public class OrderForGroupServlet extends HttpServlet {
 				e.printStackTrace();
 				System.out.println("insert failure"+ e.getMessage());
 				errMsg.add("報名失敗 :"+ e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/orderforgroup/addOrderForGroup.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/orderforgroup/AddGTOrder.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -333,7 +333,7 @@ public class OrderForGroupServlet extends HttpServlet {
 				}
 				
 				// 可以報名
-				RequestDispatcher successView = req.getRequestDispatcher("/orderforgroup/addOrderForGroup.jsp"); // 下單頁面
+				RequestDispatcher successView = req.getRequestDispatcher("/orderforgroup/AddGTOrder.jsp"); // 下單頁面
 				successView.forward(req, res);
 				
 			}catch(Exception e) {

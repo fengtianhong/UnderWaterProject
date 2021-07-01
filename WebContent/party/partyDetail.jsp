@@ -3,7 +3,8 @@
 <%@ page import="com.partymember.model.*"%>
 <%@ page import="com.party.model.*"%>
 <jsp:useBean id="diveInfoSvc" scope="page" class="com.diveinfo.model.DiveInfoService" />
-
+<jsp:useBean id="memberSvc" class="com.member.model.MemberService" />
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,12 +12,10 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>揪團詳細內容</title>
-	
     <link rel="stylesheet" href="../share/index.css">
+    <link rel="stylesheet" href="css/partyDetail.css">
     <!-- Bootstrap 的 CSS -->
     <link rel="stylesheet" href="../vendors/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/partyDetail.css">
-    
     <!-- 自己的fontaweson -->
     <script src="https://kit.fontawesome.com/99b24a5611.js" crossorigin="anonymous"></script>
 
@@ -24,8 +23,13 @@
 <body>
 
 <jsp:include page="../share/navbar.jsp" flush="true" />
-
+<main>
 <h4>揪團詳細內容</h4>
+<c:if test="${not empty errorMsgs}">
+	<c:forEach var="error" items="${errorMsgs}">
+		<section class="alert">${error}</section>
+	</c:forEach>
+</c:if>
 <section class="party">
 	<table>
 	<tr>
@@ -36,7 +40,7 @@
 	<tr>
 		<td><i class="far fa-user-circle"></i></td>
 		<td class="partyHost">主揪人： </td>
-		<td>${partyVO.partyHost}</td>
+		<td>${memberSvc.getone(partyVO.partyHost).userName}(${memberSvc.getone(partyVO.partyHost).nickName})</td>
 	</tr>
 	<tr>
 		<td><i class="fas fa-volume-up"></i></td>
@@ -70,18 +74,19 @@
 	</tr>
 	<tr>
 		<td><i class="fas fa-info-circle"></i></td>
-		<td class="partyDetail">詳細內容: </td>
-		<td>(CKEditor還沒測)${partyVO.partyDetail}</td>
+		<td>詳細內容: </td>
+		<td class=""></td>
 	</tr>
 	</table>
 	
+	<div class="partyDetail">${partyVO.partyDetail}</div>
 
 	<form method="post" action="<%=request.getContextPath()%>/party/party.do">
 		<input type="hidden" name="partySN" value="${partyVO.partySN}">
 		<input type="button" onclick="history.back()" value="回上頁" class="btn btn-outline-info btn-sm">
-		<button type="submit" name="action" value="goRegister" class="btn btn-outline-info btn-sm">報名去(待處理若會員已報名過的判斷)</button>
+		<button type="submit" name="action" value="goRegister" class="btn btn-outline-info btn-sm">報名去</button>
 	</form>
 </section>
-	
+</main>
 
 <jsp:include page="../share/footer.jsp" flush="true" />

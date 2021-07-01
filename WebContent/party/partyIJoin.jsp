@@ -5,36 +5,35 @@
 <jsp:useBean id="partyMemberSvc" class="com.partymember.model.PartyMemberService" />
 <jsp:useBean id="partySvc" class="com.party.model.PartyService" />
 <jsp:useBean id="memberSvc" class="com.member.model.MemberService" />
-
-<!-- 待改寫動態會員 -->
 <%
-	List<PartyMemberVO> listAll = partyMemberSvc.findByPartyMember(4);
+	Integer userID = (Integer) session.getAttribute("userID");
+	pageContext.setAttribute("userID", userID);
+	
+	List<PartyMemberVO> listAll = partyMemberSvc.findByPartyMember(userID);
 	pageContext.setAttribute("listAll", listAll);
 %>
-
-
 
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>我報名的揪團(待改寫動態會員)</title>
+	<title>我報名的揪團</title>
 	<link rel="stylesheet" href="../share/index.css">
-    <link rel="stylesheet" href="css/partyIHost.css">
+    <link rel="stylesheet" href="css/partyIJoin.css">
 	    <!-- Bootstrap 的 CSS -->
     <link rel="stylesheet" href="../vendors/bootstrap/css/bootstrap.min.css">
 </head>
 <body>
-
 <jsp:include page="../share/navbar.jsp" flush="true" />
 
-<h4>我報名的揪團(待改寫動態會員)</h4>
-<section class="party">
+<main>
+<h4>我報名的揪團</h4>
 <c:if test="${empty listAll}">
-	<div style="color:red">您並沒有參加任何揪團活動喔!</div>
+	<section class="alert">您並沒有參加任何揪團活動喔!</section>
 </c:if>
 
+<section class="party">
 <%@ include file="page1.file" %>
 <c:forEach var="partyMemberVO" items="${listAll}">
 	<div class="partyintro">
@@ -42,7 +41,9 @@
 			<table>
 				<tr>
 					<td>揪團編號: </td>
-					<td>${partyMemberVO.partySN}</td>
+					<td>${partyMemberVO.partySN}
+						<input type="hidden" name=partySN value="${partyMemberVO.partySN}">
+					</td>
 				</tr>
 				<tr>
 					<td>主揪人(之後可做點選連結): </td>
@@ -87,11 +88,15 @@
 				</tr>
 			</table>
 			<input type="hidden" name="partySN" value="${partyMemberVO.partySN}">
-			<button type="submit" name="action" value="partyDetail" class="btn btn-outline-info btn-sm">查看揪團詳情</button>
+			<button type="submit" name="action" value="partyIJoinDetail" class="btn btn-outline-info btn-sm">查看揪團詳情</button>
 		</form>
 	</div>
 </c:forEach>
 <%@ include file="page2.file" %>
 </section>
+</main>
 
 <jsp:include page="../share/footer.jsp" flush="true" />
+
+</body>
+</html>

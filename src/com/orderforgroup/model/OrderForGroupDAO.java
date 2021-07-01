@@ -27,9 +27,9 @@ public class OrderForGroupDAO implements OrderForGroupDAO_interface{
 	private static final String INSERT_STMT = "INSERT INTO OderForGroup (userID, groupTourSN, totalPrice, purchaseDate, phone, personID, birthdate) VALUES (?, ?, ?, ?, ?, ?, ?)";
 	private static final String UPDATE_STMT = "UPDATE OderForGroup SET userID=?, groupTourSN=?, totalPrice=?, purchaseDate=?, phone=?, personID=?, birthdate=? WHERE orderSN = ?";
 	private static final String GET_ONE_STMT = "SELECT * FROM OderForGroup WHERE orderSN = ?";
-	private static final String GET_ByUSERID_STMT = "SELECT * FROM OderForGroup WHERE userID = ? ORDER BY purchaseDate";
-	private static final String GET_ALL_STMT = "SELECT * FROM OderForGroup ORDER BY purchaseDate";
-	private static final String GET_MEMBER_STMT = "SELECT * FROM OderForGroup WHERE groupTourSN = ?";
+	private static final String GET_ByUSERID_STMT = "SELECT * FROM OderForGroup WHERE userID = ? ORDER BY purchaseDate DESC and groupTourSN DESC";
+	private static final String GET_ALL_STMT = "SELECT * FROM OderForGroup ORDER BY purchaseDate DESC and groupTourSN DESC";
+	private static final String GET_MEMBER_STMT = "SELECT * FROM OderForGroup WHERE groupTourSN = ? ORDER BY purchaseDate DESC and groupTourSN DESC";
 	
 	
 	@Override
