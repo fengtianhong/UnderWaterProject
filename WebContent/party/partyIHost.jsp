@@ -27,9 +27,14 @@
 </head>
 <body>
 <jsp:include page="../share/navbar.jsp" flush="true" />
+<jsp:include page="../share/member/Mheader.jsp" flush="true" />
 
-<main>
-<h4>我所舉辦的揪團</h4>
+<div class="option">
+	<button type="button" class="btn btn-warning btn-sm" onclick="location.href='<%=request.getContextPath()%>/party/partyIJoin.jsp'">已報名揪團查詢</button>
+	<button type="button" class="btn btn-warning btn-sm" disabled>主揪活動管理</button>
+	<button type="button" class="btn btn-warning btn-sm" onclick="location.href='<%=request.getContextPath()%>/party/party.do?action=party'">回揪團總列表</button>
+</div>
+<h4>我舉辦的揪團</h4>
 
 <c:if test="${empty listAll}">
 	<section class="alert">您並沒有舉辦任何揪團活動喔!</section>
@@ -62,7 +67,7 @@
 								<td><span class="badge badge-secondary">已額滿</span></td>
 							</c:if>
 							<c:if test="${partyVO.status == '2'}">
-								<td><span class="badge badge-secondary">揪團已結束</span></td>
+								<td><span class="badge badge-secondary">已結束</span></td>
 							</c:if>
 							<c:if test="${partyVO.status == '3'}">
 								<td><span class="badge badge-secondary">已取消</span></td>
@@ -96,8 +101,8 @@
 		</c:forEach>
 	<%@ include file="page2.file" %>
 </section>
-</main>
 
+<jsp:include page="../share/member/Mfooter.html" flush="true" />
 <jsp:include page="../share/footer.jsp" flush="true" />
 
 </body>

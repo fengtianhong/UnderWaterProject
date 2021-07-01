@@ -76,10 +76,7 @@ public class PartyServlet extends HttpServlet {
 		if ("partyDetail".equals(action)) {
 			Integer partySN = Integer.parseInt(req.getParameter("partySN"));
 			PartyVO partyVO = partySvc.findByPartySN(partySN);
-			
-			List<PartyMemberVO> partyMemberList = partyMemberSvc.findByPartySN(partyVO.getPartySN());
 			req.setAttribute("partyVO", partyVO);
-			req.setAttribute("partyMemberList", partyMemberList);
 			
 			RequestDispatcher successView = req.getRequestDispatcher("/party/partyDetail.jsp");
 			successView.forward(req, res);
