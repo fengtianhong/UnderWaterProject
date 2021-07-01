@@ -25,6 +25,7 @@
 		<style>
 		
 			#css_table {
+				
 				display:table;
 				background-color: paleturquoise;
 				border: 2px dashed white;
@@ -48,7 +49,7 @@
 				<div id="css_table">
 					<div class="css_tr">
 						<div class="css_td" style="text-align: center;"><h3>${forumArticleVO.articleTitle}</h3></div>
-						<div class="css_td"><h5>${forumArticleVO.articleText}</h5></div>
+						<div class="css_td">${forumArticleVO.articleText}</div>
 							<div class="col-xs-2 col-md-1">
 								<form method="post" action="forumArticle.do" class="btn-div">
 									<input type="hidden" name="action" value="getOne_For_Display">

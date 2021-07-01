@@ -115,7 +115,7 @@
 						<!-- <td>文章內文</td> -->
 						<td>
 							
-							<textarea classs="articleText" name="articleText" maxlength=1000";></textarea>
+							<textarea class="articleText" name="articleText" style="maxlength=1000"></textarea>
 								 <script>
 								  CKEDITOR.replace("articleText");
 								 </script>
