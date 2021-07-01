@@ -9,7 +9,7 @@
 <div id="footerGroup">
 	<img id="ad" src="../img/ad.png" alt="">
     <img id="about" src="../img/about.png" alt="">
-    <img id="QA" src="../img/QA.svg" alt="">
+    <img id="QA" src="../img/QA.svg" alt="" style="cursor:pointer" onclick="window.location.href='<%=request.getContextPath()%>/qa/QA.jsp;'">
     <img id="footer" src="../img/footer.png" alt="">
 </div>
 

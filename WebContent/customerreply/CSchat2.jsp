@@ -51,7 +51,8 @@
 		webSocket.onmessage = function(event) {
 			var jsonObj = JSON.parse(event.data);
 			if ("open" === jsonObj.type) {
-				getHistoryMsg(jsonObj);
+				getHistoryMsg();
+// 				getHistoryMsg(jsonObj);
 			} else if ("history" === jsonObj.type) {
 				messagesArea.innerHTML = '';
 				var ul = document.createElement('ul');
@@ -77,7 +78,8 @@
 				document.getElementById("area").appendChild(li);
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			} else if ("close" === jsonObj.type) {
-				getHistoryMsg(jsonObj);
+				getHistoryMsg();
+// 				getHistoryMsg(jsonObj);
 			}
 			
 		};

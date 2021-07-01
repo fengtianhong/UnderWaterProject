@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%
-	request.setAttribute("userID", 1);	// 先寫死
-%>
+<%-- <% --%>
+// 	request.setAttribute("userID", 1);	// 先寫死
+<%-- %> --%>
 
 <!DOCTYPE html>
 <html>
@@ -12,7 +12,7 @@
 <style type="text/css">
 
 </style>
-<title>USER 聊天室 (待改一對Manager)</title>
+<title>CustomerService</title>
 </head>
 <body onload="connect();" onunload="disconnect();">
 	<h3 id="statusOutput" class="statusOutput">客服1號</h3>

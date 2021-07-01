@@ -27,12 +27,16 @@
 
 	<filter-mapping>
 		<filter-name>LoginFilter</filter-name>
-		<url-pattern>/orderforgroup/*</url-pattern>
 		<url-pattern>/party/HostParty.jsp</url-pattern>
 		<url-pattern>/party/partyRegister.jsp</url-pattern>
 		<url-pattern>/party/partyIHost.jsp</url-pattern>
 		<url-pattern>/party/partyIJoin.jsp</url-pattern>
 		<url-pattern>/member/successLogin.jsp</url-pattern>
+		<url-pattern>/chat/*</url-pattern>
+		<url-pattern>/orderforgroup/AddGTOrder.jsp</url-pattern>
+		<url-pattern>/orderforgroup/GroupOrder.jsp</url-pattern>
+		<url-pattern>/orderforgroup/Success.jsp</url-pattern>
+		<url-pattern>/customerreply/CSchat.jsp</url-pattern>
 		<url-pattern>/chat/*</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
