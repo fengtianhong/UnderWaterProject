@@ -67,5 +67,7 @@ public class GroupTourService {
 	public List<GroupTourVO> getFrontendAll() {
 		return dao.getFrontendAll();
 	}
-	
+	public void updateStatus(Integer groupTourSN, String status) {
+		dao.updateStatus(groupTourSN, status);
+	}
 }

@@ -20,7 +20,7 @@ public class OrderForProductDAO implements OrderForProductDAO_interface {
 	private static final String INSERT_STMT = "INSERT INTO OrderForProduct (userID, totalPrice, orderStatus) VALUES (?, ?, ?)";
 	private static final String CHANGESTATUS_STMT = "UPDATE OrderForProduct SET orderStatus = ? WHERE orderSN = ?";
 	private static final String UPDATE_STMT = "UPDATE OrderForProduct SET userID = ?, purchaseDate = ?, totalPrice = ?,"
-			+ "clearDate = ? WHERE orderSN = ?";
+			+ " WHERE orderSN = ?";
 	private static final String GET_ONE_BY_ORDERSN = "SELECT * FROM OrderForProduct WHERE orderSN = ?";
 	private static final String GET_ALL = "SELECT * FROM OrderForProduct ORDER BY orderSN";
 
@@ -28,7 +28,7 @@ public class OrderForProductDAO implements OrderForProductDAO_interface {
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/UnderWater");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
@@ -117,8 +117,7 @@ public class OrderForProductDAO implements OrderForProductDAO_interface {
 			pstmt.setInt(1, orderForProductVO.getUserID());
 			pstmt.setTimestamp(2, orderForProductVO.getPurchaseDate());
 			pstmt.setInt(3, orderForProductVO.getTotalPrice());
-			pstmt.setTimestamp(4, orderForProductVO.getClearDate());
-			pstmt.setInt(5, orderForProductVO.getOrderSN());
+			pstmt.setInt(4, orderForProductVO.getOrderSN());
 
 			pstmt.executeUpdate();
 
@@ -167,7 +166,6 @@ public class OrderForProductDAO implements OrderForProductDAO_interface {
 				orderForProductVO.setPurchaseDate(rs.getTimestamp("purchaseDate"));
 				orderForProductVO.setTotalPrice(rs.getInt("totalPrice"));
 				orderForProductVO.setOrderStatus(rs.getString("orderStatus"));
-				orderForProductVO.setClearDate(rs.getTimestamp("clearDate"));
 			}
 
 		} catch (SQLException e) {
@@ -219,7 +217,6 @@ public class OrderForProductDAO implements OrderForProductDAO_interface {
 				orderForProductVO.setPurchaseDate(rs.getTimestamp("purchaseDate"));
 				orderForProductVO.setTotalPrice(rs.getInt("totalPrice"));
 				orderForProductVO.setOrderStatus(rs.getString("orderStatus"));
-				orderForProductVO.setClearDate(rs.getTimestamp("clearDate"));
 				list.add(orderForProductVO);
 			}
 
@@ -265,7 +262,7 @@ public class OrderForProductDAO implements OrderForProductDAO_interface {
 			con.setAutoCommit(false);
 
 			// 先新增訂單
-			String cols[] = { "productSN" };
+			String cols[] = { "orderSN" };
 			pstmt = con.prepareStatement(INSERT_STMT, cols);
 			pstmt.setInt(1, orderForProductVO.getUserID());
 			pstmt.setInt(2, orderForProductVO.getTotalPrice());
@@ -275,7 +272,7 @@ public class OrderForProductDAO implements OrderForProductDAO_interface {
 			// 取得對應的自增主鍵值
 			rs = pstmt.getGeneratedKeys();
 			if (rs.next()) {
-				nextOrderSN = rs.getString("productSN");
+				nextOrderSN = rs.getString(1);
 				System.out.println("自增主鍵值= " + nextOrderSN + "(剛剛新增的訂單編號)");
 			} else {
 				System.out.println("未取得自增主鍵值");

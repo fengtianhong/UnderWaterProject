@@ -10,4 +10,5 @@ public interface GroupTourDAO_interface {
 	public List<GroupTourVO> getAll();
 	public List<GroupTourVO> getFrontendAll();
 	public void attendGroup(Integer groupTourSN, Connection con);
+	public void updateStatus(Integer groupTourSN, String status);
 }

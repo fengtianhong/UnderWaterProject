@@ -10,7 +10,6 @@ public class OrderForProductVO implements Serializable {
 	private Timestamp purchaseDate;
 	private Integer totalPrice;
 	private String orderStatus;
-	private Timestamp clearDate;
 
 	public OrderForProductVO() {
 		super();
@@ -54,14 +53,6 @@ public class OrderForProductVO implements Serializable {
 
 	public void setOrderStatus(String orderStatus) {
 		this.orderStatus = orderStatus;
-	}
-
-	public Timestamp getClearDate() {
-		return clearDate;
-	}
-
-	public void setClearDate(Timestamp clearDate) {
-		this.clearDate = clearDate;
 	}
 
 }

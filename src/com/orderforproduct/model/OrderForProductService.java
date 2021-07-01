@@ -3,6 +3,8 @@ package com.orderforproduct.model;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.orderlist.model.OrderListVO;
+
 public class OrderForProductService {
 
 	private OrderForProductDAO_interface dao;
@@ -12,7 +14,7 @@ public class OrderForProductService {
 	}
 	
 	public OrderForProductVO insertOrder(Integer userID, Timestamp purchaseDate, Integer totalPrice,
-			String orderStatus, Timestamp clearDate) {
+			String orderStatus, List<OrderListVO> list) {
 		
 		OrderForProductVO orderForProductVO = new OrderForProductVO();
 		
@@ -20,14 +22,13 @@ public class OrderForProductService {
 		orderForProductVO.setPurchaseDate(purchaseDate);
 		orderForProductVO.setTotalPrice(totalPrice);
 		orderForProductVO.setOrderStatus(orderStatus);
-		orderForProductVO.setClearDate(clearDate);
-		dao.insert(orderForProductVO);
+		dao.insertWithOrderList(orderForProductVO, list);
 		
 		return orderForProductVO;
 	}
 	
 	public OrderForProductVO changeOrderStatus(Integer orderSN, Integer userID, Timestamp purchaseDate, Integer totalPrice,
-			String orderStatus, Timestamp clearDate) {
+			String orderStatus) {
 		
 		OrderForProductVO orderForProductVO = new OrderForProductVO();
 		
@@ -36,14 +37,13 @@ public class OrderForProductService {
 		orderForProductVO.setPurchaseDate(purchaseDate);
 		orderForProductVO.setTotalPrice(totalPrice);
 		orderForProductVO.setOrderStatus(orderStatus);
-		orderForProductVO.setClearDate(clearDate);
 		dao.changeStatus(orderForProductVO);
 		
 		return orderForProductVO;
 	}
 	
 	public OrderForProductVO updateOrder(Integer orderSN, Integer userID, Timestamp purchaseDate, Integer totalPrice,
-			String orderStatus, Timestamp clearDate) {
+			String orderStatus) {
 		
 		OrderForProductVO orderForProductVO = new OrderForProductVO();
 		
@@ -52,7 +52,6 @@ public class OrderForProductService {
 		orderForProductVO.setPurchaseDate(purchaseDate);
 		orderForProductVO.setTotalPrice(totalPrice);
 		orderForProductVO.setOrderStatus(orderStatus);
-		orderForProductVO.setClearDate(clearDate);
 		dao.update(orderForProductVO);
 		
 		return orderForProductVO;
