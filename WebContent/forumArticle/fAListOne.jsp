@@ -31,6 +31,10 @@
 				border: 2px white double;
 				margin-bottom: 10px;
 			}
+			.css_td {
+				text-align: center;
+			}
+			
 		</style>
 		
 		
@@ -39,11 +43,13 @@
 		<jsp:include page="../share/navbar.jsp" flush="true" />
 			<div id="showbox">
 				<div id="bar" style="margin-left: 20px; margin-top: 20px; box-shadow: 0 1px; padding-bottom:5px;">
-					<span class="css_td" style="text-align: center;"><fmt:formatDate value="${forumArticleVO.publishedDate}" pattern="yyyy-MM-dd HH:mm:ss "/></span>		
+					<span class="css_td" style=""><fmt:formatDate value="${forumArticleVO.publishedDate}" pattern="yyyy-MM-dd HH:mm:ss "/></span>		
 					<jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
-					<span class="css_td" style="text-align: center;">作者：${memberSvc.getone(forumArticleVO.userID).nickName}</span>
-					<span class="css_td" style="text-align: center;">文章好評：${forumArticleVO.rateGCount}</span>
-					<span class="css_td" style="text-align: center;">文章負評：${forumArticleVO.rateNGCount}</span>
+					<span class="css_td">作者：${memberSvc.getone(forumArticleVO.userID).nickName}</span>
+					<span class="css_td">文章好評：${forumArticleVO.rateGCount}</span>
+					<span class="css_td">文章負評：${forumArticleVO.rateNGCount}</span>
+					
+					<span class="css_td"></span>
 				</div>
 				<div id="title" style="margin-left: 20px; margin-top: 20px;"><h3>${forumArticleVO.articleTitle}</h3></div>
 				<div id="text" style="margin-left: 20px; margin-top: 20px;"><h5>${forumArticleVO.articleText}</h5></div>
@@ -61,9 +67,14 @@
 				
 					<input type="button" onclick="window.location.href='<%=request.getContextPath()%>/forumArticle/forumArticle.jsp'"
 							value="回文章列表" style="border-radius: 7px; margin-bottom: 20px; margin-left: 20px;">
+							
+<%-- 					<input type="button" onclick="window.location.href='<%=request.getContextPath()%>/forumArticle/forumArticleUpdate.jsp'"
+							value="編輯文章" style="border-radius: 7px; margin-bottom: 20px; margin-left: 20px;"> --%>
+							
+					
 			</div>	
 				
-
+		<%@ include file="page2frontend.file" %>
 		<jsp:include page="../share/footer.jsp" flush="true" />
 	</body>
 </html>
