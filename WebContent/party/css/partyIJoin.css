@@ -1,15 +1,31 @@
 /* ================ partyList.jsp ================ */
+/*®Mª©ªºmain*/
+main.content {
+	max-width: 1000px;
+	margin: 0 auto;
+}
 
-.main {
-	margin: 150px auto 200px;
-	width: 750px;
+/*®Mª©ªºdiv*/
+div.tab-content {
+	max-width: 90%;
+}
+
+div.option {
+	text-align: center;
+	margin-top: 10px;
+}
+
+div.option button {
+	color: #666666;
+	margin: 0 5px;
 }
 
 h4 {
 	text-align: center;
-	color: #d3d3d3;
+	color: #ffc800; /* #d3d3d3 */
 	font-weight: bold;
 	margin: 20px;
+	padding: 20px;
 }
 
 section.alert {
@@ -17,20 +33,24 @@ section.alert {
 	text-align: center;
 }
 
-section.party {
+/* section.party { */
 /* 	border: solid 1px red; */
-	margin-top: 20px;
-}
+/* 	margin-top: 20px; */
+/* } */
 
 div.partyintro {
 	background-color: #e8edf7;
-	width: 500px;
+	max-width: 90%;
 	margin: 10px auto;
 	padding: 10px;
 	border-radius: 10px;
 }
 
 div.status {
+	text-align: right;
+}
+
+div.next {
 	text-align: right;
 }
 
