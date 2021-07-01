@@ -36,7 +36,7 @@ public class PartyJNDIDAO implements PartyDAO_interface {
 	private static final String FINDBYPARTYLOCATION_STMT = "select * from party where partyLocation = ?";
 	private static final String GETALL_STMT = "select * from party order by partySN desc";
 	private static final String DELETEBYPARTYSN_STMT = "delete from party where partySN = ?";
-	private static final String FINDBYSEARCH_STMT = "select * from party where partyTitle like ? and partyLocation like ? and partyMinSize >= ? order by partySN desc";
+	private static final String FINDBYSEARCH_STMT = "select * from party where (partyTitle like ? or partySN like ?) and partyLocation like ? and partyMinSize >= ? order by partySN desc";
 	private static final String FINDBYPARTYSNLIKE_STMT = "select * from party where partySN like ? order by partySN desc";
 
 	@Override
@@ -431,8 +431,9 @@ public class PartyJNDIDAO implements PartyDAO_interface {
 			pstmt = con.prepareStatement(FINDBYSEARCH_STMT);
 			
 			pstmt.setString(1, "%" + keyword + "%");
-			pstmt.setString(2, "%" + pointSN + "%");
-			pstmt.setInt(3, partyMinSize);
+			pstmt.setString(2, "%" + keyword + "%");
+			pstmt.setString(3, "%" + pointSN + "%");
+			pstmt.setInt(4, partyMinSize);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {

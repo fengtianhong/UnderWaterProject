@@ -64,12 +64,35 @@
 			<td class="status">揪團狀態: </td>
 			<td>
 				<select size="" name="status">
-					<option value="0" ${partyVO.status == "0"? "selected": ""}>熱烈報名中
-					<option value="1" ${partyVO.status == "1"? "selected": ""}>已額滿
-					<option value="2" ${partyVO.status == "2"? "selected": ""}>已結束
-					<option value="3" ${partyVO.status == "3"? "selected": ""}>已取消
-					<option value="4" ${partyVO.status == "4"? "selected": ""}>已成團(仍可報名)
-					<option value="5" ${partyVO.status == "5"? "selected": ""}>已下架
+					<c:if test="${partyVO.status == '0'}">
+						<option value="0" selected}>熱烈報名中
+						<option value="2">結束(不再接受報名)
+						<option value="3">取消(取消揪團)
+						<option value="5">下架此揪團(違反規定)
+					</c:if>
+					<c:if test="${partyVO.status == '1'}">
+						<option value="1" selected>已額滿
+						<option value="3">取消(取消揪團)
+						<option value="4">已成團(仍可報名)
+						<option value="5">下架此揪團(違反規定)
+					</c:if>
+					<c:if test="${partyVO.status == '2'}">
+						<option value="2" selected>已結束
+						<option value="5">下架此揪團(違反規定)
+					</c:if>
+					<c:if test="${partyVO.status == '3'}">
+						<option value="3" selected>已取消
+						<option value="5">下架此揪團(違反規定)
+					</c:if>
+					<c:if test="${partyVO.status == '4'}">
+						<option value="1">額滿(不接受報名)
+						<option value="3">取消(取消揪團)
+						<option value="4" selected>已成團(仍可報名)
+						<option value="5">下架此揪團(違反規定)
+					</c:if>
+					<c:if test="${partyVO.status == '5'}">
+						<option value="5" selected>已下架
+					</c:if>
 				</select>
 			</td>
 		</tr>

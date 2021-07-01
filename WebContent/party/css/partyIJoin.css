@@ -1,4 +1,5 @@
-/* ================ partyIHost.jsp ================ */
+/* ================ partyList.jsp ================ */
+
 .main {
 	margin: 150px auto 200px;
 	width: 750px;
@@ -11,7 +12,13 @@ h4 {
 	margin: 20px;
 }
 
+section.alert {
+	color: #98f4fc;
+	text-align: center;
+}
+
 section.party {
+/* 	border: solid 1px red; */
 	margin-top: 20px;
 }
 
@@ -23,18 +30,18 @@ div.partyintro {
 	border-radius: 10px;
 }
 
-div.next {
+div.status {
 	text-align: right;
 }
 
 /* ================  ¤À­¶¬ÛÃö  ================ */
 
-div.page {
+.page {
 	color: #d3d3d3;
 	text-align: center;
 }
 
-div.page select {
+.page select {
 	font-size: 14px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;

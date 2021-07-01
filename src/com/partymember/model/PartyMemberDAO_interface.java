@@ -24,5 +24,8 @@ public interface PartyMemberDAO_interface {
 
 	// 0626 added
 	public List<PartyMemberVO> findByPartySNAndStatus(Integer partySN, String status);
+	
+	// 0630 added
+	public List<PartyMemberVO> findByPartySNAndPartyMember(Integer partySN, Integer partyMember);
 
 }

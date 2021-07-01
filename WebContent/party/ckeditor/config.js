@@ -9,7 +9,7 @@ CKEDITOR.editorConfig = function( config ) {
 	// config.uiColor = '#AADC6E';
 	
 // 自定義
-	config.extraPlugins = "base64image, base64imagedrop";
+	config.extraPlugins = "base64image, base64imagedrop, imageresize, imageresizerowandcolumn";
 	config.image_previewText=' '; /*去掉圖片預覽框的文字*/
 	config.toolbarGroups = [
 		{ name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
@@ -29,4 +29,8 @@ CKEDITOR.editorConfig = function( config ) {
 
 	config.removeButtons = 'Source,NewPage,ExportPdf,Print,Templates,Scayt,TextField,Textarea,Select,Button,ImageButton,HiddenField,CreateDiv,Anchor,PageBreak,Iframe,ShowBlocks,Maximize,About,Image,Flash';
 	
+	//取消預設img屬性
+	config.disallowedContent = 'img{width,height};img[width,height]';
+//	config.imageResize.maxWidth = 450;
+//	config.imageResize.maxHeight = 450;
 };
