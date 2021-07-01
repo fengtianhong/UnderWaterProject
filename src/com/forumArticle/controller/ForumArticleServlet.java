@@ -98,14 +98,14 @@ public class ForumArticleServlet extends HttpServlet {
 				ForumArticleService forumArticleSvc = new ForumArticleService();
 				ForumArticleVO forumArticleVO = forumArticleSvc.getOneForumArticle(articleSN);
 				//	查詢後轉交update
-				req.setAttribute("forumArticleVO", forumArticleVO); // 資料庫取出的forumArticleVO物件,存入req
+				req.setAttribute("forumArticleVO", forumArticleVO);
 				String url = "/forumArticle/fAUpdate.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 fAUpdate.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				//	其他錯誤處理
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/fAListAll.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/fAUpdate.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -150,7 +150,7 @@ public class ForumArticleServlet extends HttpServlet {
 		}
 		
 		//	****************************** 3-1.使用者查詢單一個後更新 (getOne_For_Update)******************************
-		//	forumArticle.jsp的請求
+		//	fAListOne.jsp的請求
 		if ("getOne_For_Update".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -184,13 +184,10 @@ public class ForumArticleServlet extends HttpServlet {
 				Integer articleSN = new Integer(req.getParameter("articleSN").trim());
 				
 				String articleTitle = req.getParameter("articleTitle");
-				String articleTitleReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,15}$";
 				
 				if (articleTitle == null || articleTitle.trim().length() == 0) {
 					errorMsgs.add("文章標題: 請勿空白");
-				} else if(!articleTitle.trim().matches(articleTitleReg)) { //以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("文章標題: 只能是中、英文字母、數字和_ , 且長度必需在2到15之間");
-	            }
+				} 
 								
 				String articleText = req.getParameter("articleText").trim();
 				if (articleText == null || articleText.trim().length() == 0) {
@@ -234,23 +231,19 @@ public class ForumArticleServlet extends HttpServlet {
 			
 			try {
 				//接收請求參數 以及 錯誤格式處理
+				Integer userID = new Integer(req.getParameter("userID").trim());
+				System.out.println(userID);
 				
 				String articleTitle = req.getParameter("articleTitle");
-				String articleTitleReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,15}$";
-				
 				System.out.println(articleTitle);
 				
 				String articleText = req.getParameter("articleText");
-				
 				System.out.println(articleText);
-				
 				
 				
 				if (articleTitle == null || articleTitle.trim().length() == 0) {
 					errorMsgs.add("文章標題：請勿空白");
-				} else if(!articleTitle.trim().matches(articleTitleReg)) {
-					errorMsgs.add("文章標題：只能是中、英文字母、數字和_ , 且長度必需在2到15之間");
-	            }
+				} 
 				
 				
 				
@@ -259,36 +252,33 @@ public class ForumArticleServlet extends HttpServlet {
 				} 
 				
 //				Integer userID = new Integer(req.getParameter("userID").trim());
-				Integer userID = 2;
-				
-				
 				
 				Integer articleTitleOptSN = new Integer(req.getParameter("articleTitleOptSN").trim());
 				
 				ForumArticleVO forumArticleVO = new ForumArticleVO();
 				forumArticleVO.setArticleTitle(articleTitle);
 				forumArticleVO.setArticleText(articleText);
-				System.out.println("11");
+
 				forumArticleVO.setUserID(userID);
 				
 				forumArticleVO.setArticleTitleOptSN(articleTitleOptSN);
-				System.out.println("0");
+
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("forumArticleVO", forumArticleVO);
 					RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/forumArticleInsert.jsp");
 					failureView.forward(req, res);
 					return;
 				}
-				System.out.println("1");
+				
 				//	新增
 				ForumArticleService forumArticleSvc = new ForumArticleService();
 				forumArticleVO = forumArticleSvc.addForumArticle(articleTitle, articleText, userID, articleTitleOptSN);
-				System.out.println("2");
+				
 				//	新增完成後轉交到forumArticle.jsp(文章列表)
 				String url = "/forumArticle/forumArticle.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);
-				System.out.println("3");
+				
 				//	其他錯誤處理
 			} catch  (Exception e) {
 				errorMsgs.add(e.getMessage());

@@ -36,7 +36,7 @@
 					
 					<style>
 					  table {
-						width: 75%;
+						width: 65%;
 						background-color: white;
 						margin-top: 1px;
 						margin-bottom: 1px;
@@ -67,32 +67,31 @@
 			<table id="table-1">
 				<tr>
 					<td>
-						<h4>文章新增</h4>
-						<p>(內文只能是中、英文字母、數字和_，以及圖片所組成。)</p>
+						<h4>新增文章</h4>
 					</td>
 				</tr>
 			</table>
 
 			<%-- 錯誤表列 --%>
-			<c:if test="${not empty errorMsgs}">
+<%-- 			<c:if test="${not empty errorMsgs}">
 				<font style="color:red">請修正以下錯誤:</font>
 				<ul>
 					<c:forEach var="message" items="${errorMsgs}">
 						<li style="color:red">${message}</li>
 					</c:forEach>
 				</ul>
-			</c:if>
+			</c:if> --%>
 			
 			<FORM METHOD="post" ACTION="forumArticle.do" name="form1">
 				<table>
 					<tr>
-						<%-- <jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" /> --%>
+						<jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
 						<!-- <td>發文作者</td> -->
-						<%-- <td><input type="text" name="article" value="${forumArticleVO.userID}" readonly></td> --%>
+						<td><input type="text" name="article" value="${forumArticleVO.userID}" readonly></td>
 						
-						<td><input type="text" name="article" value="2" readonly></td>
+						<!-- <td><input type="text" name="article" value="2" readonly></td> -->
 						
-						<%-- <td><p>${memberSvc.getone(forumArticleVO.userID).nickName}</p></td>	 --%>
+						<td><p>${memberSvc.getone(forumArticleVO.userID).nickName}</p></td>
 					</tr>
 					<tr>
 						<jsp:useBean id="articleTitleOptSvc" scope="page" class="com.articleTitleOpt.model.ArticleTitleOptService"></jsp:useBean>
@@ -108,7 +107,7 @@
 					<tr>
 						<!-- <td>文章標題</td> -->
 						<td>
-							<input type="text" name="articleTitle" size="45" />
+							<input type="text" name="articleTitle" size="60" />
 						</td>
 					</tr>
 					<tr>
@@ -121,10 +120,16 @@
 								 </script>
 						</td>
 					</tr>	
+					<tr>
+						<td align="center">
+							<input type="button" onclick="window.location.href='<%=request.getContextPath()%>/forumArticle/forumArticle.jsp'"
+							value="忍痛放棄" style="border-radius: 7px; margin-bottom: 20px; margin-left: 20px;">
+						
+							<input type="hidden" name="action" value="insert">
+							<input type="submit" value="送出新增" style="border-radius: 7px; margin-bottom: 20px; margin-left: 20px;">
+						</td>
+					</tr>
 				</table>
-				<br>
-				<input type="hidden" name="action" value="insert">
-				<input type="submit" value="送出新增">
 			</Form>
 			
 

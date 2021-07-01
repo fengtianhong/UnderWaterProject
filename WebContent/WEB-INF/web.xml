@@ -38,6 +38,7 @@
 		<url-pattern>/orderforgroup/Success.jsp</url-pattern>
 		<url-pattern>/customerreply/CSchat.jsp</url-pattern>
 		<url-pattern>/chat/*</url-pattern>
+		<url-pattern>/forumArticle/*</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>

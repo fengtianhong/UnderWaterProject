@@ -25,7 +25,6 @@
 		<style>
 		
 			#css_table {
-				
 				display:table;
 				background-color: paleturquoise;
 				border: 2px dashed white;
@@ -34,12 +33,16 @@
 				margin-top: 10px;
 				margin: 0 auto;
 			}
-			
 		</style>
 	</head>
 	<body>
 
 		<jsp:include page="../share/navbar.jsp" flush="true" />
+		
+		<form method="post" action="forumArticle.do" name="insert">
+			<input type="hidden" name="action" value="insert">
+			<input type="submit" value="新增文章">
+		</form>
 
 		<%@ include file="page1frontend.file" %>
 		
@@ -70,7 +73,7 @@
             </div>
 		</c:forEach>
 		
-		
+		<%@ include file="page2frontend.file" %>
 		<jsp:include page="../share/footer.jsp" flush="true" />
 
 	</body>
