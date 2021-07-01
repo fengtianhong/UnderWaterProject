@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.member.model.*"%>
+
 <%
 	request.setAttribute("userID", "Manager");	// 先寫死
+	 
 %>
 
 <!DOCTYPE html>
@@ -42,7 +45,7 @@
 
 
 	<!-- 聊天室名稱 -->
-	<div id="statusOutput" class="statusOutput"></div>
+	<div style="display:none;" id="statusOutput" class="statusOutput"></div>
 	<!-- 聊天框框 -->
 	<div id="messagesArea" class="panel message-area" ></div>
 	<div class="input-area">
@@ -69,16 +72,16 @@
 	var path = window.location.pathname;	// 取得目前造訪網頁的路徑(呼叫路徑)
 	var webCtx = path.substring(0, path.indexOf('/', 1));	// 取得UnderWaterProject
 	var endPointURL = "ws://" + host + webCtx + MyPoint;	// ws://localhost:8081/WebSocketChatWeb/FriendWS/katy
-
+	
 	var statusOutput = document.getElementById("statusOutput");
 	var messagesArea = document.getElementById("messagesArea");
 	var self = '${userID}';
 	var webSocket;
-
+	
 	function connect() {
 		// create a websocket
 		webSocket = new WebSocket(endPointURL);
-
+	
 		webSocket.onopen = function(event) {	
 			console.log("Connect Success!");
 			document.getElementById('sendMessage').disabled = false;
@@ -86,7 +89,7 @@
 			document.getElementById('disconnect').disabled = false;
 			
 		};
-
+	
 		webSocket.onmessage = function(event) {
 			var jsonObj = JSON.parse(event.data);
 			
@@ -98,11 +101,12 @@
 				var repeat = false;
 				var row = document.getElementById("row");
 				var receivers = row.childNodes;
+				getUserName(jsonObj.receiver);	// 渲染成userName
 				if(row.childNodes.length == 0) {
-// 					row.innerHTML +='<div onclick="heyYo(this)" id='+ jsonObj.receiver +' class="column" name="friendName" value=' + jsonObj.receiver + ' ><h2>' + jsonObj.receiver + '</h2></div>';
-// 					row.innerHTML +='<div onclick="heyYo(this)" id='+ jsonObj.receiver +' class="card mb-4 py-3 border-left-info" name="friendName" value=' + jsonObj.receiver + ' ><strong>' + jsonObj.receiver + '</strong></div>';
+	//					row.innerHTML +='<div onclick="heyYo(this)" id='+ jsonObj.receiver +' class="column" name="friendName" value=' + jsonObj.receiver + ' ><h2>' + jsonObj.receiver + '</h2></div>';
+	//					row.innerHTML +='<div onclick="heyYo(this)" id='+ jsonObj.receiver +' class="card mb-4 py-3 border-left-info" name="friendName" value=' + jsonObj.receiver + ' ><strong>' + jsonObj.receiver + '</strong></div>';
 					row.innerHTML +='<div onclick="heyYo(this)" id='+ jsonObj.receiver +' class="card mb-2 border-left-info" name="friendName" value=' + jsonObj.receiver + ' ><div class="card-body">' + jsonObj.receiver + '</div></div>';
-
+	
 				}
 				for(var i = 0; i < row.childNodes.length; i++) {
 					if(receivers[i].getAttribute("id") == jsonObj.receiver ) {
@@ -142,7 +146,7 @@
 			}
 			
 		};
-
+	
 		webSocket.onclose = function(event) {
 			console.log("Disconnected!");
 		};
@@ -152,7 +156,7 @@
 		var inputMessage = document.getElementById("message");
 		var friend = statusOutput.textContent;
 		var message = inputMessage.value.trim();
-
+	
 		if (message === "") {
 			alert("Input a message");
 			inputMessage.focus();
@@ -178,7 +182,7 @@
 		var receivers = row.childNodes;
 		var isMe = false;
 		var repeat = false;
-// 		row.innerHTML = '';	// 離線也不要清空
+	//		row.innerHTML = '';	// 離線也不要清空
 		
 		for (var i = 0; i < friends.length; i++) {
 			// 自己的聊天室不需要新增
@@ -188,6 +192,7 @@
 				if (receivers[j].getAttribute("id") == friends[i]) { repeat = true; }
 			}
 			if(repeat == false && isMe == false) {
+				getUserName(friends[i]);	// 渲染成userName
 				row.innerHTML +='<div onclick="heyYo(this)" id=' + friends[i] + ' class="card mb-2 border-left-info" value=' + friends[i] + ' ><div class="card-body">' + friends[i] + '</div></div>';
 			}else if(repeat == true) {
 				console.log("repeat");
@@ -196,17 +201,17 @@
 		}
 		addListener(jsonObj);
 	}
-
+	
 	
 	// 註冊列表點擊事件並抓取好友名字以取得歷史訊息
 	function addListener(jsonObj) {
-
+	
 	}
 	
 	function heyYo(e) {		// 改寫addListener，已處理點擊row會長出奇怪歷史訊息 
 		console.log("heyYo");
 		console.log(e.id);
-
+	
 				var friend = e.id;
 				updateFriendName(friend);
 				var jsonObj = {
@@ -228,6 +233,24 @@
 	
 	function updateFriendName(name) {
 		statusOutput.innerHTML = name;
+	}
+	
+	// get userName
+	function getUserName(userID) {
+		console.log("getUserName");
+		$.ajax({
+				url: "<%=request.getContextPath()%>/customerreply/GetMemberInfo.do?userID="+ userID ,
+				type: "GET",
+				dataType: "text",
+				success: function(data){
+					console.log("data = "+data);
+					var id = "#" + userID;
+					$(id).text(data);
+					console.log($(id).text());
+				}
+		})
+		
+		
 	}
 </script>
 </html>

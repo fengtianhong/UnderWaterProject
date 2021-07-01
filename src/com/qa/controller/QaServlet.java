@@ -212,13 +212,13 @@ public class QaServlet extends HttpServlet {
 				QaService qaSvc = new QaService();
 				qaSvc.deleteQa(questionSN);
 				
-				RequestDispatcher successView = req.getRequestDispatcher("/qa/");	// 回原頁面
+				RequestDispatcher successView = req.getRequestDispatcher("/qa/backendList.jsp");	// 回原頁面
 				successView.forward(req, res);
 				
 			}catch(Exception e) {
 				e.printStackTrace();
 				errMsg.add("刪除資料失敗:"+e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/qa/");	// 回原頁面
+				RequestDispatcher failureView = req.getRequestDispatcher("/qa/backendList.jsp");	// 回原頁面
 				failureView.forward(req, res);
 			}
 		}
@@ -237,17 +237,13 @@ public class QaServlet extends HttpServlet {
 				
 			}catch(Exception e) {
 				e.printStackTrace();   //
-				System.out.println("update failure");
+				System.out.println("getPopularQuestion failure");
 				errMsg.add("取得資料失敗，"+e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/qa/");
 				failureView.forward(req, res);
 			}
 		}
-		if("Update_PopularQuestionSort".equals(action)) {	// AJAX (有時間再做)
-			List<String> errMsg = new LinkedList<String>();
-			req.setAttribute("errMsg", errMsg);
-		}
-		
+
 		
 		
 	}

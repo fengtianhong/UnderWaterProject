@@ -7,9 +7,6 @@
 
 
 <%  
-	// DisplayOne的頁面會拿到 userID, groupTourSN
-	request.setAttribute("userID", 2);	// 先寫死
-// 	GroupTourVO groupTourVO = (GroupTourVO) request.getAttribute("groupTourVO"); //listAll給的(KEEP)
 	GroupTourService groupTourSvc = new GroupTourService();
 	List<GroupTourVO> list = groupTourSvc.getFrontendAll();
 	pageContext.setAttribute("list", list);
@@ -301,7 +298,7 @@
                 <div class="thumbnail">
                 
                 <div class="picture1">
-                		<img class="list-group-image" src="GetImage.do?id=${groupTourVO.groupTourSN}" />
+                		<img class="list-group-image" src="<%=request.getContextPath()%>/grouptour/GetImage.do?id=${groupTourVO.groupTourSN}" />
                 </div>
                 <div class="caption">
                         <h6><b>${groupTourVO.tourName}</b></h6>
