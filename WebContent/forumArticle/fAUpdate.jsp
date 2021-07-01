@@ -6,6 +6,7 @@
 
 <%
 	ForumArticleVO forumArticleVO = (ForumArticleVO) request.getAttribute("forumArticleVO");
+	Integer userID = (Integer) session.getAttribute("userID");
 %>
 
 
@@ -60,6 +61,18 @@
 		<script type="text/javascript" src="<%=request.getContextPath()%>/party/ckeditor/ckeditor.js"></script>
 	</head>
 	<body>
+					<%-- 錯誤表列 --%>
+			<c:if test="${not empty errorMsgs}">
+				<font style="color:red">請修正以下錯誤:</font>
+				<ul>
+					<c:forEach var="message" items="${errorMsgs}">
+						<li style="color:red">${message}</li>
+					</c:forEach>
+				</ul>
+			</c:if>
+		
+		
+		
 		<jsp:include page="../share/navbar.jsp" flush="true" />
 			
 			<table id="table-1">
@@ -70,29 +83,20 @@
 				</tr>
 			</table>
 			
-			<%-- 錯誤表列 --%>
-			<c:if test="${not empty errorMsgs}">
-				<font style="color:red">請修正以下錯誤:</font>
-				<ul>
-					<c:forEach var="message" items="${errorMsgs}">
-						<li style="color:red">${message}</li>
-					</c:forEach>
-				</ul>
-			</c:if>
+
 				
 		<FORM METHOD="post" ACTION="forumArticle.do" name="form1">
 			<table>
 				<tr>
-					<td><input type="text" name="article" value="2" readonly></td>
+					<jsp:useBean id="memberSvc" scope="session" class="com.member.model.MemberService" />
+					<td>發文者名稱：${memberSvc.getone(userID).nickName}</td>
+				</tr>
+				<tr>
+					<td><input type="text" name="articleTitle" size="45" value="<%=forumArticleVO.getArticleTitle()%>"></td>
 				</tr>
 				<tr>
 					<td>
-						<input type="text" name="articleTitle" size="60" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<textarea class="articleText" name="articleText" style="maxlength=1000"></textarea>
+						<textarea name="articleText" maxlength=1000><%=forumArticleVO.getArticleText()%></textarea>
 						<script>
 							CKEDITOR.replace("articleText");
 						</script>
@@ -100,11 +104,12 @@
 				</tr>
 				<tr>
 					<td align="center">
-						<input type="button" onclick="window.location.href='<%=request.getContextPath()%>/forumArticle/forumArticle.jsp'"
+						<input type="button" onclick="window.location.href='<%=request.getContextPath()%>/forumArticle/bFAManage.jsp'"
 						value="忍痛放棄" style="border-radius: 7px; margin-bottom: 20px; margin-left: 20px;">
 					
-						<input type="hidden" name="action" value="insert">
-						<input type="submit" value="送出新增" style="border-radius: 7px; margin-bottom: 20px; margin-left: 20px;">
+						<input type="hidden" name="action" value="hiddenAtricle">
+						<input type="hidden" name="articleSN" value="<%=forumArticleVO.getArticleSN()%>">
+						<input type="submit" value="送出修改" style="border-radius: 7px; margin-bottom: 20px; margin-left: 20px;">
 					</td>	
 				</tr>
 			</table>

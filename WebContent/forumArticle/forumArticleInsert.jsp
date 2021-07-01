@@ -6,6 +6,8 @@
 
 <%
 	ForumArticleVO forumArticleVO = (ForumArticleVO) request.getAttribute("forumArticleVO");
+
+	Integer userID = (Integer) session.getAttribute("userID");
 %>
 
 <!DOCTYPE html>
@@ -62,6 +64,12 @@
 
 		</head>
 		<body>
+		
+<p>${userID} </p>
+			<%-- 錯誤表列 --%>
+
+		
+		
 			<jsp:include page="../share/navbar.jsp" flush="true" />
 		
 			<table id="table-1">
@@ -72,26 +80,21 @@
 				</tr>
 			</table>
 
-			<%-- 錯誤表列 --%>
-<%-- 			<c:if test="${not empty errorMsgs}">
+ 			<c:if test="${not empty errorMsgs}">
 				<font style="color:red">請修正以下錯誤:</font>
 				<ul>
 					<c:forEach var="message" items="${errorMsgs}">
 						<li style="color:red">${message}</li>
 					</c:forEach>
 				</ul>
-			</c:if> --%>
+			</c:if>	
 			
 			<FORM METHOD="post" ACTION="forumArticle.do" name="form1">
 				<table>
 					<tr>
-						<jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
-						<!-- <td>發文作者</td> -->
-						<td><input type="text" name="article" value="${forumArticleVO.userID}" readonly></td>
-						
-						<!-- <td><input type="text" name="article" value="2" readonly></td> -->
-						
-						<td><p>${memberSvc.getone(forumArticleVO.userID).nickName}</p></td>
+						<jsp:useBean id="memberSvc" scope="session" class="com.member.model.MemberService" />
+						<td>發文者名稱：${memberSvc.getone(userID).nickName}</td>
+
 					</tr>
 					<tr>
 						<jsp:useBean id="articleTitleOptSvc" scope="page" class="com.articleTitleOpt.model.ArticleTitleOptService"></jsp:useBean>
@@ -105,13 +108,11 @@
 						</td>
 					</tr>
 					<tr>
-						<!-- <td>文章標題</td> -->
 						<td>
-							<input type="text" name="articleTitle" size="60" />
+							<input type="text" name="articleTitle" size="40" />
 						</td>
 					</tr>
 					<tr>
-						<!-- <td>文章內文</td> -->
 						<td>
 							
 							<textarea class="articleText" name="articleText" style="maxlength=1000"></textarea>
@@ -131,15 +132,6 @@
 					</tr>
 				</table>
 			</Form>
-			
-
-		
-		
-		
 			<jsp:include page="../share/footer.jsp" flush="true" />
-
-
-
 		</body>
-			
 </html>

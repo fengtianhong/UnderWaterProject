@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.forumComment.model.*;
 import com.forumRate.model.ForumRateVO;
@@ -161,24 +162,23 @@ public class ForumCommentServlet extends HttpServlet{
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			
+			HttpSession session = req.getSession();
+			
 			try {
-//				接收/forumArticle/fASelect.jsp請求
+//				接收請求
+				
 				String cmtText = req.getParameter("cmtText");
-				String cmtTextReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,50}$";
 				if (cmtText == null || cmtText.trim().length() == 0) {
 					errorMsgs.add("評論請勿空白");
-				} else if(!cmtText.trim().matches(cmtTextReg)) {
-					errorMsgs.add("評論只能是中、英文字母、數字和_ , 且長度必需在1到50之間");
-	            }
+				} 
 				
-				Integer userID = new Integer(req.getParameter("userID").trim());
+				Integer userID =  (Integer)session.getAttribute("userID");
 				Integer articleSN = new Integer(req.getParameter("articleSN").trim());
 				
 				ForumCommentVO forumCommentVO = new ForumCommentVO();
 				forumCommentVO.setCmtText(cmtText);
 				forumCommentVO.setUserID(userID);
-//				會員先寫死試試看功能
-//				forumCommentVO.setUserID(2);
+
 				forumCommentVO.setArticleSN(articleSN);
 				
 				if (!errorMsgs.isEmpty()) {
@@ -192,6 +192,7 @@ public class ForumCommentServlet extends HttpServlet{
 				ForumCommentService forumCommentSvc = new ForumCommentService();
 				forumCommentVO = forumCommentSvc.addForumComment(articleSN, userID, cmtText);
 //				轉交
+				req.setAttribute("articleSN", articleSN);
 				String url = "/forumArticle/fAListOne.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);

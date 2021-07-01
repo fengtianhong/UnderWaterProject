@@ -39,10 +39,7 @@
 
 		<jsp:include page="../share/navbar.jsp" flush="true" />
 		
-		<form method="post" action="forumArticle.do" name="insert">
-			<input type="hidden" name="action" value="insert">
-			<input type="submit" value="新增文章">
-		</form>
+		<button type="button" onclick="location.href='<%=request.getContextPath()%>/forumArticle/forumArticleInsert.jsp'">新增文章</button>
 
 		<%@ include file="page1frontend.file" %>
 		

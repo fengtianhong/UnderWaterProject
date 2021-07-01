@@ -14,7 +14,7 @@
 
 %>
 
-
+<%=articleSN %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -56,15 +56,35 @@
 				
 				<%@ include file="page1frontend.file" %>
 				<c:forEach var="forumCommentVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-				
+
 					<div class="commentShowbox" style="margin-left: 20px">
 						<span class="css_td" style="text-align: center;">From：${memberSvc.getone(forumArticleVO.userID).nickName}</span>
 						<span class="css_td" style="text-align: center;">在<fmt:formatDate value="${forumCommentVO.cmtDate}" pattern="yyyy-MM-dd HH:mm:ss "/>寫下：</span>
 						<div class="cmtarea" style="margin-left: 20px;"><p>${forumCommentVO.cmtText}</p></div>
+						
+<%-- 						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/forumComment/forumComment.do" name="form1">
+							<div id="delete">
+								<div>
+									<input type="hidden" name="action" value="delete">
+									<input type="hidden" name="cmtSN" value="<%=articleSN%>">
+									<input type="submit" value="新增留言" style="border-radius: 7px; margin-bottom: 20px; margin-left: 20px;">
+								</div>
+							</div>
+						</FORM> --%>
 					</div>
 					
 				</c:forEach>
-				
+				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/forumComment/forumComment.do" name="form1">
+					<div id="cmtArea">
+						<div>來自${memberSvc.getone(forumArticleVO.userID).nickName}的留言</div>
+						<div>
+							<textarea name="cmtText" rows="4" cols="50"></textarea>
+							<input type="hidden" name="action" value="insert">
+							<input type="hidden" name="articleSN" value="<%=articleSN%>">
+							<input type="submit" value="新增留言" style="border-radius: 7px; margin-bottom: 20px; margin-left: 20px;">
+						</div>
+					</div>
+				</FORM>
 					<input type="button" onclick="window.location.href='<%=request.getContextPath()%>/forumArticle/forumArticle.jsp'"
 							value="回文章列表" style="border-radius: 7px; margin-bottom: 20px; margin-left: 20px;">
 							

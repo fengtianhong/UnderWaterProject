@@ -13,36 +13,20 @@ public class ForumArticleService {
 		ForumArticleVO forumArticlevo = new ForumArticleVO();
 		
 		forumArticlevo.setArticleTitle(articleTitle);
-//		forumArticlevo.setPublishedDate(publishedDate);
 		forumArticlevo.setArticleText(articleText);
-//		forumArticlevo.setArticleStatus(articleStatus);
 		forumArticlevo.setUserID(userID);
 		forumArticlevo.setArticleTitleOptSN(articleTitleOptSN);
-//		forumArticlevo.setRateGCount(rateGCount);
-//		forumArticlevo.setRateNGCount(rateNGCount);
 		dao.insert(forumArticlevo);
 		
 		return forumArticlevo;
 	}
 	
-	//	管理者更新
-//	public ForumArticleVO mUpdateForumArticle(Integer articleSN, String articleTitle, Timestamp publishedDate, String articleText, Integer articleStatus, Integer userID, Integer articleTitleOptSN, Integer rateGCount, Integer rateNGCount) {
-	public ForumArticleVO mUpdateForumArticle(Integer articleSN, Boolean articleStatus) {		
+	//	文章刪除
+
+	public void deleteForumArticle(Integer articleSN) {		
 		
-		ForumArticleVO forumArticlevo = new ForumArticleVO();
-		
-		forumArticlevo.setArticleSN(articleSN);
-//		forumArticlevo.setArticleTitle(articleTitle);
-//		forumArticlevo.setPublishedDate(publishedDate);
-//		forumArticlevo.setArticleText(articleText);
-		forumArticlevo.setArticleStatus(articleStatus);
-//		forumArticlevo.setUserID(userID);
-//		forumArticlevo.setArticleTitleOptSN(articleTitleOptSN);
-//		forumArticlevo.setRateGCount(rateGCount);
-//		forumArticlevo.setRateNGCount(rateNGCount);
-		dao.mUpdate(forumArticlevo);
-		
-		return forumArticlevo;
+		dao.hiddenAtricle(articleSN);
+
 	}
 	//	使用者更新
 	public ForumArticleVO userUpdateForumArticle(Integer articleSN, String articleTitle, String articleText) {		
@@ -51,21 +35,12 @@ public class ForumArticleService {
 		
 		forumArticlevo.setArticleSN(articleSN);
 		forumArticlevo.setArticleTitle(articleTitle);
-//		forumArticlevo.setPublishedDate(publishedDate);
 		forumArticlevo.setArticleText(articleText);
-//		forumArticlevo.setArticleStatus(articleStatus);
-//		forumArticlevo.setUserID(userID);
-//		forumArticlevo.setArticleTitleOptSN(articleTitleOptSN);
-//		forumArticlevo.setRateGCount(rateGCount);
-//		forumArticlevo.setRateNGCount(rateNGCount);
 		dao.userUpdate(forumArticlevo);
 		
 		return forumArticlevo;
 	}
-	
-	
-	
-	
+
 	public ForumArticleVO getOneForumArticle(Integer articleSN) {
 		return dao.findByPrimaryKey(articleSN);
 	}
