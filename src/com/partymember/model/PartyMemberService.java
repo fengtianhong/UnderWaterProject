@@ -35,4 +35,8 @@ public class PartyMemberService {
 		return dao.findByPartySNAndStatus(partySN, status);
 	}
 	
+	// 0630 added
+	public List<PartyMemberVO> findByPartySNAndPartyMember(Integer partySN, Integer partyMember) {
+		return dao.findByPartySNAndPartyMember(partySN, partyMember);
+	}
 }

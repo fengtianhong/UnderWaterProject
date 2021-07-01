@@ -36,6 +36,7 @@ public class PartyMemberJNDIDAO implements PartyMemberDAO_interface {
 	private static final String GETALL_STMT = "select * from partyMember";
 	private static final String DELETEBYPARTYMEMBERSN_STMT = "delete from partyMember where partyMemberSN = ?";
 	private static final String FINDBYPARTYSNANDSTATUS_STMT = "select * from partyMember where partySN = ? and status = ?";
+	private static final String FINDBYPARTYSNANDPARTYMEMBER_STMT = "select * from partyMember where partySN = ? and partyMember = ?";
 
 	@Override
 	public int insert(PartyMemberVO partyMemberVO) {
@@ -396,6 +397,62 @@ public class PartyMemberJNDIDAO implements PartyMemberDAO_interface {
 			
 			pstmt.setInt(1, partySN);
 			pstmt.setString(2, status);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				p1 = new PartyMemberVO();
+				p1.setPartyMemberSN(rs.getInt("partyMemberSN"));
+				p1.setPartySN(rs.getInt("partySN"));
+				p1.setPartyMember(rs.getInt("partyMember"));
+				p1.setGender(rs.getString("gender"));
+				p1.setEmail(rs.getString("email"));
+				p1.setPhone(rs.getString("phone"));
+				p1.setBirthDate(rs.getDate("birthDate"));
+				p1.setPersonID(rs.getString("personID"));
+				p1.setCertification(rs.getString("certification"));
+				p1.setCertificationPic(rs.getBytes("certificationPic"));
+				p1.setAppliedTime(rs.getTimestamp("appliedTime"));
+				p1.setComment(rs.getString("comment"));
+				p1.setStatus(rs.getString("status"));
+				list1.add(p1);
+			}
+			
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace();
+				}
+			}
+			
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return list1;
+	}
+
+	@Override
+	public List<PartyMemberVO> findByPartySNAndPartyMember(Integer partySN, Integer partyMember) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		PartyMemberVO p1 = null;
+		List<PartyMemberVO> list1 = new ArrayList<>();
+	
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(FINDBYPARTYSNANDPARTYMEMBER_STMT);
+			
+			pstmt.setInt(1, partySN);
+			pstmt.setInt(2, partyMember);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
