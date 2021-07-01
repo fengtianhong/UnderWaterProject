@@ -363,22 +363,22 @@ function init() {
 	if(favorite.indexOf(groupTourSN) > 0) {
 		$(".heart").addClass("-on");
 	}
-// 	// 抓取是否已額滿	>>上面三駝都可以寫在 c:if
-// 	var attendNumber = $(".attendNumber").text();
-// 	var limitNumder = $(".limitNumder").text();
-// 	console.log(attendNumber+"/"+limitNumder);
-// 	if(attendNumber>=limitNumder) {
-// 		$(".attend_btn").val("已額滿");
-// 		$(".attend_btn").show();
-// 		$(".nonattend_btn").hide();
-// 	}
+	// 抓取是否已額滿	>>上面三駝都可以寫在 c:if
+	var attendNumber = $(".attendNumber").text();
+	var limitNumder = $(".limitNumder").text();
+	console.log(attendNumber+"/"+limitNumder);
+	if(attendNumber>=limitNumder) {
+		$(".attend_btn").val("已額滿");
+		$(".attend_btn").show();
+		$(".nonattend_btn").hide();
+	}
 	
-// 	// 抓取訂單
-// 	var orderList = $(".order_list").text();
-// 	if(orderList.indexOf(groupTourSN) > 0) {
-// 		$(".attend_btn").show();
-// 		$(".nonattend_btn").hide();
-// 	}
+	// 抓取訂單
+	var orderList = $(".order_list").text();
+	if(orderList.indexOf(groupTourSN) > 0) {
+		$(".attend_btn").show();
+		$(".nonattend_btn").hide();
+	}
 	
 	
 }
