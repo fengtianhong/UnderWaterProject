@@ -19,3 +19,11 @@
 <script src="../vendors/popper/popper.min.js"></script>
 <script src="../vendors/bootstrap/js/bootstrap.min.js"></script>
 <script src="../js/index.js"></script>
+
+<script>
+	$('a.list-group-item-action').mouseover(function(){
+		let that = $(this);
+		that.siblings().removeClass('active');
+		that.addClass('active');
+	});
+</script>
