@@ -95,7 +95,7 @@ public class DiveinfoServlet extends HttpServlet {
 			// 檢查完畢
 			DiveInfoService diveinfoSvc = new DiveInfoService();
 			diveinfoVO = diveinfoSvc.addDiveInfo(pointname, latitude, longitude, view, introduction, season.toString(),
-					local, pic, 0, 0, "上架");
+					local, pic, 5, 1, "上架");
 			RequestDispatcher failureView = req.getRequestDispatcher("/diveinfo/diveinfo.jsp");
 			failureView.forward(req, res);
 //			} catch (Exception e) {

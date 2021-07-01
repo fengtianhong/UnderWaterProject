@@ -16,6 +16,10 @@
 	content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet" href="css/friendchat.css" type="text/css" />
 <style type="text/css">
+
+.offline{
+	border:solie 1px red;
+	}
 </style>
 <title>潛水客聊天室-${memberVO.nickName}</title>
 </head>
@@ -150,30 +154,43 @@
 			inputMessage.focus();
 		}
 	}
-	var totalLast;
 	// 有好友上線或離線就更新列表
 	function refreshFriendList(jsonObj) {
 		var friends = jsonObj.users;  //當前在線的人
 		var row = document.getElementById("row");
 		var receivers = row.childNodes;  //顯示在畫面上的人
-		var repeat = false;
-		// 		row.innerHTML = '';
+// 		var repeat = false;
+				row.innerHTML = '';
 		for (var i = 0; i < friends.length; i++) {
 			if (friends[i] === self) {
 				continue;
 			}
-			for (var j = 0; j < row.childNodes.length; j++) {
-				if (receivers[j].getAttribute("id") == friends[i]) {
-					repeat = true;
-				}
-			}
-			if (!repeat) {
+// 			for (var j = 0; j < row.childNodes.length; j++) {
+// 				if (row.childNodes[j].getAttribute("id") == friends[i]) {
+// 					repeat = true;
+// 				}
+// 			}
+// 			if (!repeat) {
 				row.innerHTML += '<div id='
 						+ friends[i]
 						+ ' onclick="HtmlClick(this)" class="column" name="friendName" value='
 						+ friends[i] + ' ><h2>' + friends[i] + '</h2></div>';
-			}
+// 			}
 		}
+// 		for (var i = 0; i < row.childNodes.length; i++) {
+// 			if (row.childNodes[i].getAttribute("id") === self) {
+// 				continue;
+// 			}
+// 		}
+// 			var exist = true;
+// 			for (var j = 0; j < friends.length; j++) {
+// 				if (row.childNodes[i].getAttribute("id") == friends[j]) {
+// 					exist = false;
+// 				}
+// 			}
+// 			if (!exist) {
+// 				receivers[i].classList.toggle("offline");
+// 			} 
 		// 		addListener();
 	}
 
