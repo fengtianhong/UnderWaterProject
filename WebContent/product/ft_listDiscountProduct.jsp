@@ -13,11 +13,45 @@
 <head>
 <meta charset="UTF-8">
 <title>顯示優惠商品</title>
+<link rel="stylesheet" href="../share/index.css">
+<link rel="stylesheet" href="../vendors/bootstrap/css/bootstrap.min.css">
 
+<style>
+
+.front{
+margin: 0 auto;
+	width: 800px;
+	/* 		display: flex; */
+	background-color: snow;
+	border-radius: 10px;
+	box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.4);
+	padding: 30px;
+	opacity: .9;
+}
+
+	.show_pic {
+	height: 150px;
+	width: 200px;
+	overflow: hidden;
+}
+
+.show_pic>img {
+	cursor: pointer;
+	transition-duration: 0.5s;
+	height: 100%;
+	width: 100%;
+	transition-duration: 0.5s;
+}
+
+.show_pic>img:hover {
+	transform: scale(1.2);
+}
+</style>
 </head>
 
 <body>
-
+<jsp:include page="../share/navbar.jsp" flush="true" />
+	<div class="front">
 	<table id="table-1">
 		<tr>
 			<td>
@@ -57,8 +91,8 @@
 
 		<%-- 	<%@ include file="page1.file" %>  --%>
 		<c:forEach var="productVO" items="${list}">
-
-			<tr>
+			<FORM name ="shoppingForm" METHOD="post" ACTION="<%=request.getContextPath()%>/mall/shoppingCar.html">		
+				<tr>
 				<td>${productVO.productSN}</td>
 				<td>${productVO.productClass}</td>
 				<td>${productVO.productName}</td>
@@ -76,11 +110,17 @@
 				<td>${productVO.productPrime}</td>
 				<td>${productVO.ratingPoint}</td>
 				<td>${productVO.ratingNumber}</td>
+				
+				<td><div align="center">購買數量:<input type="number" name="productQuantity" min="1" max="9999" value=1></div></td>
+      			<td><div align="center">       <input type="submit" name="Submit" value="加入購物車"></div></td>		
 			</tr>
+				<input type="hidden" name="productSN" value="${productVO.productSN}">			
+      			<input type="hidden" name="action" value="ADD">
+      		</FORM>
 		</c:forEach>
 	</table>
-
+	</div>
 	<%-- <%@ include file="page2.file" %> --%>
-
+<jsp:include page="../share/footer.jsp" flush="true" />
 </body>
 </html>
