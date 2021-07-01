@@ -4,6 +4,7 @@
 <%@ page import="com.party.model.*"%>
 <jsp:useBean id="diveInfoSvc" scope="page" class="com.diveinfo.model.DiveInfoService" />
 <jsp:useBean id="memberSvc" class="com.member.model.MemberService" />
+<jsp:useBean id="partyMemberSvc" class="com.partymember.model.PartyMemberService" />
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -69,8 +70,8 @@
 	</tr>
 	<tr>
 		<td><i class="far fa-check-circle"></i></td>
-		<td class="sizenow">目前報名人數: </td>
-		<td>${partyMemberList.size()}</td>
+		<td class="sizenow">通過審核人數: </td>
+		<td>${partyMemberSvc.findByPartySNAndStatus(partyVO.partySN, "1").size()}</td>
 	</tr>
 	<tr>
 		<td><i class="fas fa-info-circle"></i></td>

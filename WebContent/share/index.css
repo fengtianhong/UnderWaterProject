@@ -102,4 +102,7 @@ nav.navbar.fixed-top.navbar-expand-md.navbar-light a:hover {
 	background-color: #ffffff;
 }
 
-
+a.list-group-item.list-group-item-action.active {
+	background-color: #ffc800;
+	border: none;
+}

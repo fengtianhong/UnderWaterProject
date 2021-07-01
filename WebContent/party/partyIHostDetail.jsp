@@ -16,12 +16,13 @@
     <link rel="stylesheet" href="css/partyIHostDetail.css">
     <!-- Bootstrap 的 CSS -->
     <link rel="stylesheet" href="../vendors/bootstrap/css/bootstrap.min.css">
+    <!-- CKEditor -->
+	<script type="text/javascript" src="<%=request.getContextPath()%>/party/ckeditor/ckeditor.js"></script>
 </head>
 <body>
 <jsp:include page="../share/navbar.jsp" flush="true" />
+<jsp:include page="../share/member/Mheader.jsp" flush="true" />
 
-<main>
-<h4></h4>
 <h4>我舉辦的揪團: ${partyVO.partySN} 修改內容 / 審核報名資格</h4>
 <section class="party">
 	<form method="post" action="<%=request.getContextPath()%>/party/party.do">
@@ -63,7 +64,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="partyMinSize">最低成團人數(如何和下方審核連動): </td>
+				<td class="partyMinSize">最低成團人數<br>(如何和下方審核連動): </td>
 				<td>
 					<c:if test="${partyVO.status == '1' or partyVO.status == '4'}">
 						<input type="number" value="${partyVO.partyMinSize}" disabled>
@@ -74,7 +75,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="sizenow">目前已通過審核人數(如何和下方審核連動): </td>
+				<td class="sizenow">目前已通過審核人數<br>(如何和下方審核連動): </td>
 				<td>${partyMemberSvc.findByPartySNAndStatus(partyVO.partySN, "1").size()}</td>
 			<tr>
 				<td class="status">揪團狀態: </td>
@@ -126,10 +127,13 @@
 				</c:if>
 			</tr>
 			<tr>
-				<td class="partyDetail">詳細內容: (CKEditor還沒測) </td>
-				<td><textarea name="partyDetail" maxlength=100>${partyVO.partyDetail}</textarea></td>
+				<td class="partyDetail">詳細內容: </td>
 			</tr>
 		</table>
+		<textarea name="partyDetail" maxlength=1000>${partyVO.partyDetail}</textarea>
+		<script>
+			CKEDITOR.replace("partyDetail");
+		</script>
 	<!-- 待測試 -->
 		<button type="button" onclick="location.href='<%=request.getContextPath()%>/party/partyIHost.jsp'" class="btn btn-outline-info btn-sm">回上頁(放棄揪團內容變更)</button>
 		<button type="submit" name="action" value="submitUpdate" class="btn btn-outline-info btn-sm">確認修改揪團內容</button>
@@ -146,12 +150,12 @@
 	</c:if>
 	
 	<c:if test="${not empty partyMembers}">
-		<table>
+		<table class="tableRegistration">
 			<tr>
 				<td>報名序號</td>
 				<td>報名會員</td>
 				<td>最高證照</td>
-				<td>報名時間(待修)</td>
+				<td>報名時間</td>
 				<td>報名狀態</td>
 			</tr>
 		<c:forEach var="partyMember" items="${partyMembers}">
@@ -252,8 +256,7 @@
 	</c:if>
 </section>
 
-</main>
-
+<jsp:include page="../share/member/Mfooter.html" flush="true" />
 <jsp:include page="../share/footer.jsp" flush="true" />
 
 <!-- <script src="../vendors/jquery/jquery-3.5.1.min.js"></script> -->
