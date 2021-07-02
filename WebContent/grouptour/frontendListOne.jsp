@@ -391,7 +391,7 @@ $(function () {
     $(".heart").on("click", function(){
         // confirm("ADD COLLECTIONS?");
         var that = this;
-        var userID = $(".userID").val();		// 先寫死
+        var userID = $(".userID").val();
         var groupTourSN = $(".groupTourSN").val();
         console.log(userID, "+",groupTourSN);
     

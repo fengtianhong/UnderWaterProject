@@ -30,6 +30,7 @@ public class OrderForGroupDAO implements OrderForGroupDAO_interface{
 	private static final String GET_ByUSERID_STMT = "SELECT * FROM OderForGroup WHERE userID = ? ORDER BY purchaseDate DESC";
 	private static final String GET_ALL_STMT = "SELECT * FROM OderForGroup ORDER BY purchaseDate DESC";
 	private static final String GET_MEMBER_STMT = "SELECT * FROM OderForGroup WHERE groupTourSN = ? ORDER BY purchaseDate DESC";
+
 	
 	
 	@Override
@@ -351,4 +352,5 @@ public class OrderForGroupDAO implements OrderForGroupDAO_interface{
 		return list;
 	}
 
+		
 }

@@ -7,9 +7,14 @@
 <%@ page import="com.diveinfo.model.*"%>
 
 <%
-	GroupTourService groupTourSvc = new GroupTourService();
-	List<GroupTourVO> list = groupTourSvc.getFrontendAll();
-	pageContext.setAttribute("list", list);
+	List<GroupTourVO> listNew = (List<GroupTourVO>) request.getAttribute("listNew");
+	if(listNew ==null) {
+		GroupTourService groupTourSvc = new GroupTourService();
+		List<GroupTourVO> list = groupTourSvc.getFrontendAll();
+		pageContext.setAttribute("list", list);
+	}else{
+		pageContext.setAttribute("list", listNew);
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -25,10 +30,7 @@
 	.container{
 		margin: 0 auto;  
  		width: 1200px; 
-		display: flex;
-	}
-	.filter{
-		
+/* 		display: flex; */
 	}
  	.item{ 
  		margin: 18px; 
@@ -77,11 +79,18 @@
 		margin-top: 7px;
 	}
 /* 上方搜尋欄 */
-	.bar{
-		height: 100px;
-		margin: 0 auto;  
- 		width: 1200px; 
-		display: flex;
+	.top{
+	    margin-bottom: 20px;
+    	margin-top: 30px;
+		background-color: snow;
+		border-radius: 10px;
+		box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.4);
+		padding: 10px;
+		opacity: .9;
+	}
+	.filter{
+		padding: 20px;
+		display: inline;
 	}
 	.page2{
 		margin-top: 50px;
@@ -101,19 +110,39 @@
 <body>
 <jsp:include page="../share/navbar.jsp" flush="true" />
 
-	<div class="bar"></div>
-	
+	<div class="row justify-content-center">
+	<div class="top">
+    <form  method="post" action="GroupTourFilter.do">
+	 	<div class="filter">
+		<select id="filter" name="location" class="location" onchange="filter(this.value)">
+			<option value="0">ALL
+			<option value="北部">北部
+			<option value="南部">南部
+			<option value="離島">離島
+		</select> 
+		</div> 
+	    <div class="filter"><input type="search" name="keyword" class="keyword-filter" placeholder="請輸入關鍵字"></div> 
+<!-- 		 <div class="filter"><input name="dateStart" type="date" class="date-filter"></div> -->
+<!-- 		 <div class="filter"><input name="dateEnd" type="date" class="date-filter"></div> -->
+		 
+		<input type="hidden" name="action" value="filter">
+		<input class="btn btn-primary btn-user" type ="submit" value="送出">
+		<input class="btn btn-primary btn-user" type="reset" value="清除">
+	 	<c:if test="${msg!=null}"> ${msg}</c:if>
+	</form> 
+    </div> 
+    </div>
     
-    <div class="filter"><input type="search" class="light-table-filter" data-table="order-table" placeholder="請輸入關鍵字"></div>   
+    
+    
     <div class="container">
         
-        
-	<hr>
         <div id="products" class="row justify-content-center">
 
 <%@ include file="page1.file"%>	
             <c:forEach var="groupTourVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-            <div class="item col-lg-3 col-md-6 col-sm-6">
+            <div class="item col-lg-3 col-md-3 col-sm-3">
+            <input class="forFilter" type="hidden" value="${diveInfoSvc.getOneDiveInfo(groupTourVO.pointSN).local}">
                 <div class="thumbnail">
                 
                 <div class="picture">
@@ -125,6 +154,7 @@
                         <jsp:useBean id="diveInfoSvc" scope="page" class="com.diveinfo.model.DiveInfoService"></jsp:useBean>
                         <small class="pointName">
                             ${diveInfoSvc.getOneDiveInfo(groupTourVO.pointSN).pointName}</small>
+                            
                         
                         <p class="detail">
                             <i class="fas fa-calendar-day"></i><span class="inner-text">${groupTourVO.startTime} ~ ${groupTourVO.endTime}</span>
@@ -168,9 +198,42 @@
 </body>
 
 <script>
-	// 輕量關鍵字搜索列表
-	!function(e){"use strict";var a,n,t=(a=Array.prototype,{init:function(){var t=e.getElementsByClassName("light-table-filter");a.forEach.call(t,function(t){t.oninput=o})}});function o(t){n=t.target;t=e.getElementsByClassName(n.getAttribute("data-table"));a.forEach.call(t,function(t){a.forEach.call(t.tBodies,function(t){a.forEach.call(t.rows,i)})})}function i(t){var e=t.textContent.toLowerCase(),a=n.value.toLowerCase();t.style.display=-1===e.indexOf(a)?"none":"table-row"}e.addEventListener("readystatechange",function(){"complete"===e.readyState&&t.init()})}(document);
-	
+// 	// 關鍵字搜索
+// 		function filter(value) {
+//     console.log(value);
+// 		switch(value) {
+// 			case "1":
+// 				$(".forFilter").each(function(i, e) {
+//                     if($(e).val()=="北部") {
+//                         $(e).closest("div").show();
+//                     }else{
+//                         $(e).closest("div").hide();
+//                     }
+// 				})
+// 				break;
+// 			case "2":
+//                  $(".forFilter").each(function(i, e) {
+//                     if($(e).val()=="南部") {
+//                         $(e).closest("div").show();
+//                     }else{
+//                         $(e).closest("div").hide();
+//                     }
+// 				})
+// 				break;
+// 			case "3":
+//                 $(".forFilter").each(function(i, e) {
+//                     if($(e).val()=="離島") {
+//                         $(e).closest("div").show();
+//                     }else{
+//                         $(e).closest("div").hide();
+//                     }
+// 				})
+// 				break;
+// 			default:
+//                 $(".forFilter").closest("div").show();
+// 				break;
+// 		}
+// 	}
 </script>
 
 </html>

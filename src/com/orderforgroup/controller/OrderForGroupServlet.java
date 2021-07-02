@@ -97,10 +97,17 @@ public class OrderForGroupServlet extends HttpServlet {
 				orderForGroupVO.setPhone(phone);
 				orderForGroupVO.setPersonID(personID);
 				orderForGroupVO.setBirthdate(birthdate);
+
 				
-				//
 				GroupTourService groupTourSvc = new GroupTourService();
 				GroupTourVO groupTourVO = groupTourSvc.getOne(groupTourSN);
+				
+				// 判斷是否已額滿
+				Integer LimitNumder = groupTourVO.getLimitNumder();
+				Integer AttendNumber = groupTourVO.getAttendNumber();
+				if(AttendNumber >= LimitNumder) {
+					errMsg.add("此行程已額滿");
+				}
 				
 				MemberService memberSvc = new MemberService();
 				MemberVO memberVO = memberSvc.getone(userID);
@@ -296,9 +303,8 @@ public class OrderForGroupServlet extends HttpServlet {
 				
 				MemberService memberSvc = new MemberService();
 				MemberVO memberVO = memberSvc.getone(userID);
-				HttpSession session = req.getSession();
 				
-				session.setAttribute("memberVO", memberVO);
+				req.setAttribute("memberVO", memberVO);
 				req.setAttribute("groupTourVO", groupTourVO);
 				
 				// 證照資格判斷 (測會員資格null會發生甚麼事 0:無證照 1:OW 2:AOW)
