@@ -15,7 +15,6 @@ public class ForumCommentService {
 		
 		forumCommentvo.setArticleSN(articleSN);
 		forumCommentvo.setUserID(userID);
-//		forumCommentvo.setCmtDate(cmtDate);
 		forumCommentvo.setCmtText(cmtText);
 		dao.insert(forumCommentvo);
 		

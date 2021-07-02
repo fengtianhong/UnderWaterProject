@@ -8,13 +8,29 @@
 
 <%
 	Integer articleSN = (Integer)request.getAttribute("articleSN");
+	Integer userID = (Integer)session.getAttribute("userID");
+	Integer cmtSN = (Integer)request.getAttribute("cmtSN");
+
+
 	ForumCommentService forumCommentSvc = new ForumCommentService();
 	List<ForumCommentVO> list = forumCommentSvc.getOneForumComment(articleSN);
 	pageContext.setAttribute("list", list);
+	
+	ForumArticleService faSvc = new ForumArticleService();
+	ForumArticleVO forumArticleVO = faSvc.getOneForumArticle(articleSN);
+	pageContext.setAttribute("forumArticleVO", forumArticleVO);
 
 %>
 
+
+<%-- 
 <%=articleSN %>
+<%=list == null %>
+<%=userID %> 
+--%>
+
+
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -44,7 +60,7 @@
 			<div id="showbox">
 				<div id="bar" style="margin-left: 20px; margin-top: 20px; box-shadow: 0 1px; padding-bottom:5px;">
 					<span class="css_td" style=""><fmt:formatDate value="${forumArticleVO.publishedDate}" pattern="yyyy-MM-dd HH:mm:ss "/></span>		
-					<jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
+					<jsp:useBean id="memberSvc" scope="session" class="com.member.model.MemberService" />
 					<span class="css_td">作者：${memberSvc.getone(forumArticleVO.userID).nickName}</span>
 					<span class="css_td">文章好評：${forumArticleVO.rateGCount}</span>
 					<span class="css_td">文章負評：${forumArticleVO.rateNGCount}</span>
@@ -59,19 +75,33 @@
 
 					<div class="commentShowbox" style="margin-left: 20px">
 						<span class="css_td" style="text-align: center;">From：${memberSvc.getone(forumArticleVO.userID).nickName}</span>
-						<span class="css_td" style="text-align: center;">在<fmt:formatDate value="${forumCommentVO.cmtDate}" pattern="yyyy-MM-dd HH:mm:ss "/>寫下：</span>
+						<span class="css_td" style="text-align: center;">在<fmt:formatDate value="${forumCommentVO.cmtDate}" pattern="yyyy-MM-dd HH:mm:ss"/>寫下：</span>
 						<div class="cmtarea" style="margin-left: 20px;"><p>${forumCommentVO.cmtText}</p></div>
-						
-<%-- 						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/forumComment/forumComment.do" name="form1">
-							<div id="delete">
-								<div>
-									<input type="hidden" name="action" value="delete">
-									<input type="hidden" name="cmtSN" value="<%=articleSN%>">
-									<input type="submit" value="新增留言" style="border-radius: 7px; margin-bottom: 20px; margin-left: 20px;">
-								</div>
+							<div>
+							
+								<c:if test="${userID == forumCommentVO.userID}">
+									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/forumComment/forumComment.do" name="form1">
+										<input type="hidden" name="action" value="delete">
+										<input type="hidden" name="cmtSN" value="${forumCommentVO.cmtSN}">
+										<input type="hidden" name="articleSN" value="${forumCommentVO.articleSN}">
+										<input type="submit" value="刪除">
+									</FORM>
+								</c:if>
+								
+								<c:if test="${userID == forumCommentVO.userID}">
+										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/forumComment/forumComment.do" name="form2">
+										<input type="hidden" name="action" value="update">
+										<input type="hidden" name="cmtSN" value="${forumCommentVO.cmtSN}">
+										<input type="hidden" name="articleSN" value="${forumCommentVO.articleSN}">
+										<input type="hidden" name="userID" value="${forumCommentVO.userID}">
+										<textarea name="cmtText" rows="4" cols="50">${forumCommentVO.getCmtText()}</textarea>
+										<input type="submit" value="編輯">
+									</FORM>
+								</c:if>
+							
 							</div>
-						</FORM> --%>
 					</div>
+					
 					
 				</c:forEach>
 				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/forumComment/forumComment.do" name="form1">

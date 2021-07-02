@@ -107,7 +107,7 @@
 						<input type="button" onclick="window.location.href='<%=request.getContextPath()%>/forumArticle/bFAManage.jsp'"
 						value="忍痛放棄" style="border-radius: 7px; margin-bottom: 20px; margin-left: 20px;">
 					
-						<input type="hidden" name="action" value="hiddenAtricle">
+						<input type="hidden" name="action" value="userUpdate">
 						<input type="hidden" name="articleSN" value="<%=forumArticleVO.getArticleSN()%>">
 						<input type="submit" value="送出修改" style="border-radius: 7px; margin-bottom: 20px; margin-left: 20px;">
 					</td>	
