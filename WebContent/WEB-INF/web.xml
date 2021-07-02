@@ -282,4 +282,14 @@
 		<url-pattern>/member/MemberInfoServlet.do</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>PersonChangeServlet</servlet-name>
+		<servlet-class>com.member.controller.PersonChangeServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>PersonChangeServlet</servlet-name>
+		<url-pattern>/member/PersonChangeServlet.do</url-pattern>
+	</servlet-mapping>
+	
 </web-app>

@@ -25,7 +25,7 @@ public class LogoutServlet extends HttpServlet {
 //		System.out.println("logout doPost");
 		
 		req.getSession().removeAttribute("userID");
-		res.sendRedirect(req.getContextPath()+"/member/login.jsp");
+		res.sendRedirect(req.getContextPath());
 	}
 
 }

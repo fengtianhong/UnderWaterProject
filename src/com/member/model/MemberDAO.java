@@ -15,7 +15,7 @@ public class MemberDAO implements MemberDAO_interface{
 	private static final String GET_ALL_STMT = "SELECT * FROM Member ORDER BY userID";
 	private static final String LOGIN_STMT = "SELECT * FROM MEMBER WHERE ACCOUNT=? AND PWD=?";
 	private static final String CHECK_ACCOUNT = "SELECT * FROM Member where account=?";
-	
+	private static final String PERSONINFOCHANGE = "UPDATE Member SET nickName=?, userName=?, gender=?, birthDate=?, phone=?, Certification=?, CertificationPic=?, personID=?, address=?, personphoto=? WHERE userID = ?";
 	public static void main(String[] args) {
 //		測試insert
 //		MemberVO vo = new MemberVO();
@@ -154,7 +154,6 @@ public class MemberDAO implements MemberDAO_interface{
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
 			pstmt = con.prepareStatement(UPDATE_STMT);
 		
-			
 			pstmt.setString(1, MemberVO.getNickName());
 			pstmt.setString(2, MemberVO.getUserName());
 			pstmt.setString(3, MemberVO.getGender());
@@ -168,8 +167,8 @@ public class MemberDAO implements MemberDAO_interface{
 			pstmt.setTimestamp(11, MemberVO.getUpDateTime());
 			pstmt.setInt(12, MemberVO.getRatePeople());
 			pstmt.setInt(13, MemberVO.getRatePoint());
-			pstmt.setInt(14, MemberVO.getUserID());
-			pstmt.setBytes(15, MemberVO.getPersonPhoto());
+			pstmt.setBytes(14, MemberVO.getPersonPhoto());
+			pstmt.setInt(15, MemberVO.getUserID());
 			pstmt.executeUpdate();
 			
 		} catch (Exception e) {
@@ -467,8 +466,48 @@ public Boolean checkAccount(MemberVO MemberVO) {
 	return false;
 }
 	
-		
+public void personInfoUpdate(MemberVO MemberVO) {		
+	Connection con = null;
+	PreparedStatement pstmt = null;
 	
+	try {
+		con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+		pstmt = con.prepareStatement(PERSONINFOCHANGE);
+		
+		pstmt.setString(1, MemberVO.getNickName());
+		pstmt.setString(2, MemberVO.getUserName());
+		pstmt.setString(3, MemberVO.getGender());
+		pstmt.setDate(4, MemberVO.getBirthDate());
+		pstmt.setString(5, MemberVO.getPhone());
+		pstmt.setString(6, MemberVO.getCertification());
+		pstmt.setBytes(7, MemberVO.getCertificationPic());
+		pstmt.setString(8, MemberVO.getPersonID());
+		pstmt.setString(9, MemberVO.getAddress());
+		pstmt.setBytes(10, MemberVO.getPersonPhoto());
+		pstmt.setInt(11, MemberVO.getUserID());
+		
+		pstmt.executeUpdate();
+	}catch(Exception e) {
+		e.printStackTrace();
+	}finally {
+		if (pstmt != null) {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		if (con != null) {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+}
+
 	
 	
 	
