@@ -3,14 +3,16 @@
 
 <html>
 <head>
-<meta charset="UTF-8">
+	<%@ include file="../share/backend/Bmeta.file" %>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>後台商品修改</title>
 
 </head>
 
 <body>
+<%@ include file="../share/backend/Bheader.file" %>
 	<a href='backstageManage.jsp'>回後台商品管理</a>
-	<h3>修改~請選擇過濾方式</h3>
 	<h3>查詢方式:</h3>
 	
 	<c:if test="${not empty errorMsgs}">
@@ -37,5 +39,7 @@
 
 	</ul>
 
+<%@ include file="../share/backend/Bfooter.file" %>
 </body>
+<%@ include file="../share/backend/Bjs.file" %>
 </html>
