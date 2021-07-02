@@ -18,9 +18,11 @@ import com.orderlist.model.OrderListVO;
 public class OrderForProductDAO implements OrderForProductDAO_interface {
 
 	private static final String INSERT_STMT = "INSERT INTO OrderForProduct (userID, totalPrice, orderStatus) VALUES (?, ?, ?)";
+	
 	private static final String CHANGESTATUS_STMT = "UPDATE OrderForProduct SET orderStatus = ? WHERE orderSN = ?";
 	private static final String UPDATE_STMT = "UPDATE OrderForProduct SET userID = ?, purchaseDate = ?, totalPrice = ?,"
 			+ " WHERE orderSN = ?";
+	
 	private static final String GET_ONE_BY_ORDERSN = "SELECT * FROM OrderForProduct WHERE orderSN = ?";
 	private static final String GET_ALL = "SELECT * FROM OrderForProduct ORDER BY orderSN";
 
@@ -272,6 +274,8 @@ public class OrderForProductDAO implements OrderForProductDAO_interface {
 			// 取得對應的自增主鍵值
 			rs = pstmt.getGeneratedKeys();
 			if (rs.next()) {
+				
+				// getString(), 只能填欄位索引值
 				nextOrderSN = rs.getString(1);
 				System.out.println("自增主鍵值= " + nextOrderSN + "(剛剛新增的訂單編號)");
 			} else {

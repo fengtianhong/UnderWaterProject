@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.mysql.cj.x.protobuf.MysqlxCrud.InsertOrBuilder;
 import com.orderforproduct.model.OrderForProductService;
 import com.orderlist.model.OrderListVO;
 import com.product.model.ProductService;
@@ -28,7 +27,8 @@ public class ShoppingCar extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("31");
+//		System.out.println("31");
+		
 		response.setContentType("text/html; charset=UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		
@@ -41,12 +41,11 @@ public class ShoppingCar extends HttpServlet {
 		if (action.equals("createOrder")) {
 			OrderForProductService orderSvc = new OrderForProductService();
 			
-			System.out.println("43");
+//			System.out.println("45");
 				Integer userID = (Integer)(session.getAttribute("userID"));
 				Double price = Double.parseDouble(request.getParameter("Price"));
 				totalprice = price.intValue();
-				
-				
+							
 				java.sql.Timestamp purchaseDate = new java.sql.Timestamp(System.currentTimeMillis());
 				String orderStatus = "處理中";
 				
@@ -58,14 +57,21 @@ public class ShoppingCar extends HttpServlet {
 					orderListVO.setPurchaseQuantity(productVO.getProductQuantity());
 					orderListVO.setProductPrice(productVO.getProductPrice());
 					list.add(orderListVO);
+					
 //					System.out.println(orderListVO.getProductSN()+ "+" + orderListVO.getPurchaseQuantity()+ "+" +orderListVO.getProductPrice()+ "+" +totalPrice + "+" + orderStatus );
 				}
-				System.out.println("58");
-				orderSvc.insertOrder(userID, purchaseDate, totalprice, orderStatus, list);		
+				
+//				System.out.println("64");
+				orderSvc.insertOrder(userID, purchaseDate, totalprice, orderStatus, list);
+				
+//				String url = "/product/ft_searchProduct.jsp";			
+//				session.invalidate();
+//				response.sendRedirect(url);
 			}
 		
 		if (!action.equals("CHECKOUT")) {
-			System.out.println("63");
+//			System.out.println("69");
+			
 			// 刪除購物車中的商品
 			if (action.equals("DELETE")) {
 				String del = request.getParameter("del");
@@ -101,17 +107,19 @@ public class ShoppingCar extends HttpServlet {
 						buylist.add(newproductVO);
 				}
 			}
-			System.out.println("77");
+//			System.out.println("106");
+			
 			session.setAttribute("shoppingcart", buylist);
 			String url = "/product/ft_listAllProduct.jsp";
 			RequestDispatcher rd = request.getRequestDispatcher(url);
 			rd.forward(request, response);
-			System.out.println("82");
+//			System.out.println("112");
 		}
 		
 		// 結帳，計算購物車商品價錢總數
 		else if (action.equals("CHECKOUT")) {
-			System.out.println("86");
+//			System.out.println("117");
+			
 			float total = 0;
 			for (int i = 0; i < buylist.size(); i++) {
 				ProductVO order = buylist.get(i);
@@ -126,7 +134,7 @@ public class ShoppingCar extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher(url);
 			rd.forward(request, response);
 		}
-		System.out.println("129");
+//		System.out.println("133");
 	}
 
 	private ProductVO getProductVO(HttpServletRequest request) {

@@ -1,6 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.* , com.product.model.ProductVO"%>
-<% session.setAttribute("userID", 1); %>
+<%-- <% session.setAttribute("userID", 1); %> --%>
+<jsp:useBean id="memberSvc" class="com.member.model.MemberService" />
+<%
+	Integer userID = (Integer) session.getAttribute("userID");
+	pageContext.setAttribute("userID", userID);
+%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

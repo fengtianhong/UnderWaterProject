@@ -14,12 +14,47 @@
 	session.setAttribute("photoTemp", photoTemp);
 	
 %>
-<%= productVO==null %>
+
 <html>
 <head>
+
 <meta charset="UTF-8">
 <title>修改商品資料</title>
+<link rel="stylesheet" href="../share/index.css">
+<link rel="stylesheet" href="../vendors/bootstrap/css/bootstrap.min.css">
 
+
+<style>
+
+.front{
+margin: 0 auto;
+	width: 800px;
+	/* 		display: flex; */
+	background-color: snow;
+	border-radius: 10px;
+	box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.4);
+	padding: 30px;
+	opacity: .9;
+}
+
+	.show_pic {
+	height: 150px;
+	width: 200px;
+	overflow: hidden;
+}
+
+.show_pic>img {
+	cursor: pointer;
+	transition-duration: 0.5s;
+	height: 100%;
+	width: 100%;
+	transition-duration: 0.5s;
+}
+
+.show_pic>img:hover {
+	transform: scale(1.2);
+}
+</style>
 </head>
 
 <body>
@@ -175,6 +210,7 @@
  			});
 		});
 	</script>
+
 </body>
 
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
