@@ -22,7 +22,6 @@ public class NewsServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		System.out.println("test:"+action);
 		HttpSession session = req.getSession();
 		if ("insert".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
@@ -159,7 +158,6 @@ public class NewsServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				String newsTypeS = new String(req.getParameter("newsType"));
-				System.out.println(newsTypeS);
 				NewsService newsSvc = new NewsService();
 				List<NewsVO> listnew=null;
 				if("product".equals(newsTypeS)) {
