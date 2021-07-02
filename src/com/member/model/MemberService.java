@@ -83,4 +83,25 @@ public class MemberService {
 		vo.setAccount(account);
 		return dao.checkAccount(vo);
 	}
+	
+	public MemberVO persoInfoUpdateMember(Integer userID, String nickName, String userName, 
+			String gender, Date birthDate, String phone, String certification,
+			byte[] certificationPic, String personID, String address, byte[] personPhoto) {
+		MemberVO vo = new MemberVO(); 
+		
+		vo.setUserID(userID);
+		vo.setNickName(nickName);
+		vo.setUserName(userName);
+		vo.setGender(gender);
+		vo.setBirthDate(birthDate);
+		vo.setPhone(phone);
+		vo.setCertification(certification);
+		vo.setCertificationPic(certificationPic);
+		vo.setPersonID(personID);
+		vo.setAddress(address);
+		vo.setPersonPhoto(personPhoto);
+		
+		dao.personInfoUpdate(vo);
+		return vo;
+	}
 }

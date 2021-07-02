@@ -54,11 +54,13 @@ public class LoginServlet extends HttpServlet {
 						return;
 					}else {
 //						System.out.println("若沒有來源網頁,導回index頁面");
-						req.getRequestDispatcher("personinfo.jsp").forward(req, res);
+//						req.getRequestDispatcher(req.getContextPath() + "/index.jsp").forward(req, res);
+						res.sendRedirect(req.getContextPath());
+						return;
 					}
 				}catch(Exception e) {//若沒有,導回index頁面
 //					System.out.println("沒有,導回index頁面");
-					req.getRequestDispatcher("personinfo.jsp").forward(req, res);
+					res.sendRedirect(req.getContextPath());
 				}
 			}else {
 				System.out.println("驗證碼不正確");

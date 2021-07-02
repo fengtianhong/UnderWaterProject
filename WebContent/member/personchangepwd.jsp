@@ -1,5 +1,17 @@
+<%@	page import="com.member.model.MemberVO"%>
+<%@	page import="com.member.model.MemberService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
+<% 	
+	Integer userID = Integer.parseInt(session.getAttribute("userID").toString());
+	
+	MemberService memberSvc = new MemberService();
+	MemberVO memberVO = memberSvc.getone(userID);
+
+	pageContext.setAttribute("memberVO", memberVO);
+	
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,22 +47,31 @@
 									<div class="card">
 										<div class="card-body">
 											<h5 class="card-title">變更密碼</h5>
-											<form action="#" method="post">
+											<form action="PersonChangeServlet.do" method="post">
 												<div class="form-group">
 													<label for="inputPasswordCurrent">原始密碼</label>
-													<input type="password" class="form-control" id="inputPasswordCurrent">
+													<input type="password" name="pwd" class="form-control" id="inputPasswordCurrent">
 												</div>
 												<div class="form-group">
 													<label for="inputPasswordNew">新密碼</label>
-													<input type="password" class="form-control" id="inputPasswordNew">
+													<input type="password" name="newpwd1" class="form-control" id="inputPasswordNew">
 												</div>
 												<div class="form-group">
 													<label for="inputPasswordNew2">再次確認密碼</label>
-													<input type="password" class="form-control" id="inputPasswordNew2">
+													<input type="password" name="newpwd2" class="form-control" id="inputPasswordNew2">
 												</div>
+												<input type="hidden" name="userID" value="${memberVO.userID}">
+												<input type="hidden" name="action" value="update_pwd">
 												<button type="submit" class="btn btn-primary">送出</button>
 											</form>
-
+<c:if test="${not empty errorMsgs}">
+	<font style="color:red">請修正以下錯誤:</font>
+	<ul>
+		<c:forEach var="message" items="${errorMsgs}">
+			<li style="color:red">${message}</li>
+		</c:forEach>
+	</ul>
+</c:if>
 										</div>
 									</div>
 								</div>

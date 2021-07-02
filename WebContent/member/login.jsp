@@ -177,7 +177,6 @@
 	}
 
 		function reloadImage() {
-			alert("123");
 // 			$('#identity').each(function(i,e){
 // 				alert($(e));
 // 				$(e).attr('src','IdentityServlet?ts=' + new Date().getTime());
