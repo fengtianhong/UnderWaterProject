@@ -68,7 +68,8 @@ public class PartyJNDIDAO implements PartyDAO_interface {
 //			}
 			
 		} catch (SQLException se) {
-			se.printStackTrace();
+			//讓SQL錯誤訊息可以顯示到最前面(前端畫面), 方便除錯
+			throw new RuntimeException("資料庫(JNDIDAO)錯誤: " + se.getMessage());
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -113,7 +114,8 @@ public class PartyJNDIDAO implements PartyDAO_interface {
 			
 			
 		} catch (SQLException se) {
-			se.printStackTrace();
+			//讓SQL錯誤訊息可以顯示到最前面(前端畫面), 方便除錯
+			throw new RuntimeException("資料庫(JNDIDAO)錯誤: " + se.getMessage());
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -148,7 +150,8 @@ public class PartyJNDIDAO implements PartyDAO_interface {
 
 			
 		} catch (SQLException se) {
-			se.printStackTrace();
+			//讓SQL錯誤訊息可以顯示到最前面(前端畫面), 方便除錯
+			throw new RuntimeException("資料庫(JNDIDAO)錯誤: " + se.getMessage());
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -202,7 +205,8 @@ public class PartyJNDIDAO implements PartyDAO_interface {
 			}
 			
 		} catch (SQLException se) {
-			se.printStackTrace();
+			//讓SQL錯誤訊息可以顯示到最前面(前端畫面), 方便除錯
+			throw new RuntimeException("資料庫(JNDIDAO)錯誤: " + se.getMessage());
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -256,7 +260,8 @@ public class PartyJNDIDAO implements PartyDAO_interface {
 			}
 			
 		} catch (SQLException se) {
-			se.printStackTrace();
+			//讓SQL錯誤訊息可以顯示到最前面(前端畫面), 方便除錯
+			throw new RuntimeException("資料庫(JNDIDAO)錯誤: " + se.getMessage());
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -310,7 +315,8 @@ public class PartyJNDIDAO implements PartyDAO_interface {
 			}
 			
 		} catch (SQLException se) {
-			se.printStackTrace();
+			//讓SQL錯誤訊息可以顯示到最前面(前端畫面), 方便除錯
+			throw new RuntimeException("資料庫(JNDIDAO)錯誤: " + se.getMessage());
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -363,7 +369,8 @@ public class PartyJNDIDAO implements PartyDAO_interface {
 			}
 			
 		} catch (SQLException se) {
-			se.printStackTrace();
+			//讓SQL錯誤訊息可以顯示到最前面(前端畫面), 方便除錯
+			throw new RuntimeException("資料庫(JNDIDAO)錯誤: " + se.getMessage());
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -398,7 +405,8 @@ public class PartyJNDIDAO implements PartyDAO_interface {
 			i = pstmt.executeUpdate();
 			
 		} catch (SQLException se) {
-			se.printStackTrace();
+			//讓SQL錯誤訊息可以顯示到最前面(前端畫面), 方便除錯
+			throw new RuntimeException("資料庫(JNDIDAO)錯誤: " + se.getMessage());
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -454,7 +462,8 @@ public class PartyJNDIDAO implements PartyDAO_interface {
 			}
 			
 		} catch (SQLException se) {
-			se.printStackTrace();
+			//讓SQL錯誤訊息可以顯示到最前面(前端畫面), 方便除錯
+			throw new RuntimeException("資料庫(JNDIDAO)錯誤: " + se.getMessage());
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -508,7 +517,8 @@ public class PartyJNDIDAO implements PartyDAO_interface {
 			}
 			
 		} catch (SQLException se) {
-			se.printStackTrace();
+			//讓SQL錯誤訊息可以顯示到最前面(前端畫面), 方便除錯
+			throw new RuntimeException("資料庫(JNDIDAO)錯誤: " + se.getMessage());
 		} finally {
 			if (pstmt != null) {
 				try {

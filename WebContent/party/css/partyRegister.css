@@ -11,6 +11,11 @@ h4 {
 	margin: 20px;
 }
 
+section.msg {
+	color: #98f4fc;
+	text-align: center;
+}
+
 section.party {
 	color: #666666;
 	background-color: #e8edf7;
