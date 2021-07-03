@@ -14,7 +14,7 @@
 									<a class="list-group-item list-group-item-action" href="personinfochange.jsp" role="tab"> 資訊變更</a> 
 									<a class="list-group-item list-group-item-action" href="personchangepwd.jsp" role="tab"> 密碼變更</a> 
 									<a class="list-group-item list-group-item-action" href="#" role="tab"> 待新增 </a> 
-									<a class="list-group-item list-group-item-action" href="<%=request.getContextPath()%>/orderforgroup/GroupOrder.jsp" role="tab"> 套裝行程訂單 </a> 
+									<a class="list-group-item list-group-item-action" id="orderG" href="<%=request.getContextPath()%>/orderforgroup/GroupOrder.jsp" role="tab"> 套裝行程訂單 </a> 
 									<a class="list-group-item list-group-item-action" id="party" href="<%=request.getContextPath()%>/party/partyIJoin.jsp" role="tab"> 揪團管理 </a> 
 									<a class="list-group-item list-group-item-action" href="#" role="tab"> 待新增 </a> 
 									<a class="list-group-item list-group-item-action" href="#" role="tab"> 待新增  </a>

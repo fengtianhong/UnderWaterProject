@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import com.grouptour.model.*;
@@ -44,6 +45,10 @@ public class GroupTourServlet extends HttpServlet {
 				
 				req.setAttribute("groupTourVO", groupTourVO);
 				req.setAttribute("content", content);
+//報名用
+				HttpSession session = req.getSession();
+				session.setAttribute("groupTourSN", groupTourSN);
+				
 				RequestDispatcher successView = req.getRequestDispatcher("/grouptour/frontendListOne.jsp");
 				successView.forward(req, res);
 				
