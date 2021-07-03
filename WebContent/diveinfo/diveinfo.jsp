@@ -31,7 +31,9 @@ html, body {
 #map-canvas {
 	height: 100%;
 }
-
+.dropdown-menu{
+background-color:transparent;
+}
 .show_pic {
 	height: 250px;
 }
@@ -189,6 +191,8 @@ nav.navbar.fixed-top.navbar-expand-md.navbar-light a {
 		}
 		google.maps.event.addDomListener(window, 'load', initialize);
 	</script>
-
+<script src="../vendors/jquery/jquery-3.5.1.min.js"></script>
+<script src="../vendors/popper/popper.min.js"></script>
+<script src="../vendors/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
