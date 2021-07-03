@@ -37,10 +37,6 @@
 		<url-pattern>/orderforgroup/GroupOrder.jsp</url-pattern>
 		<url-pattern>/orderforgroup/Success.jsp</url-pattern>
 		<url-pattern>/customerreply/CSchat.jsp</url-pattern>
-		<url-pattern>/chat/*</url-pattern>
-		<url-pattern>/forumArticle/*</url-pattern>
-		<url-pattern>/product/ft_searchProduct.jsp</url-pattern>
-		<url-pattern>/shoppingCar/Checkout.jsp</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
@@ -49,22 +45,20 @@
 	</filter-mapping>
 	
 	
-	<filter>
-		<filter-name>WebManagerSystemLoginFilter</filter-name>
-		<filter-class>com.manager.controller.WebManagerSystemLoginFilter</filter-class>
-	</filter>
+<!-- 	<filter> -->
+<!-- 		<filter-name>WebManagerSystemLoginFilter</filter-name> -->
+<!-- 		<filter-class>com.manager.controller.WebManagerSystemLoginFilter</filter-class> -->
+<!-- 	</filter> -->
 
-	<filter-mapping>
-		<filter-name>WebManagerSystemLoginFilter</filter-name>
-		<url-pattern>/news/*</url-pattern>
-		<url-pattern>/party/partyManage.jsp</url-pattern>
-		<url-pattern>/party/partyManageDetail.jsp</url-pattern>
-		<dispatcher>REQUEST</dispatcher>
-		<dispatcher>FORWARD</dispatcher>
-		<dispatcher>INCLUDE</dispatcher>
-		<dispatcher>ERROR</dispatcher>
-		<dispatcher>ASYNC</dispatcher>
-	</filter-mapping>
+<!-- 	<filter-mapping> -->
+<!-- 		<filter-name>WebManagerSystemLoginFilter</filter-name> -->
+<!-- 		<url-pattern>/news/*</url-pattern> -->
+<!-- 		<dispatcher>REQUEST</dispatcher> -->
+<!-- 		<dispatcher>FORWARD</dispatcher> -->
+<!-- 		<dispatcher>INCLUDE</dispatcher> -->
+<!-- 		<dispatcher>ERROR</dispatcher> -->
+<!-- 		<dispatcher>ASYNC</dispatcher> -->
+<!-- 	</filter-mapping> -->
 	
 	<servlet>
 		<servlet-name>DiveInfoServlet</servlet-name>

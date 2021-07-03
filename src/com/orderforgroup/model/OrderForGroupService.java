@@ -55,4 +55,5 @@ public class OrderForGroupService {
 	public List<Integer> getMember(Integer groupTourSN) {
 		return dao.getMember(groupTourSN);
 	}
+
 }

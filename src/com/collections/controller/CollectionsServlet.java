@@ -54,8 +54,8 @@ public class CollectionsServlet extends HttpServlet {
 				return;
 				
 			}catch(Exception e) {
-				e.printStackTrace();	//
-				System.out.println("add collection failure"+ e.getMessage());
+//				e.printStackTrace();	//
+				System.out.println("add collection failure, NO LOGIN. "+ e.getMessage());
 				out.print("fail");
 			}
 			

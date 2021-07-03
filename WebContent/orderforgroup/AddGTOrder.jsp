@@ -10,7 +10,7 @@
 OrderForGroupVO orderForGroupVO = (OrderForGroupVO) request.getAttribute("orderForGroupVO");
 
 //這東西應該會放在Session
-MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");	
+MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");	
 GroupTourVO groupTourVO = (GroupTourVO) request.getAttribute("groupTourVO");
 %>
 
