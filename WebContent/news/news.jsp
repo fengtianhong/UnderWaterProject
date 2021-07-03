@@ -5,13 +5,13 @@
 <%@ page import="com.news.model.*"%>
 <%@ page import="java.util.*"%>
 <%
-	NewsService newsSvc = new NewsService();
-	List<NewsVO> list = newsSvc.getAll();
-	List<NewsVO> listNew = (List<NewsVO>) request.getAttribute("listNew");
-	if (listNew == null) {
+
+	List<NewsVO> list= (List<NewsVO>) request.getAttribute("listNew");
+	if (list == null) {
+		NewsService newsSvc = new NewsService();
+		list = newsSvc.getAll();
 		pageContext.setAttribute("list", list);
 	} else {
-		list=listNew;
 		pageContext.setAttribute("list", list);
 	}
 %>
