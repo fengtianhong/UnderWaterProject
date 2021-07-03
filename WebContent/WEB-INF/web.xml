@@ -118,6 +118,8 @@
  -->
 
 
+
+<!-- 論壇註冊相關共5個-->
 	<servlet>
 		<servlet-name>ArticleTitleOptServlet</servlet-name>
 		<servlet-class>com.articleTitleOpt.controller.ArticleTitleOptServlet</servlet-class>
@@ -148,7 +150,27 @@
 		<url-pattern>/forumComment/forumComment.do</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>ArticleReportServlet</servlet-name>
+		<servlet-class>com.articleReport.controller.ArticleReportServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ArticleReportServlet</servlet-name>
+		<url-pattern>/forumArticle/articleReport.do</url-pattern>
+	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>ForumRateServlet</servlet-name>
+		<servlet-class>com.forumRate.controller.ForumRateServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ForumRateServlet</servlet-name>
+		<url-pattern>/forumRate/forumRate.do</url-pattern>
+	</servlet-mapping>	
+	
+		
 	
 
 	<servlet>

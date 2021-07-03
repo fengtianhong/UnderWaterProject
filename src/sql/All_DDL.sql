@@ -543,7 +543,7 @@ create table `ArticleReport` (
 	`rptReason` varchar(150) not null comment '檢舉原因',
 	`userID` int not null comment '會員編號',
 	`articleSN` int not null comment '文章編號',
-	`rptResult` varchar(9) comment '檢舉處理狀態',
+	`rptStatus` boolean not null default 0 comment '處理狀態',
 	`reRptResult` varchar(150) comment '檢舉處理回報',
 	CONSTRAINT `ArticleReport_userID` FOREIGN KEY (`userID`) REFERENCES `Member` (`userID`),
 	CONSTRAINT `ArticleReport_articleSN` FOREIGN KEY (`articleSN`) REFERENCES `ForumArticle` (`articleSN`)

@@ -48,7 +48,7 @@ public class ForumCommentServlet extends HttpServlet{
 				try {
 					articleSN = new Integer(str);
 				} catch (Exception e){
-					errorMsgs.add("評價編號格式不正確");
+					errorMsgs.add("留言編號格式不正確");
 				}
 				
 				if (!errorMsgs.isEmpty()) {
@@ -81,7 +81,7 @@ public class ForumCommentServlet extends HttpServlet{
 //				其他例外處理
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("評價查詢網頁.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("留言查詢網頁.jsp");
 				failureView.forward(req, res);
 			}
 		}

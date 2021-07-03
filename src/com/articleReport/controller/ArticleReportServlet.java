@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.articleReport.model.ArticleReportService;
 import com.articleReport.model.ArticleReportVO;
@@ -108,12 +109,10 @@ public class ArticleReportServlet extends HttpServlet{
 				Integer rptSN = new Integer(req.getParameter("rptSN"));
 				
 				String reRptResult = req.getParameter("reRptResult");
-				String reRptResultReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]$";
+				
 				if (reRptResult == null || reRptResult.trim().length() == 0) {
 					errorMsgs.add("更新檢舉處理之文字不得為空");
-				} else if(!reRptResult.trim().matches(reRptResultReg)) { 
-					errorMsgs.add("更新檢舉處理之只能是中、英文字母、數字和_。");
-	            }
+				} 
 				
 				ArticleReportVO articleReportVO = new ArticleReportVO();
 				articleReportVO.setRptSN(rptSN);
@@ -146,17 +145,48 @@ public class ArticleReportServlet extends HttpServlet{
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			
+			HttpSession session = req.getSession();
+
 			try {
 //				接收參數
-				Integer userID = new Integer(req.getParameter("userID").trim());
-				Integer articleSN = new Integer(req.getParameter("articleSN").trim());
-				String rptReason = req.getParameter("articleTitle");
-				String rptReasonReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{5,50}$";
+				
+				Integer userID =  (Integer)session.getAttribute("userID");
+				Integer articleSN = new Integer(req.getParameter("articleSN"));
+				
+//				新增
+				req.setAttribute("articleSN", articleSN);
+				req.setAttribute("userID", userID);
+								
+//				成功後轉交畫面
+				String url = "/forumArticle/rptForm.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);						
+//				其他錯誤處理
+			} catch (Exception e) {
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/rptForm.jsp");
+				failureView.forward(req, res);
+			}	
+		}
+		
+//		使用者新增檢舉
+		if ("insertrpt".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			HttpSession session = req.getSession();
+
+			try {
+//				接收參數
+				
+				Integer userID =  (Integer)session.getAttribute("userID");
+				Integer articleSN = new Integer(req.getParameter("articleSN"));
+
+				String rptReason = req.getParameter("rptReason");
+				
 				if (rptReason == null || rptReason.trim().length() == 0) {
 					errorMsgs.add("檢舉內容請勿空白");
-				} else if(!rptReason.trim().matches(rptReasonReg)) {
-					errorMsgs.add("檢舉內容只能是中、英文字母、數字和_ , 且長度必需在5到50之間");
-	            }
+				} 
 				
 				ArticleReportVO articleReportVO = new ArticleReportVO();
 				articleReportVO.setUserID(userID);
@@ -165,21 +195,23 @@ public class ArticleReportServlet extends HttpServlet{
 				
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("articleReportVO", articleReportVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/emp/addEmp.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/rptForm.jsp");
 					failureView.forward(req, res);
 					return;
 				}
+				
 //				新增
 				ArticleReportService articleReportSvc = new ArticleReportService();
-				articleReportVO = articleReportSvc.addArticleReport(userID, articleSN, rptReasonReg);
+				articleReportVO = articleReportSvc.addArticleReport(userID, articleSN, rptReason);
+								
 //				成功後轉交畫面
-				String url = "哪裡呢.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+				String url = "/forumArticle/forumArticle.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);						
 //				其他錯誤處理
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("是哪個.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/rptForm.jsp");
 				failureView.forward(req, res);
 			}	
 		}

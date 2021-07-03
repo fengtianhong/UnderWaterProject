@@ -6,7 +6,7 @@ public class ArticleReportVO implements java.io.Serializable{
 	private Integer userID;
 	private Integer articleSN;
 	private String rptReason;
-	private String rptResult;
+	private Boolean rptStatus;
 	private String reRptResult;
 	
 	
@@ -35,16 +35,16 @@ public class ArticleReportVO implements java.io.Serializable{
 	public void setRptReason(String rptReason) {
 		this.rptReason = rptReason;
 	}
-	public String getRptResult() {
-		return rptResult;
-	}
-	public void setRptResult(String rptResult) {
-		this.rptResult = rptResult;
-	}
 	public String getReRptResult() {
 		return reRptResult;
 	}
 	public void setReRptResult(String reRptResult) {
 		this.reRptResult = reRptResult;
+	}
+	public Boolean getRptStatus() {
+		return rptStatus;
+	}
+	public void setRptStatus(Boolean rptStatus) {
+		this.rptStatus = rptStatus;
 	}
 }	

@@ -251,9 +251,7 @@ public class ForumArticleServlet extends HttpServlet {
 				ForumArticleVO forumArticleVO = new ForumArticleVO();
 				forumArticleVO.setArticleTitle(articleTitle);
 				forumArticleVO.setArticleText(articleText);
-
 				forumArticleVO.setUserID(userID);
-				
 				forumArticleVO.setArticleTitleOptSN(articleTitleOptSN);
 
 				if (!errorMsgs.isEmpty()) {
@@ -271,8 +269,6 @@ public class ForumArticleServlet extends HttpServlet {
 				String url = "/forumArticle/forumArticle.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);
-				
-				System.out.println(userID);
 				
 				//	其他錯誤處理
 			} catch  (Exception e) {

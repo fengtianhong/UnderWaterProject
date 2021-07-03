@@ -47,9 +47,6 @@
 				border: 2px white double;
 				margin-bottom: 10px;
 			}
-			.css_td {
-				text-align: center;
-			}
 			
 		</style>
 		
@@ -58,17 +55,37 @@
 	<body>
 		<jsp:include page="../share/navbar.jsp" flush="true" />
 			<div id="showbox">
+				<div id="infobox" style="display:inline;">
+					<span id="title" style="margin-left: 20px; margin-top: 20px; font-size: 24px; font-style: italic; font-weight: bold;">
+							${forumArticleVO.articleTitle}</span>
+						<span>
+							<c:if test="${forumArticleVO.userID != userID }">
+								<form method="post" action="articleReport.do">
+									<input type="submit" value="檢舉">
+									<input type="hidden" name="articleSN" value="<%=articleSN%>">
+									<input type="hidden" name="action" value="insert">
+								</form>
+							</c:if>
+						</span>	
+						<span>
+							<c:if test="${forumArticleVO.userID == userID }">
+								<input type="button" onclick="window.location.href='<%=request.getContextPath()%>/forumArticle/bFAManage.jsp'"
+								value="個人文章管理" style="border-radius: 7px; margin-bottom: 20px; margin-left: 20px;">
+							</c:if>		
+						</span>	
+				</div>
+				
+				
+				<hr>
 				<div id="bar" style="margin-left: 20px; margin-top: 20px; box-shadow: 0 1px; padding-bottom:5px;">
-					<span class="css_td" style=""><fmt:formatDate value="${forumArticleVO.publishedDate}" pattern="yyyy-MM-dd HH:mm:ss "/></span>		
 					<jsp:useBean id="memberSvc" scope="session" class="com.member.model.MemberService" />
 					<span class="css_td">作者：${memberSvc.getone(forumArticleVO.userID).nickName}</span>
+					<span class="css_td" style=""><fmt:formatDate value="${forumArticleVO.publishedDate}" pattern="yyyy-MM-dd HH:mm:ss "/></span>
 					<span class="css_td">文章好評：${forumArticleVO.rateGCount}</span>
 					<span class="css_td">文章負評：${forumArticleVO.rateNGCount}</span>
-					
-					<span class="css_td"></span>
 				</div>
-				<div id="title" style="margin-left: 20px; margin-top: 20px;"><h3>${forumArticleVO.articleTitle}</h3></div>
-				<div id="text" style="margin-left: 20px; margin-top: 20px;"><h5>${forumArticleVO.articleText}</h5></div>
+				
+				<div id="text" style="margin-left: 20px; margin-top: 20px; margin-bottom: 60px;"><h5>${forumArticleVO.articleText}</h5></div>
 				
 				<%@ include file="page1frontend.file" %>
 				<c:forEach var="forumCommentVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
@@ -94,7 +111,6 @@
 										<input type="hidden" name="cmtSN" value="${forumCommentVO.cmtSN}">
 										<input type="hidden" name="articleSN" value="${forumCommentVO.articleSN}">
 										<input type="hidden" name="userID" value="${forumCommentVO.userID}">
-										<textarea name="cmtText" rows="4" cols="50">${forumCommentVO.getCmtText()}</textarea>
 										<input type="submit" value="編輯">
 									</FORM>
 								</c:if>
