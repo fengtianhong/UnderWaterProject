@@ -25,7 +25,7 @@ public class WebManagerSystemLogoutServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		
+		System.out.println("有跑到logout");
 		req.getSession().removeAttribute("account");
 		res.sendRedirect(req.getContextPath()+"/member/webManagerSystemLogin.jsp");
 		

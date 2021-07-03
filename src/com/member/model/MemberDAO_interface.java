@@ -14,4 +14,6 @@ public interface MemberDAO_interface {
 	public Boolean login(MemberVO MemberVO);
 	public Boolean checkAccount(MemberVO MemberVO);
 	public void personInfoUpdate(MemberVO MemberVO);
+	public void pwdUpdate(MemberVO MemberVO);
+	public List<MemberVO> findBySearch(String account, String nickName, String userName);
 }

@@ -25,25 +25,23 @@
 			<c:if test="${not empty errorMsgs}">
 				<font style="color=red">以下欄位請輸入正確資料:</font>
 				<ul>
-					<c:forEach var="message" items="${errorMsgs }">
+					<c:forEach var="message" items="${errorMsgs}">
 						<li style="color=red">${message}</li>
 					</c:forEach>
 				</ul>
 			</c:if>
 		</div>
-		<form  method="post" action="member.do"
-			enctype="multipart/form-data" onsubmit="return checkform(this)">
+		<form  method="post" 
+			enctype="multipart/form-data" onsubmit="checkform(this)">
 			<table style="border-collapse:separate; border-spacing:0px 50px;">
 				<tr>
 					<td>帳號:</td>
-					<td ><input placeholder="必填" type="email" name="account" size="45"
-						value="<%=(memberVO == null) ? "" : memberVO.getAccount()%>" /></td>
-					<td><input type="submit" name="btn_account" value="檢查帳號可用性" size="30" id="btn_account"><p>${used}</td>
+					<td ><input placeholder="必填" type="email" name="account" size="45" value="<%=(memberVO == null) ? "" : memberVO.getAccount()%>" /></td>
+					<td><input type="button" name="btn_account" value="檢查帳號可用性" size="30" id="btn_account" onclick="CheckAccountUse()"><p>${used}</td>
 				</tr>
 				<tr>
 					<td>密碼:</td>
-					<td><input placeholder="必填" type="password" name="pwd"
-						value="<%=(memberVO == null) ? "" : memberVO.getPwd()%>" /></td>
+					<td><input placeholder="必填" type="password" name="pwd" value="<%=(memberVO == null) ? "" : memberVO.getPwd()%>" /></td>
 				</tr>
 				<tr>
 					<td>再次確認密碼:</td>
@@ -66,10 +64,9 @@
 				</tr>
 				<tr>
 					<td>性別:</td>
-					<td><input placeholder="必填" type="radio" name="gender" value="男"
-						${memberVO.equals("男") ? 'selected' : ''}>男 <input
-						type="radio" name="gender" value="男"
-						${memberVO.equals("女") ? 'selected' : ''}>女</td>
+					<td><input type="radio" name="gender" value="男"  placeholder="必填"  ${memberVO.equals("男") ? 'selected' : ''}>男 
+						<input type="radio" name="gender" value="女" ${memberVO.equals("女") ? 'selected' : ''}>女
+					</td>
 				</tr>
 
 				<tr>
@@ -92,21 +89,22 @@
 
 				<tr>
 					<td>淺水證照:</td>
-					<td><select name="certification" size="2">
+					<td>
+						<select name="certification" size="2">
 							<option value="0" ${(memberVO.limitNumder==null)? 'selected':'' }>無
 							
 							<option value="1" ${(memberVO.limitNumder==1)? 'selected':'' }>PADI
 								OW / SSI OW
 							<option value="2" ${(memberVO.limitNumder==2)? 'selected':'' }>PADI
 								AOW / SSI AOW
-					</select></td>
+						</select>
+					</td>
 				</tr>
 
 				<tr>
 					<td>
-						驗證碼：<input type="text" name="checknum" id="checknum" onblur="Manual_VerificationCode(this.value)"/>
-						<img src="<%=request.getContextPath()%>/member/IdentityServlet"
-						id="identity" onload="btn.disabled=false;" /> <input
+						驗證碼：	<input type="text" name="checknum" id="checknum" onblur="Manual_VerificationCode(this.value)"/>
+								<img src="<%=request.getContextPath()%>/member/IdentityServlet" id="identity" onload="btn.disabled=false;" /> <input
 						type="button" value=" 換個圖片 " id="btn" onclick="reloadImage()">
 					</td>
 
@@ -135,7 +133,12 @@
 
 </style>
 <script>
-
+function CheckAccountUse() {
+	
+	if((document.getElementById('btn_account').value).trim() == ''){
+		alert('帳號不得空白');
+	}
+}
 function checkform(form){
 	if(form.account.value == ""){
 		alert("帳號不能空白");

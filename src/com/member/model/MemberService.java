@@ -104,4 +104,16 @@ public class MemberService {
 		dao.personInfoUpdate(vo);
 		return vo;
 	}
+	
+	public MemberVO pwdUpdateMember(Integer userID, String pwd) {
+		MemberVO vo = new MemberVO();
+		vo.setUserID(userID);
+		vo.setPwd(pwd);
+		dao.pwdUpdate(vo);
+		return vo;
+	}
+	
+	public List<MemberVO> findBySearchMember(String account, String nickName, String userName){
+		return dao.findBySearch(account, nickName, userName);
+	}
 }
