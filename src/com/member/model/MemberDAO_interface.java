@@ -13,4 +13,5 @@ public interface MemberDAO_interface {
 	public List<MemberVO> getAll();
 	public Boolean login(MemberVO MemberVO);
 	public Boolean checkAccount(MemberVO MemberVO);
+	public void updatePassword(String account, String pwd);
 }

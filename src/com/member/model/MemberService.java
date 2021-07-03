@@ -83,4 +83,7 @@ public class MemberService {
 		vo.setAccount(account);
 		return dao.checkAccount(vo);
 	}
+	public void ForgetPwd(String account, String pwd) {
+		dao.updatePassword(account, pwd);
+	}
 }

@@ -7,13 +7,13 @@
 <%@ page import="com.diveinfo.model.*"%>
 
 <%
-	List<GroupTourVO> listNew = (List<GroupTourVO>) request.getAttribute("listNew");
-	if(listNew ==null) {
+	List<GroupTourVO> list = (List<GroupTourVO>) request.getAttribute("listNew");
+	if(list ==null) {
 		GroupTourService groupTourSvc = new GroupTourService();
-		List<GroupTourVO> list = groupTourSvc.getFrontendAll();
+		list = groupTourSvc.getFrontendAll();
 		pageContext.setAttribute("list", list);
 	}else{
-		pageContext.setAttribute("list", listNew);
+		pageContext.setAttribute("list", list);
 	}
 %>
 <!DOCTYPE html>
