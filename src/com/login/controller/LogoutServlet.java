@@ -25,7 +25,12 @@ public class LogoutServlet extends HttpServlet {
 //		System.out.println("logout doPost");
 		
 		req.getSession().removeAttribute("userID");
+
 		res.sendRedirect(req.getContextPath());
+
+		req.getSession().removeAttribute("certificationPic"); // for party certificationPic
+	
+
 	}
 
 }

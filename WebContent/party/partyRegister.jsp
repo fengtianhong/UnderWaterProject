@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	Integer userID = (Integer) session.getAttribute("userID");
 	pageContext.setAttribute("userID", userID);
@@ -21,6 +22,9 @@
 
 <main>
 <h4>報名揪團頁面</h4>
+<c:forEach var="msg" items="${errorMsgs}">
+	<section class="msg">${msg}</section>
+</c:forEach>
 
 <section class="party">
 <form action="<%=request.getContextPath()%>/party/party.do" method="post" enctype="multipart/form-data">
@@ -35,50 +39,61 @@
 	<tr>
 		<td>會員: </td>
 		<td>
-			<input type="text" name="partyMemberName" value="${memberSvc.getone(userID).userName}(${memberSvc.getone(userID).nickName})" readonly>
+			${memberSvc.getone(userID).userName}(${memberSvc.getone(userID).nickName})
 			<input type="hidden" name="partyMember" value="${userID}" readonly>
 		</td>
 	</tr>
 	<tr>
 		<td>性別: </td> 
 		<td>
-			<select name="gender">
-				<option value="0" ${memberSvc.getone(userID).gender == '0'? "selected":""}>男
-				<option value="1" ${memberSvc.getone(userID).gender == '1'? "selected":""}>女
-			</select>
+			${memberSvc.getone(userID).gender == '0'? "男":"女"}
+			<input type="hidden" name="gender" value="${memberSvc.getone(userID).gender}">
 		</td>
 	</tr>
 	<tr>
 		<td>E-mail: </td>
-		<td><input type="text" name="email" value="${memberSvc.getone(userID).account}" maxlength="50"></td>
+<%-- 		<td><input type="email" name="email" value="${partyMemberVO.account}" maxlength="50"></td> --%>
+		<td><input type="email" name="email" value="${partyMemberVO == null? memberSvc.getone(userID).account : partyMemberVO.email}" maxlength="50"></td>
+<%-- 		<td><input type="email" name="email" value="${partyMemberVO.email}" maxlength="50"></td> --%>
 	</tr>
 	<tr>
 		<td>手機號碼: </td>
-		<td><input type="text" name="phone" value="${memberSvc.getone(userID).phone}" maxlength="10"></td>
+		<td><input type="tel" pattern="[0][9][0-9]{8}" name="phone" value="${partyMemberVO == null? memberSvc.getone(userID).phone : partyMemberVO.phone}" maxlength="10"></td>
 	</tr>
 	<tr>
-		<td>出生年月日(投保用): </td>
-		<td><input type="date" name="birthDate" value="${memberSvc.getone(userID).birthDate}"></td>
+		<td>出生年月日(選填): </td>
+		<td><input type="date" name="birthDate" value="${partyMemberVO == null? memberSvc.getone(userID).birthDate : partyMemberVO.birthDate}"></td>
 	</tr>
 	<tr>
-		<td>身份證字號(投保用): </td>
-		<td><input type="text" name="personID" value="${memberSvc.getone(userID).personID}" maxlength="10"></td>
+		<td>身份證字號(選填): </td>
+		<td><input type="text" name="personID" value="${partyMemberVO == null? memberSvc.getone(userID).personID : partyMemberVO.personID}" maxlength="10"></td>
 	</tr>
 	<tr>
 		<td>最高證照: </td>
 		<td>
-			<select size="" name="certification">
-				<option value="0" ${memberSvc.getone(userID).certification == '0'? "selected":""} ${memberSvc.getone(userID).certification == null? "selected":""}>無相關證照
-				<option value="1" ${memberSvc.getone(userID).certification == '1'? "selected":""}>PADI OW / SSI OW
-				<option value="2" ${memberSvc.getone(userID).certification == '2'? "selected":""}>PADI AOW / SSI AOW
-			</select>
+			<c:if test="${partyMemberVO == null}">
+				<select size="" name="certification">
+					<option value="0" ${memberSvc.getone(userID).certification == '0'? "selected":""}>無相關證照
+					<option value="1" ${memberSvc.getone(userID).certification == '1'? "selected":""}>PADI OW / SSI OW
+					<option value="2" ${memberSvc.getone(userID).certification == '2'? "selected":""}>PADI AOW / SSI AOW
+				</select>
+			</c:if>
+			<c:if test="${partyMemberVO != null}">
+				<select size="" name="certification">
+					<option value="0" ${partyMemberVO.certification == '0'? "selected":""}>無相關證照
+					<option value="1" ${partyMemberVO.certification == '1'? "selected":""}>PADI OW / SSI OW
+					<option value="2" ${partyMemberVO.certification == '2'? "selected":""}>PADI AOW / SSI AOW
+				</select>
+			</c:if>
 		</td>
 	</tr>
 	<tr>
-		<td>請上傳證照翻拍檔案: </td>
+		<td>請上傳證照翻拍檔案<br>(最大2MB): </td>
 		<td>
 			<input type="file" id="p_file" name="certificationPic">
 			<div id="displayArea">預覽圖</div>
+			<c:if test="${partyMemberVO != null}">
+			</c:if>
 		</td>
 	</tr>
 	<tr>
@@ -88,10 +103,9 @@
 	</table>
 	
 	<div class="page">
-		<input type="button" onclick="history.back()" class="btn btn-outline-info btn-sm" value="回上頁">
-		<button type="submit" name="action" value="submitRegistration" class="btn btn-outline-info btn-sm">提交報名表</button>
+		<input type="button" onclick="history.back()" class="btn btn-outline-info btn-sm" id="goBack" value="回上頁">
+		<button type="submit" name="action" value="submitRegistration" id="submitRegistration" class="btn btn-outline-info btn-sm">提交報名表</button>
 	</div>
-<!-- 看goBack可否直接動態 -->
 
 </form>
 </section>
@@ -100,6 +114,25 @@
 <jsp:include page="../share/footer.jsp" flush="true" />
 
 <script>
+
+	// 確認接受平台規範
+	$(function() {
+		let msg = ``;
+		if (!confirm("提醒您, 本網站僅提供會員一個自由發起揪團與參加揪團的交流平台。   請會員務必小心詐騙，並謹慎提供個人資料。接受本平台條款才可報名揪團。")) {
+			window.history.back();
+		}
+		
+		// 若session已有圖檔 取出來放
+		if (sessionStorage.getItem("dataIn") != null) {
+			var dataOut = JSON.parse(sessionStorage.getItem("dataIn"));
+			document.querySelector('#displayArea').innerText = "";
+        	let html = `<img id="display" src="" style="max-width:200px">`;
+    	    document.querySelector('#displayArea').insertAdjacentHTML('beforeend', html);
+			$('#display').attr('src', dataOut.pic_base64);
+		};
+	});
+	
+	// 證照圖片上傳處理
 	document.querySelector('#p_file').addEventListener('change', function() {
 		let file = this.files[0];
 		let reader = new FileReader();
@@ -109,8 +142,22 @@
         	let html = `<img id="display" src="" style="max-width:200px">`;
     	    document.querySelector('#displayArea').insertAdjacentHTML('beforeend', html);
 			document.querySelector('#display').setAttribute('src', reader.result);
-		})
+			
+			var pic_base64 = reader.result;
+			var dataIn;
+			dataIn = {
+					pic_base64: pic_base64
+			};
+		});
 	});
+	// 提交報名後 站存證照圖檔
+	$('#submitRegistration').on('click', function() {
+			sessionStorage.setItem("dataIn", JSON.stringify(dataIn));
+	})
+	
+	$('#goBack').on('click', function() {
+		sessionStorage.removeItem("dataIn");
+	})
 		
 </script>
 

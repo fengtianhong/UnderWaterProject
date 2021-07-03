@@ -5,9 +5,15 @@
 <%@ page import="com.news.model.*"%>
 <%@ page import="java.util.*"%>
 <%
-	NewsService newsSvc = new NewsService();
-	List<NewsVO> list = newsSvc.getAll();
-	pageContext.setAttribute("list", list);
+
+	List<NewsVO> list= (List<NewsVO>) request.getAttribute("listNew");
+	if (list == null) {
+		NewsService newsSvc = new NewsService();
+		list = newsSvc.getAll();
+		pageContext.setAttribute("list", list);
+	} else {
+		pageContext.setAttribute("list", list);
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -103,7 +109,7 @@ body {
 
 .forincludeTop {
 	margin: 0 auto;
-	width: 200px;
+	width: 210px;
 	margin-bottom: 10px;
 }
 
@@ -152,8 +158,7 @@ table {
 				<option value="divepoint" ${(newsTypeS=='divepoint')?"selected":""}>潛點</option>
 				<option value="product" ${(newsTypeS=='product')?"selected":""}>商品</option>
 				<option value="party" ${(newsTypeS=='party')?"selected":""}>揪團</option>
-			</select>
-			<input type="hidden" name="action" value="showType">
+			</select> <input type="hidden" name="action" value="showType">
 		</FORM>
 		<table>
 			<tr>
@@ -162,7 +167,7 @@ table {
 			<div class="forincludeTop">
 				<%@ include file="page1frontend.file"%>
 			</div>
-			<c:forEach var="newsVO" items="${(listNew==null)?list:listNew}"
+			<c:forEach var="newsVO" items="${list}"
 				begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 
 				<tr

@@ -1,12 +1,15 @@
 package com.grouptour.model;
 
 import java.sql.*;
+import java.sql.Date;
 import java.util.*;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import com.orderforgroup.model.OrderForGroupVO;
 
 import util.Util;
 
@@ -29,6 +32,9 @@ public class GroupTourDAO implements GroupTourDAO_interface{
 	private static final String GET_FRONTEND_All_LIST_STMT = "SELECT * FROM GroupTour WHERE status=0 ORDER BY startTime";
 	private static final String UPDATE_ATTEND_NUMBER_STMT = "UPDATE GroupTour SET attendNumber=attendNumber+1 WHERE groupTourSN=?";
 	private static final String UPDATE_STATUS_STMT = "UPDATE GroupTour SET status=? WHERE groupTourSN=?";
+	// 篩選用
+	private static final String KEYWORD_STMT = "SELECT * FROM GroupTour where tourName like ? or content like ?";
+	private static final String LOCATION_STMT = "select groupTourSN from GroupTour left join Diveinfo on GroupTour.pointSN = Diveinfo.pointSN where local = ?";
 	
 	@Override
 	public void insert(GroupTourVO groupTourVO) {
@@ -372,6 +378,98 @@ public class GroupTourDAO implements GroupTourDAO_interface{
 		}	
 		
 	}
+
+	@Override
+	public List<Integer> keywordFilter(String keyword) {
+		List<Integer> list = new ArrayList<Integer>();
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			con = ds.getConnection();
+			ps = con.prepareStatement(KEYWORD_STMT);
+			ps.setString(1, "%"+ keyword + "%");
+			ps.setString(2, "%"+ keyword + "%");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				list.add(rs.getInt("groupTourSN"));
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if(rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if(ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if(con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<Integer> locationFilter(String location) {
+		List<Integer> list = new ArrayList<Integer>();
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			con = ds.getConnection();
+			ps = con.prepareStatement(LOCATION_STMT);
+			ps.setString(1, location);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				list.add(rs.getInt("groupTourSN"));
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if(rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if(ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+			if(con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
 }
 
 	

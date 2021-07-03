@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -38,183 +39,302 @@ public class PartyServlet extends HttpServlet {
 		PartyService partySvc = new PartyService();
 		PartyMemberService partyMemberSvc = new PartyMemberService();
 		PrintWriter out = res.getWriter();
+		HttpSession session = req.getSession();
 		
 // ========================= 會員使用畫面  =====================================
 		
-		//會員 從navbar 連到揪團總表
+		// 從navbar 連到揪團總表(會看到全部)
 		if ("party".equals(action)) {
-			HttpSession session = req.getSession();
 			session.setAttribute("listBySearch", null);
 			
 			RequestDispatcher successView = req.getRequestDispatcher("/party/partyList.jsp");
 			successView.forward(req, res);
 		}
 		
-		//會員 查詢 揪團總表(有下條件)
+		// 下條件查詢 揪團總表
 		if ("getAllBy".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-//			System.out.println("test");
-			String keyword = req.getParameter("keyword");
-			Integer pointSN = Integer.parseInt(req.getParameter("pointSN"));
-			Integer partyMinSize = Integer.parseInt(req.getParameter("partyMinSize"));
-			List<PartyVO> listBySearch = partySvc.findBySearch(keyword, pointSN, partyMinSize);
+			List<PartyVO> listBySearch = null;
 
-			if (listBySearch.size() == 0) {
-				errorMsgs.add("查無此條件資料，請重新查詢！");
+			try {
+				//空白或預設就是搜尋全部
+				String keyword = req.getParameter("keyword").trim();  // 搜尋標題or揪團編號
+				Integer pointSN = Integer.parseInt(req.getParameter("pointSN"));  // 用選的
+				Integer partyMinSize = Integer.parseInt(req.getParameter("partyMinSize"));  // 用選的
+				listBySearch = partySvc.findBySearch(keyword, pointSN, partyMinSize);
+				
+				if (listBySearch.size() == 0) {   // 無資料
+					errorMsgs.add("查無此條件資料，請重新查詢！");
+					session.removeAttribute("listBySearch");
+				} else {
+					session.setAttribute("listBySearch", listBySearch);
+				}
+				
 				RequestDispatcher successView = req.getRequestDispatcher("/party/partyList.jsp");
-				successView.forward(req, res);				
-			} else {
-				HttpSession session = req.getSession();
-				session.setAttribute("listBySearch", listBySearch);
-				RequestDispatcher successView = req.getRequestDispatcher("/party/partyList.jsp");
-				successView.forward(req, res);
+				successView.forward(req, res);	
+				
+			} catch(Exception e) {
+				errorMsgs.add("按條件搜尋失敗: " + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/party/partyList.jsp");
+				failureView.forward(req, res);	
 			}
 		}
 		
-		//會員 查詢 揪團細節
+		// 查詢 揪團細節
 		if ("partyDetail".equals(action)) {
-			Integer partySN = Integer.parseInt(req.getParameter("partySN"));
-			PartyVO partyVO = partySvc.findByPartySN(partySN);
-			req.setAttribute("partyVO", partyVO);
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
 			
-			RequestDispatcher successView = req.getRequestDispatcher("/party/partyDetail.jsp");
-			successView.forward(req, res);
+			try {
+				Integer partySN = Integer.parseInt(req.getParameter("partySN"));  // hidden input
+				PartyVO partyVO = partySvc.findByPartySN(partySN);
+				req.setAttribute("partyVO", partyVO);
+				
+				RequestDispatcher successView = req.getRequestDispatcher("/party/partyDetail.jsp");
+				successView.forward(req, res);
+			} catch (Exception e) {
+				errorMsgs.add("查詢揪團詳細資料失敗: " + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/party/partyList.jsp");
+				failureView.forward(req, res);	
+			}
 		}
 		
-		//會員 從揪團細節 回總表
-		if ("goBackToList".equals(action)) {
-			RequestDispatcher successView = req.getRequestDispatcher("/party/partyList.jsp");
-			successView.forward(req, res);
-		}
+		// 從查詢揪團細節 回總表 => 改用js
+//		if ("goBackToList".equals(action)) {
+//			RequestDispatcher successView = req.getRequestDispatcher("/party/partyList.jsp");
+//			successView.forward(req, res);
+//		}
 		
-		//會員 從揪團細節 去報名
+		// 報名去 (前往報名)
 		if ("goRegister".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			
-			Integer partySN = Integer.parseInt(req.getParameter("partySN"));
-			PartyVO partyVO = partySvc.findByPartySN(partySN);
-			req.setAttribute("partyVO", partyVO);
-			
-			HttpSession session = req.getSession();
-			Integer partyMember = (Integer) session.getAttribute("userID");
-			
-			if (partyMember != null) { //若已登入過
-				// 判斷是否已報名過
-				List<PartyMemberVO> listAll = partyMemberSvc.findByPartyMember(partyMember);
-				for (PartyMemberVO vo : listAll) {
-					if (vo.getPartySN().equals(partySN)) {
-						errorMsgs.add("您已報名過囉");	//已報名過
-						RequestDispatcher faildView = req.getRequestDispatcher("/party/partyDetail.jsp");
-						faildView.forward(req, res);
+			try {
+				Integer partySN = Integer.parseInt(req.getParameter("partySN"));  // hidden input
+				PartyVO partyVO = partySvc.findByPartySN(partySN);
+				req.setAttribute("partyVO", partyVO);
+				
+				Integer partyMember = (Integer) session.getAttribute("userID");
+				if (partyMember != null) { //若已登入過
+					// 判斷是否已報名過
+					List<PartyMemberVO> listAll = partyMemberSvc.findByPartyMember(partyMember);
+					for (PartyMemberVO vo : listAll) {
+						if (vo.getPartySN().equals(partySN)) {
+							//已報名過
+							errorMsgs.add("您已報名過囉");	
+							RequestDispatcher failureView = req.getRequestDispatcher("/party/partyDetail.jsp");
+							failureView.forward(req, res);
+							return;
+						}
+					}
+					
+					//判斷是否為主揪
+					Integer partyHost = partySvc.findByPartySN(partySN).getPartyHost();
+					if (partyHost == partyMember) {
+						errorMsgs.add("您是主揪，不需要報名喔!");	
+						RequestDispatcher failureView = req.getRequestDispatcher("/party/partyDetail.jsp");
+						failureView.forward(req, res);
 						return;
 					}
+					
+					// 沒有報名過
+					RequestDispatcher successView = req.getRequestDispatcher("/party/partyRegister.jsp");
+					successView.forward(req, res);
+				} else {
+					// 尚未登入
+					RequestDispatcher successView = req.getRequestDispatcher("/party/partyRegister.jsp");
+					successView.forward(req, res);
 				}
-				// 沒有報名過
-				RequestDispatcher successView = req.getRequestDispatcher("/party/partyRegister.jsp");
-				successView.forward(req, res);
-			} else {
-				RequestDispatcher successView = req.getRequestDispatcher("/party/partyRegister.jsp");
-				successView.forward(req, res);
+			} catch (Exception e) {
+				errorMsgs.add("前往報名頁面失敗: " + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/party/partyList.jsp");
+				failureView.forward(req, res);	
 			}
 		}
 		
-//未完成	//會員 從報名 回上頁揪團細節
-		if ("goBackToDetail".equals(action)) {
-//			Integer partySN = Integer.parseInt(req.getParameter("partySN"));
-//			PartyVO partyVO = partySvc.findByPartySN(partySN);
-			String partySN = req.getParameter("partySN");
-			req.setAttribute("partySN", partySN);
-			
-			RequestDispatcher successView = req.getRequestDispatcher("/party/partyDetail.jsp");
-			successView.forward(req, res);
-		}
+		// 從填寫報名資訊 回上頁  揪團細節 => 改用js
+//		if ("goBackToDetail".equals(action)) {
+//		}
 		
 		
 //未完成	//會員 從報名頁面 提交報名表
 		if ("submitRegistration".equals(action)) {
-			Integer partySN = Integer.parseInt(req.getParameter("partySN"));
-			Integer partyMember = Integer.parseInt(req.getParameter("partyMember"));
-			String gender = req.getParameter("gender");
-			String email = req.getParameter("email");
-			String phone = req.getParameter("phone");
-			Date birthDate = Date.valueOf(req.getParameter("birthDate"));
-			String personID = req.getParameter("personID");
-			String certification = req.getParameter("certification");
-			//證照照片
-			Part part = req.getPart("certificationPic");
-			InputStream in = part.getInputStream();
-			byte[] certificationPic = new byte[in.available()];
-			in.read(certificationPic);
-			in.close();
-			String comment = req.getParameter("comment");
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
 			
-			PartyMemberVO pm1 = new PartyMemberVO();
-			pm1.setPartySN(partySN);
-			pm1.setPartyMember(partyMember);
-			pm1.setGender(gender);
-			pm1.setEmail(email);
-			pm1.setPhone(phone);
-			pm1.setBirthDate(birthDate);
-			pm1.setPersonID(personID);
-			pm1.setCertification(certification);
-			pm1.setCertificationPic(certificationPic);
-			pm1.setComment(comment);
-			
-//			try {
+			try {
+				Integer partySN = Integer.parseInt(req.getParameter("partySN").trim());  // hidden input
+				Integer partyMember = Integer.parseInt(req.getParameter("partyMember"));  // hidden input
+				String gender = req.getParameter("gender");  // hidden input
+				
+				String email = req.getParameter("email");
+				if (email == null || email.trim().length() == 0 || !email.contains("@") || !email.contains(".")) {
+					errorMsgs.add("輸入email格式不正確");
+				}
+				
+				String phone = req.getParameter("phone").trim();  // HTML input驗證 (reg)
+
+				Date birthDate = null;
+				try {
+					birthDate = Date.valueOf(req.getParameter("birthDate"));
+				} catch (IllegalArgumentException ie) {
+					birthDate = null;	// 允許不輸入
+				}
+				
+				String personID = req.getParameter("personID").trim();  // 可以不輸入
+				String personIDReg = "^[A-Z]{1}[12]{1}[0-9]{8}$";
+				if (personID.length() != 0) { // 如果填寫了 就要符合格式
+					if (!personID.matches(personIDReg)) {
+						errorMsgs.add("輸入身份證字號格式不正確");
+					}
+				}
+				
+				String certification = req.getParameter("certification");
+				
+				//證照照片
+				Part part = req.getPart("certificationPic");
+				String fileType = part.getContentType();
+				InputStream in = null;
+				byte[] certificationPic = null;
+				
+				if (fileType == null || !fileType.startsWith("image")) {
+					if (session.getAttribute("certificationPic") == null) {
+						errorMsgs.add("上傳證照圖片檔案格式有誤");  // 既無上傳過 這次也沒有
+					} else {
+						certificationPic = (byte[]) session.getAttribute("certificationPic");
+					}
+				} else {
+					in = part.getInputStream();
+					certificationPic = new byte[in.available()];
+					in.read(certificationPic);
+					in.close();
+					session.setAttribute("certificationPic", certificationPic);
+				}
+				String comment = req.getParameter("comment");
+				
+				PartyMemberVO pm1 = new PartyMemberVO();
+				pm1.setPartySN(partySN);
+				pm1.setPartyMember(partyMember);
+				pm1.setGender(gender);
+				pm1.setEmail(email);
+				pm1.setPhone(phone);
+				pm1.setBirthDate(birthDate);
+				pm1.setPersonID(personID);
+				pm1.setCertification(certification);
+				pm1.setCertificationPic(certificationPic);
+				pm1.setComment(comment);
+				
+				req.setAttribute("partyMemberVO", pm1);
+				
+				if (!errorMsgs.isEmpty()) {
+					// 如果報名有輸入錯誤, 須回傳原本partyVO
+					PartyVO partyVO = partySvc.findByPartySN(partySN);
+					req.setAttribute("partyVO", partyVO); 
+					RequestDispatcher failureView = req.getRequestDispatcher("/party/partyRegister.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+
 				partyMemberSvc.insert(pm1);
-				System.out.println("新增成功");
-//待確認持續登入狀態	
+				
+				session.removeAttribute("certificationPic");
 				RequestDispatcher successView = req.getRequestDispatcher("/party/partyIJoin.jsp");
 				successView.forward(req, res);	
-//			} catch (SQLException e) {
-//*****待確認怎麼抓這個例外
-//				java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '400001-1' for key 'partymember.UK_PartyMember_partySN_partyMember'
-//				System.out.println("重複報名");
-//			out.println("<h2>***待做*** 將跳轉至會員後台頁面(查詢已報名)</h2>");
-//out.println("<h2>***待做*** 重複報名抓不住例外</h2>");
-//			}
-			
-			
+				
+			} catch (Exception e) {
+				errorMsgs.add("報名失敗: " + e.getMessage());
+				System.out.println("partyservlet#248= " + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/party/partyList.jsp");
+				failureView.forward(req, res);
+			}
 		}
 		
+		
+		// 發起揪團
 		if ("readyToHost".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
 			try {
-			Integer partyHost = Integer.parseInt(req.getParameter("partyHost"));
-			String partyTitle = req.getParameter("partyTitle");
-			Date regDate = Date.valueOf(req.getParameter("regDate"));
-			Date closeDate = Date.valueOf(req.getParameter("closeDate"));
-			Date startDate = Date.valueOf(req.getParameter("startDate"));
-			Date endDate = Date.valueOf(req.getParameter("endDate"));
-			Integer partyLocation = Integer.parseInt(req.getParameter("partyLocation"));
-			Integer partyMinSize = Integer.parseInt(req.getParameter("partyMinSize"));
-			String partyDetail = req.getParameter("partyDetail");
-			String status = "0";
-			
-			PartyVO pv1 = new PartyVO();
-			pv1.setPartyHost(partyHost);
-			pv1.setPartyTitle(partyTitle);
-			pv1.setRegDate(regDate);
-			pv1.setCloseDate(closeDate);
-			pv1.setStartDate(startDate);
-			pv1.setEndDate(endDate);
-			pv1.setPartyLocation(partyLocation);
-			pv1.setPartyMinSize(partyMinSize);
-			pv1.setPartyDetail(partyDetail);
-			pv1.setStatus(status);
-			
-			partySvc.insert(pv1);
-			
-			// 跳轉到無條件的總列表(新增的才會在最上面)
-			List<PartyVO> listBySearch = null;
-			req.setAttribute("listBySearch", listBySearch);
-			
-			RequestDispatcher successView = req.getRequestDispatcher("/party/partyList.jsp");
-			successView.forward(req, res);
+				Integer partyHost = Integer.parseInt(req.getParameter("partyHost"));  // hidden input
+				String partyTitle = req.getParameter("partyTitle");
+				String partyTitleReg = "^[(\\u4e00-\\u9fa5)(a-zA-Z0-9_)]{2,}$";
+				
+				if (partyTitle == null || partyTitle.trim().length() == 0) {
+					errorMsgs.add("標題不可空白!");
+				} else if (!partyTitle.matches(partyTitleReg)) {
+					errorMsgs.add("標題至少要有兩個中/英文字");
+				}
+				
+				Date startDate = null;
+				try {
+					startDate = Date.valueOf(req.getParameter("startDate"));
+				} catch (IllegalArgumentException e) {
+					errorMsgs.add("請輸入活動開始日期");
+				}
+				
+				Date endDate = null;
+				try {
+					endDate = Date.valueOf(req.getParameter("endDate"));
+				} catch (IllegalArgumentException e) {
+					errorMsgs.add("請輸入活動結束日期");
+				}
+				
+				Date regDate = null;
+				try {
+					regDate = Date.valueOf(req.getParameter("regDate"));
+				} catch (IllegalArgumentException e) {
+					errorMsgs.add("請輸入開放報名日期");
+				}
+				
+				Date closeDate = null;
+				try {
+					closeDate = Date.valueOf(req.getParameter("closeDate"));
+				} catch (IllegalArgumentException e) {
+					errorMsgs.add("請輸入截止報名日期");
+				}
+				
+				Integer partyLocation = Integer.parseInt(req.getParameter("partyLocation"));  // hidden input
+				Integer partyMinSize = Integer.parseInt(req.getParameter("partyMinSize"));  // hidden input
+				String partyDetail = req.getParameter("partyDetail");  // 可填可不填
+				String status = "0";
+				
+				PartyVO pv1 = new PartyVO();
+				pv1.setPartyHost(partyHost);
+				pv1.setPartyTitle(partyTitle);
+				pv1.setRegDate(regDate);
+				pv1.setCloseDate(closeDate);
+				pv1.setStartDate(startDate);
+				pv1.setEndDate(endDate);
+				pv1.setPartyLocation(partyLocation);
+				pv1.setPartyMinSize(partyMinSize);
+				pv1.setPartyDetail(partyDetail);
+				pv1.setStatus(status);
+				
+				if (!errorMsgs.isEmpty()) {
+					// 如果報名有輸入錯誤, 須回傳當下已填寫的partyVO
+					req.setAttribute("partyVO", pv1); 
+					RequestDispatcher failureView = req.getRequestDispatcher("/party/partyRegister.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+				
+				partySvc.insert(pv1);
+				
+				// 跳轉到無條件的總列表(新增的才會在最上面)
+				List<PartyVO> listBySearch = null;
+				req.setAttribute("listBySearch", listBySearch);
+				
+				RequestDispatcher successView = req.getRequestDispatcher("/party/partyList.jsp");
+				successView.forward(req, res);
 			
 			} catch (Exception e) {
-				e.printStackTrace();
+				errorMsgs.add("發起揪團失敗: " + e.getMessage());
+				System.out.println("partyservlet#335= " + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/party/HostParty.jsp");
+				failureView.forward(req, res);
 			}
 		}
 		
@@ -230,7 +350,6 @@ public class PartyServlet extends HttpServlet {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			
-			HttpSession session = req.getSession();
 			
 			if ("".equals(req.getParameter("partySN").trim())) {
 				session.removeAttribute("findByPartySNLike");

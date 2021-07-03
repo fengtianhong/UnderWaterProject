@@ -37,8 +37,6 @@
 		<url-pattern>/orderforgroup/GroupOrder.jsp</url-pattern>
 		<url-pattern>/orderforgroup/Success.jsp</url-pattern>
 		<url-pattern>/customerreply/CSchat.jsp</url-pattern>
-		<url-pattern>/chat/*</url-pattern>
-		<url-pattern>/forumArticle/*</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
@@ -47,22 +45,20 @@
 	</filter-mapping>
 	
 	
-	<filter>
-		<filter-name>WebManagerSystemLoginFilter</filter-name>
-		<filter-class>com.manager.controller.WebManagerSystemLoginFilter</filter-class>
-	</filter>
+<!-- 	<filter> -->
+<!-- 		<filter-name>WebManagerSystemLoginFilter</filter-name> -->
+<!-- 		<filter-class>com.manager.controller.WebManagerSystemLoginFilter</filter-class> -->
+<!-- 	</filter> -->
 
-	<filter-mapping>
-		<filter-name>WebManagerSystemLoginFilter</filter-name>
-		<url-pattern>/news/*</url-pattern>
-		<url-pattern>/party/partyManage.jsp</url-pattern>
-		<url-pattern>/party/partyManageDetail.jsp</url-pattern>
-		<dispatcher>REQUEST</dispatcher>
-		<dispatcher>FORWARD</dispatcher>
-		<dispatcher>INCLUDE</dispatcher>
-		<dispatcher>ERROR</dispatcher>
-		<dispatcher>ASYNC</dispatcher>
-	</filter-mapping>
+<!-- 	<filter-mapping> -->
+<!-- 		<filter-name>WebManagerSystemLoginFilter</filter-name> -->
+<!-- 		<url-pattern>/news/*</url-pattern> -->
+<!-- 		<dispatcher>REQUEST</dispatcher> -->
+<!-- 		<dispatcher>FORWARD</dispatcher> -->
+<!-- 		<dispatcher>INCLUDE</dispatcher> -->
+<!-- 		<dispatcher>ERROR</dispatcher> -->
+<!-- 		<dispatcher>ASYNC</dispatcher> -->
+<!-- 	</filter-mapping> -->
 	
 	<servlet>
 		<servlet-name>DiveInfoServlet</servlet-name>
@@ -216,7 +212,7 @@
 
 	<servlet>
 		<servlet-name>ProductServlet</servlet-name>
-		<servlet-class>com.product.controller.ProductServlet</servlet-class>
+		<servlet-class>com.product.controller.ProductServletBk</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -232,16 +228,6 @@
 	<servlet-mapping>
 		<servlet-name>OrderForProductServlet</servlet-name>
 		<url-pattern>/orderforproduct/orderforproduct.do</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>OrderListServlet</servlet-name>
-		<servlet-class>com.orderlist.controller.OrderListServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>OrderListServlet</servlet-name>
-		<url-pattern>/orderlist/orderlist.do</url-pattern>
 	</servlet-mapping>
 
 	<servlet>

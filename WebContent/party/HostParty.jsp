@@ -6,7 +6,6 @@
 	Integer userID = (Integer) session.getAttribute("userID");
 	pageContext.setAttribute("userID", userID);
 %>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,20 +24,25 @@
 
 <main>
 <h4>發起揪團</h4>
+<c:forEach var="msg" items="${errorMsgs}">
+	<section class="msg">${msg}</section>
+</c:forEach>
+<c:if test="${partyVO}">
+	<section class="msg">${partyVO.Title}</section>
+</c:if>
 
 <section class="party">
 <form method="post" action="<%=request.getContextPath()%>/party/party.do">
 	<table>
 		<tr>
 			<td>主揪人: </td>
-			<td>
-				<input type="text" name="partyHostName" value="${memberSvc.getone(userID).userName}(${memberSvc.getone(userID).nickName})" readonly>
+			<td>${memberSvc.getone(userID).userName}(${memberSvc.getone(userID).nickName})
 				<input type="hidden" name="partyHost" value="${userID}">
 			</td>
 		</tr>
 		<tr>
 			<td class="partyTitle">揪團主旨: </td>
-			<td><input type="text" name="partyTitle" maxlength="20"></td>
+			<td><input type="text" name="partyTitle" maxlength="30"></td>
 		</tr>
 		<tr>
 			<td class="date">活動日期: </td>
@@ -47,11 +51,11 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="regDate">報名開放日期: </td>
+			<td class="regDate">開放報名日期: </td>
 			<td><input type="date" name="regDate"></td>
 		</tr>
 		<tr>
-			<td class="closeDate">報名截止日期: </td>
+			<td class="closeDate">截止報名日期: </td>
 			<td><input type="date" name="closeDate"></td>
 		</tr>
 		<tr>
@@ -88,6 +92,13 @@
 
 <script>
 	$(function(){
+		
+		// 確認接受平台規範
+		if (!confirm("提醒您, 本網站僅提供會員一個自由發起揪團與參加揪團的交流平台。   請會員務必小心詐騙，並謹慎提供個人資料。接受本平台條款才可發起揪團。")) {
+			window.history.back();
+		});
+		
+		
 		// 設定活動 開放報名時間: 當下
 		$('input[name="regDate"]').attr('min', new Date().toISOString().split("T")[0]);
 		

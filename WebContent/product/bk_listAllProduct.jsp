@@ -11,9 +11,44 @@
 
 <html>
 <head>
-<meta charset="UTF-8">
-<title>顯示所有商品</title>
+ 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>所有商品</title>
 
+<link rel="stylesheet" href="../share/index.css">
+<link rel="stylesheet" href="../vendors/bootstrap/css/bootstrap.min.css">
+
+<style>
+
+.front{
+margin: 0 auto;
+	width: 800px;
+	/* 		display: flex; */
+	background-color: snow;
+	border-radius: 10px;
+	box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.4);
+	padding: 30px;
+	opacity: .9;
+}
+
+	.show_pic {
+	height: 150px;
+	width: 200px;
+	overflow: hidden;
+}
+
+.show_pic>img {
+	cursor: pointer;
+	transition-duration: 0.5s;
+	height: 100%;
+	width: 100%;
+	transition-duration: 0.5s;
+}
+
+.show_pic>img:hover {
+	transform: scale(1.2);
+}
+</style>
 </head>
 
 <body>
@@ -21,7 +56,6 @@
 	<table id="table-1">
 		<tr>
 			<td>
-				<h3>所有商品資料</h3>
 				<h4>
 					<a href="bk_updateProduct_select.jsp">回修改~過濾方式</a>
 				</h4>
@@ -95,6 +129,7 @@
 	</table>
 
 	<%-- <%@ include file="page2.file" %> --%>
-
+	
 </body>
+
 </html>
