@@ -19,7 +19,6 @@
 	ForumArticleService faSvc = new ForumArticleService();
 	ForumArticleVO forumArticleVO = faSvc.getOneForumArticle(articleSN);
 	pageContext.setAttribute("forumArticleVO", forumArticleVO);
-
 %>
 
 
@@ -42,10 +41,16 @@
 		<style type="text/css">
 			#showbox {
 				background-color: paleturquoise;
-				width: 75%;
+				width: 1000px;
 				margin: 0 auto;
 				border: 2px white double;
 				margin-bottom: 10px;
+			}
+			
+			.red {
+				position: relative;
+			    top: 24px;
+			    left: 780px;
 			}
 			
 		</style>
@@ -55,10 +60,10 @@
 	<body>
 		<jsp:include page="../share/navbar.jsp" flush="true" />
 			<div id="showbox">
-				<div id="infobox" style="display:inline;">
+				<div id="infobox" style="display:flex; align-items: ;" >
 					<span id="title" style="margin-left: 20px; margin-top: 20px; font-size: 24px; font-style: italic; font-weight: bold;">
 							${forumArticleVO.articleTitle}</span>
-						<span>
+						<span class="red">
 							<c:if test="${forumArticleVO.userID != userID }">
 								<form method="post" action="articleReport.do">
 									<input type="submit" value="檢舉">
@@ -67,12 +72,25 @@
 								</form>
 							</c:if>
 						</span>	
-						<span>
+ 						<span class="red">
 							<c:if test="${forumArticleVO.userID == userID }">
-								<input type="button" onclick="window.location.href='<%=request.getContextPath()%>/forumArticle/bFAManage.jsp'"
-								value="個人文章管理" style="border-radius: 7px; margin-bottom: 20px; margin-left: 20px;">
-							</c:if>		
+								<form method="post" action="forumArticle.do">
+									<input type="submit" value="編輯">
+									<input type="hidden" name="articleSN" value="<%=articleSN%>">
+									<input type="hidden" name="action" value="getOne_For_Update">
+								</form>
+							</c:if>
 						</span>	
+						<span class="red">
+							<c:if test="${forumArticleVO.userID == userID }">
+								<form method="post" action="forumArticle.do">
+									<input type="submit" value="刪除">
+									<input type="hidden" name="articleSN" value="<%=articleSN%>">
+									<input type="hidden" name="action" value="deleteArticle">
+								</form>
+							</c:if>
+						</span>
+
 				</div>
 				
 				

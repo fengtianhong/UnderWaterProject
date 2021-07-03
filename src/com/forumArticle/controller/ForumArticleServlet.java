@@ -27,7 +27,6 @@ public class ForumArticleServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		
 		//	****************************** 1.查詢單一個 (getOne_For_Display)******************************
-		//	可用在查詢檢舉文章的時候
 		//	forumArticle.jsp的請求
 		if ("getOne_For_Display".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
@@ -86,7 +85,7 @@ public class ForumArticleServlet extends HttpServlet {
 			}			
 		}
 		
-		//	****************************** 2-1.查詢單一個後下架 (getOne_For_Update)******************************
+		//	****************************** 2-1.查詢單一個後下架 ******************************
 		//	
 		if ("deleteArticle".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
@@ -110,7 +109,7 @@ public class ForumArticleServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
-		//	****************************** 下架文章 ******************************
+		//	****************************** 個人頁面下架文章 ******************************
 		//	
 		//	下架文章請求
 		if ("hiddenAtricle".equals(action)) {
@@ -126,7 +125,7 @@ public class ForumArticleServlet extends HttpServlet {
 				forumArticleVO.setArticleStatus(articleStatus);
 
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("forumArticleVO", forumArticleVO); // 含有輸入格式錯誤的empVO物件,也存入req
+					req.setAttribute("forumArticleVO", forumArticleVO);
 					RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/bFAManage.jsp");
 					failureView.forward(req, res);
 					return; //程式中斷
