@@ -174,8 +174,9 @@ public class OrderForGroupServlet extends HttpServlet {
 			req.setAttribute("errMsg", errMsg);
 			
 			try {
-				Integer userID = new Integer(req.getParameter("userID").trim());		// FK有需要先驗證是否存在?
-				Integer groupTourSN = new Integer(req.getParameter("groupTourSN").trim());	// FK有需要先驗證是否存在?
+				Integer userID = new Integer(req.getParameter("userID").trim());
+				Integer groupTourSN = new Integer(req.getParameter("groupTourSN").trim());
+				Integer orderSN = new Integer(req.getParameter("orderSN").trim());
 				
 				
 				Integer totalPrice = null;
@@ -236,29 +237,33 @@ public class OrderForGroupServlet extends HttpServlet {
 				orderForGroupVO.setPersonID(personID);
 				orderForGroupVO.setBirthdate(birthdate);
 				
+				req.setAttribute("orderForGroupVO", orderForGroupVO);
 				if(!errMsg.isEmpty()) {
-					req.setAttribute("orderForGroupVO", orderForGroupVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/orderforgroup");	// 重新insert 待確認
+					System.out.println("update failure");
+					RequestDispatcher failureView = req.getRequestDispatcher("/orderforgroup/updateOrderForGroup.jsp");	// 重新insert 待確認
 					failureView.forward(req, res);
 					return;
 				}
-				
+				System.out.println("update success");
+				String Msg = "更新成功";
+				req.setAttribute("Msg", Msg);
 				OrderForGroupService orderForGroupSvc = new OrderForGroupService();
-				orderForGroupSvc.insertOrderForGroup(userID, groupTourSN, totalPrice, purchaseDate, phoneReg, personIDReg, birthdate);
-				RequestDispatcher successView = req.getRequestDispatcher("/orderforgroup/");	// 訂單成功頁面 待確認(先回listOne)
+				orderForGroupSvc.updateOderForGroup(orderSN, userID, groupTourSN, totalPrice, purchaseDate, phone, personID, birthdate);
+				
+				RequestDispatcher successView = req.getRequestDispatcher("/orderforgroup/updateOrderForGroup.jsp");	// 訂單成功頁面 待確認(先回listOne)
 				successView.forward(req, res);
 				
 				
 			}catch(Exception e) {
-				System.out.println("insert failure"+ e.getMessage());
+				System.out.println("update failure"+ e.getMessage());
 				errMsg.add("Exception occured"+e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/orderforgroup");	// 重新insert 待確認
+				RequestDispatcher failureView = req.getRequestDispatcher("/orderforgroup/updateOrderForGroup.jsp");	// 重新insert 待確認
 				failureView.forward(req, res);
 			}
 		}
 		
 		
-		if("getOne_ForUpdate".equals(action)) {		// 訂單修改 for後台還是前台? 多一個頁面參數?
+		if("getOne_ForUpdate".equals(action)) {		// 訂單修改
 			List<String> errMsg = new LinkedList<String>();
 			req.setAttribute("errMsg", errMsg);
 			try {
