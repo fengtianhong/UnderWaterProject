@@ -85,13 +85,12 @@
                 </a>
                 <div id="collapseGT" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Backend:</h6>
+                        <h6 class="collapse-header">行程管理:</h6>
                         <a class="collapse-item" href="<%=request.getContextPath()%>/grouptour/backendListGT.jsp">行程列表</a>
                         <a class="collapse-item" href="<%=request.getContextPath()%>/grouptour/addGT.jsp">新增行程</a>                 
                         <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="#">鮮奶茶</a>
-                        <a class="collapse-item" href="#">嘿嘿嘿</a>
+                        <h6 class="collapse-header">訂單管理:</h6>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/orderforgroup/backendListAll.jsp">所有訂單</a>
                     </div>
                 </div>
             </li>   
@@ -109,7 +108,6 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Customer Service:</h6>
                         <a class="collapse-item" href="<%=request.getContextPath()%>/customerreply/CSmanager.jsp">客服訊息</a>
-                        <a class="collapse-item" href="<%=request.getContextPath()%>/customerreply/customerservice.do?action=CSmanager">客服訊息(TEST)</a>
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">Q&A:</h6>
                         <a class="collapse-item" href="<%=request.getContextPath()%>/qa/backendList.jsp">QA列表</a>
