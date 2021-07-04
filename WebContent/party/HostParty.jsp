@@ -27,9 +27,6 @@
 <c:forEach var="msg" items="${errorMsgs}">
 	<section class="msg">${msg}</section>
 </c:forEach>
-<c:if test="${partyVO}">
-	<section class="msg">${partyVO.Title}</section>
-</c:if>
 
 <section class="party">
 <form method="post" action="<%=request.getContextPath()%>/party/party.do">
@@ -42,7 +39,9 @@
 		</tr>
 		<tr>
 			<td class="partyTitle">揪團主旨: </td>
-			<td><input type="text" name="partyTitle" maxlength="30"></td>
+			<td><input type="text" name="partyTitle" maxlength="30" <c:if test="${partyVO != null}">value="${partyVO.partyTitle}"</c:if>>
+				
+			</td>
 		</tr>
 		<tr>
 			<td class="date">活動日期: </td>
@@ -61,23 +60,33 @@
 		<tr>
 			<td class="partyLocation">揪團潛點: </td>
 			<td>
-				<select size="" name="partyLocation">
-				<c:forEach var="diveInfoVO" items="${diveInfoSvc.getAll()}">
-					<option value="${diveInfoVO.pointSN}">${diveInfoVO.pointName}
-				</c:forEach>
-				</select>
+				<c:if test="${partyVO != null}">
+					<select size="" name="partyLocation">
+					<c:forEach var="diveInfoVO" items="${diveInfoSvc.getAll()}">
+						<option value="${diveInfoVO.pointSN}" ${partyVO.partyLocation == diveInfoVO.pointSN? "selected" : ""}>${diveInfoVO.pointName}
+					</c:forEach>
+					</select>
+				</c:if>
+				
+				<c:if test="${partyVO == null}">
+					<select size="" name="partyLocation">
+					<c:forEach var="diveInfoVO" items="${diveInfoSvc.getAll()}">
+						<option value="${diveInfoVO.pointSN}">${diveInfoVO.pointName}
+					</c:forEach>
+					</select>
+				</c:if>
 			</td>
 		</tr>
 		<tr>
 			<td class="partyMinSize">最低成團人數: </td>
-			<td><input type="number" min="1" max="20" name="partyMinSize"></td>
+			<td><input type="number" min="1" max="20" name="partyMinSize" <c:if test="${partyVO != null}">value="${partyVO.partyMinSize}"</c:if>></td>
 		</tr>
 		<tr>
 			<td>揪團詳細內容</td>
 			<td></td>
 		</tr>
 	</table>
-	<textarea name="partyDetail" maxlength=1000></textarea>
+	<textarea name="partyDetail" maxlength=1000><c:if test="${partyVO != null}">${partyVO.partyDetail}</c:if></textarea>
 	<script>
 		CKEDITOR.replace("partyDetail");
 	</script>
@@ -92,14 +101,13 @@
 
 <script>
 	$(function(){
-		
+// partyHostDetail.jsp也有(不完整)
 		// 確認接受平台規範
 		if (!confirm("提醒您, 本網站僅提供會員一個自由發起揪團與參加揪團的交流平台。   請會員務必小心詐騙，並謹慎提供個人資料。接受本平台條款才可發起揪團。")) {
 			window.history.back();
-		});
+		};
 		
-		
-		// 設定活動 開放報名時間: 當下
+		// 設定活動 開放報名時間最小值: 當下
 		$('input[name="regDate"]').attr('min', new Date().toISOString().split("T")[0]);
 		
 		// 設定活動 開始時間 : 當下隔天
@@ -131,7 +139,7 @@
 	$('input[name="endDate"]').on('click', function(){
 		var startDate = $('input[name="startDate"]').val();
 		$('input[name="endDate"]').attr('min', startDate);
-	})
+	});
 
 	// 設定活動 結束報名時間: 在活動開始前一天
 	$('input[name="closeDate"]').on('click', function(){
@@ -147,7 +155,7 @@
 //不完整  還差day==0的判斷QQ (month-1的話記得加if)
 		$('input[name="closeDate"]').attr('max', year + "-" + month + "-" + day);
 		$('input[name="closeDate"]').attr('min', new Date().toISOString().split("T")[0]);
-	})
+	});
 	
 		
 </script>

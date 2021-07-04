@@ -24,16 +24,24 @@
 <jsp:include page="../share/member/Mheader.jsp" flush="true" />
 
 <h4>我舉辦的揪團: ${partyVO.partySN} 修改內容 / 審核報名資格</h4>
+<c:forEach var="msg" items="${errorMsgs}">
+	<section class="msg">${msg}</section>
+</c:forEach>
 <section class="party">
 	<form method="post" action="<%=request.getContextPath()%>/party/party.do">
 		<table>
 			<tr>
 				<td class="partySN">揪團編號： </td>
-				<td><input type="text" name="partySN" value="${partyVO.partySN}" readonly></td>
+				<td>
+					${partyVO.partySN}
+					<input type="hidden" name="partySN" value="${partyVO.partySN}">
+				</td>
 			</tr>
 			<tr>
-				<td class="partyHost">主揪人： </td>
-				<td><input type="text" name="partyHost" value="${partyVO.partyHost}" readonly></td>
+				<td class="partyHost">主揪人：(可刪) </td>
+				<td>${partyVO.partyHost}
+					<input type="hidden" name="partyHost" value="${partyVO.partyHost}">
+				</td>
 			</tr>
 			<tr>
 				<td class="partyTitle">揪團主旨: </td>
@@ -75,13 +83,13 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="sizenow">目前已通過審核人數<br>(如何和下方審核連動): </td>
+				<td class="sizenow">目前已通過審核人數: </td>
 				<td>${partyMemberSvc.findByPartySNAndStatus(partyVO.partySN, "1").size()}</td>
 			<tr>
 				<td class="status">揪團狀態: </td>
 				<c:if test="${partyVO.status == 0}">
 					<td>
-						<select size="" name="status">
+						<select class="status" size="" name="status">
 							<option value="0" selected>熱烈報名中
 							<option value="3">取消
 						</select>
@@ -89,7 +97,7 @@
 				</c:if>
 				<c:if test="${partyVO.status == 1}">
 					<td>
-						<select size="" name="status">
+						<select class="status" size="" name="status">
 							<option value="1" selected>已額滿
 							<option value="4">已成團(仍可報名)
 						</select>
@@ -97,21 +105,21 @@
 				</c:if>
 				<c:if test="${partyVO.status == 2}">
 					<td>
-						<select size="" name="status">
+						<select class="status" size="" name="status">
 							<option value="2" selected>已結束
 						</select>
 					</td>
 				</c:if>
 				<c:if test="${partyVO.status == 3}">
 					<td>
-						<select size="" name="status">
+						<select class="status" size="" name="status">
 							<option value="3" selected>已取消
 						</select>
 					</td>
 				</c:if>
 				<c:if test="${partyVO.status == 4}">
 					<td>
-						<select size="" name="status">
+						<select class="status" size="" name="status">
 							<option value="1" ${partyVO.status == "1"? "selected": ""}>額滿
 							<option value="3" ${partyVO.status == "3"? "selected": ""}>取消
 							<option value="4" selected>已成團(仍可報名)
@@ -120,7 +128,7 @@
 				</c:if>
 				<c:if test="${partyVO.status == 5}">
 					<td>
-						<select size="" name="status">
+						<select class="status" size="" name="status">
 							<option value="5" selected>此揪團已被下架
 						</select>
 					</td>
@@ -144,13 +152,16 @@
 <!-- ======================== 報名狀況  ============================== -->
 
 <h4>報名狀況(按報名先後)</h4>
+<c:forEach var="msg" items="${errorMsgs2}">
+	<section class="msg">${msg}</section>
+</c:forEach>
 <section class="registration">
 	<c:if test="${empty partyMembers}">
 		<div class="alert">目前尚無會員報名喔!</div>
 	</c:if>
 	
 	<c:if test="${not empty partyMembers}">
-		<table class="tableRegistration">
+		<table class="reg">
 			<tr>
 				<td>報名序號</td>
 				<td>報名會員</td>
@@ -273,6 +284,17 @@
 		let input2 = $(this.closest('tr')).find('input[name="partySN"]')[0];
 		let partySN = $(input2).val();
 		
+		let sizenow = $('.sizenow').next().text();
+// 		let partyMinSize = $('.partyMinSize').next().children().val();
+		let partyStatus = $('select.status option:checked').val();
+		console.log(sizenow);
+		console.log(partyStatus);
+		
+		if (partyStatus == 1) {
+			alert('您的揪團已額滿, 若要繼續收團員, 請變更揪團狀態至"已成團(仍可報名)".')
+			return;
+		}
+		
 		if (confirm('確定接受報名序號' + partyMemberSN + '成為團員? 提醒您: 確認後無法修改!')) {
 			let status = '1';
 			
@@ -287,14 +309,28 @@
 					"partySN": partySN
 				},
 				success: function(data) {
+					// 變更按鈕
 					let new_html = `<button disabled class="btn btn-outline-success btn-sm">已接受</button>`;
 					$(that.closest('td')).html(new_html);
+					
+					// 變更目前通過人數
+					$('.sizenow').next().text(parseInt(sizenow) + 1);
+					
+					// 接受後 controller通知額滿
+					if (data == "full") {
+						let html = `
+								<select size="" class="status" name="status">
+									<option value="1" selected>已額滿
+									<option value="4">已成團(仍可報名)
+								</select>
+						`;
+						$('.status').next().html(html);
+					}
 				}
 			});
 		} else {
 			return;
 		}
-		
 	});
 	
 	reject.on('click', function(){
@@ -317,6 +353,7 @@
 					"action":  "updatePartyMemberStatus",
 					"partyMemberSN": partyMemberSN,
 					"status": status,
+					"partySN": partySN
 				},
 				success: function(data) {
 					let new_html = `<button disabled class="btn btn-secondary btn-sm">已拒絕</button>`;
@@ -328,6 +365,56 @@
 		}
 		
 	});
+
+// HostParty.jsp也有(不完整)
+	// 設定活動 開放報名時間最小值: 當下
+	$('input[name="regDate"]').attr('min', new Date().toISOString().split("T")[0]);
+	
+	// 設定活動 開始時間 : 當下隔天
+	var today = new Date();
+	var minDay = today.getDate() + 1;
+	var minMonth = today.getMonth() + 1;
+	var minYear = today.getFullYear();
+//不完整  還差day==30 or 31 的判斷QQ (month+1的話記得加if)
+	if (minDay < 10) {
+		minDay ="0" + minDay;
+	}
+	if (minMonth < 10) {
+		minMonth = "0" + minMonth;
+	}
+	var minStartDate = minYear + "-" + minMonth + "-" + minDay;
+	$('input[name="startDate"]').attr('min', minStartDate);
+
+	var maxDay = today.getDate();
+	var maxYear = today.getFullYear() + 1 ;
+	if (maxDay < 10) {
+		maxDay = "0" + maxDay;
+	}
+	var maxStartDate = maxYear + "-" + minMonth + "-" + maxDay;
+	$('input[name="startDate"]').attr('max', maxStartDate);
+	
+	// 設定活動 結束時間
+	$('input[name="endDate"]').on('click', function(){
+		var startDate = $('input[name="startDate"]').val();
+		$('input[name="endDate"]').attr('min', startDate);
+	});
+
+	// 設定活動 結束報名時間: 在活動開始前一天
+	$('input[name="closeDate"]').on('click', function(){
+		var startDate = $('input[name="startDate"]').val();
+		var array1 = startDate.split('-');
+		var year = array1[0];
+		var month = array1[1];
+		var day = array1[2] - 1;
+		if (day < 10) {
+			day ="0" + day;
+		}
+		console.log(day);
+//不完整  還差day==0的判斷QQ (month-1的話記得加if)
+		$('input[name="closeDate"]').attr('max', year + "-" + month + "-" + day);
+		$('input[name="closeDate"]').attr('min', new Date().toISOString().split("T")[0]);
+	});
+	
 </script>
 
 </body>
