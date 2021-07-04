@@ -13,7 +13,7 @@
     <img id="footer" src="../img/footer.png" alt="">
 </div>
 
-	<a class="btn btn-primary btn-sm text-uppercase chat"><i class="far fa-comment-dots"></i></a>
+	<a class="btn btn-primary btn-sm text-uppercase chat" href="<%=request.getContextPath()%>/chat/index.jsp"  target="_blank"><i class="far fa-comment-dots"></i></a>
 <%-- 	<a target="_blank" class="btn btn-primary btn-sm text-uppercase customer-service" href="<%=request.getContextPath()%>/customerreply/CSchat.jsp"><i class="fas fa-headset"></i></a> --%>
 	
 		<!-- 客服 -->
