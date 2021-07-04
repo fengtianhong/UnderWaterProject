@@ -10,7 +10,7 @@
 	<head>
 		<%@ include file="../share/backend/Bmeta.file" %>
 		<meta charset="UTF-8">
-		<title>UW - 文章管理</title>
+		<title>UW - 檢舉管理</title>
 		<style type="text/css">
 
 		</style>
