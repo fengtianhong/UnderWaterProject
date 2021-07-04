@@ -166,7 +166,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Backend:</h6>
                         <a class="collapse-item" href="<%=request.getContextPath()%>/articleTitleOpt/articleTitleOptSelect.jsp">標題管理</a>
-                        <a class="collapse-item" href="<%=request.getContextPath()%>/forumArticle/uwRptReply.jsp">檢舉處理</a>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/forumArticle/uwRptManage.jsp">檢舉處理</a>
                         <a class="collapse-item" href="<%=request.getContextPath()%>/forumArticle/uwFManage.jsp">文章管理</a>              
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">Other Pages:</h6>

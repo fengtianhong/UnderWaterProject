@@ -1,36 +1,12 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="java.util.*"%>
-<%@ page import="com.forumArticle.model.*"%>
-<%@ page import="com.articleReport.model.*"%>
-<%@ page import="com.member.model.*" %>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-	<head>
-		<%@ include file="../share/backend/Bmeta.file" %>
-		<meta charset="UTF-8">
-		<title>UW - 檢舉管理</title>
-		<style type="text/css">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
 
-		</style>
-		
-		
-		
-	</head>
-	<body>
-	<%@ include file="../share/backend/Bheader.file" %>
-	
-	
-	
-	
-		
-	
-	
-	
-	
-	<%@ include file="../share/backend/Bfooter.file" %>
-	</body>
-	<%@ include file="../share/backend/Bjs.file" %>
-	
+</body>
 </html>

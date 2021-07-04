@@ -19,10 +19,11 @@ public class ArticleReportService {
 		return articleReportvo;
 	}
 	
-	public ArticleReportVO updateArticleReport(Integer rptSN, String reRptResult) {
+	public ArticleReportVO updateArticleReport(Integer rptSN, Boolean rptStatus, String reRptResult) {
 		ArticleReportVO articleReportvo = new ArticleReportVO();
 		
 		articleReportvo.setRptSN(rptSN);
+		articleReportvo.setRptStatus(rptStatus);
 		articleReportvo.setReRptResult(reRptResult);
 		dao.update(articleReportvo);
 		

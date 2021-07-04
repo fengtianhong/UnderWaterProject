@@ -79,22 +79,25 @@ public class ArticleReportServlet extends HttpServlet{
 		if ("getOne_For_Update".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			
+			System.out.println("1");
 			try {
 //				接收參數
 				Integer rptSN = new Integer(req.getParameter("rptSN"));
+				System.out.println("2");
 //				查詢
 				ArticleReportService articleReportSvc = new ArticleReportService();
 				ArticleReportVO articleReportVO = articleReportSvc.getOneArticleReport(rptSN);
+				System.out.println("3");
 //				成功後轉交更新
 				req.setAttribute("articleReportVO", articleReportVO);
-				String url = "某個更新.jsp";
+				String url = "/forumArticle/uwRptReply.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
+				System.out.println("4");
 //				其他錯誤處理
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("是哪個.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/uwRptManage.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -107,7 +110,7 @@ public class ArticleReportServlet extends HttpServlet{
 			try {
 //				接收參數
 				Integer rptSN = new Integer(req.getParameter("rptSN"));
-				
+				Boolean rptStatus = new Boolean(req.getParameter("rptStatus"));
 				String reRptResult = req.getParameter("reRptResult");
 				
 				if (reRptResult == null || reRptResult.trim().length() == 0) {
@@ -116,17 +119,19 @@ public class ArticleReportServlet extends HttpServlet{
 				
 				ArticleReportVO articleReportVO = new ArticleReportVO();
 				articleReportVO.setRptSN(rptSN);
+				articleReportVO.setRptStatus(rptStatus);
 				articleReportVO.setReRptResult(reRptResult);
 				
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("articleReportVO", articleReportVO); // 含有輸入格式錯誤的empVO物件,也存入req
+					req.setAttribute("articleReportVO", articleReportVO); 
 					RequestDispatcher failureView = req.getRequestDispatcher("/emp/update_emp_input.jsp");
 					failureView.forward(req, res);
 					return; //程式中斷
 				}
 //				更新
 				ArticleReportService articleReportSvc = new ArticleReportService();
-				articleReportVO = articleReportSvc.updateArticleReport(rptSN, reRptResult);
+				articleReportVO = articleReportSvc.updateArticleReport(rptSN, null, reRptResult);
+						
 //				成功後轉交
 				req.setAttribute("articleReportVO", articleReportVO);
 				String url = "某個更新.jsp";

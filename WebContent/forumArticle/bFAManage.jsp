@@ -80,7 +80,7 @@
 						<!-- <td>標題選項</td> -->
 						<td>文章標題</td>
 						<td>發布日期</td>
-						<td>文章狀態</td>
+						<!-- <td>文章狀態</td> -->
 						<td>文章編輯</td>
 						<td>刪除文章</td>		
 					</tr>
@@ -91,9 +91,9 @@
 								<%-- <td>${article.articleTitleOptSN}</td> --%>
 								<td>${article.articleTitle}</td>
 								<td>${article.publishedDate}</td>
-								<c:if test="${article.articleStatus == true}">
+								<%-- <c:if test="${article.articleStatus == true}">
 									<td>正常</td>
-								</c:if>							
+								</c:if>	 --%>						
 								<td>
 									<form method="post" action="forumArticle.do">
 										<input type="submit" value="修改">
@@ -128,10 +128,10 @@
 								<td>${rpt.rptSN}</td>
 								<td>${rpt.articleSN}</td>					
 								<c:if test="${rpt.rptStatus == false}">
-									<td>待處理</td>
+									<td><font color="red">未處理</font></td>
 								</c:if>
 								<c:if test="${rpt.rptStatus == true}">
-									<td>已處理</td>
+									<td><font color="green">已處理</font></td>
 								</c:if>						
 								<td>${rpt.rptReason}</td>	
 								<td>${rpt.reRptResult}</td>

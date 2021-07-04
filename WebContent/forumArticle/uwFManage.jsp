@@ -5,6 +5,11 @@
 <%@ page import="com.articleReport.model.*"%>
 <%@ page import="com.member.model.*" %>
 
+
+
+
+
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -20,15 +25,8 @@
 	</head>
 	<body>
 	<%@ include file="../share/backend/Bheader.file" %>
-	
-	
-	
-	
 		
-	
-	
-	
-	
+
 	<%@ include file="../share/backend/Bfooter.file" %>
 	</body>
 	<%@ include file="../share/backend/Bjs.file" %>
