@@ -18,6 +18,9 @@ public class MemberDAO implements MemberDAO_interface{
 	private static final String PERSONINFOCHANGE = "UPDATE Member SET nickName=?, userName=?, gender=?, birthDate=?, phone=?, Certification=?, CertificationPic=?, personID=?, address=?, personphoto=? WHERE userID = ?";
 	private static final String PWDUPDATE_STMT = "UPDATE Member SET pwd=? WHERE userID = ?";
 	private static final String FINDBYSEARCH_STMT = "SELECT * FROM Member where account like ? or nickname like ? or username like ? order by account";
+	private static final String UPDATE_PASSWORD_ACCOUNT = "UPDATE Member SET pwd=? WHERE account = ?";
+	
+	
 	public static void main(String[] args) {
 //		測試insert
 //		MemberVO vo = new MemberVO();
@@ -466,6 +469,43 @@ public Boolean checkAccount(MemberVO MemberVO) {
 	}
 	System.out.println("走到最後");
 	return false;
+}
+
+
+@Override
+public void updatePassword(String account, String pwd) {
+	// UPDATE_PASSWORD_ACCOUNT
+	Connection con = null;
+	PreparedStatement pstmt = null;
+	
+	try {
+		con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+		pstmt = con.prepareStatement(UPDATE_PASSWORD_ACCOUNT);
+	
+		pstmt.setString(1, pwd);
+		pstmt.setString(2, account);
+		pstmt.executeUpdate();
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+	} finally {
+		if (pstmt != null) {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		if (con != null) {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
 }
 	
 public void personInfoUpdate(MemberVO MemberVO) {		

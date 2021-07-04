@@ -102,7 +102,9 @@ public class MemberService {
 		vo.setPersonPhoto(personPhoto);
 		
 		dao.personInfoUpdate(vo);
-		return vo;
+		return vo;}
+	public void ForgetPwd(String account, String pwd) {
+		dao.updatePassword(account, pwd);
 	}
 	
 	public MemberVO pwdUpdateMember(Integer userID, String pwd) {

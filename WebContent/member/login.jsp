@@ -105,11 +105,11 @@
 								<p> 
                                     <label for="Certification">潛水證照:</label>
                                     <select name="certification" size="2">
-										<option value="0" ${(memberVO.limitNumder==null)? 'selected':'' }>無
+										<option value="0" ${(memberVO.certification==null)? 'selected':'' }>無
 							
-										<option value="1" ${(memberVO.limitNumder==1)? 'selected':'' }>PADI
+										<option value="1" ${(memberVO.certification==1)? 'selected':'' }>PADI
 										OW / SSI OW
-										<option value="2" ${(memberVO.limitNumder==2)? 'selected':'' }>PADI
+										<option value="2" ${(memberVO.certification==2)? 'selected':'' }>PADI
 										AOW / SSI AOW
 									</select>
                                 </p>
