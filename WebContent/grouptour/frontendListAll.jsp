@@ -115,10 +115,10 @@
     <form  method="post" action="GroupTourFilter.do">
 	 	<div class="filter">
 		<select id="filter" name="location" class="location" onchange="filter(this.value)">
-			<option value="0">ALL
-			<option value="北部">北部
-			<option value="南部">南部
-			<option value="離島">離島
+			<option value="0" ${(location=='0')? 'selected':''}>ALL
+			<option value="北部" ${(location=='北部')? 'selected':''}>北部
+			<option value="南部" ${(location=='南部')? 'selected':''}>南部
+			<option value="離島" ${(location=='離島')? 'selected':''}>離島
 		</select> 
 		</div> 
 	    <div class="filter"><input type="search" name="keyword" class="keyword-filter" placeholder="請輸入關鍵字"></div> 
