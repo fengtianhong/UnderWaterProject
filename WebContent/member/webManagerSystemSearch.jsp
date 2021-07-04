@@ -6,19 +6,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%
-MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
-	List<MemberVO> list = (List<MemberVO>)request.getAttribute("list");
-	if(list == null){
-		MemberService memberSvc = new MemberService();
-		list = memberSvc.getAll();
-		pageContext.setAttribute("list", list);
-	}else{
-		pageContext.setAttribute("list", list);
-	}
-	
-	
-	
-	
+	MemberService memberSvc = new MemberService();
+	List<MemberVO> list = memberSvc.getAll();
+	pageContext.setAttribute("list", list);
+	MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
 	
 %>
 
@@ -112,8 +103,7 @@ MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
                 <div class="input-group">
                     <input type="text" class="form-control" name="keyword" placeholder="全部查詢" id="searchInput">
                     <span class="input-group-btn">
-                    	<input type="hidden" name="action" value="search">
-                        <input class="btn btn-default" type="submit" value="查詢">
+                        <button class="btn btn-default" type="button" name="action" value="search" id="search">查詢</button>
                     </span>
                 </div>
             </div>
@@ -122,9 +112,7 @@ MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
             	<form action="WebManagerSystemLogoutServlet.do" method="post">
             		<button class="btn btn-primary" type="submit" id="logout" >登出</button>
             	</form>
-            	
             </div>
-            <div><c:if test="${msg!=null}"> ${msg}</c:if></div>
         </div>
 		
 		<table class="table table-striped table-bordered">

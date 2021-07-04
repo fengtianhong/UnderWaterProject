@@ -21,8 +21,8 @@ public class MemberDAO implements MemberDAO_interface{
 	
 	private static final String PWDUPDATE_STMT = "UPDATE Member SET pwd=? WHERE userID = ?";
 	private static final String FINDBYSEARCH_STMT = "SELECT * FROM Member where account like ? or nickname like ? or username like ? order by account";
-	private static final String UPDATE_PASSWORD_ACCOUNT = "UPDATE Member SET pwd=? WHERE account = ?";
-	
+	//下面為後台搜尋會員
+	private static final String MANAGERFINDBYSEARCH_STMT = "SELECT * FROM Member where account like ? or nickname like ? or username like ? or address like ? order by account";
 	
 	public static void main(String[] args) {
 //		測試insert
@@ -631,7 +631,68 @@ public List<MemberVO> findBySearch(String account, String nickName, String userN
 }
 	
 	
+public List<MemberVO> managerFindBySearch(String account, String nickName, String userName, String address){ 
+	Connection con = null;
+	PreparedStatement pstmt = null;
+	MemberVO vo = null;
+	ResultSet rs = null;
+	List<MemberVO> list = new ArrayList<MemberVO>();
 	
+	try {
+		con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+		pstmt = con.prepareStatement(MANAGERFINDBYSEARCH_STMT);
+		pstmt.setString(1, "%" + account + "%");
+		pstmt.setString(2, "%" + nickName + "%");
+		pstmt.setString(3, "%" + userName + "%");
+		pstmt.setString(4, "%" + address + "%");
+		rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			vo = new MemberVO();
+			vo.setUserID(rs.getInt("userId"));
+			vo.setAccount(rs.getString("account"));
+			vo.setPwd(rs.getString("pwd"));
+			vo.setNickName(rs.getString("nickName"));
+			vo.setUserName(rs.getString("userName"));
+			vo.setGender(rs.getString("gender"));
+			vo.setBirthDate(rs.getDate("birthDate"));
+			vo.setPhone(rs.getString("phone"));
+			vo.setCertification(rs.getString("Certification"));
+			vo.setCertificationPic(rs.getBytes("CertificationPic"));
+			vo.setPersonID(rs.getString("personID"));
+			vo.setAddress(rs.getString("address"));
+			vo.setCreateTime(rs.getTimestamp("CreateTime"));
+			vo.setStatus(rs.getInt("Status"));
+			vo.setUpDateTime(rs.getTimestamp("UpDateTime"));
+			vo.setRatePeople(rs.getInt("RatePeople"));
+			vo.setRatePoint(rs.getInt("RatePoint"));
+			vo.setPersonPhoto(rs.getBytes("personPhoto"));
+			list.add(vo);
+		}
+		
+		
+	}catch(Exception e) {
+		
+	}finally {
+		if (pstmt != null) {
+			try {
+				pstmt.close();
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
+		}
+		
+		if (con != null) {
+			try {
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	return list;
+}
 	
 }
 

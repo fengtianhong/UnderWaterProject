@@ -118,4 +118,8 @@ public class MemberService {
 	public List<MemberVO> findBySearchMember(String account, String nickName, String userName){
 		return dao.findBySearch(account, nickName, userName);
 	}
+	
+	public List<MemberVO> managerFindBySearch(String account, String nickName, String userName, String address){
+		return dao.managerFindBySearch(account, nickName, userName, address);
+	}
 }

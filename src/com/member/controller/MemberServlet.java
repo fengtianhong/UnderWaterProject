@@ -5,6 +5,9 @@ import javax.servlet.http.*;
 import com.member.model.MemberService;
 import com.member.model.MemberVO;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
@@ -94,17 +97,19 @@ public class MemberServlet extends HttpServlet{
 			
 			//證照圖片===========================
 			byte[] certificationPic = null;
+//			File noimage = new File("/images/noimage.png");
+//			FileInputStream fis = new FileInputStream(noimage);
 			InputStream in = null;
+//			System.out.println(in);
 			try {
 				Part part = req.getPart("certificationPic"); 
 				in = part.getInputStream();	
 				certificationPic = new byte[in.available()];
 				in.read(certificationPic);
-				
-//				if(certificationPic.length == 0) { //未修正圖片存取原圖片
-//					MemberService membersvc = new MemberService();
-//					MemberVO originalVO= membersvc.getone(userID);
+//				if(certificationPic) {
+//					fis.read(certificationPic);
 //				}
+				
 			}catch(Exception e) {
 				e.printStackTrace();
 				errorMsgs.add("證照圖片讀取錯誤" + e.getLocalizedMessage());
