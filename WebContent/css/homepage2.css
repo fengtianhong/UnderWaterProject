@@ -94,11 +94,13 @@ nav.navbar.fixed-top.navbar-expand-md.navbar-light a:hover {
   margin-left: 50%;
 }
 
+/* ICON */
 .arrow-up {
 	position: fixed;
 	right: 20px;
 	bottom: 20px;
 }
+
 
 /* ¶]°¨¿O¥Î */
 
@@ -169,5 +171,121 @@ nav.navbar.fixed-top.navbar-expand-md.navbar-light a:hover {
     opacity: 0;
     transform: translateY(50px);
   }
+}
+/* customer service  */
+.customer-service {
+	position: fixed;
+	right: 20px;
+    bottom: 58px;
+    font-size: 17px;
+}
+.chat{
+	position: fixed;
+	right: 20px;
+	bottom: 100px;
+    font-size: 17px;
+}
+
+.bot-container{
+	transition-duration: 0.4s;
+    position: fixed;
+    bottom: 50px;
+    right: 80px;
+    height: 0;
+    width: 0;
+    border-radius: 20px;
+    overflow: hidden;
+}
+.-on{
+	display: block;
+    transform: scale(1, 1);
+    height: 500px;
+    width: 300px;
+}
+.statusOutput {
+	background: steelblue;
+	color: white;
+	margin: 0;
+	width: 100%;
+	height: 8%;
+	padding-top: 10px;
+    padding-left: 22px;
+}
+.message-area {
+    font-size: 14px;
+	padding: 5px;
+	height: 78%;
+	width: 100%;
+	resize: none;
+	box-sizing: border-box;
+	overflow: auto;
+	background-color: #efefef;;
+}
+.panel {
+	float: right;
+}
+.input-area {
+	height: 15%;
+	background: white;
+	width: 100%;
+}
+.input-area input {
+	margin: 1.2em 0em 0.5em 1.1em;
+}
+.text-field {
+	padding: 0.2em;
+	width: 70%;
+	height: 21px;
+}
+#message {
+	min-width: 50%;
+	max-width: 70%;
+}
+.fish {
+   font-size: 28px;
+    border: none;
+    background-color: transparent;
+    position: relative;
+    top: 6px;
+}
+.message-area > ul{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.message-area > ul > li {
+    box-shadow: rgb(0 0 0 / 10%) 0px 20px 25px -5px, 
+    			rgb(0 0 0 / 4%) 0px 10px 10px -5px;
+    display: inline-block;
+    clear: both;
+    padding: 10px;
+    border-radius: 31px;
+    margin-bottom: 5px;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+
+.friend{
+	background: white;
+	float: left;
+}
+.me{
+	float: right;
+	background: slategray;
+	color: #fff;
+}
+
+.friend + .me{
+  border-bottom-right-radius: 5px;
+}
+
+.me + .me{
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.me:last-of-type {
+  border-bottom-right-radius: 30px;
 }
 

@@ -8,23 +8,134 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<link rel="stylesheet" href="./css/friendchat.css" type="text/css" />
+<!-- <link rel="stylesheet" href="./css/friendchat.css" type="text/css" /> -->
 <style type="text/css">
 
+.bot-container{
+	display:none;
+    position: fixed;
+    bottom: 50px;
+    right: 80px;
+	height: 500px;
+	width: 300px;
+	border-radius: 20px;
+	overflow: hidden;
+}
+.-on{
+	display: block;
+}
+.statusOutput {
+	background: steelblue;
+	color: white;
+	margin: 0;
+	width: 100%;
+	height: 8%;
+	padding-top: 10px;
+    padding-left: 22px;
+}
+.message-area {
+    font-size: 14px;
+	padding: 5px;
+	height: 78%;
+	width: 100%;
+	resize: none;
+	box-sizing: border-box;
+	overflow: auto;
+	background-color: #efefef;;
+}
+.panel {
+	float: right;
+}
+.input-area {
+	height: 15%;
+	background: white;
+	width: 100%;
+}
+/* 輸入訊息的input */
+.input-area input {
+	margin: 1.2em 0em 0.5em 1.1em;
+}
+.text-field {
+	padding: 0.2em;
+	width: 70%;
+	height: 21px;
+}
+#message {
+	min-width: 50%;
+	max-width: 70%;
+}
+.fish {
+   font-size: 28px;
+    border: none;
+    background-color: transparent;
+    position: relative;
+/*     left: 71px; */
+    top: 6px;
+}
+/* 聊天訊息 */
+.message-area > ul{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.message-area > ul > li {
+    box-shadow: rgb(0 0 0 / 10%) 0px 20px 25px -5px, 
+    			rgb(0 0 0 / 4%) 0px 10px 10px -5px;
+    display: inline-block;
+    clear: both;
+    padding: 10px;
+    border-radius: 31px;
+    margin-bottom: 5px;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+
+.friend{
+	background: white;
+	float: left;
+}
+.me{
+	float: right;
+	background: slategray;
+	color: #fff;
+}
+
+.friend + .me{
+  border-bottom-right-radius: 5px;
+}
+
+.me + .me{
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.me:last-of-type {
+  border-bottom-right-radius: 30px;
+}
+
+
+html, body {
+	background: gray;
+}
 </style>
 <title>USER 聊天室 (待改一對Manager)</title>
 </head>
-<body onload="connect();" onunload="disconnect();">
-	<h3 id="statusOutput" class="statusOutput">客服1號</h3>
-	<div id="row"><!-- 這裡是好友列表的部分(刪掉或寫死連線為客服?) --></div>
-	<div id="messagesArea" class="panel message-area" ></div>
-	<div class="panel input-area">
-		<input id="message" class="text-field" type="text" placeholder="Message" onkeydown="if (event.keyCode == 13) sendMessage();" /> 
-		<input type="submit" id="sendMessage" class="button" value="Send" onclick="sendMessage();" /> 
-		<input type="button" id="connect" class="button" value="Connect" onclick="connect();" /> 
-		<input type="button" id="disconnect" class="button" value="Disconnect" onclick="disconnect();" />
+<body>
+	<button target="_blank" class="btn btn-primary btn-sm text-uppercase customer-service" onclick="connect();"><i class="fas fa-headset"></i></button>
+
+	<div class="bot-container" onload="connect();" onunload="disconnect();">
+		
+		<h3 id="statusOutput" class="statusOutput">客服1號</h3>
+		<div id="messagesArea" class="panel message-area" ></div>
+		<div class="panel input-area">
+			<input id="message" class="text-field" type="text" placeholder="Message" onkeydown="if (event.keyCode == 13) sendMessage();" /> 
+			<button type="submit" id="sendMessage" class="button fish" value="Send" onclick="sendMessage();"><i class="fas fa-fish"></i></button>
+		</div>
 	</div>
 </body>
+<script src="https://kit.fontawesome.com/d3e24e4d81.js" crossorigin="anonymous"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script>
 	var MyPoint = "/CustomerServiceWS/${userID}";	// java EL，可以改成 roomID 跟 session 等，變成發送給特定對象(一對一的聊天室)
 	var host = window.location.host;
@@ -39,6 +150,7 @@
 
 	function connect() {
 		// create a websocket
+		console.log(endPointURL);
 		webSocket = new WebSocket(endPointURL);
 
 		webSocket.onopen = function(event) {
@@ -145,6 +257,12 @@
 		document.getElementById('connect').disabled = false;
 		document.getElementById('disconnect').disabled = true;
 	}
+	
+	$(".customer-service").on("click", function() {
+		$(".bot-container").toggleClass("-on");
+	})
+	
+	
 	
 // 	function updateFriendName(name) {
 // 		statusOutput.innerHTML = name;
