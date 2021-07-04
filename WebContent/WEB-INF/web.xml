@@ -57,7 +57,12 @@
 	<filter-mapping>
 		<filter-name>WebManagerSystemLoginFilter</filter-name>
 		<url-pattern>/backend.jsp</url-pattern>
-		<url-pattern>/news/*</url-pattern>
+		<url-pattern>/diveinfo/diveinfolist.jsp</url-pattern>
+		<url-pattern>/diveinfo/updateDiveinfo.jsp</url-pattern>
+		<url-pattern>/diveinfo/addDiveinfo.jsp</url-pattern>
+		<url-pattern>/news/addNews.jsp</url-pattern>
+		<url-pattern>/news/newslist.jsp</url-pattern>
+		<url-pattern>/news/updateNews.jsp</url-pattern>
 		<url-pattern>/customerreply/CSmanager.jsp</url-pattern>
 		<url-pattern>/grouptour/addGT.jsp</url-pattern>
 		<url-pattern>/grouptour/updateGT.jsp</url-pattern>
