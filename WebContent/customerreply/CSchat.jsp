@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%-- <% --%>
+<%
 // 	request.setAttribute("userID", 1);	// 先寫死
-<%-- %> --%>
+%>
 
 <!DOCTYPE html>
 <html>
@@ -26,7 +26,7 @@
 	</div>
 </body>
 <script>
-	var MyPoint = "/CustomerServiceWS/${userID}";	// java EL，可以改成 roomID 跟 session 等，變成發送給特定對象(一對一的聊天室)
+	var MyPoint = "customerreply/CustomerServiceWS/${userID}";	// java EL，可以改成 roomID 跟 session 等，變成發送給特定對象(一對一的聊天室)
 	var host = window.location.host;
 	var path = window.location.pathname;
 	var webCtx = path.substring(0, path.indexOf('/', 1));

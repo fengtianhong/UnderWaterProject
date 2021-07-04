@@ -25,12 +25,34 @@
 <title>訂單主檔與明細</title>
 </head>
 
+<style type="text/css">
+
+.container{
+	margin: 0 auto;  
+ 	width: 1200px; 
+ 	}
+ 	
+  table{
+    width:100%;
+    table-layout: fixed;
+   }
+ 
+  td{
+    padding: 8px;
+    text-align: left;
+    vertical-align:middle;
+    font-weight: 300;
+    color: gray;
+    border-bottom: solid 1px rgba(20,24,78,0.3); 
+  }
+
+</style>
+
 <body>
 <%@ include file="../share/backend/Bheader.file" %>
 	<div class="container">
 		<table>
-			<h3>訂單主檔</h3>
-				
+			<h3>訂單主檔</h3>				
 			<tr>
 				<td>訂單編號</td>
 				<td>會員編號</td>
@@ -47,14 +69,11 @@
 				<td>${orderForProductVO.totalPrice}</td>
 				<td>${orderForProductVO.orderStatus}</td>
 			</tr>
-		</c:forEach>
+		</c:forEach>	
+		</table>
 		
-			<tr>
-				<td>
-					<h3>明細內容</h3>
-				</td>
-			</tr>
-			
+		<table>
+			<h3>明細內容</h3>					
 			<tr>
 				<td>明細編號</td>
 				<td>商品編號</td>
