@@ -77,4 +77,7 @@ public class GroupTourService {
 	public List<Integer> SearchLocation(String location) {
 		return dao.locationFilter(location);
 	}
+	public List<Integer> SearchAll() {
+		return dao.allForFilter();
+	}
 }

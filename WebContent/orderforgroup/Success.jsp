@@ -36,7 +36,7 @@
 	<h2>套裝行程已報名成功!</h2>
 	<hr>
     <input class="btn btn-primary btn-user" type ="button" onclick="window.location.href='<%=request.getContextPath()%>/grouptour/frontendListAll.jsp'" value="返回套裝行程列表">
-    <input class="btn btn-primary btn-user" type ="button" onclick="window.location.href='<%=request.getContextPath()%>/grouptour/listByUserID.jsp'" value="查看個人訂單(NOTYET)">
+    <input class="btn btn-primary btn-user" type ="button" onclick="window.location.href='<%=request.getContextPath()%>/orderforgroup/GroupOrder.jsp'" value="查看個人訂單">
 </div>
 
 

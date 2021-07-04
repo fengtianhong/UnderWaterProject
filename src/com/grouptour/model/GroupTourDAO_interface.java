@@ -15,4 +15,6 @@ public interface GroupTourDAO_interface {
 	// 篩選用
 	public List<Integer> keywordFilter(String keyword);
 	public List<Integer> locationFilter(String location);
+	public List<Integer> allForFilter();
+	
 }
