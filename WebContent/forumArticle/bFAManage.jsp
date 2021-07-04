@@ -22,14 +22,20 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>論壇 - 後台</title>
+		<title>論壇 - 文章管理</title>
+		
+		<link rel="stylesheet" href="../share/index.css">
+		<link rel="stylesheet" href="../vendors/bootstrap/css/bootstrap.min.css">
+		<jsp:include page="../share/member/Mmeta.html" flush="true"/>
+		
 		<style>
-			div {
-				border: 1px black solid;
+			
+			.articleManage {
 				text-align: center;
 			}
+			
 			table {
-				border: 1px black solid;
+				/* border: 1px black solid; */
 				text-align: center;
 			}
 			tr {
@@ -39,11 +45,18 @@
 			td {
 				border: 1px black solid;
 			}
+			
+			.content{
+			    width: 1000px;
+		    	margin: 0 auto;
+			}
 		</style>
 	</head>
 	<body>
-<%-- 		<jsp:include page="../share/navbar.jsp" flush="true" />
-		<jsp:include page="../share/member/Mheader.jsp" flush="true" /> --%>
+		<jsp:include page="../share/navbar.jsp" flush="true" />
+		<jsp:include page="../share/member/Mheader.jsp" flush="true"/>
+
+		
 	
 		<c:if test="${not empty errorMsgs}">
 			<font style="color:red">請修正以下錯誤:</font>
@@ -53,7 +66,7 @@
 				</c:forEach>
 			</ul>
 		</c:if>
-		<div id="articleManage"><h3>個人文章管理頁面</h3></div>
+		<div class="articleManage"><h3>個人文章管理頁面</h3></div>
 			<div>
 				<table>
 					<tr>
@@ -124,7 +137,7 @@
 					</c:forEach>
 				</table>
 			</div>
-		<%-- <jsp:include page="../share/member/Mfooter.html" flush="true" /> 
-		<jsp:include page="../share/footer.jsp" flush="true" />	 --%>
+		<jsp:include page="../share/member/Mfooter.html" flush="true"/>    
+		<jsp:include page="../share/footer.jsp" flush="true" />
 	</body>
 </html>
