@@ -21,6 +21,9 @@ public class MemberDAO implements MemberDAO_interface{
 	
 	private static final String PWDUPDATE_STMT = "UPDATE Member SET pwd=? WHERE userID = ?";
 	private static final String FINDBYSEARCH_STMT = "SELECT * FROM Member where account like ? or nickname like ? or username like ? order by account";
+	private static final String UPDATE_PASSWORD_ACCOUNT = "UPDATE Member SET pwd=? WHERE account = ?";
+	
+	
 	public static void main(String[] args) {
 //		測試insert
 //		MemberVO vo = new MemberVO();
