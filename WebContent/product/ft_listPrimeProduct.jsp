@@ -3,18 +3,19 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.product.model.*"%>
 
-<% 
-	List<ProductVO> list = (List<ProductVO>) request.getAttribute("list");
+<%
+	ProductService productSvc = new ProductService();
+	List<ProductVO> list = productSvc.getPrimeProduct("是");
 	pageContext.setAttribute("list", list);
 %>
 
 <html>
 <head>
 <meta charset="UTF-8">
-<title>商品~單一類別</title>
 <link rel="stylesheet" href="../share/index.css">
 <link rel="stylesheet" href="../vendors/bootstrap/css/bootstrap.min.css">
 
+<title>精選專區</title>
 <style>
 
 a { color: #4D2078; PADDING-RIGHT: 2px; PADDING-LEFT: 2px; PADDING-BOTTOM: 2px; PADDING-TOP: 2px; background-color:#EEEBFF; height: 20px; width: 120px; text-align: center; ; border: #A498BD; border-style: outset; border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px}
@@ -89,7 +90,7 @@ margin: 0 auto;
 		</td>
 	</tr>
 	<hr>
-	
+		<h3>精選專區:</h3>
 	<jsp:include page="/shoppingCar/Cart.jsp" flush="true" />
 	<table>
 		<tr>
@@ -107,10 +108,10 @@ margin: 0 auto;
 			<td>評價總分</td>
 			<td>評價人數</td>
 		</tr>
+
 		<%-- 	<%@ include file="page1.file" %>  --%>
-		
 		<c:forEach var="productVO" items="${list}">
-			<FORM name ="shoppingForm" METHOD="post" ACTION="<%=request.getContextPath()%>/mall/shoppingCar.html">
+			<FORM name ="shoppingForm" METHOD="post" ACTION="<%=request.getContextPath()%>/mall/shoppingCar.html">		
 				<tr>
 				<td>${productVO.productSN}</td>
 				<td>${productVO.productClass}</td>
@@ -131,11 +132,11 @@ margin: 0 auto;
 				<td>${productVO.ratingNumber}</td>
 				
 				<td><div align="center">購買數量:<input type="number" name="productQuantity" min="1" max="9999" value=1></div><br>
-      			<div align="center">       <input type="submit" name="Submit" value="加入購物車"></div></td>
+      			<div align="center">       <input type="submit" name="Submit" value="加入購物車"></div></td>		
 			</tr>
 				<input type="hidden" name="productSN" value="${productVO.productSN}">			
       			<input type="hidden" name="action" value="ADD">
-			</FORM>    		
+      		</FORM>
 		</c:forEach>
 	</table>
 	
