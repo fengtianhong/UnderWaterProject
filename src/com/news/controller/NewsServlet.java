@@ -83,8 +83,9 @@ public class NewsServlet extends HttpServlet {
 				// 檢查完畢
 				NewsService newsSvc = new NewsService();
 				newsVO = newsSvc.addNews(title, content, image, newsDate, newsFrom, newsType);
-				RequestDispatcher failureView = req.getRequestDispatcher("/news/newslist.jsp");
-				failureView.forward(req, res);
+				res.sendRedirect(req.getContextPath()+"/news/newslist.jsp");
+//				RequestDispatcher failureView = req.getRequestDispatcher("/news/newslist.jsp");
+//				failureView.forward(req, res);
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/news/newslist.jsp");

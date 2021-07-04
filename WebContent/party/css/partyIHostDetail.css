@@ -37,12 +37,12 @@ section.registration {
 	box-shadow: 0px 2px 15px 0px rgba(0,0,0,0.5);
 }
 
-section.registration table.tableRegistration {
+section.registration table.reg {
 	margin-right: auto;
 	margin-left: auto;
 }
 
-section.registration table.tableRegistration tr, td {
+section.registration table.reg tr, td {
 	text-align: center;
 	padding: 5px 10px;
 }
@@ -55,4 +55,9 @@ div.alert {
 
 td > img.showpic {
 	max-width: 350px;
+}
+
+section.msg {
+	color: #98f4fc;
+	text-align: center;
 }

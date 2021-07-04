@@ -18,6 +18,9 @@
 <title>商城商品</title>
 <style>
 
+a { color: #4D2078; PADDING-RIGHT: 2px; PADDING-LEFT: 2px; PADDING-BOTTOM: 2px; PADDING-TOP: 2px; background-color:#EEEBFF; height: 20px; width: 120px; text-align: center; ; border: #A498BD; border-style: outset; border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px}
+              a:hover { BORDER-RIGHT: ##605080 1px outset; PADDING-RIGHT: 2px; BORDER-TOP: #605080 1px outset; PADDING-LEFT: 2px; PADDING-BOTTOM: 2px; BORDER-LEFT: #605080 1px outset; PADDING-TOP: 2px; BORDER-BOTTOM: #605080 1px outset;background-color:#BDAAE2; height: 20px; width: 120px; text-align: center; } 
+
 .front{
 margin: 0 auto;
 	width: 800px;
@@ -63,10 +66,11 @@ margin: 0 auto;
 	</c:if>
 	
 	<a href="<%=request.getContextPath()%>/product/ft_listDiscountProduct.jsp">優惠專區</a>
+	<a href="<%=request.getContextPath()%>/product/ft_listPrimeProduct.jsp">精選專區</a>
 	<a href="<%=request.getContextPath()%>/product/ft_listAllProduct.jsp">所有商品</a><br>
 	<tr>		    			   
 		<td>
-		    <b>請選擇類別:</b>
+		    <b>商品分類 請選擇類別:</b>
 		    <FORM METHOD="post" ACTION="product_user.do">
 		       <select size="1" name="productClass">
 		       
@@ -86,7 +90,7 @@ margin: 0 auto;
 		</td>
 	</tr>
 	<hr>
-				
+		<h3>所有商品:</h3>			
 	<jsp:include page="/shoppingCar/Cart.jsp" flush="true" />
 	<table>
 		<tr>
@@ -95,12 +99,12 @@ margin: 0 auto;
 			<td>商品名稱</td>
 			<td>商品單價</td>
 			<td>商品數量</td>
-			<td>商品狀態</td>
+<!-- 			<td>商品狀態</td> -->
 			<td>商品圖片</td>
 			<td>商品說明</td>
-			<td>上架時間</td>
-			<td>優惠品</td>
-			<td>精選品</td>
+<!-- 			<td>上架時間</td> -->
+<!-- 			<td>優惠品</td> -->
+<!-- 			<td>精選品</td> -->
 			<td>評價總分</td>
 			<td>評價人數</td>
 		</tr>
@@ -114,16 +118,16 @@ margin: 0 auto;
 				<td>${productVO.productName}</td>
 				<td>${productVO.productPrice}</td>
 				<td>${productVO.productQuantity}</td>
-				<td>${productVO.productStatus}</td>
+<%-- 				<td>${productVO.productStatus}</td> --%>
 				<td>
 					<div class="show_pic">
 						<img src="<%=request.getContextPath()%>/product/GetPhoto.do?productSN=${productVO.productSN}">
 					</div>
 				</td>
 				<td>${productVO.productDetail}</td>
-				<td>${productVO.productCreateTime}</td>
-				<td>${productVO.productDiscount}</td>
-				<td>${productVO.productPrime}</td>
+<%-- 				<td>${productVO.productCreateTime}</td> --%>
+<%-- 				<td>${productVO.productDiscount}</td> --%>
+<%-- 				<td>${productVO.productPrime}</td> --%>
 				<td>${productVO.ratingPoint}</td>
 				<td>${productVO.ratingNumber}</td>
 				

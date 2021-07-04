@@ -39,6 +39,8 @@ public class PartyPic extends HttpServlet {
 				out.write('a');
 			}
 		}
+		
+		
 	}
 
 }

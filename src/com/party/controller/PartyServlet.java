@@ -114,8 +114,8 @@ public class PartyServlet extends HttpServlet {
 			try {
 				Integer partySN = Integer.parseInt(req.getParameter("partySN"));  // hidden input
 				PartyVO partyVO = partySvc.findByPartySN(partySN);
-				req.setAttribute("partyVO", partyVO);
-				
+				session.setAttribute("partyVO", partyVO);	// 有filter
+
 				Integer partyMember = (Integer) session.getAttribute("userID");
 				if (partyMember != null) { //若已登入過
 					// 判斷是否已報名過
@@ -199,19 +199,22 @@ public class PartyServlet extends HttpServlet {
 				InputStream in = null;
 				byte[] certificationPic = null;
 				
-				if (fileType == null || !fileType.startsWith("image")) {
-					if (session.getAttribute("certificationPic") == null) {
-						errorMsgs.add("上傳證照圖片檔案格式有誤");  // 既無上傳過 這次也沒有
-					} else {
+				if (fileType.equals("application/octet-stream")) {
+					//沒上傳
+					if (session.getAttribute("certificationPic") != null) {  // 卻有之前資料
 						certificationPic = (byte[]) session.getAttribute("certificationPic");
 					}
-				} else {
+				} else if (fileType.startsWith("image")) {
 					in = part.getInputStream();
 					certificationPic = new byte[in.available()];
 					in.read(certificationPic);
 					in.close();
 					session.setAttribute("certificationPic", certificationPic);
-				}
+				} else {  
+					// 上傳非圖檔
+					errorMsgs.add("上傳證照圖片檔案格式有誤" + fileType);
+					}
+						
 				String comment = req.getParameter("comment");
 				
 				PartyMemberVO pm1 = new PartyMemberVO();
@@ -245,7 +248,7 @@ public class PartyServlet extends HttpServlet {
 				
 			} catch (Exception e) {
 				errorMsgs.add("報名失敗: " + e.getMessage());
-				System.out.println("partyservlet#248= " + e.getMessage());
+				System.out.println("partyservlet #submitRegistration = " + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/party/partyList.jsp");
 				failureView.forward(req, res);
 			}
@@ -260,10 +263,10 @@ public class PartyServlet extends HttpServlet {
 			try {
 				Integer partyHost = Integer.parseInt(req.getParameter("partyHost"));  // hidden input
 				String partyTitle = req.getParameter("partyTitle");
-				String partyTitleReg = "^[(\\u4e00-\\u9fa5)(a-zA-Z0-9_)]{2,}$";
+				String partyTitleReg = "^[(\\u4e00-\\u9fa5)(a-zA-Z0-9,!@#$%^&*()_+=)\\/?<>;:\'\"|.]{2,}$";
 				
 				if (partyTitle == null || partyTitle.trim().length() == 0) {
-					errorMsgs.add("標題不可空白!");
+					errorMsgs.add("標題不可空白, 或是包含 [] {}");
 				} else if (!partyTitle.matches(partyTitleReg)) {
 					errorMsgs.add("標題至少要有兩個中/英文字");
 				}
@@ -314,9 +317,9 @@ public class PartyServlet extends HttpServlet {
 				pv1.setStatus(status);
 				
 				if (!errorMsgs.isEmpty()) {
-					// 如果報名有輸入錯誤, 須回傳當下已填寫的partyVO
+					// 如果發起內容有輸入錯誤, 須回傳當下已填寫的partyVO
 					req.setAttribute("partyVO", pv1); 
-					RequestDispatcher failureView = req.getRequestDispatcher("/party/partyRegister.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/party/HostParty.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -332,13 +335,94 @@ public class PartyServlet extends HttpServlet {
 			
 			} catch (Exception e) {
 				errorMsgs.add("發起揪團失敗: " + e.getMessage());
-				System.out.println("partyservlet#335= " + e.getMessage());
+				System.out.println("partyservlet #readyToHost = " + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/party/HostParty.jsp");
 				failureView.forward(req, res);
 			}
 		}
 		
+// ================================= 使用者(會員)後台 ==================================
+
+		//使用者 查詢自己主揪的團 細節/更改/審核參加資格
+		if ("partyIHostDetail".equals(action)) {
+			Integer partySN = Integer.parseInt(req.getParameter("partySN"));  // hidden input
+			PartyVO partyVO = partySvc.findByPartySN(partySN);
+			req.setAttribute("partyVO", partyVO);
+			
+			List<PartyMemberVO> partyMembers = partyMemberSvc.findByPartySN(partySN);
+			req.setAttribute("partyMembers", partyMembers);
+			
+			RequestDispatcher successView = req.getRequestDispatcher("/party/partyIHostDetail.jsp");
+			successView.forward(req, res);
+		}
 		
+		//使用者 放棄修改 自己主揪的團 => 用前端處理 history.back()
+//				if ("goBackToPartyIHost".equals(action)) {
+//					RequestDispatcher successView = req.getRequestDispatcher("/party/partyIHost.jsp");
+//					successView.forward(req, res);
+//				}
+		
+		//使用者 審核團員名單 => AJAX呼叫controller
+		if ("updatePartyMemberStatus".equals(action)) {
+			List<String> errorMsgs2 = new LinkedList<String>();
+			req.setAttribute("errorMsgs2", errorMsgs2);
+			
+			try {
+				Integer partyMemberSN = Integer.parseInt(req.getParameter("partyMemberSN"));
+				String status = req.getParameter("status");
+				Integer partySN = Integer.parseInt(req.getParameter("partySN"));			
+				//接受或拒絕 更新狀態
+				partyMemberSvc.updateStatus(partyMemberSN, status);
+	
+				int nowSize = partyMemberSvc.findByPartySNAndStatus(partySN, "1").size();
+				int partyMinSize = partySvc.findByPartySN(partySN).getPartyMinSize();
+	//			System.out.println("核可人數= " + nowSize);
+	//			System.out.println("最低人數= " + partyMinSize);
+				
+				PartyVO partyVO = partySvc.findByPartySN(partySN);
+	//待補	判斷人數足夠變更狀態!
+				if (nowSize == partyMinSize) {
+					partyVO.setStatus("1");
+					partySvc.update(partyVO);
+					out.print("full");
+				} else {
+					out.print("continue");
+				}
+				// 前端顯示會員已被接受/拒絕 => 改用AJAX
+	//					Integer partySN = Integer.parseInt(req.getParameter("partySN"));
+	//					PartyVO partyVO = partySvc.findByPartySN(partySN);
+	//					req.setAttribute("partyVO", partyVO);
+				
+	//					List<PartyMemberVO> partyMembers = partyMemberSvc.findByPartySN(partySN);
+	//					req.setAttribute("partyMembers", partyMembers);
+				
+	//					RequestDispatcher successView = req.getRequestDispatcher("/party/partyIHostDetail.jsp");
+	//					successView.forward(req, res);
+			} catch (Exception e) {
+				errorMsgs2.add("審核報名會員是否通過/拒絕 失敗: " + e.getMessage());
+				System.out.println("partyservlet #updatePartyMemberStatus= " + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/party/partyIHost.jsp");
+				failureView.forward(req, res);
+			}
+				
+		}
+		
+		//使用者 查詢自己參加的揪團細節 
+		if ("partyIJoinDetail".equals(action)) {
+			try {
+				Integer partySN = Integer.parseInt(req.getParameter("partySN"));  // hidden input
+				PartyVO partyVO = partySvc.findByPartySN(partySN);
+				req.setAttribute("partyVO", partyVO);
+				
+				RequestDispatcher successView = req.getRequestDispatcher("/party/partyDetail.jsp");
+				successView.forward(req, res);
+			} catch (Exception e) {
+				System.out.println("partyservlet #partyIJoinDetail = " + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/party/partyIJoin.jsp");
+				failureView.forward(req, res);
+			}
+		}
+
 		
 // 跳出Party相關記得把session.invalidate();
 		
@@ -375,10 +459,10 @@ public class PartyServlet extends HttpServlet {
 			
 		}
 		
-		//管理者 查看內容準備修改
+		//管理者 查看內容 前往修改
 		if ("updateParty".equals(action)) {
 			
-			Integer partySN = Integer.parseInt(req.getParameter("partySN"));
+			Integer partySN = Integer.parseInt(req.getParameter("partySN"));  //hidden input
 			PartyVO partyVO = partySvc.findByPartySN(partySN);
 			req.setAttribute("partyVO", partyVO);
 			
@@ -387,108 +471,99 @@ public class PartyServlet extends HttpServlet {
 			
 		}
 		
-//未完成     //管理者 確認修改
+//未完成日期部分
+		//管理者 及 會員後台 確認修改
 		if ("submitUpdate".equals(action)) {
-			Integer partySN = Integer.parseInt(req.getParameter("partySN").trim());
-			Integer partyHost = Integer.parseInt(req.getParameter("partyHost").trim());
-			String partyTitle = req.getParameter("partyTitle");
-			Date startDate = Date.valueOf(req.getParameter("startDate"));
-			Date endDate = Date.valueOf(req.getParameter("endDate"));
-			Date regDate = Date.valueOf(req.getParameter("regDate"));
-			Date closeDate = Date.valueOf(req.getParameter("closeDate"));
-			Integer partyMinSize = Integer.parseInt(req.getParameter("partyMinSize").trim());
-			Integer partyLocation = Integer.parseInt(req.getParameter("partyLocation").trim());
-			String partyDetail = req.getParameter("partyDetail");
-			String status = req.getParameter("status");
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
 			
-			PartyVO pv1 = new PartyVO();
-			pv1.setPartySN(partySN);
-			pv1.setPartyHost(partyHost);
-			pv1.setPartyTitle(partyTitle);
-			pv1.setStartDate(startDate);
-			pv1.setEndDate(endDate);
-			pv1.setRegDate(regDate);
-			pv1.setCloseDate(closeDate);
-			pv1.setPartyMinSize(partyMinSize);
-			pv1.setPartyLocation(partyLocation);
-			pv1.setPartyDetail(partyDetail);
-			pv1.setStatus(status);
-			
-			partySvc.update(pv1);
-			
-			RequestDispatcher successView = req.getRequestDispatcher("/party/partyIHost.jsp");
-			successView.forward(req, res);
+			try {
+				Integer partySN = Integer.parseInt(req.getParameter("partySN").trim());  // hidden input
+				Integer partyHost = Integer.parseInt(req.getParameter("partyHost").trim());  // hidden input
+				
+				String partyTitle = req.getParameter("partyTitle");
+				String partyTitleReg = "^[(\\u4e00-\\u9fa5)(a-zA-Z0-9)]{2,}$";
+				if (partyTitle == null || partyTitle.trim().length() == 0) {
+					errorMsgs.add("標題不可空白!");
+				} else if (!partyTitle.matches(partyTitleReg)) {
+					errorMsgs.add("標題至少要有兩個中/英文字");
+				}
+				
+				Date startDate = null;
+				try {
+					startDate = Date.valueOf(req.getParameter("startDate"));
+				} catch (IllegalArgumentException e) {
+					errorMsgs.add("請輸入活動開始日期");
+				}
+				
+				Date endDate = null;
+				try {
+					endDate = Date.valueOf(req.getParameter("endDate"));
+				} catch (IllegalArgumentException e) {
+					errorMsgs.add("請輸入活動結束日期");
+				}
+				
+				Date regDate = null;
+				try {
+					regDate = Date.valueOf(req.getParameter("regDate"));
+				} catch (IllegalArgumentException e) {
+					errorMsgs.add("請輸入開放報名日期");
+				}
+				
+				Date closeDate = null;
+				try {
+					closeDate = Date.valueOf(req.getParameter("closeDate"));
+				} catch (IllegalArgumentException e) {
+					errorMsgs.add("請輸入截止報名日期");
+				}
+				
+				Integer partyMinSize = Integer.parseInt(req.getParameter("partyMinSize").trim());  // 下拉式選單
+				Integer partyLocation = Integer.parseInt(req.getParameter("partyLocation").trim());  // 下拉式選單
+				String partyDetail = req.getParameter("partyDetail");  // 可填可不填
+				String status = req.getParameter("status");  // 下拉式選單
+				
+				PartyVO pv1 = new PartyVO();
+				pv1.setPartySN(partySN);
+				pv1.setPartyHost(partyHost);
+				pv1.setPartyTitle(partyTitle);
+				pv1.setStartDate(startDate);
+				pv1.setEndDate(endDate);
+				pv1.setRegDate(regDate);
+				pv1.setCloseDate(closeDate);
+				pv1.setPartyMinSize(partyMinSize);
+				pv1.setPartyLocation(partyLocation);
+				pv1.setPartyDetail(partyDetail);
+				pv1.setStatus(status);
+				
+				if (!errorMsgs.isEmpty()) {
+					// 如果修改內容有輸入錯誤, 須回傳當下已填寫的partyVO
+					req.setAttribute("partyVO", pv1); 
+					RequestDispatcher failureView = req.getRequestDispatcher("/party/partyManageDetail.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+				
+				partySvc.update(pv1);
+				
+				// 跳轉回總列表
+				errorMsgs.add("修改成功!");
+				RequestDispatcher successView = req.getRequestDispatcher("/party/partyManage.jsp");
+				successView.forward(req, res);
+				
+			} catch (Exception e) {
+				errorMsgs.add("管理者後台修改揪團失敗: " + e.getMessage());
+				System.out.println("partyservlet #submitUpdate = " + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/party/partyManage.jsp");
+				failureView.forward(req, res);
+			}
 		}
 		
-		//管理者 放棄修改 返回前頁
-		if ("goBackToManage".equals(action)) {
-			RequestDispatcher successView = req.getRequestDispatcher("/party/partyManage.jsp");
-			successView.forward(req, res);
-		}
-		
-		
-// ================================= 使用者(會員)後台 ==================================
-		
-		//使用者 查詢自己主揪的團 細節/更改/審核參加資格
-		if ("partyIHostDetail".equals(action)) {
-			Integer partySN = Integer.parseInt(req.getParameter("partySN"));
-			PartyVO partyVO = partySvc.findByPartySN(partySN);
-			req.setAttribute("partyVO", partyVO);
-			
-			List<PartyMemberVO> partyMembers = partyMemberSvc.findByPartySN(partySN);
-			req.setAttribute("partyMembers", partyMembers);
-			
-			RequestDispatcher successView = req.getRequestDispatcher("/party/partyIHostDetail.jsp");
-			successView.forward(req, res);
-		}
-		
-		//使用者 放棄修改 自己主揪的團 => 用前端處理 history.back()
-//		if ("goBackToPartyIHost".equals(action)) {
-//			RequestDispatcher successView = req.getRequestDispatcher("/party/partyIHost.jsp");
+		//管理者 放棄修改 返回前頁 => 改用前端直接導向
+//		if ("goBackToManage".equals(action)) {
+//			RequestDispatcher successView = req.getRequestDispatcher("/party/partyManage.jsp");
 //			successView.forward(req, res);
 //		}
 		
-		//使用者 審核自己主揪的團
-		if ("updatePartyMemberStatus".equals(action)) {
-			Integer partyMemberSN = Integer.parseInt(req.getParameter("partyMemberSN"));
-			String status = req.getParameter("status");
-			Integer partySN = Integer.parseInt(req.getParameter("partySN"));			
-			//接受或拒絕 更新狀態
-			partyMemberSvc.updateStatus(partyMemberSN, status);
-
-			System.out.println("核可人數= " + partyMemberSvc.findByPartySNAndStatus(partySN, "1").size());
-			System.out.println("最低人數= " + partySvc.findByPartySN(partySN).getPartyMinSize());
-			
-			PartyVO partyVO = partySvc.findByPartySN(partySN);
-//待補	判斷人數足夠變更狀態!
-			if (partyMemberSvc.findByPartySNAndStatus(partySN, "1").size() == partyVO.getPartyMinSize()) {
-				partyVO.setStatus("1");
-				partySvc.update(partyVO);
-			}
-			
-			//以下改用AJAX
-//			Integer partySN = Integer.parseInt(req.getParameter("partySN"));
-//			PartyVO partyVO = partySvc.findByPartySN(partySN);
-//			req.setAttribute("partyVO", partyVO);
-			
-//			List<PartyMemberVO> partyMembers = partyMemberSvc.findByPartySN(partySN);
-//			req.setAttribute("partyMembers", partyMembers);
-			
-//			RequestDispatcher successView = req.getRequestDispatcher("/party/partyIHostDetail.jsp");
-//			successView.forward(req, res);
-
-//如果需要錯誤判斷  out.print("qq"); 
-			
-		}
-		//使用者 查詢自己參加的揪團細節 
-		if ("partyIJoinDetail".equals(action)) {
-			Integer partySN = Integer.parseInt(req.getParameter("partySN"));
-			PartyVO partyVO = partySvc.findByPartySN(partySN);
-			req.setAttribute("partyVO", partyVO);
-			
-			RequestDispatcher successView = req.getRequestDispatcher("/party/partyDetail.jsp");
-			successView.forward(req, res);
-		}
 
 	}
 }

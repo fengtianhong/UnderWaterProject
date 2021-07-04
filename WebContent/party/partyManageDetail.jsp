@@ -14,6 +14,9 @@
 <%@ include file="../share/backend/Bheader.file" %>
 
 <h2>揪團後台修改</h2>
+<c:forEach var="msg" items="${errorMsgs}">
+	<section class="msg">${msg}</section>
+</c:forEach>
 <form method="post" action="<%=request.getContextPath()%>/party/party.do">
 	<table>
 		<tr>
