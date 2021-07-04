@@ -11,7 +11,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>顯示所有商品</title>
+<title>商品~單一類別</title>
 <link rel="stylesheet" href="../share/index.css">
 <link rel="stylesheet" href="../vendors/bootstrap/css/bootstrap.min.css">
 
@@ -51,16 +51,6 @@ margin: 0 auto;
 <body>
 <jsp:include page="../share/navbar.jsp" flush="true" />
 	<div class="front">
-	<table id="table-1">
-		<tr>
-			<td>
-				<h3>所有商品資料</h3>
-				<h4>
-					<a href="ft_searchProduct.jsp">回商城查詢首頁</a>
-				</h4>
-			</td>
-		</tr>
-	</table>
 
 	<c:if test="${not empty errorMsgs}">
 		<font style="color: red">請修正以下錯誤:</font>
@@ -70,6 +60,31 @@ margin: 0 auto;
 			</c:forEach>
 		</ul>
 	</c:if>
+	
+	<a href="<%=request.getContextPath()%>/product/ft_listDiscountProduct.jsp">優惠專區</a>
+	<a href="<%=request.getContextPath()%>/product/ft_listAllProduct.jsp">所有商品</a><br>
+	<tr>		    			   
+		<td>
+		    <b>請選擇類別:</b>
+		    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/product_user.do">
+		       <select size="1" name="productClass">
+		       
+		       <jsp:useBean id="productVO" scope="page" class="com.product.model.ProductVO" />
+					<option value="蛙鞋">蛙鞋</option>
+					<option value="呼吸管">呼吸管</option>
+					<option value="面鏡">面鏡</option>
+					<option value="防寒曬衣物">防寒曬衣物</option>
+					<option value="氣瓶">氣瓶</option>
+					<option value="照明燈">照明燈</option>
+					<option value="其他配件">其他配件</option>											
+		       </select>
+		       
+		       <input type="hidden" name="action" value="getProductByClass">
+		       <input type="submit" value="送出">
+		    </FORM>
+		</td>
+	</tr>
+	<hr>
 	
 	<jsp:include page="/shoppingCar/Cart.jsp" flush="true" />
 	<table>
@@ -111,16 +126,18 @@ margin: 0 auto;
 				<td>${productVO.ratingPoint}</td>
 				<td>${productVO.ratingNumber}</td>
 				
-				<td><div align="center">購買數量:<input type="number" name="productQuantity" min="1" max="9999" value=1></div></td>
-      			<td><div align="center">       <input type="submit" name="Submit" value="加入購物車"></div></td>
+				<td><div align="center">購買數量:<input type="number" name="productQuantity" min="1" max="9999" value=1></div><br>
+      			<div align="center">       <input type="submit" name="Submit" value="加入購物車"></div></td>
 			</tr>
 				<input type="hidden" name="productSN" value="${productVO.productSN}">			
       			<input type="hidden" name="action" value="ADD">
 			</FORM>    		
 		</c:forEach>
 	</table>
+	
 	</div>
 	<%-- <%@ include file="page2.file" %> --%>
+	
 <jsp:include page="../share/footer.jsp" flush="true" />
 </body>
 </html>

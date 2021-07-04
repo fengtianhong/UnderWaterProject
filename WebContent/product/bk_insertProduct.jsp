@@ -11,18 +11,14 @@
 	<%@ include file="../share/backend/Bmeta.file" %>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>商品新增頁面</title>
-
+    
+<title>新增商品</title>
 </head>
+
 <body>
 <%@ include file="../share/backend/Bheader.file" %>
-
-	<div class="container">
-		<table id="table-1">
-				<tr><td><a href="backstageManage.jsp">回商品後台管理</a></td></tr>	
-		</table>
-	
-		<h3>商品新增:</h3>
+	<div class="container">	
+		<h3>新增商品:</h3>
 	
 		<c:if test="${not empty errorMsgs}">
 			<font style="color: red">請修正以下錯誤:</font>
@@ -33,7 +29,7 @@
 			</ul>
 		</c:if>
 	
-		<FORM METHOD="post" ACTION="product.do" name="form1" enctype="multipart/form-data">
+		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/product.do" name="form1" enctype="multipart/form-data">
 			<table>
 				<tr>
 					<td>商品類別:</td>
@@ -66,11 +62,9 @@
 				<tr>	
 					<td>商品狀態:</td>
 					<td><input type="radio" name="productStatus" id="st1" value="上架"			
-					<%=(productVO == null) ? "" : productVO.getProductStatus().contains("上架") ? "checked" : ""%>/>
-	
-	<%-- 				<%=(productVO == null) ? "" : "上架".equals(productVO.getProductStatus()) ? "checked" : ""%>/> --%>
-					
+					<%=(productVO == null) ? "" : productVO.getProductStatus().contains("上架") ? "checked" : ""%>/>		
 					<label for="st1">上架</label>
+					
 					<input type="radio" name="productStatus" id="st2" value="下架"
 					<%=(productVO == null) ? "" : productVO.getProductStatus().contains("下架") ? "checked" : ""%>/>
 					<label for="st2">下架</label><br></td>
@@ -134,10 +128,10 @@
 			<input type="submit" value="新增">
 	
 		</FORM>
-		
+	</div>
 <%@ include file="../share/backend/Bfooter.file" %>
-</body>
 <%@ include file="../share/backend/Bjs.file" %>
+</body>
 
 		<script>
 			window.addEventListener("DOMContentLoaded", function() {

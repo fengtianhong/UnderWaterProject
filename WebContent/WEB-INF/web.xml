@@ -39,6 +39,7 @@
 		<url-pattern>/orderforgroup/GroupOrder.jsp</url-pattern>
 		<url-pattern>/orderforgroup/Success.jsp</url-pattern>
 		<url-pattern>/customerreply/CSchat.jsp</url-pattern>
+		<url-pattern>/shoppingCar/Checkout.jsp</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
