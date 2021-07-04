@@ -19,6 +19,8 @@ public class MemberDAO implements MemberDAO_interface{
 	private static final String UPDATE_PASSWORD_ACCOUNT = "UPDATE Member SET pwd=? WHERE account = ?";
 	
 	
+	private static final String PWDUPDATE_STMT = "UPDATE Member SET pwd=? WHERE userID = ?";
+	private static final String FINDBYSEARCH_STMT = "SELECT * FROM Member where account like ? or nickname like ? or username like ? order by account";
 	public static void main(String[] args) {
 //		測試insert
 //		MemberVO vo = new MemberVO();
@@ -548,7 +550,82 @@ public void personInfoUpdate(MemberVO MemberVO) {
 
 }
 
+
+@Override
+public void pwdUpdate(MemberVO MemberVO) {
+	Connection con = null;
+	PreparedStatement pstmt = null;
 	
+	try {
+		con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+		pstmt = con.prepareStatement(PWDUPDATE_STMT);
+		pstmt.setString(1, MemberVO.getPwd());
+		pstmt.setInt(2, MemberVO.getUserID());
+		pstmt.executeUpdate();
+	}catch(Exception e) {
+		e.printStackTrace();
+	}finally {
+		if (pstmt != null) {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		if (con != null) {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+}
+
+public List<MemberVO> findBySearch(String account, String nickName, String userName){
+	Connection con = null;
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+	MemberVO vo = null;
+	List<MemberVO> list = new ArrayList<MemberVO>();
+	try {
+		con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+		pstmt = con.prepareStatement(FINDBYSEARCH_STMT);
+		
+		pstmt.setString(1, "%" + account + "%");
+		pstmt.setString(2, "%" + nickName + "%");
+		pstmt.setString(3, "%" + userName + "%");
+		rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			vo = new MemberVO();
+			vo.setAccount(rs.getString("account"));
+			vo.setNickName(rs.getString("nickName"));
+			vo.setUserName(rs.getString("userName"));
+			vo.setUserID(rs.getInt("userID"));
+			list.add(vo);
+		}
+	}catch(Exception e) {
+		e.printStackTrace();
+	}finally {
+		if (pstmt != null) {
+			try {
+				pstmt.close();
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
+		}
+		
+		if (con != null) {
+			try {
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	return list;
+}
 	
 	
 	

@@ -11,7 +11,6 @@ public class LoginFilter implements Filter{
 	private FilterConfig config;
 	
 	public void init(FilterConfig config) {
-		System.out.println("init");
 		this.config = config;
 	}
 	

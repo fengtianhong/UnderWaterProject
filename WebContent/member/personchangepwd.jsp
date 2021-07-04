@@ -32,7 +32,7 @@
 									<a class="list-group-item list-group-item-action" href="personinfo.jsp" role="tab"> 會員資訊 </a> 
 									<a class="list-group-item list-group-item-action" href="personinfochange.jsp" role="tab"> 資訊變更 </a> 
 									<a class="list-group-item list-group-item-action active" href="personchangepwd.jsp" role="tab"> 密碼變更</a> 
-									<a class="list-group-item list-group-item-action" href="#" role="tab"> 待新增 </a> 
+									<a class="list-group-item list-group-item-action" href="searchmember.jsp" role="tab"> 尋找會員 </a> 
 									<a class="list-group-item list-group-item-action" href="#" role="tab"> 待新增</a> 
 									<a class="list-group-item list-group-item-action" href="#" role="tab"> 待新增 </a> 
 									<a class="list-group-item list-group-item-action" href="#" role="tab"> 待新增 </a> 
@@ -46,7 +46,14 @@
 								<div id="password" role="tabpanel">
 									<div class="card">
 										<div class="card-body">
-											<h5 class="card-title">變更密碼</h5>
+
+												<c:if test="${not empty successMsgs}">
+													<font style="color:red"></font>
+													<c:forEach var="message" items="${successMsgs}">
+														<a style="color:red">${message}</a>
+													</c:forEach>
+												</c:if>
+
 											<form action="PersonChangeServlet.do" method="post">
 												<div class="form-group">
 													<label for="inputPasswordCurrent">原始密碼</label>

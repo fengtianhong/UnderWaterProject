@@ -43,7 +43,7 @@ public class WebManagerSystemLoginServlet extends HttpServlet {
 		if(vo == true) {
 			session.setAttribute("account", account);
 			String location = (String)session.getAttribute("location");
-			System.out.println("有跑到");
+//			System.out.println("有跑到");
 			if(location != null) {
 				session.removeAttribute("location");
 				res.sendRedirect(location);
