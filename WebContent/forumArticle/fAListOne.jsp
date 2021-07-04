@@ -22,11 +22,11 @@
 %>
 
 
-<%-- 
+
 <%=articleSN %>
 <%=list == null %>
 <%=userID %> 
---%>
+<%=cmtSN %>
 
 
 
@@ -50,7 +50,7 @@
 			.red {
 				position: relative;
 			    top: 24px;
-			    left: 780px;
+			    left: 750px;
 			}
 			
 		</style>
@@ -86,7 +86,7 @@
 								<form method="post" action="forumArticle.do">
 									<input type="submit" value="刪除">
 									<input type="hidden" name="articleSN" value="<%=articleSN%>">
-									<input type="hidden" name="action" value="deleteArticle">
+									<input type="hidden" name="action" value="hiddenAtricle">
 								</form>
 							</c:if>
 						</span>
@@ -124,11 +124,12 @@
 								</c:if>
 								
 								<c:if test="${userID == forumCommentVO.userID}">
-										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/forumComment/forumComment.do" name="form2">
+									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/forumComment/forumComment.do" name="form2">
 										<input type="hidden" name="action" value="update">
 										<input type="hidden" name="cmtSN" value="${forumCommentVO.cmtSN}">
 										<input type="hidden" name="articleSN" value="${forumCommentVO.articleSN}">
 										<input type="hidden" name="userID" value="${forumCommentVO.userID}">
+										<textarea name="cmtText" rows="4" cols="52">${forumCommentVO.getCmtText()}</textarea>
 										<input type="submit" value="編輯">
 									</FORM>
 								</c:if>
@@ -151,11 +152,6 @@
 				</FORM>
 					<input type="button" onclick="window.location.href='<%=request.getContextPath()%>/forumArticle/forumArticle.jsp'"
 							value="回文章列表" style="border-radius: 7px; margin-bottom: 20px; margin-left: 20px;">
-							
-<%-- 					<input type="button" onclick="window.location.href='<%=request.getContextPath()%>/forumArticle/forumArticleUpdate.jsp'"
-							value="編輯文章" style="border-radius: 7px; margin-bottom: 20px; margin-left: 20px;"> --%>
-							
-					
 			</div>	
 				
 		<%@ include file="page2frontend.file" %>

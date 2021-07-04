@@ -91,9 +91,14 @@ public class ForumCommentServlet extends HttpServlet{
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);			
 			
+			HttpSession session = req.getSession();
+			
 			try {
 //				接收
-				Integer articleSN = new Integer(req.getParameter("articleSN"));
+//				Integer cmtSN =  (Integer)session.getAttribute("cmtSN");
+				Integer articleSN = (Integer)session.getAttribute("articleSN");
+//				Integer userID =  (Integer)session.getAttribute("userID");
+//				Integer articleSN = new Integer(req.getParameter("articleSN"));
 //				查詢
 				ForumCommentService forumCommentSvc = new ForumCommentService();
 				List<ForumCommentVO> forumCommentVO = forumCommentSvc.getOneForumComment(articleSN);
@@ -118,6 +123,7 @@ public class ForumCommentServlet extends HttpServlet{
 			
 			try {
 //				接收
+				Integer userID =  (Integer)session.getAttribute("userID");
 				Integer cmtSN = new Integer(req.getParameter("cmtSN").trim());
 				String cmtText = req.getParameter("cmtText");
 		
@@ -125,13 +131,8 @@ public class ForumCommentServlet extends HttpServlet{
 					errorMsgs.add("評論內容請勿空白");
 				} 			
 				
-				Integer userID = new Integer(req.getParameter("userID").trim());
+//				Integer userID = new Integer(req.getParameter("userID").trim());
 				Integer articleSN = new Integer(req.getParameter("articleSN").trim());
-				
-				System.out.println(cmtSN);
-				System.out.println(articleSN);
-				System.out.println(userID);
-				System.out.println(cmtText);
 				
 				ForumCommentVO forumCommentVO = new ForumCommentVO();
 				forumCommentVO.setCmtSN(cmtSN);

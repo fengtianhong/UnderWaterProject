@@ -86,11 +86,8 @@
 								<td>${article.articleTitle}</td>
 								<td>${article.publishedDate}</td>
 								<c:if test="${article.articleStatus == true}">
-									<td>正常顯示</td>
-								</c:if>
-								<c:if test="${article.articleStatus == false}">
-									<td>不正常</td>
-								</c:if>								
+									<td>正常</td>
+								</c:if>							
 								<td>
 									<form method="post" action="forumArticle.do">
 										<input type="submit" value="修改">
