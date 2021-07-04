@@ -169,6 +169,26 @@
                     </div>
                 </div>
             </li>
+            
+             <!-------------------------- Nav 商品管理 -------------------------->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#mallproduct"
+                    aria-expanded="true" aria-controls="mallproduct">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>商品管理</span>
+                </a>
+                <div id="mallproduct" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Backend:</h6>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/product/bk_insertProduct.jsp">新增商品</a>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/product/bk_updateProduct_select.jsp">修改商品</a>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/order_and_list/order_and_list.jsp">訂單與明細查詢</a>              
+                        <div class="collapse-divider"></div>
+                        <h6 class="collapse-header">Other Pages:</h6>
+                    </div>
+                </div>
+            </li>   
+             <!--------------------------end of  Nav 商品管理 -------------------------->
 
  		
             <!-- Nav Item - Charts -->

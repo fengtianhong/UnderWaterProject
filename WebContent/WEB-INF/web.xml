@@ -41,7 +41,6 @@
 		<url-pattern>/chat/*</url-pattern>
 		<url-pattern>/chat/*</url-pattern>
 		<url-pattern>/chat/*</url-pattern>
-		<url-pattern>/product/ft_searchProduct.jsp</url-pattern>
 		<url-pattern>/shoppingCar/Checkout.jsp</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
