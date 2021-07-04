@@ -251,15 +251,38 @@ public class MemberListServlet extends HttpServlet {
 			}
 			
 			
-			if("search".equals(action)) {
-				System.out.println("有跑到");
+		if("search".equals(action)) {
+//			System.out.println("search有跑到");
+			List<String> errorMsgs = new LinkedList<String>();
+			
+			try {
+				req.setAttribute("errorMsgs", errorMsgs);
+				MemberService memberSvc = new MemberService();
+				String keyword = req.getParameter("keyword");
+				String url = "/member/webManagerSystem.jsp";
+				String account = req.getParameter("keyword");
+				String nickName = req.getParameter("keyword");
+				String userName = req.getParameter("keyword");
+				String address = req.getParameter("keyword");
+				System.out.println(keyword);
+				List<MemberVO> list = memberSvc.managerFindBySearch(account, nickName, userName, address);
+				System.out.println(list);
+				if(list.size() == 0) {
+					errorMsgs.add("查無資料");
+					RequestDispatcher failureView = req.getRequestDispatcher(url);
+					failureView.forward(req, res);
+					return;
+				}else {
+					req.setAttribute("list", list);
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
+					return;
+				}
+			}catch(Exception e){
+				
 			}
 			
-		
-		
-		
-		
-		
+		}
 		
 	}
 
