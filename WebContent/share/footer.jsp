@@ -32,6 +32,7 @@
 	<a class="btn btn-primary btn-sm text-uppercase arrow-up" href="#"><i class="fas fa-arrow-up fa-lg"></i></a>
 
 <!-- body 結束標籤之前，載入Bootstrap 的 JS 及其相依性安裝(jQuery、Popper) -->
+<script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
 <script src="../vendors/jquery/jquery-3.5.1.min.js"></script>
 <script src="../vendors/popper/popper.min.js"></script>
 <script src="../vendors/bootstrap/js/bootstrap.min.js"></script>

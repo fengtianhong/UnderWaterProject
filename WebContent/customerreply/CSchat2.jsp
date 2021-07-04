@@ -12,17 +12,20 @@
 <style type="text/css">
 
 .bot-container{
-	display:none;
+	transition-duration: 0.4s;
     position: fixed;
     bottom: 50px;
     right: 80px;
-	height: 500px;
-	width: 300px;
-	border-radius: 20px;
-	overflow: hidden;
+    height: 0;
+    width: 0;
+    border-radius: 20px;
+    overflow: hidden;
 }
 .-on{
 	display: block;
+    transform: scale(1, 1);
+    height: 500px;
+    width: 300px;
 }
 .statusOutput {
 	background: steelblue;
