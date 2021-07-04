@@ -14,6 +14,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<%@ include file="../share/backend/Bmeta.file" %>
 		<meta charset="UTF-8">
 		<title>查詢標題選項：</title>
 		
@@ -28,7 +29,7 @@
 		
 	</head>
 	<body>
-	
+		<%@ include file="../share/backend/Bheader.file" %>
 		<table id="listOnepg">
 			<tr>
 				<td>
@@ -48,5 +49,7 @@
 				<td><%=articleTitleOptVO.getArticleTitleOptText()%></td>
 			</tr>
 		</table>
+	<%@ include file="../share/backend/Bfooter.file" %>
 	</body>
+	<%@ include file="../share/backend/Bjs.file" %>
 </html>

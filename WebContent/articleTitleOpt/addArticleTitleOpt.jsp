@@ -11,6 +11,7 @@
 
 <html>
 	<head>
+		<%@ include file="../share/backend/Bmeta.file" %>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 		<title>新增標題選項 (addArticleTitleOpt.jsp)</title>
 		
@@ -36,6 +37,7 @@
     </style>
 </head>
 <body>
+	<%@ include file="../share/backend/Bheader.file" %>
 	<table id="addpg">
 			<tr>
 				<td>
@@ -61,7 +63,7 @@
         <tr>
             <td>請在此輸入要新增的標題選項文字</td>
             <td>
-            	<input type="text" name="articleTitleOptText" size="36" value="<%= (articleTitleOptVO==null)? "輸入文字" : articleTitleOptVO.getArticleTitleOptText()%>" />
+            	<input type="text" name="articleTitleOptText" size="36" value="<%= (articleTitleOptVO==null)? "" : articleTitleOptVO.getArticleTitleOptText()%>" />
             </td>
         	<td>
         		<input type="hidden" name="action" value="insert">
@@ -72,6 +74,8 @@
         	
 	</FORM>
  
-</body>
+	<%@ include file="../share/backend/Bfooter.file" %>
+	</body>
+	<%@ include file="../share/backend/Bjs.file" %>
 
 </html>

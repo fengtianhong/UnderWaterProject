@@ -37,6 +37,11 @@
 			table {
 				/* border: 1px black solid; */
 				text-align: center;
+				table-layout:fixed;
+				word-break:break-all;
+				margin-top: 20px;
+				width: 800px;
+				margin: 10px auto;
 			}
 			tr {
 				border: 1px black solid;
@@ -44,6 +49,7 @@
 			
 			td {
 				border: 1px black solid;
+				width: 
 			}
 			
 			.content{
@@ -71,7 +77,7 @@
 				<table>
 					<tr>
 						<td>文章編號</td>
-						<td>標題選項</td>
+						<!-- <td>標題選項</td> -->
 						<td>文章標題</td>
 						<td>發布日期</td>
 						<td>文章狀態</td>
@@ -82,7 +88,7 @@
 						<c:if test="${userID == article.userID}">
 							<tr>
 								<td>${article.articleSN}</td>
-								<td>${article.articleTitleOptSN}</td>
+								<%-- <td>${article.articleTitleOptSN}</td> --%>
 								<td>${article.articleTitle}</td>
 								<td>${article.publishedDate}</td>
 								<c:if test="${article.articleStatus == true}">

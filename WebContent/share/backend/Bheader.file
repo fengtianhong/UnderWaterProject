@@ -154,6 +154,27 @@
                 </div>
             </li>   
              <!--------------------------end of  Nav 商品管理 -------------------------->
+             
+             <!-------------------------- Nav 文章管理 -------------------------->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#article"
+                    aria-expanded="true" aria-controls="article">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>文章管理</span>
+                </a>
+                <div id="article" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Backend:</h6>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/articleTitleOpt/articleTitleOptSelect.jsp">標題管理</a>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/forumArticle/uwRptReply.jsp">檢舉處理</a>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/forumArticle/uwFManage.jsp">文章管理</a>              
+                        <div class="collapse-divider"></div>
+                        <h6 class="collapse-header">Other Pages:</h6>
+                    </div>
+                </div>
+            </li>   
+             <!--------------------------end of  Nav 文章管理 -------------------------->
+             
 
  		
 

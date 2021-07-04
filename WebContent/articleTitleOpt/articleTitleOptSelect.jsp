@@ -11,6 +11,7 @@
 
 <html>
 	<head>
+	<%@ include file="../share/backend/Bmeta.file" %>
 		<meta charset="UTF-8">
 		<title>發文標題選項管理</title>
 		<style>
@@ -22,8 +23,9 @@
 				border: 2px solid;
 				margin: 0 auto;
 				text-align: center;
-				width: 400px;
+				width: 600px;
 				line-height: 20px;
+				
 			}
 			div#linkbutton {
 				border: 2px solid;
@@ -31,8 +33,8 @@
 				margin-left: auto;
 				margin-top: 3px;
 				padding: 5px;
-				width: 390px;
-				line-height: 10px;
+				width: 600px;
+				line-height: 20px;
 				text-align: center;
 			}
 		
@@ -41,7 +43,7 @@
 				margin-top: 3px;
 				border: 1px solid;
 				text-align: left;
-				width: 500px;
+				width: 600px;
 			}
 			
 			
@@ -50,6 +52,7 @@
 	</head>
 
 	<body>
+	<%@ include file="../share/backend/Bheader.file" %>
 		<div id="titlepg">
 			<h2>發文標題選項管理頁</h2>
 			<h4>此頁提供查詢功能，若需新增或更新請點下方連結前往</h4>
@@ -98,5 +101,7 @@
 			</ul>
 		</div>
 
+	<%@ include file="../share/backend/Bfooter.file" %>
 	</body>
+	<%@ include file="../share/backend/Bjs.file" %>
 </html>
