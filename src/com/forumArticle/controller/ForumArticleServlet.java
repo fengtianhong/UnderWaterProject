@@ -26,7 +26,7 @@ public class ForumArticleServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		
-		//	****************************** 1.查詢單一個 (getOne_For_Display)******************************
+//		論壇首頁 - 閱讀更多
 		//	forumArticle.jsp的請求
 		if ("getOne_For_Display".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
@@ -44,8 +44,6 @@ public class ForumArticleServlet extends HttpServlet {
 					failureView.forward(req, res);
 					return;
 				}
-				
-				
 				
 				Integer articleSN = null;
 				try {
@@ -71,7 +69,7 @@ public class ForumArticleServlet extends HttpServlet {
 					failureView.forward(req, res);
 					return;
 				}
-				//	查詢完成轉交
+				//	查詢完成轉交 - 閱讀文章內文
 				req.setAttribute("forumArticleVO", forumArticleVO); // 資料庫取出的forumArticleVO物件,存入req
 				req.setAttribute("articleSN", articleSN);
 				String url = "/forumArticle/fAListOne.jsp";
@@ -85,7 +83,7 @@ public class ForumArticleServlet extends HttpServlet {
 			}			
 		}
 		
-		//	****************************** 2-1.查詢單一個後下架 ******************************
+		//	後台使用者刪除文章
 		//	
 		if ("deleteArticle".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
@@ -99,7 +97,7 @@ public class ForumArticleServlet extends HttpServlet {
 				forumArticleSvc.deleteForumArticle(articleSN);
 				//	轉交首頁
 				req.setAttribute("articleSN", articleSN);
-				String url = "/forumArticle/forumArticle.jsp";
+				String url = "/forumArticle/bFAManage.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				//	其他錯誤處理
@@ -109,7 +107,7 @@ public class ForumArticleServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
-		//	****************************** 個人頁面下架文章 ******************************
+		//	****************************** 文章閱讀頁面下架文章 ******************************
 		//	
 		//	下架文章請求
 		if ("hiddenAtricle".equals(action)) {
@@ -137,7 +135,7 @@ public class ForumArticleServlet extends HttpServlet {
 					
 				//	修改完成後轉交
 					req.setAttribute("forumArticleVO", forumArticleVO);
-					String url = "/forumArticle/backend.jsp";
+					String url = "/forumArticle/forumArticle.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url);
 					successView.forward(req, res);
 					

@@ -38,9 +38,9 @@
 	<body>
 
 		<jsp:include page="../share/navbar.jsp" flush="true" />
-		
-		<button type="button" onclick="location.href='<%=request.getContextPath()%>/forumArticle/forumArticleInsert.jsp'">新增文章</button>
-
+		<c:if test="userID != null">
+			<button type="button" onclick="location.href='<%=request.getContextPath()%>/forumArticle/forumArticleInsert.jsp'">新增文章</button>
+		</c:if>
 		<%@ include file="page1frontend.file" %>
 		
 		<c:forEach var="forumArticleVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
