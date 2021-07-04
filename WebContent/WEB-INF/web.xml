@@ -34,12 +34,14 @@
 		<url-pattern>/party/partyIHost.jsp</url-pattern>
 		<url-pattern>/party/partyIJoin.jsp</url-pattern>
 		<url-pattern>/chat/*</url-pattern>
-		<url-pattern>/member/personinfo.jsp</url-pattern>
 		<url-pattern>/orderforgroup/AddGTOrder.jsp</url-pattern>
 		<url-pattern>/orderforgroup/GroupOrder.jsp</url-pattern>
 		<url-pattern>/orderforgroup/Success.jsp</url-pattern>
 		<url-pattern>/customerreply/CSchat.jsp</url-pattern>
 		<url-pattern>/shoppingCar/Checkout.jsp</url-pattern>
+		<url-pattern>/member/personinfo.jsp</url-pattern>
+		<url-pattern>/member/personchangepwd.jsp</url-pattern>
+		<url-pattern>/member/personchange.jsp</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
@@ -54,6 +56,7 @@
 	 
 	<filter-mapping>
 		<filter-name>WebManagerSystemLoginFilter</filter-name>
+		<url-pattern>/backend.jsp</url-pattern>
 		<url-pattern>/news/*</url-pattern>
 		<url-pattern>/member/webManagerSystem.jsp</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
