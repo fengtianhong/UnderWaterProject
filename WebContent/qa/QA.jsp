@@ -5,9 +5,12 @@
 <%@ page import="com.qa.model.*"%>
 
 <%  
+	List<QaVO> list = (List<QaVO>)request.getAttribute("listNew");
+	if(list == null) {
 		QaService qaService = new QaService();
-		List<QaVO> list = qaService.getAll();
-		pageContext.setAttribute("list", list);
+		list = qaService.getAll();
+	}
+	pageContext.setAttribute("list", list);
 %>
 
 <!DOCTYPE html>
@@ -91,7 +94,7 @@
 	<hr>
 
 	<%@ include file="page1.file" %>
-    <c:forEach var="qaVO" items="${(listNew==null)?list:listNew}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">          
+    <c:forEach var="qaVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">          
          <div class="card shadow mb-4">
            <!-- Card Header - Accordion -->
            <a href="#collapse${qaVO.questionSN}" class="d-block card-header py-2 collapsed question" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapse${orderForGroupVO.orderSN}">

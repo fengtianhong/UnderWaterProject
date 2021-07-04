@@ -27,35 +27,33 @@ public class GroupTourFilter extends HttpServlet {
 		String action = req.getParameter("action");
 		
 		if("filter".equals(action)) {
-			System.out.println("do2");
+			
 			try {
 				GroupTourService groupTourSvc = new GroupTourService();			
 				List<Integer> listK = null;
 				List<Integer> listL = null;
-//				List<Integer> listD = null;
 				List<GroupTourVO> listNew = new ArrayList<GroupTourVO>();
+				
 				
 				// keyword
 				String keyword = req.getParameter("keyword").trim();
 				if(keyword != null && keyword.length() != 0) {
 					listK = groupTourSvc.SearchKeyword(keyword);
+				}else {
+					listK = groupTourSvc.SearchAll();
 				}
 				
 				// location
 				String location = req.getParameter("location").trim();
 				if(location != null && location.length() != 0) {
-					listL = groupTourSvc.SearchLocation(location);
+					if("0".equals(location)) {
+						listL = groupTourSvc.SearchAll();
+					}else {
+						listL = groupTourSvc.SearchLocation(location);
+					}
 				}
+				req.setAttribute("location", location);		// 維持 option
 				
-//				// date 先不做
-//				Date dateStart = null;
-//				Date dateEnd = null;
-//				try {
-//					dateStart = Date.valueOf(req.getParameter("dateStart"));
-//					dateStart = Date.valueOf(req.getParameter("dateEnd"));
-//					listD = groupTourSvc.SearchDate(dateStart, dateEnd);
-//				}catch(IllegalArgumentException e) {
-//				}
 				
 				// 比對list
 				if(listK == null && listL != null) {
@@ -74,7 +72,6 @@ public class GroupTourFilter extends HttpServlet {
 					}
 				}
 				
-				System.out.println(listNew);
 				if(listNew.size() == 0) {
 					String msg = "查無行程";
 					req.setAttribute("msg", msg);
@@ -87,6 +84,7 @@ public class GroupTourFilter extends HttpServlet {
 				RequestDispatcher successView = req.getRequestDispatcher("/grouptour/frontendListAll.jsp");
 				successView.forward(req, res);
 				
+				 
 			}catch(Exception e) {
 				System.out.println("update failure"+ e.getMessage());
 				e.printStackTrace();

@@ -50,7 +50,7 @@ public class WebManagerSystemLoginServlet extends HttpServlet {
 				return;
 			}else{
 				System.out.println("進系統");
-				req.getRequestDispatcher("/member/webManagerSystem.jsp").forward(req, res);
+				req.getRequestDispatcher("/backend.jsp").forward(req, res);
 			}
 			
 						

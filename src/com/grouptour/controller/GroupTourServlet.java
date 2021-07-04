@@ -45,7 +45,8 @@ public class GroupTourServlet extends HttpServlet {
 				
 				req.setAttribute("groupTourVO", groupTourVO);
 				req.setAttribute("content", content);
-//報名用
+				
+				//報名用
 				HttpSession session = req.getSession();
 				session.setAttribute("groupTourSN", groupTourSN);
 				
@@ -84,7 +85,7 @@ public class GroupTourServlet extends HttpServlet {
 					errMsg.add("圖片讀取錯誤"+e.getMessage());
 				}
 			
-// 時間線:  報名開始-報名結束-行程開始-行程結束
+				// 時間線:  報名開始-報名結束-行程開始-行程結束
 				
 				Date regTime = null;
 				try {
@@ -212,7 +213,6 @@ public class GroupTourServlet extends HttpServlet {
 				GroupTourService groupTourSvc = new GroupTourService();
 				groupTourVO = groupTourSvc.insertGroupTour(tourName, tourPic, startTime, endTime, regTime, closeTime, pointSN, price, limitNumder, certificationLimit, status, content);
 				req.setAttribute("Msg", "新增成功");
-//				System.out.println(groupTourVO);
 
 				RequestDispatcher successView = req.getRequestDispatcher("/grouptour/addGT.jsp");
 				successView.forward(req, res);

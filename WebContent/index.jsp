@@ -114,33 +114,34 @@
 				<h2 class="section-heading text-uppercase">Portfolio</h2>
 				<h3 class="section-subheading text-muted">最完整也最品質放心的潛水相關裝備</h3>
 			</div>
+			
 			<div class="row">
-				<div class="col-lg-4 col-sm-6 mb-4">
-					<!-- Portfolio item 1-->
-					<div class="portfolio-item">
+				<div class="col-lg-4 col-sm-6 mb-4" onclick="window.location.href='<%=request.getContextPath()%>/product/ft_listAllProduct.jsp;'">
+<!-- 					Portfolio item 1 -->
+					<div class="portfolio-item1">
 						<a class="portfolio-link" data-bs-toggle="modal"
 							href="#portfolioModal1">
 							<div class="portfolio-hover">
-								<div class="portfolio-hover-content">
-									<i class="fas fa-plus fa-3x"></i>
-								</div>
+<!-- 								<div class="portfolio-hover-content"> -->
+<!-- 									<i class="fas fa-plus fa-3x"></i> -->
+<!-- 								</div> -->
 							</div> <img class="img-fluid" src="img/portfolio/suit.jpg" alt="..." />
 						</a>
 						<div class="portfolio-caption">
-							<div class="portfolio-caption-heading">潛水衣</div>
-							<div class="portfolio-caption-subheading text-muted">穿膩了一身黑嗎</div>
+							<div class="portfolio-caption-heading">每日新發現</div>
+							<div class="portfolio-caption-subheading text-muted">各大品牌任妳挑</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-4 col-sm-6 mb-4">
+				<div class="col-lg-4 col-sm-6 mb-4" onclick="window.location.href='<%=request.getContextPath()%>/product/ft_listDiscountProduct.jsp;'">
 					<!-- Portfolio item 2-->
-					<div class="portfolio-item">
+					<div class="portfolio-item2">
 						<a class="portfolio-link" data-bs-toggle="modal"
 							href="#portfolioModal2">
 							<div class="portfolio-hover">
-								<div class="portfolio-hover-content">
-									<i class="fas fa-plus fa-3x"></i>
-								</div>
+<!-- 								<div class="portfolio-hover-content"> -->
+<!-- 									<i class="fas fa-plus fa-3x"></i> -->
+<!-- 								</div> -->
 							</div> <img class="img-fluid" src="img/portfolio/watch.jpg" alt="..." />
 						</a>
 						<div class="portfolio-caption">
@@ -166,6 +167,23 @@
 						</div>
 					</div>
 				</div>
+<!-- 				<div class="col-lg-4 col-sm-6 mb-4"> -->
+<!-- 					Portfolio item 3 -->
+<!-- 					<div class="portfolio-item"> -->
+<!-- 						<a class="portfolio-link" data-bs-toggle="modal" -->
+<!-- 							href="#portfolioModal3"> -->
+<!-- 							<div class="portfolio-hover"> -->
+<!-- 								<div class="portfolio-hover-content"> -->
+<!-- 									<i class="fas fa-plus fa-3x"></i> -->
+<!-- 								</div> -->
+<!-- 							</div> <img class="img-fluid" src="img/portfolio/3.jpg" alt="..." /> -->
+<!-- 						</a> -->
+<!-- 						<div class="portfolio-caption"> -->
+<!-- 							<div class="portfolio-caption-heading">活動商品</div> -->
+<!-- 							<div class="portfolio-caption-subheading text-muted">主打明星都在這</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
 			</div>
 		</div>
 	</section>

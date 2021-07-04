@@ -150,7 +150,7 @@ public class OrderForGroupServlet extends HttpServlet {
 				}
 				
 				orderForGroupSvc.insertOrderForGroup(userID, groupTourSN, totalPrice, purchaseDate, phone, personID, birthdate);
-//
+				// 刪除報名用資料 
 				session.removeAttribute("groupTourVO");
 				session.removeAttribute("groupTourSN");
 				
@@ -290,11 +290,10 @@ public class OrderForGroupServlet extends HttpServlet {
 		if("getOne_ForOrder".equals(action)) {		// 按我要報名
 			List<String> errMsg = new LinkedList<String>();
 			req.setAttribute("errMsg", errMsg);
+			
+			// 報名用 (避免登入重導後會抓不回來)
 			HttpSession session = req.getSession();
 			Integer groupTourSN = (Integer)(session.getAttribute("groupTourSN"));
-//			Integer groupTourSN = new Integer(req.getParameter("groupTourSN"));
-			System.out.println(groupTourSN);
-			
 			GroupTourService groupTourSvc = new GroupTourService();
 			GroupTourVO groupTourVO = groupTourSvc.getOne(groupTourSN);
 			session.setAttribute("groupTourVO", groupTourVO);
@@ -309,7 +308,7 @@ public class OrderForGroupServlet extends HttpServlet {
 				}
 				
 				
-				// 證照資格判斷 (測會員資格null會發生甚麼事 0:無證照 1:OW 2:AOW)
+				// 證照資格判斷
 				try {
 					MemberService memberSvc = new MemberService();
 					MemberVO memberVO = memberSvc.getone(userID);
@@ -323,7 +322,7 @@ public class OrderForGroupServlet extends HttpServlet {
 					errMsg.add("資格不符，請確認您的證照資訊");
 				}
 				
-				// 以及判斷是否有報名過(同步在套裝行程顯示頁面)
+				// 以及判斷是否有報名過 (同步在套裝行程顯示頁面)
 				OrderForGroupService orderForGroupSvc = new OrderForGroupService();
 				List<OrderForGroupVO> list = orderForGroupSvc.getOrderByUserID(userID);
 				
