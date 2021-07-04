@@ -12,7 +12,7 @@
 <%Vector<ProductVO> buylist = (Vector<ProductVO>) session.getAttribute("shoppingcart");%>
 <%if (buylist != null && (buylist.size() > 0)) {%>
 
-<font size="+3">目前您購物車的內容如下：</font>
+<font size="+3">購物車內容如下：</font>
 
 <table border="1" width="740">
 	<tr bgcolor="#999999">
@@ -41,6 +41,10 @@
 	
 	<%}%>
 	
+<%-- 	<% else {%> --%>
+<!-- 		<h3>購物車中暫無商品 !!</h3>	 -->
+<%-- 	<%} %> --%>
+
 </table>
 
           <form name="checkoutForm" action="<%=request.getContextPath()%>/mall/shoppingCar.html" method="POST">

@@ -7,7 +7,7 @@
 	List<ProductVO> list = (List<ProductVO>) request.getAttribute("list");
 	pageContext.setAttribute("list", list);
 %>
-
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -17,8 +17,8 @@
 
 <style>
 
-a { color: #4D2078; PADDING-RIGHT: 2px; PADDING-LEFT: 2px; PADDING-BOTTOM: 2px; PADDING-TOP: 2px; background-color:#EEEBFF; height: 20px; width: 120px; text-align: center; ; border: #A498BD; border-style: outset; border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px}
-              a:hover { BORDER-RIGHT: ##605080 1px outset; PADDING-RIGHT: 2px; BORDER-TOP: #605080 1px outset; PADDING-LEFT: 2px; PADDING-BOTTOM: 2px; BORDER-LEFT: #605080 1px outset; PADDING-TOP: 2px; BORDER-BOTTOM: #605080 1px outset;background-color:#BDAAE2; height: 20px; width: 120px; text-align: center; }
+a.mall { color: #4D2078; PADDING-RIGHT: 2px; PADDING-LEFT: 2px; PADDING-BOTTOM: 2px; PADDING-TOP: 2px; background-color:#EEEBFF; height: 20px; width: 120px; text-align: center; ; border: #A498BD; border-style: outset; border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px}
+a.mall:hover { BORDER-RIGHT: ##605080 1px outset; PADDING-RIGHT: 2px; BORDER-TOP: #605080 1px outset; PADDING-LEFT: 2px; PADDING-BOTTOM: 2px; BORDER-LEFT: #605080 1px outset; PADDING-TOP: 2px; BORDER-BOTTOM: #605080 1px outset;background-color:#BDAAE2; height: 20px; width: 120px; text-align: center; }
 
 .front{
 margin: 0 auto;
@@ -64,9 +64,9 @@ margin: 0 auto;
 		</ul>
 	</c:if>
 	
-	<a href="<%=request.getContextPath()%>/product/ft_listDiscountProduct.jsp">優惠專區</a>
-	<a href="<%=request.getContextPath()%>/product/ft_listPrimeProduct.jsp">精選專區</a>
-	<a href="<%=request.getContextPath()%>/product/ft_listAllProduct.jsp">所有商品</a><br>
+	<a class="mall" href="<%=request.getContextPath()%>/product/ft_listDiscountProduct.jsp">優惠專區</a>
+	<a class="mall" href="<%=request.getContextPath()%>/product/ft_listPrimeProduct.jsp">精選專區</a>
+	<a class="mall" href="<%=request.getContextPath()%>/product/ft_listAllProduct.jsp">所有商品</a><br>
 	<tr>		    			   
 		<td>
 		    <b>商品分類 請選擇類別:</b>
