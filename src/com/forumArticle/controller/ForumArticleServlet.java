@@ -109,7 +109,7 @@ public class ForumArticleServlet extends HttpServlet {
 		}
 		//	****************************** 文章閱讀頁面下架文章 ******************************
 		//	
-		//	下架文章請求
+		//	文章內頁刪除文章
 		if ("hiddenAtricle".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);

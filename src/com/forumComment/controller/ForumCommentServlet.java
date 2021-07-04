@@ -24,6 +24,10 @@ public class ForumCommentServlet extends HttpServlet{
 		
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+		String actionDelete = req.getParameter("actionDelete");
+		String delete = "刪除";
+		String update = "編輯";
+		
 		
 //		查詢單筆
 		if ("getOne_For_Display".equals(action)) {
@@ -102,6 +106,9 @@ public class ForumCommentServlet extends HttpServlet{
 //				查詢
 				ForumCommentService forumCommentSvc = new ForumCommentService();
 				List<ForumCommentVO> forumCommentVO = forumCommentSvc.getOneForumComment(articleSN);
+				
+//				List<ForumCommentVO> forumCommentVO = forumCommentSvc.getOneForumComment(cmtSN);
+				
 //				成功後轉交
 				req.setAttribute("forumCommentVO", forumCommentVO);
 				String url = "/forumArticle/fAListOne.jsp";
@@ -115,7 +122,7 @@ public class ForumCommentServlet extends HttpServlet{
 			}
 		}
 //		更新評論
-		if ("update".endsWith(action)) {
+		if (update.equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			
@@ -212,7 +219,7 @@ public class ForumCommentServlet extends HttpServlet{
 		}
 		
 //		刪除評論
-		if ("delete".equals(action)) {
+		if (delete.equals(actionDelete)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			

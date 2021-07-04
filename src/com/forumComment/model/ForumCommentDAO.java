@@ -30,6 +30,11 @@ public class ForumCommentDAO implements ForumCommentDAO_interface{
 			"SELECT cmtSN, cmtDate, cmtText, userID, articleSN FROM ForumComment order by cmtSN";
 		private static final String GET_ONE_STMT = 
 			"SELECT  * FROM ForumComment where articleSN = ?";
+		
+//		private static final String GET_ONE_STMT = 
+//				"SELECT  * FROM ForumComment where cmtSN = ?";
+		
+		
 		private static final String DELETE = 
 			"DELETE FROM ForumComment where cmtSN = ?";
 		private static final String UPDATE = 

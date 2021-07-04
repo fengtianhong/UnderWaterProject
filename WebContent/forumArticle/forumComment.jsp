@@ -47,21 +47,10 @@
 				margin-bottom: 10px;
 			}
 			
-/* 			.red {
+			.red {
 				position: relative;
 			    top: 24px;
 			    left: 750px;
-			} */
-			
-			.infobox {
-				display: flex;
-			    align-items: flex-end;
-			    flex-direction: row;
-			    position: relative;
-			}
-			
-			.rpt {
-				margin-left: 500px
 			}
 		
 		</style>
@@ -71,11 +60,10 @@
 	<body>
 		<jsp:include page="../share/navbar.jsp" flush="true" />
 			<div id="showbox">
-				<div class="infobox" style="display:flex;" >
-					<div id="title" style="margin-left: 20px; margin-top: 20px; font-size: 24px; font-style: italic; font-weight: bold;">
-							${forumArticleVO.articleTitle}</div><br>
-							
-						<span class="rpt">
+				<div id="infobox" style="display:flex; align-items: ;" >
+					<span id="title" style="margin-left: 20px; margin-top: 20px; font-size: 24px; font-style: italic; font-weight: bold;">
+							${forumArticleVO.articleTitle}</span>
+						<span class="red">
 							<c:if test="${forumArticleVO.userID != userID }">
 								<form method="post" action="articleReport.do">
 									<input type="submit" value="檢舉">
@@ -84,7 +72,7 @@
 								</form>
 							</c:if>
 						</span>	
- 						<span class="edit">
+ 						<span class="red">
 							<c:if test="${forumArticleVO.userID == userID }">
 								<form method="post" action="forumArticle.do">
 									<input type="submit" value="編輯">
@@ -93,7 +81,7 @@
 								</form>
 							</c:if>
 						</span>	
-						<span class="delete">
+						<span class="red">
 							<c:if test="${forumArticleVO.userID == userID }">
 								<form method="post" action="forumArticle.do">
 									<input type="submit" value="刪除">
@@ -111,8 +99,8 @@
 					<jsp:useBean id="memberSvc" scope="session" class="com.member.model.MemberService" />
 					<span class="css_td">作者：${memberSvc.getone(forumArticleVO.userID).nickName}</span>
 					<span class="css_td" style=""><fmt:formatDate value="${forumArticleVO.publishedDate}" pattern="yyyy-MM-dd HH:mm:ss "/></span>
-					<%-- <span class="css_td">文章好評：${forumArticleVO.rateGCount}</span>
-					<span class="css_td">文章負評：${forumArticleVO.rateNGCount}</span> --%>
+					<span class="css_td">文章好評：${forumArticleVO.rateGCount}</span>
+					<span class="css_td">文章負評：${forumArticleVO.rateNGCount}</span>
 				</div>
 				
 				<div id="text" style="margin-left: 20px; margin-top: 20px; margin-bottom: 60px;"><h5>${forumArticleVO.articleText}</h5></div>
