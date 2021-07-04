@@ -26,9 +26,9 @@ public class ArticleReportDAO implements ArticleReportDAO_interface{
 	private static final String INSERT_STMT = 
 			"INSERT INTO ArticleReport (userID, articleSN, rptReason) VALUES (?, ?, ?)";
 	private static final String GET_ALL_STMT = 
-			"SELECT rptSN, userID, articleSN, rptReason, rptResult,reRptResult FROM ArticleReport order by rptSN";
+			"SELECT rptSN, userID, articleSN, rptReason, rptStatus,reRptResult FROM ArticleReport order by rptSN";
 	private static final String GET_ONE_STMT = 
-			"SELECT rptSN, userID, articleSN, rptReason, rptResult,reRptResult FROM ArticleReport where rptSN = ?";
+			"SELECT rptSN, userID, articleSN, rptReason, rptStatus,reRptResult FROM ArticleReport where rptSN = ?";
 	private static final String UPDATE = 
 			"UPDATE ArticleReport set reRptResult = ? where rptSN = ?";
 	
@@ -47,8 +47,6 @@ public class ArticleReportDAO implements ArticleReportDAO_interface{
 			pstmt.setInt(1, articleReportVO.getUserID());
 			pstmt.setInt(2, articleReportVO.getArticleSN());
 			pstmt.setString(3, articleReportVO.getRptReason());
-//			pstmt.setString(4, articleReportVO.getRptResult());
-//			pstmt.setString(5, articleReportVO.getReRptResult());
 			
 			pstmt.executeUpdate();
 			
@@ -132,7 +130,7 @@ public class ArticleReportDAO implements ArticleReportDAO_interface{
 				articleReportVO.setUserID(rs.getInt("userID"));
 				articleReportVO.setArticleSN(rs.getInt("articleSN"));
 				articleReportVO.setRptReason(rs.getString("rptReason"));
-				articleReportVO.setRptResult(rs.getString("rptResult"));
+				articleReportVO.setRptStatus(rs.getBoolean("rptStatus"));
 				articleReportVO.setReRptResult(rs.getString("reRptResult"));
 			}
 		} catch (SQLException se) {
@@ -184,7 +182,7 @@ public class ArticleReportDAO implements ArticleReportDAO_interface{
 				articleReportVO.setUserID(rs.getInt("userID"));
 				articleReportVO.setArticleSN(rs.getInt("articleSN"));
 				articleReportVO.setRptReason(rs.getString("rptReason"));
-				articleReportVO.setRptResult(rs.getString("rptResult"));
+				articleReportVO.setRptStatus(rs.getBoolean("rptStatus"));
 				articleReportVO.setReRptResult(rs.getString("reRptResult"));
 				list.add(articleReportVO);
 			}

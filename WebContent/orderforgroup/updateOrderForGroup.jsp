@@ -35,7 +35,7 @@ OrderForGroupVO orderForGroupVO = (OrderForGroupVO) request.getAttribute("orderF
 	}
 	.submit_btn{
 		padding-top: 20px;
-		padding-left: 50%;
+/* 		padding-left: 50%; */
 		margin-bottom: 20px;
 	}
 
@@ -51,17 +51,17 @@ OrderForGroupVO orderForGroupVO = (OrderForGroupVO) request.getAttribute("orderF
 
 <form method="post" action="<%=request.getContextPath()%>/orderforgroup/orderforgroup.do">
 <table>
-	<tr>
-		<td>訂購人userID</td>	
-		<td>${orderForGroupVO.userID}</td>
+	<tr><jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService"></jsp:useBean> 
+		<td>訂購人</td>	
+		<td>${orderForGroupVO.userID} - ${memberSvc.getone(orderForGroupVO.userID).userName}</td>
 	</tr>
-	<tr>
+	<tr><jsp:useBean id="groupTourSvc" scope="page" class="com.grouptour.model.GroupTourService"></jsp:useBean>
 		<td>訂購商品(套裝行程)</td>	
 		<td>${orderForGroupVO.groupTourSN} - ${groupTourSvc.getOne(orderForGroupVO.groupTourSN).tourName}</td>
 	</tr>
 	<tr>
 		<td>總金額</td>	
-		<td><input type="TEXT" name="phone" size="45" value="${orderForGroupVO.totalPrice}" /></td>
+		<td><input type="TEXT" name="totalPrice" size="45" value="${orderForGroupVO.totalPrice}" /></td>
 	</tr>
 	<tr>
 		<td>購買日期</td>	
@@ -73,15 +73,21 @@ OrderForGroupVO orderForGroupVO = (OrderForGroupVO) request.getAttribute("orderF
 	</tr>
 	<tr>
 		<td>身分證字號</td>	
-		<td><input type="TEXT" name="personID" size="45" value="${orderForGroupVO.userID}" /></td>
+		<td><input type="TEXT" name="personID" size="45" value="${orderForGroupVO.personID}" /></td>
 	</tr>
 	<tr>
 		<td>出生日期</td>	
 		<td><input type="TEXT" class="date" name="birthdate" size="45" value="${orderForGroupVO.birthdate}" /></td>
 	</tr>
 </table>
-	<input type="hidden" name="action" value="update">
-	<input class="btn btn-primary btn-user" type="submit" value="修改">
+	<div class="submit_btn">
+		<input type="hidden" name="action" value="update">
+		<input type="hidden" name="orderSN" value="${orderForGroupVO.orderSN}">
+		<input type="hidden" name="groupTourSN" value="${orderForGroupVO.groupTourSN}">
+		<input type="hidden" name="userID" value="${orderForGroupVO.userID}">
+		<input class="btn btn-primary btn-user " type="submit" value="修改">
+	    <input class="btn btn-primary btn-user" type ="button" onclick="window.location.href='<%=request.getContextPath()%>/orderforgroup/backendListAll.jsp'" value="上一頁">
+	</div>
 </form>
 </div><%-- col-lg-7 end --%>
 
@@ -110,7 +116,16 @@ OrderForGroupVO orderForGroupVO = (OrderForGroupVO) request.getAttribute("orderF
                 
     </div></c:if></div><%-- col-lg-4 end --%>	
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <%-- 成功訊息 --%>
+    <c:if test="${not empty Msg}">
+        <script>
+            alert("更新成功");
+        </script>
+    </c:if>
+<%@ include file="../share/backend/Bfooter.file" %>
+</body>
+<%@ include file="../share/backend/Bjs.file" %>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
@@ -125,15 +140,7 @@ OrderForGroupVO orderForGroupVO = (OrderForGroupVO) request.getAttribute("orderF
      $('.date').datetimepicker({
 	       timepicker:false,
 	       format:'Y-m-d',
-		   beforeShowDay: function(date) {
-       	  if (  date.getYear() <  today.getYear() || 
-		       (date.getYear() == today.getYear() && date.getMonth() <  today.getMonth()) || 
-		       (date.getYear() == today.getYear() && date.getMonth() == today.getMonth() && date.getDate() < today.getDate())
-	          ) {
-	               return [false, ""]
-	          }
-	          return [true, ""];
-    	}});
+    	});
 
 
         

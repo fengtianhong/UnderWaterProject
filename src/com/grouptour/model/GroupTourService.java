@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.List;
 
 import com.collections.model.CollectionsDAO_interface;
+import com.orderforgroup.model.OrderForGroupVO;
 
 public class GroupTourService {
 
@@ -67,5 +68,16 @@ public class GroupTourService {
 	public List<GroupTourVO> getFrontendAll() {
 		return dao.getFrontendAll();
 	}
-	
+	public void updateStatus(Integer groupTourSN, String status) {
+		dao.updateStatus(groupTourSN, status);
+	}
+	public List<Integer> SearchKeyword(String keyword) {
+		return dao.keywordFilter(keyword);
+	}
+	public List<Integer> SearchLocation(String location) {
+		return dao.locationFilter(location);
+	}
+	public List<Integer> SearchAll() {
+		return dao.allForFilter();
+	}
 }

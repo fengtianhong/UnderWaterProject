@@ -23,10 +23,6 @@ public class ArticleReportService {
 		ArticleReportVO articleReportvo = new ArticleReportVO();
 		
 		articleReportvo.setRptSN(rptSN);
-//		articleReportvo.setUserID(userID);
-//		articleReportvo.setArticleSN(articleSN);
-//		articleReportvo.setRptReason(rptReason);
-//		articleReportvo.setRptResult(rptResult);
 		articleReportvo.setReRptResult(reRptResult);
 		dao.update(articleReportvo);
 		

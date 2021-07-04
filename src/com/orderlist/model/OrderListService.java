@@ -1,5 +1,6 @@
 package com.orderlist.model;
 
+import java.sql.Connection;
 import java.util.List;
 
 public class OrderListService {
@@ -11,7 +12,7 @@ public class OrderListService {
 	}
 	
 	public OrderListVO insertOrderList(Integer productSN, Integer orderSN, Integer purchaseQuantity,
-			Integer productPrice, Integer rating) {
+			Integer productPrice, Integer rating, Connection con) {
 		
 		OrderListVO orderListVO = new OrderListVO();
 		
@@ -20,7 +21,7 @@ public class OrderListService {
 		orderListVO.setPurchaseQuantity(purchaseQuantity);
 		orderListVO.setProductPrice(productPrice);
 		orderListVO.setRating(rating);
-		dao.insert(orderListVO);
+		dao.insertWithOrderForProduct(orderListVO, con);
 		
 		return orderListVO;
 	}

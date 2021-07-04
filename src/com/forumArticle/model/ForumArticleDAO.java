@@ -29,11 +29,11 @@ public class ForumArticleDAO implements ForumArticleDAO_interface{
 	private static final String INSERT_STMT = 
 			"INSERT INTO ForumArticle (articleTitle, articleText, userID, articleTitleOptSN) VALUES (?, ?, ?, ?)";
 		private static final String GET_ALL_STMT = 
-			"SELECT * FROM ForumArticle order by articleSN desc";
+			"SELECT * FROM ForumArticle where articleStatus = 1 order by articleSN desc ";
 		private static final String GET_ONE_STMT = 
 			"SELECT * FROM ForumArticle where articleSN = ?";
-		private static final String mUPDATE = 
-			"UPDATE ForumArticle set articleStatus = ? where articleSN = ?";
+		private static final String hiddenAtricle = 
+			"UPDATE ForumArticle set articleStatus = 0 where articleSN = ?";
 		private static final String userUPDATE = 
 			"UPDATE ForumArticle set articleTitle = ?, articleText = ? where articleSN = ?";
 		
@@ -48,16 +48,13 @@ public class ForumArticleDAO implements ForumArticleDAO_interface{
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
 			pstmt.setString(1, forumArticleVO.getArticleTitle());
-//			pstmt.setTimestamp(2, forumArticleVO.getPublishedDate());
+
 			pstmt.setString(2, forumArticleVO.getArticleText());
-//			pstmt.setBoolean(4, forumArticleVO.getArticleStatus());
-//			會員先用寫死的方法
-//			pstmt.setInt(3, forumArticleVO.getUserID());
-			pstmt.setInt(3, 1);
+
+			pstmt.setInt(3, forumArticleVO.getUserID());
+
 			pstmt.setInt(4, forumArticleVO.getArticleTitleOptSN());
-//			pstmt.setInt(7, forumArticleVO.getRateGCount());
-//			pstmt.setInt(8, forumArticleVO.getRateNGCount());
-			
+
 			pstmt.executeUpdate();
 			
 		} catch (SQLException se) {
@@ -80,18 +77,17 @@ public class ForumArticleDAO implements ForumArticleDAO_interface{
 		}
 	}
 
-//	修改文章(管理員)
+//	
 	@Override
-	public void mUpdate(ForumArticleVO forumArticleVO) {
+	public void hiddenAtricle(Integer articleSN) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(mUPDATE);
+			pstmt = con.prepareStatement(hiddenAtricle);
 			
-			pstmt.setBoolean(1, forumArticleVO.getArticleStatus());
-			pstmt.setInt(2, forumArticleVO.getArticleSN());
+			pstmt.setInt(1, articleSN);
 			
 			pstmt.executeUpdate();
 			

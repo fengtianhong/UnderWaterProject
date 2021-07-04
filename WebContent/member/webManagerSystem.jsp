@@ -1,4 +1,4 @@
-<%@page import="java.util.List"%>
+<%@ page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="com.member.model.*"%>
@@ -6,10 +6,19 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%
-	MemberService memberSvc = new MemberService();
-	List<MemberVO> list = memberSvc.getAll();
-	pageContext.setAttribute("list", list);
-	MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
+MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
+	List<MemberVO> list = (List<MemberVO>)request.getAttribute("list");
+	if(list == null){
+		MemberService memberSvc = new MemberService();
+		list = memberSvc.getAll();
+		pageContext.setAttribute("list", list);
+	}else{
+		pageContext.setAttribute("list", list);
+	}
+	
+	
+	
+	
 	
 %>
 
@@ -93,25 +102,29 @@
             </div>
         </div>
     </nav>
-
+<div class="container">
  		<div class="row">
             <div class="col-lg-1">
 
             </div>
+            <form action="<%=request.getContextPath()%>/member/MemberListServlet.do" method="post">
             <div class="col-lg-6">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="全部查詢" id="searchInput">
+                    <input type="text" class="form-control" name="keyword" placeholder="全部查詢" id="searchInput">
                     <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" id="search">查詢</button>
+                    	<input type="hidden" name="action" value="search">
+                        <input class="btn btn-default" type="submit" value="查詢">
                     </span>
                 </div>
             </div>
-
+			</form>
             <div class="col-lg-1" >
             	<form action="WebManagerSystemLogoutServlet.do" method="post">
             		<button class="btn btn-primary" type="submit" id="logout" >登出</button>
             	</form>
+            	
             </div>
+            <div><c:if test="${msg!=null}"> ${msg}</c:if></div>
         </div>
 		
 		<table class="table table-striped table-bordered">
@@ -156,7 +169,7 @@
 			<td><div class="picture"><img class="preview" src="GetImagepersonPhoto.do?userid=${memberVO.userID}"></div></td>
 			<td>
 				<form method="post"  action="<%=request.getContextPath()%>/member/MemberListServlet.do" >
-					<input type="submit" class="update" value="修改">
+					<input type="submit" class="update" value="修改" onclick="showupdatediv();">
 					<input type="hidden" name="userid"  value="${memberVO.userID}">
 					<input type="hidden" name="action" value="getOne_For_Update">
 				</form>
@@ -168,83 +181,8 @@
 <%@ include file="page2.file"%>	
 
 
-<div>
-	<c:if test="${not empty errorMsgs}">
-	<font style="color:red">請修正以下錯誤:</font>
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li style="color:red">${message}</li>
-		</c:forEach>
-	</ul>
-</c:if>
-            <h1>更新會員內容</h1>
-<form method="post" action="MemberListServlet.do" name="form1"  enctype="multipart/form-data">
-	<table>
-	      	<tr>
-				<td>編號<input name="ueserid" type="text" value="${memberVO.userID}" readonly></td>
-			</tr>
-			<tr>
-				<td>帳號<input name="account" type="text" value="${memberVO.account}" readonly></td>
-			</tr>
-			<tr>
-				<td>暱稱<input name="nickname" type="text" value="${memberVO.nickName}"></td>
-			</tr>
-			<tr>	
-				<td>姓名<input name="username" type="text" value="${memberVO.userName}"></td>
-			</tr>
-			<tr>	
-				<td>性別
-					<input name="gender" type="radio" value="男"${(memberVO.gender=="0")? 'checked' : ''}>男
-					<input name="gender" type="radio" value="女"${(memberVO.gender=="1")? 'checked' : ''}>女
-				</td>
-			</tr>
-			<tr>	
-				<td>生日<input name="birthdate" type="text" value="${memberVO.birthDate}" class="birthdate"></td>
-			</tr>
-			<tr>	
-				<td>電話<input name="phone" type="text" value="${memberVO.phone}"></td>
-			</tr>
-			<tr>	
-				<td>證照<input name="certification" type="text" value="${memberVO.certification}"></td>
-			</tr>
-			<tr>	
-					<td><input type="file" id="the_file" name="certificationpic" accept="image/*"></td>
-<%-- 				<td>證照照片<input  type="text" name="certificationpic" value="${memberVO.certificationPic}"></td> --%>
-				<td><div class="picture"><img class="preview" src="GetImage.do?userid=${memberVO.userID}"></div></td>
-			</tr>
-			<tr>	
-				<td>身分證字號<input type="text" name="personid" value="${membeVO.personID}"></td>
-			</tr>
-			<tr>	
-				<td>地址<input type="text" name="address" value="${memberVO.address}"></td>
-			</tr>
-			<tr>	
-				<td>加入時間<input type="text" name="createtime" value="<fmt:formatDate value="${memberVO.createTime}" pattern="yyyy-mm-dd hh:mm:ss"/>" readonly></td>
-			</tr>
-			<tr>	
-				<td>帳號狀態<input type="text" name="status" value="${memberVO.status}"></td>
-			</tr>
-			<tr>	
-				<td>更新時間<input type="text" name="updatetime" value="<fmt:formatDate value="${memberVO.upDateTime}" pattern="yyyy-mm-dd hh:mm:ss"/>" readonly></td>
-			</tr>
-			<tr>	
-				<td>評價人數<input type="text" name="ratepeople" value="${memberVO.ratePeople}"></td>
-			</tr>
-			<tr>	
-				<td>評價總分<input type="text" name="ratepoint" value="${memberVO.ratePoint}"></td>			
-			</tr>
-			<tr>	
-				<td><input type="file" id="the_file" name="personPhoto" accept="image/*"></td>
-				<td><div class="picture"><img class="preview" src="GetImagepersonPhoto.do?userid=${memberVO.userID}"></div></td>
-			</tr>
-	</table>
-	<br>
-	<input type="hidden" name="action" value="update">
-	<input type="hidden" name="userid" value="${memberVO.userID}">
-	<input type="submit" value="確定修改">
-</form> 
-</div>
 
+</div>
 </body>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
@@ -266,62 +204,24 @@
         maxDate:           '+1970-01-01'  // 去除今日(不含)之後
      });
 	//獲取所有的按钮，绑定事件
-    const updateBtns = document.getElementsByClassName("update");
-    const cancelBtns = document.getElementsByClassName("cancel");
-    const updateSureBtn = document.getElementById("updateSure");
-    const addSureBtn = document.getElementById("addSure");
+   const updateSureBtn = document.getElementById("updateSure");
     const addMember = document.getElementById("addMember");
     const searchInput = document.getElementById("searchInput");
     const search = document.getElementById("search");
 	
+    var popBox;
+    window.onload = function(){
+    	popBox = document.getElementById("popBox");
+    };
     
-    
-    updateBtns[0].onclick = function (){
-		 console.log("123")
-		}
-    	
-    
-   
-    
-   
-    	
-        
-    
-
-    //隱藏更視窗
-    function hiddenUpdateDiv() {
-        let updateDiv = document.getElementById("updatePopBox");
-        updateDiv.style.display = "none";
+    //顯示彈跳視窗
+    function showupdatediv(){
+    	popBox.style.display="block";
     }
-    //顯示更新視窗
-    function showUpdateDiv() {
-        let updateDiv = document.getElementById("updatePopBox");
-        updateDiv.style.display = "block";
+    //隱藏彈跳視窗
+    function closeupdatediv(){
+    	popBox.style.display="none";
     }
-    	
-  
-   
-    function filterMember(keyword) {
-        return memberList.filter(member => {
-            return member.userID == keyword || member.account == keyword || member.nickName == keyword;
-        })
-    }  	
-    
-    
-    function eventBind() {
-        search.onclick = function () {
-            let keyword = searchInput.value;
-            if (keyword != null && keyword != "") {
-            	console.log("456");
-//                 memberList = filterMember(keyword);
-            }
-            eventBind();
-        }
-
-    }
-
-    eventBind()
-    
     </script>
 
 

@@ -6,12 +6,14 @@
 <%@ page import="com.grouptour.model.*"%>
 
 <%  
-// 抓取新增失敗時回傳的VO
-OrderForGroupVO orderForGroupVO = (OrderForGroupVO) request.getAttribute("orderForGroupVO");
-
-//這東西應該會放在Session
-MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");	
-GroupTourVO groupTourVO = (GroupTourVO) request.getAttribute("groupTourVO");
+	// 抓取新增失敗時回傳的VO
+	OrderForGroupVO orderForGroupVO = (OrderForGroupVO) request.getAttribute("orderForGroupVO");
+	
+	// userID groupTourSN 應該會放在Session
+// 	Integer userID = (Integer) session.getAttribute("userID");
+// 	pageContext.setAttribute("userID", userID);
+// 	MemberService memSvc = new MemberService();
+// 	pageContext.setAttribute("memberVO", memSvc.getone(userID));
 %>
 
 <!DOCTYPE html>
@@ -25,7 +27,6 @@ GroupTourVO groupTourVO = (GroupTourVO) request.getAttribute("groupTourVO");
 	.main-container{
 		margin: 0 auto;
 		width: 900px;
-		/* 		display: flex; */
 	}
 	.bar{
 		height: 100px;
@@ -148,6 +149,7 @@ GroupTourVO groupTourVO = (GroupTourVO) request.getAttribute("groupTourVO");
 </div>
 
 <!------------ 個人資訊 ---------------->
+<jsp:useBean id="memberSvc" class="com.member.model.MemberService" />
 <div class="row info">
 <div class="col-lg-12 product">
     <!-- Roitation Utilities -->
@@ -161,26 +163,26 @@ GroupTourVO groupTourVO = (GroupTourVO) request.getAttribute("groupTourVO");
 		<table class="form">
 			<tr>
 				<td width="30%">訂購人</td>	
-				<td><input type="TEXT" size="45" value="${memberVO.userName}" required />
+				<td><input type="TEXT" size="45" value="${memberSvc.getone(userID).userName}" required />
 				</td>
 			</tr>	
 			<tr>
 				<td>連絡電話</td>	
-				<td><input type="TEXT" name="phone" size="45" value="${memberVO.phone}" placeholder="請輸入手機號碼" required />
+				<td><input type="TEXT" name="phone" size="45" value="${memberSvc.getone(userID).phone}" placeholder="請輸入手機號碼" required />
 				</td>
 			</tr>
 			<tr>
 				<td>身分證字號</td>	
-				<td><input type="TEXT" name="personID" size="45" value="${memberVO.personID}" required />
+				<td><input type="TEXT" name="personID" size="45" value="${memberSvc.getone(userID).personID}" required />
 				</td>
 			</tr>
 			<tr>
 				<td>出生日期</td>	
-				<td><input type="TEXT" class="date" name="birthdate" size="45" value="${memberVO.birthDate}" required />
+				<td><input type="TEXT" class="date" name="birthdate" size="45" value="${memberSvc.getone(userID).birthDate}" required />
 				</td>
 			</tr>
 		</table>
-		<input type="hidden" name="userID" value="${memberVO.userID}">
+		<input type="hidden" name="userID" value="${userID}">
 		<input type="hidden" name="groupTourSN" value="${groupTourVO.groupTourSN}">
 		<input type="hidden" name="totalPrice" value="${groupTourVO.price}">
 		<input type="hidden" name="action" value="insert">

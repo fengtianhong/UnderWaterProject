@@ -33,13 +33,14 @@
 				margin-top: 10px;
 				margin: 0 auto;
 			}
-			
 		</style>
 	</head>
 	<body>
 
 		<jsp:include page="../share/navbar.jsp" flush="true" />
-
+		<c:if test="userID != null">
+			<button type="button" onclick="location.href='<%=request.getContextPath()%>/forumArticle/forumArticleInsert.jsp'">新增文章</button>
+		</c:if>
 		<%@ include file="page1frontend.file" %>
 		
 		<c:forEach var="forumArticleVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
@@ -48,7 +49,7 @@
 				<div id="css_table">
 					<div class="css_tr">
 						<div class="css_td" style="text-align: center;"><h3>${forumArticleVO.articleTitle}</h3></div>
-						<div class="css_td"><h5>${forumArticleVO.articleText}</h5></div>
+						<div class="css_td">${forumArticleVO.articleText}</div>
 							<div class="col-xs-2 col-md-1">
 								<form method="post" action="forumArticle.do" class="btn-div">
 									<input type="hidden" name="action" value="getOne_For_Display">
@@ -69,7 +70,7 @@
             </div>
 		</c:forEach>
 		
-		
+		<%@ include file="page2frontend.file" %>
 		<jsp:include page="../share/footer.jsp" flush="true" />
 
 	</body>

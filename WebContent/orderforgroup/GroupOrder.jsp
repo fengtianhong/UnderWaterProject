@@ -131,7 +131,7 @@
 $(function () {
 	
 	$(".cancel").on("click", function() { alert("請聯繫客服為您協助!!"); })
-	
+	$('#orderG').addClass('active');
 })
 
 </script>

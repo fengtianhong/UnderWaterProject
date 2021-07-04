@@ -16,9 +16,11 @@ public class OrderListDAO implements OrderListDAO_interface {
 
 	private static final String INSERT_STMT = "INSERT INTO OrderList (productSN, orderSN, purchaseQuantity,"
 			+ "productPrice, rating) VALUES (?, ?, ?, ?, ?)";
+	
 	private static final String DELETE_STMT = "DELETE FROM OrderList WHERE orderListSN = ?";
 	private static final String UPDATE_STMT = "UPDATE OrderList SET productSN = ?, orderSN = ?,"
 			+ "purchaseQuantity = ?, productPrice = ? WHERE orderListSN = ?";
+	
 	private static final String GET_ONE_BY_ORDERLISTSN = "SELECT * FROM OrderList WHERE orderListSN = ?";
 	private static final String GET_ALL = "SELECT * FROM OrderList ORDER BY orderListSN";
 
@@ -26,7 +28,7 @@ public class OrderListDAO implements OrderListDAO_interface {
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/UnderWater");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
@@ -257,7 +259,7 @@ public class OrderListDAO implements OrderListDAO_interface {
 			pstmt.setInt(2, orderListVO.getOrderSN());
 			pstmt.setInt(3, orderListVO.getPurchaseQuantity());
 			pstmt.setInt(4, orderListVO.getProductPrice());
-			pstmt.setInt(5, orderListVO.getRating());
+			pstmt.setInt(5, 0);
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {

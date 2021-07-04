@@ -8,7 +8,6 @@ public class ForumArticleVO implements java.io.Serializable{
 	private String articleTitle;
 	private Timestamp publishedDate;
 	private String articleText;
-//	private Integer articleStatus;
 	private Boolean articleStatus;
 	private Integer userID;
 	private Integer articleTitleOptSN;

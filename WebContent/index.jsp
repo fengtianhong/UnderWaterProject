@@ -70,18 +70,19 @@
 				<div  class="col-md-4" >
 
 					<span style="cursor:pointer"
-					onclick="window.location.href='<%=request.getContextPath()%>/diveinfo/diveinfo.jsp;'" class="fa-stack fa-4x"> <i
+					onclick="window.location.href='<%=request.getContextPath()%>/diveinfo/diveinfo.jsp'" class="fa-stack fa-4x"> <i
 						class="fas fa-circle fa-stack-2x text-primary"></i> <i
 						class="fas fa-shopping-cart fa-stack-1x fa-inverse"></i>
 					</span>
 					<h4 style="cursor:pointer"
-					onclick="window.location.href='<%=request.getContextPath()%>/diveinfo/diveinfo.jsp;'" class="my-3">潛水地圖</h4>
+					onclick="window.location.href='<%=request.getContextPath()%>/diveinfo/diveinfo.jsp'" class="my-3">潛水地圖</h4>
 					<p style="cursor:pointer"
-					onclick="window.location.href='<%=request.getContextPath()%>/diveinfo/diveinfo.jsp;'" class="text-muted">是否在為了下一次的冒險目的籌畫呢？給您地圖式的搜尋，快速找到心動的潛水點。</p>
+					onclick="window.location.href='<%=request.getContextPath()%>/diveinfo/diveinfo.jsp'" class="text-muted">是否在為了下一次的冒險目的籌畫呢？給您地圖式的搜尋，快速找到心動的潛水點。</p>
 
 				</div>
 
-				<div class="col-md-4">
+				<div class="col-md-4" style="cursor:pointer"
+					onclick="window.location.href='<%=request.getContextPath()%>/forumArticle/forumArticle.jsp'">
 					<span class="fa-stack fa-4x"> <i
 						class="fas fa-circle fa-stack-2x text-primary"></i> <i
 						class="fas fa-laptop fa-stack-1x fa-inverse"></i>
@@ -90,7 +91,7 @@
 					<p class="text-muted">眾多潛水愛好者發表的潛點分享、潛點心得，就算還沒親自去過，也能先一窺究竟。</p>
 				</div>
 				<div class="col-md-4" style="cursor:pointer"
-					onclick="window.location.href='<%=request.getContextPath()%>/grouptour/frontendListAll.jsp;'">
+					onclick="window.location.href='<%=request.getContextPath()%>/grouptour/frontendListAll.jsp'">
 					<span class="fa-stack fa-4x"> <i
 						class="fas fa-circle fa-stack-2x text-primary"></i> <i
 						class="fas fa-lock fa-stack-1x fa-inverse"></i>
@@ -113,9 +114,10 @@
 				<h2 class="section-heading text-uppercase">Portfolio</h2>
 				<h3 class="section-subheading text-muted">最完整也最品質放心的潛水相關裝備</h3>
 			</div>
+			
 			<div class="row">
-				<div class="col-lg-4 col-sm-6 mb-4">
-					<!-- Portfolio item 1-->
+				<div class="col-lg-4 col-sm-6 mb-4" onclick="window.location.href='<%=request.getContextPath()%>/product/ft_listAllProduct.jsp;'">
+<!-- 					Portfolio item 1 -->
 					<div class="portfolio-item">
 						<a class="portfolio-link" data-bs-toggle="modal"
 							href="#portfolioModal1">
@@ -126,13 +128,14 @@
 							</div> <img class="img-fluid" src="img/portfolio/suit.jpg" alt="..." />
 						</a>
 						<div class="portfolio-caption">
-							<div class="portfolio-caption-heading">潛水衣</div>
-							<div class="portfolio-caption-subheading text-muted">穿膩了一身黑嗎</div>
+							<div class="portfolio-caption-heading">血拚好市</div>
+							<div class="portfolio-caption-subheading text-muted">多種商品任您挑選</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-lg-4 col-sm-6 mb-4">
-					<!-- Portfolio item 2-->
+				</div>			
+				
+				<div class="col-lg-4 col-sm-6 mb-4" onclick="window.location.href='<%=request.getContextPath()%>/product/ft_listPrimeProduct.jsp;'">
+					<!-- Portfolio item 2 -->
 					<div class="portfolio-item">
 						<a class="portfolio-link" data-bs-toggle="modal"
 							href="#portfolioModal2">
@@ -143,12 +146,13 @@
 							</div> <img class="img-fluid" src="img/portfolio/watch.jpg" alt="..." />
 						</a>
 						<div class="portfolio-caption">
-							<div class="portfolio-caption-heading">潛水手錶</div>
-							<div class="portfolio-caption-subheading text-muted">各大品牌任妳挑</div>
+							<div class="portfolio-caption-heading">暢銷專區</div>
+							<div class="portfolio-caption-subheading text-muted">主打明星通通在這</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-4 col-sm-6 mb-4">
+				
+				<div class="col-lg-4 col-sm-6 mb-4" onclick="window.location.href='<%=request.getContextPath()%>/product/ft_listDiscountProduct.jsp;'">
 					<!-- Portfolio item 3-->
 					<div class="portfolio-item">
 						<a class="portfolio-link" data-bs-toggle="modal"
@@ -157,11 +161,11 @@
 								<div class="portfolio-hover-content">
 									<i class="fas fa-plus fa-3x"></i>
 								</div>
-							</div> <img class="img-fluid" src="img/portfolio/3.jpg" alt="..." />
+							</div> <img class="img-fluid" src="img/portfolio/BCD.jpg" alt="..." />
 						</a>
 						<div class="portfolio-caption">
-							<div class="portfolio-caption-heading">活動商品</div>
-							<div class="portfolio-caption-subheading text-muted">主打明星都在這</div>
+							<div class="portfolio-caption-heading">優惠專區</div>
+							<div class="portfolio-caption-subheading text-muted">百大品牌天天最低價</div>
 						</div>
 					</div>
 				</div>
@@ -240,7 +244,7 @@
 			<div class="row">
 				<div class="col-lg-4">
 					<div class="team-member">
-						<img class="mx-auto rounded-circle" src="img/team/feng.jpg" alt="..." />
+						<img class="mx-auto rounded-circle" src="img/team/1.jpg" alt="..." />
 						<h4>Tim Feng</h4>
 						<p class="text-muted">潛點地圖、最新消息</p>
 						<a class="btn btn-dark btn-social mx-2" href="#!"><i
@@ -346,7 +350,7 @@
 								<p class="item-intro text-muted">Lorem ipsum dolor sit amet
 									consectetur.</p>
 								<img class="img-fluid d-block mx-auto"
-									src="/img/portfolio/suit.jpg" alt="..." />
+									src="img/portfolio/suit.jpg" alt="..." />
 								<p>Use this area to describe your project. Lorem ipsum dolor
 									sit amet, consectetur adipisicing elit. Est blanditiis dolorem
 									culpa incidunt minus dignissimos deserunt repellat aperiam
@@ -384,7 +388,7 @@
 								<p class="item-intro text-muted">Lorem ipsum dolor sit amet
 									consectetur.</p>
 								<img class="img-fluid d-block mx-auto"
-									src="../assets/img/portfolio/watch.jpg" alt="..." />
+									src="img/portfolio/watch.jpg" alt="..." />
 								<p>Use this area to describe your project. Lorem ipsum dolor
 									sit amet, consectetur adipisicing elit. Est blanditiis dolorem
 									culpa incidunt minus dignissimos deserunt repellat aperiam
@@ -422,7 +426,7 @@
 								<p class="item-intro text-muted">Lorem ipsum dolor sit amet
 									consectetur.</p>
 								<img class="img-fluid d-block mx-auto"
-									src="../assets/img/portfolio/3.jpg" alt="..." />
+									src="img/portfolio/BCD.jpg" alt="..." />
 								<p>Use this area to describe your project. Lorem ipsum dolor
 									sit amet, consectetur adipisicing elit. Est blanditiis dolorem
 									culpa incidunt minus dignissimos deserunt repellat aperiam

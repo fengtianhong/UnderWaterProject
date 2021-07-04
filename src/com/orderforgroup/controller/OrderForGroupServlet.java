@@ -97,14 +97,22 @@ public class OrderForGroupServlet extends HttpServlet {
 				orderForGroupVO.setPhone(phone);
 				orderForGroupVO.setPersonID(personID);
 				orderForGroupVO.setBirthdate(birthdate);
+
 				
-				//
 				GroupTourService groupTourSvc = new GroupTourService();
 				GroupTourVO groupTourVO = groupTourSvc.getOne(groupTourSN);
+				
+				// 判斷是否已額滿
+				Integer LimitNumder = groupTourVO.getLimitNumder();
+				Integer AttendNumber = groupTourVO.getAttendNumber();
+				if(AttendNumber >= LimitNumder) {
+					errMsg.add("此行程已額滿");
+				}
 				
 				MemberService memberSvc = new MemberService();
 				MemberVO memberVO = memberSvc.getone(userID);
 				HttpSession session = req.getSession();
+				
 				
 				session.setAttribute("memberVO", memberVO);
 				req.setAttribute("groupTourVO", groupTourVO);
@@ -142,6 +150,9 @@ public class OrderForGroupServlet extends HttpServlet {
 				}
 				
 				orderForGroupSvc.insertOrderForGroup(userID, groupTourSN, totalPrice, purchaseDate, phone, personID, birthdate);
+				// 刪除報名用資料 
+				session.removeAttribute("groupTourVO");
+				session.removeAttribute("groupTourSN");
 				
 				req.setAttribute("Msg", "報名成功");
 				RequestDispatcher successView = req.getRequestDispatcher("/orderforgroup/Success.jsp");	// 訂單成功頁面 待確認
@@ -163,8 +174,9 @@ public class OrderForGroupServlet extends HttpServlet {
 			req.setAttribute("errMsg", errMsg);
 			
 			try {
-				Integer userID = new Integer(req.getParameter("userID").trim());		// FK有需要先驗證是否存在?
-				Integer groupTourSN = new Integer(req.getParameter("groupTourSN").trim());	// FK有需要先驗證是否存在?
+				Integer userID = new Integer(req.getParameter("userID").trim());
+				Integer groupTourSN = new Integer(req.getParameter("groupTourSN").trim());
+				Integer orderSN = new Integer(req.getParameter("orderSN").trim());
 				
 				
 				Integer totalPrice = null;
@@ -225,29 +237,33 @@ public class OrderForGroupServlet extends HttpServlet {
 				orderForGroupVO.setPersonID(personID);
 				orderForGroupVO.setBirthdate(birthdate);
 				
+				req.setAttribute("orderForGroupVO", orderForGroupVO);
 				if(!errMsg.isEmpty()) {
-					req.setAttribute("orderForGroupVO", orderForGroupVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/orderforgroup");	// 重新insert 待確認
+					System.out.println("update failure");
+					RequestDispatcher failureView = req.getRequestDispatcher("/orderforgroup/updateOrderForGroup.jsp");	// 重新insert 待確認
 					failureView.forward(req, res);
 					return;
 				}
-				
+				System.out.println("update success");
+				String Msg = "更新成功";
+				req.setAttribute("Msg", Msg);
 				OrderForGroupService orderForGroupSvc = new OrderForGroupService();
-				orderForGroupSvc.insertOrderForGroup(userID, groupTourSN, totalPrice, purchaseDate, phoneReg, personIDReg, birthdate);
-				RequestDispatcher successView = req.getRequestDispatcher("/orderforgroup/");	// 訂單成功頁面 待確認(先回listOne)
+				orderForGroupSvc.updateOderForGroup(orderSN, userID, groupTourSN, totalPrice, purchaseDate, phone, personID, birthdate);
+				
+				RequestDispatcher successView = req.getRequestDispatcher("/orderforgroup/updateOrderForGroup.jsp");	// 訂單成功頁面 待確認(先回listOne)
 				successView.forward(req, res);
 				
 				
 			}catch(Exception e) {
-				System.out.println("insert failure"+ e.getMessage());
+				System.out.println("update failure"+ e.getMessage());
 				errMsg.add("Exception occured"+e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/orderforgroup");	// 重新insert 待確認
+				RequestDispatcher failureView = req.getRequestDispatcher("/orderforgroup/updateOrderForGroup.jsp");	// 重新insert 待確認
 				failureView.forward(req, res);
 			}
 		}
 		
 		
-		if("getOne_ForUpdate".equals(action)) {		// 訂單修改 for後台還是前台? 多一個頁面參數?
+		if("getOne_ForUpdate".equals(action)) {		// 訂單修改
 			List<String> errMsg = new LinkedList<String>();
 			req.setAttribute("errMsg", errMsg);
 			try {
@@ -279,30 +295,28 @@ public class OrderForGroupServlet extends HttpServlet {
 		if("getOne_ForOrder".equals(action)) {		// 按我要報名
 			List<String> errMsg = new LinkedList<String>();
 			req.setAttribute("errMsg", errMsg);
+			
+			// 報名用 (避免登入重導後會抓不回來)
+			HttpSession session = req.getSession();
+			Integer groupTourSN = (Integer)(session.getAttribute("groupTourSN"));
+			GroupTourService groupTourSvc = new GroupTourService();
+			GroupTourVO groupTourVO = groupTourSvc.getOne(groupTourSN);
+			session.setAttribute("groupTourVO", groupTourVO);
+			
 			try {
-				
-				Integer userID = null;
-				try{
-					userID = new Integer(req.getParameter("userID"));
-				}catch(Exception e) {
-					errMsg.add("請確認是否已登入");
+				// 沒登入就出去
+				Integer userID = (Integer)(session.getAttribute("userID"));
+				if(userID == null) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/orderforgroup/AddGTOrder.jsp");	// 回到套裝行程頁面
+					failureView.forward(req, res);
+					return;
 				}
-
 				
-				Integer groupTourSN = new Integer(req.getParameter("groupTourSN"));
 				
-				GroupTourService groupTourSvc = new GroupTourService();
-				GroupTourVO groupTourVO = groupTourSvc.getOne(groupTourSN);
-				
-				MemberService memberSvc = new MemberService();
-				MemberVO memberVO = memberSvc.getone(userID);
-				HttpSession session = req.getSession();
-				
-				session.setAttribute("memberVO", memberVO);
-				req.setAttribute("groupTourVO", groupTourVO);
-				
-				// 證照資格判斷 (測會員資格null會發生甚麼事 0:無證照 1:OW 2:AOW)
+				// 證照資格判斷
 				try {
+					MemberService memberSvc = new MemberService();
+					MemberVO memberVO = memberSvc.getone(userID);
 					Integer certification = Integer.parseInt(memberVO.getCertification());	// 可能null
 					Integer certificationLimit = Integer.parseInt(groupTourVO.getCertificationLimit());
 					if(certification < certificationLimit) {
@@ -313,7 +327,7 @@ public class OrderForGroupServlet extends HttpServlet {
 					errMsg.add("資格不符，請確認您的證照資訊");
 				}
 				
-				// 以及判斷是否有報名過(同步在套裝行程顯示頁面)
+				// 以及判斷是否有報名過 (同步在套裝行程顯示頁面)
 				OrderForGroupService orderForGroupSvc = new OrderForGroupService();
 				List<OrderForGroupVO> list = orderForGroupSvc.getOrderByUserID(userID);
 				

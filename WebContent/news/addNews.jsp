@@ -5,7 +5,6 @@
 <%
 	NewsVO newsVO = (NewsVO) request.getAttribute("newsVO");
 %>
-<%=newsVO == null%>
 <html>
 <head>
 

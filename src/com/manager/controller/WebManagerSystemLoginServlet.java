@@ -43,14 +43,14 @@ public class WebManagerSystemLoginServlet extends HttpServlet {
 		if(vo == true) {
 			session.setAttribute("account", account);
 			String location = (String)session.getAttribute("location");
-			System.out.println("有跑到");
+//			System.out.println("有跑到");
 			if(location != null) {
 				session.removeAttribute("location");
 				res.sendRedirect(location);
 				return;
 			}else{
 				System.out.println("進系統");
-				req.getRequestDispatcher("/member/webManagerSystem.jsp").forward(req, res);
+				req.getRequestDispatcher("/backend.jsp").forward(req, res);
 			}
 			
 						

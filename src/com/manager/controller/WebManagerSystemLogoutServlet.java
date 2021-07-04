@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-@WebServlet("/WebManagerSystemLogoutServlet")
+@WebServlet("/WebManagerSystemLogoutServlet.do")
 public class WebManagerSystemLogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -25,7 +25,7 @@ public class WebManagerSystemLogoutServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		
+		System.out.println("有跑到logout");
 		req.getSession().removeAttribute("account");
 		res.sendRedirect(req.getContextPath()+"/member/webManagerSystemLogin.jsp");
 		
