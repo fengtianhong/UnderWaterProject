@@ -43,6 +43,9 @@ public class ShoppingCar extends HttpServlet {
 			
 //			System.out.println("45");
 				Integer userID = (Integer)(session.getAttribute("userID"));
+				
+				System.out.println(request.getParameter("Price"));
+				
 				Double price = Double.parseDouble(request.getParameter("Price"));
 				totalprice = price.intValue();
 							
@@ -64,9 +67,10 @@ public class ShoppingCar extends HttpServlet {
 //				System.out.println("64");
 				orderSvc.insertOrder(userID, purchaseDate, totalprice, orderStatus, list);
 				
-//				String url = "/product/ft_searchProduct.jsp";			
-//				session.invalidate();
-//				response.sendRedirect(url);
+				String url = request.getContextPath()+"/product/ft_listAllProduct.jsp";			
+				session.removeAttribute("shoppingcart");
+				response.sendRedirect(url);
+				return;
 			}
 		
 		if (!action.equals("CHECKOUT")) {

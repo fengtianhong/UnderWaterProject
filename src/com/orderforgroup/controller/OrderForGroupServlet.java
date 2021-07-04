@@ -113,6 +113,7 @@ public class OrderForGroupServlet extends HttpServlet {
 				MemberVO memberVO = memberSvc.getone(userID);
 				HttpSession session = req.getSession();
 				
+				
 				session.setAttribute("memberVO", memberVO);
 				req.setAttribute("groupTourVO", groupTourVO);
 				
@@ -149,6 +150,9 @@ public class OrderForGroupServlet extends HttpServlet {
 				}
 				
 				orderForGroupSvc.insertOrderForGroup(userID, groupTourSN, totalPrice, purchaseDate, phone, personID, birthdate);
+				// 刪除報名用資料 
+				session.removeAttribute("groupTourVO");
+				session.removeAttribute("groupTourSN");
 				
 				req.setAttribute("Msg", "報名成功");
 				RequestDispatcher successView = req.getRequestDispatcher("/orderforgroup/Success.jsp");	// 訂單成功頁面 待確認
@@ -286,29 +290,28 @@ public class OrderForGroupServlet extends HttpServlet {
 		if("getOne_ForOrder".equals(action)) {		// 按我要報名
 			List<String> errMsg = new LinkedList<String>();
 			req.setAttribute("errMsg", errMsg);
+			
+			// 報名用 (避免登入重導後會抓不回來)
+			HttpSession session = req.getSession();
+			Integer groupTourSN = (Integer)(session.getAttribute("groupTourSN"));
+			GroupTourService groupTourSvc = new GroupTourService();
+			GroupTourVO groupTourVO = groupTourSvc.getOne(groupTourSN);
+			session.setAttribute("groupTourVO", groupTourVO);
+			
 			try {
-				
-				Integer userID = null;
-				try{
-					userID = new Integer(req.getParameter("userID"));
-				}catch(Exception e) {
-					errMsg.add("請確認是否已登入");
+				// 沒登入就出去
+				Integer userID = (Integer)(session.getAttribute("userID"));
+				if(userID == null) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/orderforgroup/AddGTOrder.jsp");	// 回到套裝行程頁面
+					failureView.forward(req, res);
+					return;
 				}
-
 				
-				Integer groupTourSN = new Integer(req.getParameter("groupTourSN"));
 				
-				GroupTourService groupTourSvc = new GroupTourService();
-				GroupTourVO groupTourVO = groupTourSvc.getOne(groupTourSN);
-				
-				MemberService memberSvc = new MemberService();
-				MemberVO memberVO = memberSvc.getone(userID);
-				
-				req.setAttribute("memberVO", memberVO);
-				req.setAttribute("groupTourVO", groupTourVO);
-				
-				// 證照資格判斷 (測會員資格null會發生甚麼事 0:無證照 1:OW 2:AOW)
+				// 證照資格判斷
 				try {
+					MemberService memberSvc = new MemberService();
+					MemberVO memberVO = memberSvc.getone(userID);
 					Integer certification = Integer.parseInt(memberVO.getCertification());	// 可能null
 					Integer certificationLimit = Integer.parseInt(groupTourVO.getCertificationLimit());
 					if(certification < certificationLimit) {
@@ -319,7 +322,7 @@ public class OrderForGroupServlet extends HttpServlet {
 					errMsg.add("資格不符，請確認您的證照資訊");
 				}
 				
-				// 以及判斷是否有報名過(同步在套裝行程顯示頁面)
+				// 以及判斷是否有報名過 (同步在套裝行程顯示頁面)
 				OrderForGroupService orderForGroupSvc = new OrderForGroupService();
 				List<OrderForGroupVO> list = orderForGroupSvc.getOrderByUserID(userID);
 				

@@ -1,5 +1,6 @@
 package com.member.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
@@ -46,7 +47,7 @@ public class MemberListServlet extends HttpServlet {
 				
 				req.setAttribute("memberVO", memberVO);
 				
-				RequestDispatcher successView = req.getRequestDispatcher("/member/webManagerSystem.jsp");
+				RequestDispatcher successView = req.getRequestDispatcher("/member/webManagerSystemChange.jsp");
 				successView.forward(req, res);
 				return;
 			}catch(Exception e) {
@@ -68,49 +69,6 @@ public class MemberListServlet extends HttpServlet {
 				req.setAttribute("errorMsgs", errorMsgs);
 				
 				try {
-					
-//					String str = req.getParameter("userid");
-//					if(str == null || (str.trim().length()) == 0) {
-//						errorMsgs.add("請輸入內容");
-//					}
-//					
-//					if(!errorMsgs.isEmpty()) {
-//						RequestDispatcher failureView = req.getRequestDispatcher("/member/webManagerSystem.jsp");
-//						failureView.forward(req, res);
-//						return;
-//					}
-//					
-//					Integer userID = null;
-//					try {
-//						userID = new Integer(str);
-//					}catch(Exception e) {
-//						errorMsgs.add("會員編號格式不正確");
-//					}
-					
-//					if(!errorMsgs.isEmpty()) {
-//						RequestDispatcher failureView = req
-//								.getRequestDispatcher("/member/webManagerSystem.jsp");
-//						failureView.forward(req, res);
-//						return;
-//					}
-//					//開始查資料
-//					MemberService memberSvc = new MemberService();
-//					MemberVO memberVO = memberSvc.getone(userID);
-//					if(userID == null) {
-//						errorMsgs.add("查無資料");
-//					}
-//					
-//					if(!errorMsgs.isEmpty()) {
-//						RequestDispatcher failureView = req.getRequestDispatcher("/member/webManangerSystem.jsp");
-//						failureView.forward(req, res);
-//						return;
-//					}
-//					userId = null;
-//					try {
-//						
-//					}catch(Exception e) {
-//						errorMsgs.add("");
-//					}
 					Integer userId =  new Integer(req.getParameter("userid").trim());					
 					String account = req.getParameter("account").trim();
 					
@@ -182,7 +140,7 @@ public class MemberListServlet extends HttpServlet {
 					
 					//個人照片
 					byte[] personPhoto = null;
-					
+//					File noimage = new File("/member/images/noimage.PNG");
 					
 					try {
 						Part part = req.getPart("personPhoto");
@@ -269,9 +227,9 @@ public class MemberListServlet extends HttpServlet {
 					memberVO.setPersonPhoto(personPhoto);
 					
 					if(!errorMsgs.isEmpty()) {
-						System.out.println("我有跑到isEmpty");
+//						System.out.println("我有跑到isEmpty");
 						req.setAttribute("membervo", memberVO);
-						String url = "/member/webManagerSystem.jsp";
+						String url = "/member/webManagerSystemChange.jsp";
 						RequestDispatcher failureView = req.getRequestDispatcher(url);
 						failureView.forward(req, res);
 						
@@ -283,7 +241,7 @@ public class MemberListServlet extends HttpServlet {
 							birthDate, phone, certification, certificationPic, personId, address,
 							createTime, status, updateTime, ratepeople, ratepoint, personPhoto);
 					req.setAttribute("membervo", memberVO);
-					System.out.println("我有跑到membersvc");
+//					System.out.println("我有跑到membersvc");
 					String url = "/member/webManagerSystem.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 					successView.forward(req, res);
@@ -293,12 +251,38 @@ public class MemberListServlet extends HttpServlet {
 			}
 			
 			
+		if("search".equals(action)) {
+//			System.out.println("search有跑到");
+			List<String> errorMsgs = new LinkedList<String>();
 			
-		
-		
-		
-		
-		
+			try {
+				req.setAttribute("errorMsgs", errorMsgs);
+				MemberService memberSvc = new MemberService();
+				String keyword = req.getParameter("keyword");
+				String url = "/member/webManagerSystem.jsp";
+				String account = req.getParameter("keyword");
+				String nickName = req.getParameter("keyword");
+				String userName = req.getParameter("keyword");
+				String address = req.getParameter("keyword");
+				System.out.println(keyword);
+				List<MemberVO> list = memberSvc.managerFindBySearch(account, nickName, userName, address);
+				System.out.println(list);
+				if(list.size() == 0) {
+					errorMsgs.add("查無資料");
+					RequestDispatcher failureView = req.getRequestDispatcher(url);
+					failureView.forward(req, res);
+					return;
+				}else {
+					req.setAttribute("list", list);
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
+					return;
+				}
+			}catch(Exception e){
+				
+			}
+			
+		}
 		
 	}
 

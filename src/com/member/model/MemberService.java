@@ -106,4 +106,20 @@ public class MemberService {
 	public void ForgetPwd(String account, String pwd) {
 		dao.updatePassword(account, pwd);
 	}
+	
+	public MemberVO pwdUpdateMember(Integer userID, String pwd) {
+		MemberVO vo = new MemberVO();
+		vo.setUserID(userID);
+		vo.setPwd(pwd);
+		dao.pwdUpdate(vo);
+		return vo;
+	}
+	
+	public List<MemberVO> findBySearchMember(String account, String nickName, String userName){
+		return dao.findBySearch(account, nickName, userName);
+	}
+	
+	public List<MemberVO> managerFindBySearch(String account, String nickName, String userName, String address){
+		return dao.managerFindBySearch(account, nickName, userName, address);
+	}
 }

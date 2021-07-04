@@ -33,59 +33,47 @@ public class MemberInfoServlet extends HttpServlet {
 		res.setCharacterEncoding("UTF-8");
 		PrintWriter out = res.getWriter();
 		String action = req.getParameter("action");
-//		System.out.println(keyword);
+		MemberService memberSvc = new MemberService();
+//		System.out.println("post有跑道");
 		
 		//查詢開始
-		if("search_account".equals(action)) {
-			System.out.println("有跑到");
+		if("search".equals(action)) {
+			String keyword = req.getParameter("keyword");
+//			System.out.println("serch有跑到");
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			try {
-				String account = req.getParameter("account");
-				if(account == null || (account.trim().length() ==0)) {
-					errorMsgs.add("請輸入email帳號");
-				}
-				if(!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/member/personinfo.jsp");
-					return;
-				}
-				
-				//老師這版有需要嗎
-//				Integer empno = null;
-//				try {
-//					empno = new Integer(str);
-//				} catch (Exception e) {
-//					errorMsgs.add("員工編號格式不正確");
-//				}
-				
-				//開查資料
-				MemberService memberSvc = new MemberService();
-				MemberVO memberVO = memberSvc.findByAccount(account);
-				if(memberVO == null) {
-					errorMsgs.add("查無資料");
-				}
-				
-				if(!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/member/personinfo.jsp");
+			String url = "/member/searchmember.jsp";
+			String account = req.getParameter("keyword");
+			String nickName = req.getParameter("keyword");
+			String userName = req.getParameter("keyword");
+			List<MemberVO> list = memberSvc.findBySearchMember(account, nickName, userName);
+//				System.out.println(list);
+			if(list.size() == 0) {
+					errorMsgs.add("查無資料，請重新查詢!");
+					RequestDispatcher failureView = req.getRequestDispatcher(url);
 					failureView.forward(req, res);
 					return;
-				}
-				
-				req.setAttribute("memberVO", memberVO);
-				String url = "/member/personinfo.jsp";
+			}else {
+				req.setAttribute("list", list);
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
-			}catch(Exception e) {
-				errorMsgs.add("無法取得資訊" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/member/personinfo.jsp");
-				failureView.forward(req, res);
-			}
-		}
-		//========查詢結束========
-		if("update".equals(action)) {
-			
+				return;
+			}			
 		}
 		
+		if("memberDetail".equals(action)) {
+//			System.out.println("memberDetail有跑到");
+//			System.out.println(req.getAttribute("userID"));
+			Integer userID = new Integer(req.getParameter("userID").trim());
+			MemberVO memberVO = memberSvc.getone(userID);
+			
+			req.setAttribute("memberVO", memberVO);
+			String url = "/member/searchmemberdetail.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+//			System.out.println("有跑到最後");
+			successView.forward(req, res);
+			return;
+		}
 		
 	}
 

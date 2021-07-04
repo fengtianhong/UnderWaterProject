@@ -7,6 +7,7 @@
 
 
 <%  
+	// 推薦行程欄位用
 	GroupTourService groupTourSvc = new GroupTourService();
 	List<GroupTourVO> list = groupTourSvc.getFrontendAll();
 	pageContext.setAttribute("list", list);

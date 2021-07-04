@@ -43,6 +43,8 @@ public class PersonChangeServlet extends HttpServlet {
 		List<String> errorMsgs = new LinkedList<String>();
 		req.setAttribute("errorMsgs", errorMsgs);
 		String action = req.getParameter("action");
+		List<String> successMsgs = new LinkedList<String>();
+		req.setAttribute("successMsgs", successMsgs);
 //		System.out.println(action);
 		
 		//個人網頁更新
@@ -73,7 +75,7 @@ public class PersonChangeServlet extends HttpServlet {
 				
 				//性別選項  不需再篩選
 				String gender = req.getParameter("gender");
-				System.out.println();
+//				System.out.println();
 				
 				java.sql.Date birthDate = null;
 				try {
@@ -161,10 +163,14 @@ public class PersonChangeServlet extends HttpServlet {
 				MemberService memberSvc = new MemberService();
 				memberVO = memberSvc.persoInfoUpdateMember(userID, nickName, userName, gender, birthDate, phone, certification, certificationPic, personID, address, personPhoto);
 				req.setAttribute("memberVO", memberVO);
-				String url = "/member/personInfo.jsp";
+//				System.out.println("修改成功之前");
+				successMsgs.add("修改成功!!");
+				String url = "/member/personinfochange.jsp";
 				// 成功轉交給personInfo.jsp
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
+				successView.forward(req, res);
 			}catch(Exception e) {
+				System.out.println("error");
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/member/personinfochange.jsp");
 				failureView.forward(req, res);
@@ -172,8 +178,15 @@ public class PersonChangeServlet extends HttpServlet {
 		}
 		//============修改密碼
 		if("update_pwd".equals(action)) {
-//			System.out.println("update_pwd有跑到");
+			
+			try {
+			
+			MemberService memberSvc = new MemberService();
 			Integer userID = new Integer(req.getParameter("userID"));
+			MemberVO memberVO = memberSvc.getone(userID);
+			String originalpwd = memberVO.getPwd();
+//			System.out.println("update_pwd有跑到");
+			
 			String pwd = req.getParameter("pwd");
 //			System.out.println(pwd);
 			String newpwd1 = req.getParameter("newpwd1");
@@ -186,16 +199,14 @@ public class PersonChangeServlet extends HttpServlet {
 			if(newpwd1 == null || newpwd1.trim().length() == 0 || newpwd2 == null || newpwd2.trim().length() == 0) {
 				errorMsgs.add("新密碼不得空白");
 			}
-			System.out.println(newpwd1 + newpwd2);
+//			System.out.println(newpwd1 + newpwd2);
 			if(!(newpwd1.equals(newpwd2))) {
 				errorMsgs.add("兩次新密碼輸入有誤");
 			}
 			
-			
-			MemberService memberSvc = new MemberService();
-			MemberVO memberVO = memberSvc.getone(userID);
-			System.out.println(memberVO.getPwd());
-			
+			if(!originalpwd.equals(pwd)) {
+				errorMsgs.add("與原始密碼有出入");
+			}
 			
 			if(!errorMsgs.isEmpty()) {
 				RequestDispatcher failureView = req.getRequestDispatcher("/member/personchangepwd.jsp");
@@ -203,15 +214,25 @@ public class PersonChangeServlet extends HttpServlet {
 				return;
 			}
 			
+			memberVO = memberSvc.pwdUpdateMember(userID, newpwd2);
 			
+			req.setAttribute("memberVO", memberVO);
+			String url = "/member/personchangepwd.jsp";
+			successMsgs.add("修改成功!!");
 			
-			
-			
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
+			}catch(Exception e) {
+				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/member/personchangepwd.jsp");
+				failureView.forward(req, res);
+			}
 		}
+			
 		
 		
 		
 		
 	}
-
+		
 }

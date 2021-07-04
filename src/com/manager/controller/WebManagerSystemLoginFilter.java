@@ -33,7 +33,6 @@ public class WebManagerSystemLoginFilter implements Filter{
 		HttpSession session = req.getSession();
 		
 		Object account = session.getAttribute("account");
-		
 		if(account == null) {
 			session.setAttribute("location", req.getRequestURI());
 			res.sendRedirect(req.getContextPath() + "/member/webManagerSystemLogin.jsp");

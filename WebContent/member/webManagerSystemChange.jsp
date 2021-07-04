@@ -6,19 +6,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%
-MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
-	List<MemberVO> list = (List<MemberVO>)request.getAttribute("list");
-	if(list == null){
-		MemberService memberSvc = new MemberService();
-		list = memberSvc.getAll();
-		pageContext.setAttribute("list", list);
-	}else{
-		pageContext.setAttribute("list", list);
-	}
-	
-	
-	
-	
+	MemberService memberSvc = new MemberService();
+	List<MemberVO> list = memberSvc.getAll();
+	pageContext.setAttribute("list", list);
+	MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
 	
 %>
 
@@ -73,15 +64,15 @@ MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
 .popBox {
 	border: solid;
 	width: 750px;
-	height: 750px;
+	height: 800px;
 	position: absolute;
-	left: 50%;
-	top: 20%;
+	left: 42%;
+	top: 0%;
 	margin-left: -250px;
 	z-index: 100;
 	background-color: white;
 	text-align: center;
-	display: none;
+	display: block;
 }
 
 .popBox input {
@@ -107,24 +98,20 @@ MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
             <div class="col-lg-1">
 
             </div>
-            <form action="<%=request.getContextPath()%>/member/MemberListServlet.do" method="post">
             <div class="col-lg-6">
                 <div class="input-group">
-                    <input type="text" class="form-control" name="keyword" placeholder="全部查詢" id="searchInput">
+                    <input type="text" class="form-control" placeholder="全部查詢" id="searchInput">
                     <span class="input-group-btn">
-                    	<input type="hidden" name="action" value="search">
-                        <input class="btn btn-default" type="submit" value="查詢">
+                        <button class="btn btn-default" type="button" id="search">查詢</button>
                     </span>
                 </div>
             </div>
-			</form>
+
             <div class="col-lg-1" >
             	<form action="WebManagerSystemLogoutServlet.do" method="post">
             		<button class="btn btn-primary" type="submit" id="logout" >登出</button>
             	</form>
-            	
             </div>
-            <div><c:if test="${msg!=null}"> ${msg}</c:if></div>
         </div>
 		
 		<table class="table table-striped table-bordered">
@@ -180,8 +167,51 @@ MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
         </table>
 <%@ include file="page2.file"%>	
 
+<div class="popBox" id="popBox updatePopBox">
+	<c:if test="${not empty errorMsgs}">
+		<font style="color:red">請修正以下錯誤:</font>
+		<ul>
+			<c:forEach var="message" items="${errorMsgs}">
+				<li style="color:red">${message}</li>
+			</c:forEach>
+		</ul>
+	</c:if>
 
-
+            <h1>更新會員內容</h1>
+	<form method="post" action="MemberListServlet.do" name="form1"  enctype="multipart/form-data"><br>
+			編&#12288;&#12288;號：<input name="ueserid" type="text" class="updateInput" value="${memberVO.userID}" readonly><br/>
+			帳&#12288;&#12288;號：<input name="account" type="text" value="${memberVO.account}" readonly><br />
+			暱&#12288;&#12288;稱：<input name="nickname" type="text" value="${memberVO.nickName}"><br />
+			姓&#12288;&#12288;名：<input name="username" type="text" value="${memberVO.userName}"><br />
+			
+			性&#12288;&#12288;別：&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;<input name="gender" type="radio" value="男"${(memberVO.gender=="0")? 'checked' : ''}>男
+								<input name="gender" type="radio" value="女"${(memberVO.gender=="1")? 'checked' : ''}>女<br>
+			
+			生&#12288;&#12288;日：<input name="birthdate" type="text" value="${memberVO.birthDate}" class="birthdate"><br />
+			電&#12288;&#12288;話：<input name="phone" type="text" value="${memberVO.phone}"><br />
+			證&#12288;&#12288;照：<input name="certification" type="text" value="${memberVO.certification}"><br />
+			<input type="file" id="the_file" name="certificationpic" accept="image/*"><br />
+<%-- 				<td>證照照片<input  type="text" name="certificationpic" value="${memberVO.certificationPic}"></td> --%>
+<%-- 				<td><div class="picture"><img class="preview" src="GetImage.do?userid=${memberVO.userID}"></div></td> --%>
+			身分證字號：<input type="text" name="personid" value="${membeVO.personID}"><br />
+			地&#12288;&#12288;址：<input type="text" name="address" value="${memberVO.address}"><br />
+			加入時間：<input type="text" name="createtime" value="<fmt:formatDate value="${memberVO.createTime}" pattern="yyyy-mm-dd hh:mm:ss"/>" readonly><br />
+			帳號狀態：<input type="text" name="status" value="${memberVO.status}"><br />
+			更新時間：<input type="text" name="updatetime" value="<fmt:formatDate value="${memberVO.upDateTime}" pattern="yyyy-mm-dd hh:mm:ss"/>" readonly><br />
+			評價人數：<input type="text" name="ratepeople" value="${memberVO.ratePeople}"><br />
+			評價總分：<input type="text" name="ratepoint" value="${memberVO.ratePoint}">	<br />		
+			<input type="file" id="the_file" name="personPhoto" accept="image/*"><br />
+<%-- 				<td><div class="picture"><img class="preview" src="GetImagepersonPhoto.do?userid=${memberVO.userID}"></div></td> --%>
+			
+		<br>
+		<div style="margin-top: 40px;">
+			<input type="hidden" name="action" value="update">
+			<input type="hidden" name="userid" value="${memberVO.userID}">
+			<input type="submit" value="確定修改">
+			<button type="button" onclick="location.href='webManagerSystem.jsp'">取消</button>
+		</div>
+	</form> 
+</div>
 </div>
 </body>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -223,7 +253,11 @@ MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
     	popBox.style.display="none";
     }
     </script>
-
+<style>
+	tr, td{
+	text-align:center;
+	}
+</style>
 
 
 </html>
