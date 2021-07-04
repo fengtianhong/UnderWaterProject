@@ -84,8 +84,8 @@ nav.navbar.fixed-top.navbar-expand-md.navbar-light a {
 					<li class="nav-item"><a class="nav-link">商城</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="<%=request.getContextPath()%>/forumArticle/forumArticle.jsp">論壇</a></li>
-					<li class="nav-item"><a class="nav-link">會員中心</a></li>
-					<li class="nav-item"><a class="nav-link">購物車?</a></li>
+ <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/member/personinfo.jsp">會員中心</a></li>
+                        <li class="nav-item"><a class="nav-link"  target="_blank"  href="<%=request.getContextPath()%>/chat/index.jsp">聊天</a></li>
 					<c:if test="${userID==null}">
 						<li class="nav-item"><a class="nav-link"
 							href="<%=request.getContextPath()%>/member/login.jsp">登入</a></li>

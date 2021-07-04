@@ -34,6 +34,7 @@
 		<url-pattern>/party/partyIHost.jsp</url-pattern>
 		<url-pattern>/party/partyIJoin.jsp</url-pattern>
 		<url-pattern>/chat/*</url-pattern>
+		<url-pattern>/member/personinfo.jsp</url-pattern>
 		<url-pattern>/orderforgroup/AddGTOrder.jsp</url-pattern>
 		<url-pattern>/orderforgroup/GroupOrder.jsp</url-pattern>
 		<url-pattern>/orderforgroup/Success.jsp</url-pattern>
