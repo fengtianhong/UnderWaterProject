@@ -19,7 +19,7 @@
 	border: 1px solid green;
 }
 </style>
-<title>客服 - 後台管理</title>
+<title>後台管理 - 客服</title>
 </head>
 <body onload="connect();" onunload="disconnect();">
 <%@ include file="../share/backend/Bheader.file" %>
