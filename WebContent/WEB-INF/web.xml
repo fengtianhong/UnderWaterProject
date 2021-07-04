@@ -12,7 +12,9 @@
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
-
+<!-- 	<error-page> -->
+<!-- 		<location>/error.jsp</location> -->
+<!-- 	</error-page> -->
 	<resource-ref>
 		<description>DB Connection</description>
 		<res-ref-name>jdbc/UnderWater</res-ref-name>
@@ -27,25 +29,25 @@
 
 	<filter-mapping>
 		<filter-name>LoginFilter</filter-name>
-		<url-pattern>/orderforgroup/*</url-pattern>
 		<url-pattern>/party/HostParty.jsp</url-pattern>
 		<url-pattern>/party/partyRegister.jsp</url-pattern>
 		<url-pattern>/party/partyIHost.jsp</url-pattern>
 		<url-pattern>/party/partyIJoin.jsp</url-pattern>
 		<url-pattern>/chat/*</url-pattern>
+		<url-pattern>/orderforgroup/AddGTOrder.jsp</url-pattern>
+		<url-pattern>/orderforgroup/GroupOrder.jsp</url-pattern>
+		<url-pattern>/orderforgroup/Success.jsp</url-pattern>
+		<url-pattern>/customerreply/CSchat.jsp</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
 		<dispatcher>ERROR</dispatcher>
 		<dispatcher>ASYNC</dispatcher>
 	</filter-mapping>
-	
-	
-	<filter>
-		<filter-name>WebManagerSystemLoginFilter</filter-name>
-		<filter-class>com.manager.controller.WebManagerSystemLoginFilter</filter-class>
-	</filter>
-
+	 <filter> 
+	 <filter-name>WebManagerSystemLoginFilter</filter-name> 
+	 <filter-class>com.manager.controller.WebManagerSystemLoginFilter</filter-class> 
+	 </filter> 
 	<filter-mapping>
 		<filter-name>WebManagerSystemLoginFilter</filter-name>
 		<url-pattern>/news/*</url-pattern>
@@ -87,30 +89,15 @@
 		<url-pattern>/party/party.do</url-pattern>
 	</servlet-mapping>
 
-<!-- 改成Annotation註冊
-	<servlet>
-		<servlet-name>PartyPic</servlet-name>
-		<servlet-class>com.party.controller.PartyPic</servlet-class>
-	</servlet>
-	
-	<servlet-mapping>
-		<servlet-name>PartyPic</servlet-name>
-		<url-pattern>/party/partyPic.do</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>PartySchedule</servlet-name>
-		<servlet-class>com.party.controller.PartySchedule</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	
-	<servlet-mapping>
-		<servlet-name>PartySchedule</servlet-name>
-		<url-pattern>/PartySchedule</url-pattern>
-	</servlet-mapping>
- -->
+	<!-- 改成Annotation註冊 <servlet> <servlet-name>PartyPic</servlet-name> <servlet-class>com.party.controller.PartyPic</servlet-class> 
+		</servlet> <servlet-mapping> <servlet-name>PartyPic</servlet-name> <url-pattern>/party/partyPic.do</url-pattern> 
+		</servlet-mapping> <servlet> <servlet-name>PartySchedule</servlet-name> <servlet-class>com.party.controller.PartySchedule</servlet-class> 
+		<load-on-startup>1</load-on-startup> </servlet> <servlet-mapping> <servlet-name>PartySchedule</servlet-name> 
+		<url-pattern>/PartySchedule</url-pattern> </servlet-mapping> -->
 
 
+
+<!-- 論壇註冊相關共5個-->
 	<servlet>
 		<servlet-name>ArticleTitleOptServlet</servlet-name>
 		<servlet-class>com.articleTitleOpt.controller.ArticleTitleOptServlet</servlet-class>
@@ -130,6 +117,42 @@
 		<servlet-name>ForumArticleServlet</servlet-name>
 		<url-pattern>/forumArticle/forumArticle.do</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ForumCommentServlet</servlet-name>
+		<servlet-class>com.forumComment.controller.ForumCommentServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ForumCommentServlet</servlet-name>
+		<url-pattern>/forumComment/forumComment.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ArticleReportServlet</servlet-name>
+		<servlet-class>com.articleReport.controller.ArticleReportServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ArticleReportServlet</servlet-name>
+		<url-pattern>/forumArticle/articleReport.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ForumRateServlet</servlet-name>
+		<servlet-class>com.forumRate.controller.ForumRateServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ForumRateServlet</servlet-name>
+		<url-pattern>/forumRate/forumRate.do</url-pattern>
+	</servlet-mapping>	
+	
+		
+	
+
+
+
 
 	<servlet>
 
@@ -174,7 +197,7 @@
 
 	<servlet>
 		<servlet-name>ProductServlet</servlet-name>
-		<servlet-class>com.product.controller.ProductServlet</servlet-class>
+		<servlet-class>com.product.controller.ProductServletBk</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -190,16 +213,6 @@
 	<servlet-mapping>
 		<servlet-name>OrderForProductServlet</servlet-name>
 		<url-pattern>/orderforproduct/orderforproduct.do</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>OrderListServlet</servlet-name>
-		<servlet-class>com.orderlist.controller.OrderListServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>OrderListServlet</servlet-name>
-		<url-pattern>/orderlist/orderlist.do</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
@@ -236,7 +249,7 @@
 		<servlet-name>LogoutServlet</servlet-name>
 		<servlet-class>com.login.controller.LogoutServlet</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>LogoutServlet</servlet-name>
 		<url-pattern>/member/LogoutServlet.do</url-pattern>
@@ -251,25 +264,25 @@
 		<servlet-name>WebManagerSystemLogoutServlet</servlet-name>
 		<url-pattern>/member/WebManagerSystemLogoutServlet.do</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>MemberInfoServlet</servlet-name>
 		<servlet-class>com.member.controller.MemberInfoServlet</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>MemberInfoServlet</servlet-name>
 		<url-pattern>/member/MemberInfoServlet.do</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>PersonChangeServlet</servlet-name>
 		<servlet-class>com.member.controller.PersonChangeServlet</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>PersonChangeServlet</servlet-name>
 		<url-pattern>/member/PersonChangeServlet.do</url-pattern>
 	</servlet-mapping>
-	
+
 </web-app>

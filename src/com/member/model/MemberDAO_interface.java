@@ -16,4 +16,5 @@ public interface MemberDAO_interface {
 	public void personInfoUpdate(MemberVO MemberVO);
 	public void pwdUpdate(MemberVO MemberVO);
 	public List<MemberVO> findBySearch(String account, String nickName, String userName);
+	public void updatePassword(String account, String pwd);
 }
