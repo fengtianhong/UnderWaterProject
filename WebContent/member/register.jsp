@@ -5,7 +5,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	request.setCharacterEncoding("UTF-8");
-	response.setCharacterEncoding("UTF-8");
+	response.setCharacterEncoding("UTF-8");		
+	
 %>
 <%
 	// 抓取新增失敗時回傳的VO
@@ -145,8 +146,9 @@
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script>
-	
-	
+<%	
+	String successMsgs = (String)session.getAttribute("successMsgs");
+	%>
 	
 	
 	function checkform(form){
