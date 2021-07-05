@@ -19,16 +19,14 @@
 		<style type="text/css">
 
 		</style>
-		
-		
-		
+
 	</head>
 	<body>
-	<%@ include file="../share/backend/Bheader.file" %>
+		<%@ include file="../share/backend/Bheader.file" %>
 		
 
-	<%@ include file="../share/backend/Bfooter.file" %>
+		<%@ include file="../share/backend/Bfooter.file" %>
 	</body>
-	<%@ include file="../share/backend/Bjs.file" %>
+		<%@ include file="../share/backend/Bjs.file" %>
 	
 </html>

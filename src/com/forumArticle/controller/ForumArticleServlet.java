@@ -179,7 +179,7 @@ public class ForumArticleServlet extends HttpServlet {
 			
 			//接收參數+錯誤處理
 			try {
-				Integer articleSN = new Integer(req.getParameter("articleSN").trim());
+				Integer articleSN = new Integer(req.getParameter("articleSN"));
 				
 				String articleTitle = req.getParameter("articleTitle");
 				
