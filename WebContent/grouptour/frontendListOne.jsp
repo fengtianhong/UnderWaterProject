@@ -212,13 +212,13 @@
 	        <c:if test="${groupTourVO.certificationLimit==2}">PADI AOW / SSI AOW</c:if>
 	</div>
 <!-- row end --></div>
-<hr>
+<!-- <hr> -->
 <div class="row">
 <div class="col-xl-12 col-lg-12">
-		<p>潛點評價</p><jsp:useBean id="locationrateSvc" scope="page" class="com.locationrate.model.LocationrateService"></jsp:useBean>
-		<div>
-		<p>${locationrateSvc.getByPointSN(groupTourVO.pointSN)}</p>
-		</div>
+<%-- 		<p>潛點評價</p><jsp:useBean id="locationrateSvc" scope="page" class="com.locationrate.model.LocationrateService"></jsp:useBean> --%>
+<!-- 		<div> -->
+<%-- 		<p>${locationrateSvc.getByPointSN(groupTourVO.pointSN)}</p> --%>
+<!-- 		</div> -->
 </div>	
 <!-- row end --></div>	 
 <hr>
