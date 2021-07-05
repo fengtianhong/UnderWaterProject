@@ -11,8 +11,6 @@
 %>
 
 
-
-
 <!DOCTYPE html>
 <html>
 	<head>
@@ -28,6 +26,7 @@
 	</head>
 	<body>
 		<%@ include file="../share/backend/Bheader.file" %>
+		<form method="post" action="articleReport.do">
 			<table>
 				<tr>
 					<td>檢舉編號<td>
@@ -39,26 +38,18 @@
 				</tr>
 				<tr>
 					<td>檢舉回覆<td>
-					<td><textarea name="reRptResult" maxlength==1000></textarea></td>
+					<td><textarea name="reRptResult" maxlength==1000>${articleReportVO.reRptResult}</textarea></td>
 				</tr>
-<%-- 				<tr>
-					<td>處理狀態<td>
-					<td>
-						<jsp:useBean id="articleReportSvc" scope="page" class="com.articleReport.model.ArticleReportService"></jsp:useBean>
-						<select size="1" name="rptStatus">
-							<c:forEach var="articleReportVO" items="${articleReportSvc.all}">
-								<option value="${articleReportVO.rptStatus == 0}" ${articleReportVO.rptStatus}? 'selected':''"></option>
-							</c:forEach>
-						</select>
-					</td>
-				</tr> --%>
+
 				<tr>
 					<td>送出<td>
 					<td>
 						
 							<input type="hidden" name="action" value="update">
-							<%-- <input type="hidden" name="rptSN" value="<%=articleReportVO.getRptSN()%>"> --%>
-							<input type="submit" value="送出修改" style="border-radius: 7px; margin-bottom: 20px; margin-left: 20px;">
+							<input type="hidden" name="rptSN" value="<%=articleReportVO.getRptSN()%>">
+							<%-- <input type="hidden" name="rptStatus" value="<%=articleReportVO.getRptStatus()%>"> --%>
+							<%-- <input type="hidden" name="reRptResult" value="<%=articleReportVO.getReRptResult()%>"> --%>
+							<input type="submit" value="送出處理回覆" style="border-radius: 7px; margin-bottom: 20px; margin-left: 20px;">
 						
 					</td>
 				</tr>
@@ -67,7 +58,7 @@
 			
 			</table>
 		
-		
+		</form>
 		
 		
 		

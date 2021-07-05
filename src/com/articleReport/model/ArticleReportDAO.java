@@ -30,7 +30,7 @@ public class ArticleReportDAO implements ArticleReportDAO_interface{
 	private static final String GET_ONE_STMT = 
 			"SELECT rptSN, userID, articleSN, rptReason, rptStatus,reRptResult FROM ArticleReport where rptSN = ?";
 	private static final String UPDATE = 
-			"UPDATE ArticleReport set rptStatus = ?, reRptResult = ? where rptSN = ?";
+			"UPDATE ArticleReport set rptStatus = 1, reRptResult = ? where rptSN = ?";
 	
 	
 
@@ -83,9 +83,9 @@ public class ArticleReportDAO implements ArticleReportDAO_interface{
 //			pstmt.setString(1, articleReportVO.getRptReason());
 //			pstmt.setInt(2, articleReportVO.getUserID());
 //			pstmt.setInt(3, articleReportVO.getArticleSN());
-			pstmt.setBoolean(1, articleReportVO.getRptStatus());
-			pstmt.setString(2, articleReportVO.getReRptResult());
-			pstmt.setInt(3, articleReportVO.getRptSN());
+//			pstmt.setBoolean(1, articleReportVO.getRptStatus());
+			pstmt.setString(1, articleReportVO.getReRptResult());
+			pstmt.setInt(2, articleReportVO.getRptSN());
 			
 			pstmt.executeUpdate();
 		} catch (SQLException se) {

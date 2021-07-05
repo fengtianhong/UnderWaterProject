@@ -56,8 +56,6 @@
 			<div class="post-heading">
 				<div id="css_table">
 					<div class="css_tr">
-						<%-- <div class="css_td" style="text-align: center;"><h3>${forumArticleVO.articleTitle}</h3></div> --%>
-						<%-- <div class="css_td">${forumArticleVO.articleText}</div> --%>
 							<div class="col-xs-2 col-md-1">
 								<form method="post" action="forumArticle.do" class="btn-div">
 									<input type="hidden" name="action" value="getOne_For_Display">
@@ -70,8 +68,7 @@
 						<jsp:useBean id="memberSvc" scope="page" class="com.member.model.MemberService" />
 						<span class="css_td" style="text-align: center;">作者：${memberSvc.getone(forumArticleVO.userID).nickName}</span>
 						
-						<%-- <span class="css_td" style="text-align: center;">文章好評：${forumArticleVO.rateGCount}</span>
-						<span class="css_td" style="text-align: center;">文章負評：${forumArticleVO.rateNGCount}</span> --%>
+						
 					</div>
 
 				</div>

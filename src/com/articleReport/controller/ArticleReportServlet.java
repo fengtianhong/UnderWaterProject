@@ -104,22 +104,24 @@ public class ArticleReportServlet extends HttpServlet{
 		
 //		更新(管理員更新檢舉回覆文字)
 		if ("update".equals(action)) {
+			
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			System.out.println("1");
+			
 			try {
 //				接收參數
+			
 				Integer rptSN = new Integer(req.getParameter("rptSN"));
-				Boolean rptStatus = new Boolean(req.getParameter("rptStatus"));
+//				Boolean rptStatus = new Boolean(req.getParameter("rptStatus"));
 				String reRptResult = req.getParameter("reRptResult");
 				
 				if (reRptResult == null || reRptResult.trim().length() == 0) {
 					errorMsgs.add("更新檢舉處理之文字不得為空");
 				} 
-				System.out.println("11");
+				
 				ArticleReportVO articleReportVO = new ArticleReportVO();
 				articleReportVO.setRptSN(rptSN);
-				articleReportVO.setRptStatus(true);
+//				articleReportVO.setRptStatus(rptStatus);
 				articleReportVO.setReRptResult(reRptResult);
 				
 				if (!errorMsgs.isEmpty()) {
@@ -128,10 +130,12 @@ public class ArticleReportServlet extends HttpServlet{
 					failureView.forward(req, res);
 					return; //程式中斷
 				}
+				
 //				更新
 				ArticleReportService articleReportSvc = new ArticleReportService();
-				articleReportVO = articleReportSvc.updateArticleReport(rptSN, rptStatus, reRptResult);
-				System.out.println("111");	
+//				articleReportVO = articleReportSvc.updateArticleReport(rptSN, rptStatus, reRptResult);
+				articleReportVO = articleReportSvc.updateArticleReport(rptSN, reRptResult);
+				
 //				成功後轉交
 				req.setAttribute("articleReportVO", articleReportVO);
 				String url = "/forumArticle/uwRptManage.jsp";
