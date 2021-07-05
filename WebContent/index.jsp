@@ -451,7 +451,7 @@
 
 
 	<jsp:include page="/share/footer_homepage.jsp" flush="true" />
-	<a class="btn btn-primary btn-sm text-uppercase chat"><i class="far fa-comment-dots"></i></a>
+	<a class="btn btn-primary btn-sm text-uppercase chat" target="_blank"  href="<%=request.getContextPath()%>/chat/index.jsp"><i class="far fa-comment-dots" ></i></a>
 	
 	<!-- 客服 -->
 	<button target="_blank" class="btn btn-primary btn-sm text-uppercase customer-service" onclick="connect();"><i class="fas fa-headset"></i></button>
