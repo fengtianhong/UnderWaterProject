@@ -56,10 +56,12 @@
 					</tr>
 					<tr>
 						<td>介紹:</td>
-						<td><input type="TEXT" name="introduction" size="45"
-							placeholder="請輸入潛點詳細介紹"
-							value="<%=(diveinfoVO == null) ? "" : diveinfoVO.getIntroduction()%>"></td>
+<!-- 						<td><input type="TEXT" name="introduction" size="45" -->
+<!-- 							placeholder="請輸入潛點詳細介紹" -->
+<%-- 							value="<%=(diveinfoVO == null) ? "" : diveinfoVO.getIntroduction()%>"></td> --%>
+						<td><textarea style="resize:none;" name="introduction" rows="7" cols="45"><%=(diveinfoVO == null) ? "" : diveinfoVO.getIntroduction()%></textarea></td>
 					</tr>
+				
 					<tr>
 						<td>季節:</td>
 						<td><input type="checkbox" id="season1" name="season"

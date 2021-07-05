@@ -50,6 +50,7 @@ public class DiveinfoServlet extends HttpServlet {
 			}
 			String view = req.getParameter("view");
 			String introduction = req.getParameter("introduction");
+			introduction=introduction.replaceAll("\r|\n|\t", "");
 			if (introduction == null || (introduction.trim().length() == 0)) {
 				errorMsgs.add("請輸入詳細介紹");
 
@@ -164,6 +165,7 @@ public class DiveinfoServlet extends HttpServlet {
 				}
 				String view = req.getParameter("view");
 				String introduction = req.getParameter("introduction");
+				introduction=introduction.replaceAll("\r|\n|\t", "");
 				if (introduction == null || (pointname.trim().length() == 0)) {
 					errorMsgs.add("請輸入詳細介紹");
 
