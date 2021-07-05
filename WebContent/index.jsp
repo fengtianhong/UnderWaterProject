@@ -200,9 +200,9 @@
 								<%=partyList.get(0).getPartySN()%></h4>
 							<h4 class="subheading"><%=partyList.get(0).getPartyTitle()%></h4>
 						</div>
-						<div class="timeline-body">
-							<p class="text-muted"><%=partyList.get(0).getPartyDetail()%></p>
-						</div>
+<!-- 						<div class="timeline-body"> -->
+<%-- 							<p class="text-muted"><%=partyList.get(0).getPartyDetail()%></p> --%>
+<!-- 						</div> -->
 					</div>
 				</li>
 				<li class="timeline-inverted">
@@ -217,9 +217,9 @@
 								<%=partyList.get(1).getPartySN()%></h4>
 							<h4 class="subheading"><%=partyList.get(1).getPartyTitle()%></h4>
 						</div>
-						<div class="timeline-body">
-							<p class="text-muted"><%=partyList.get(1).getPartyDetail()%></p>
-						</div>
+<!-- 						<div class="timeline-body"> -->
+<%-- 							<p class="text-muted"><%=partyList.get(1).getPartyDetail()%></p> --%>
+<!-- 						</div> -->
 					</div>
 				</li>
 				<li class="timeline-inverted">
@@ -258,8 +258,8 @@
 				<div class="col-lg-4">
 					<div class="team-member">
 						<img class="mx-auto rounded-circle" src="img/team/2.jpg" alt="..." />
-						<h4>來張大頭照</h4>
-						<p class="text-muted">Lead Marketer</p>
+						<h4>Huang</h4>
+						<p class="text-muted">發起揪團 | 報名 | 審核資格</p>
 						<a class="btn btn-dark btn-social mx-2" href="#!"><i
 							class="fab fa-twitter"></i></a> <a
 							class="btn btn-dark btn-social mx-2" href="#!"><i
