@@ -44,13 +44,13 @@
 									<img src="<%=request.getContextPath()%>/member/IdentityServlet" id="identity" onload="btn.disabled=false;" /> 
 									<input type="button" value=" 換個圖片 " id="btn" onclick="reloadImage()">
 									<div id="wrap-inline">
-										<p>${msg}</p>
+										<p style="color:red;">${msg}</p>
                             			<p class="login button"> <input type="submit" value="登入" /> </p>
 									</div>
 								</div>
                 				<p class="change_link">還沒成為會員 ?
 									<a href="register.jsp" class="to_register">註冊</a>
-									<a href="getaccount.jsp" class="to_register">忘記密碼</a>
+									<a href="forgetpassword.jsp" class="to_register">忘記密碼</a>
 								</p>
                             </form>
 <!--                         </div> -->

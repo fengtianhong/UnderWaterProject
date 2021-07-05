@@ -106,7 +106,7 @@
             </div>
         </div>
 		
-		<table class="table table-striped table-bordered">
+		<table class="table table-striped table-bordered" style="text-align:center;">
                 <tr>
 					<td>編號</td>
                     <td>帳號</td>
@@ -137,7 +137,7 @@
 			<td>${memberVO.birthDate}</td>
 			<td>${memberVO.phone}</td>
 			<td>${memberVO.certification}</td>
-			<td><div class="picture"><img class="preview" src="GetImage.do?userid=${memberVO.userID}"></div></td>
+			<td><div class="picture"><img class="preview" src="GetImageCertificationPic.do?userid=${memberVO.userID}"></div></td>
 			<td>${memberVO.personID}</td>
 			<td>${memberVO.address}</td>
 			<td>${memberVO.createTime}</td>
@@ -148,7 +148,7 @@
 			<td><div class="picture"><img class="preview" src="GetImagepersonPhoto.do?userid=${memberVO.userID}"></div></td>
 			<td>
 				<form method="post"  action="<%=request.getContextPath()%>/member/MemberListServlet.do" >
-					<input type="submit" class="update" value="修改" onclick="showupdatediv();">
+					<input type="submit" class="update btn btn-primary btn-user" value="修改" onclick="showupdatediv();">
 					<input type="hidden" name="userid"  value="${memberVO.userID}">
 					<input type="hidden" name="action" value="getOne_For_Update">
 				</form>

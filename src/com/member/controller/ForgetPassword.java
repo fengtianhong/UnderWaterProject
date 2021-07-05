@@ -31,6 +31,8 @@ public class ForgetPassword extends HttpServlet {
 		
 		try {
 			// 驗證帳號是否正確
+//			System.out.println(req.getContextPath());
+//			System.out.println("forgetpassword doPost有收到");
 			String account = req.getParameter("account");
 			System.out.println(account);
 			MemberService memberSvc = new MemberService();
@@ -38,7 +40,7 @@ public class ForgetPassword extends HttpServlet {
 			System.out.println(memberVO);
 			if(memberVO == null) {
 				errMsg.add("請確認帳號是否正確");
-				RequestDispatcher failureView = req.getRequestDispatcher("/member/");
+				RequestDispatcher failureView = req.getRequestDispatcher("/member/forgetpassword.jsp");
 				failureView.forward(req, res);
 				return;
 			}
@@ -58,10 +60,12 @@ public class ForgetPassword extends HttpServlet {
 			mailService.sendMail(to, messageText);
 			System.out.println("success");
 			
+			res.sendRedirect(req.getContextPath() + "/member/passwordreset.jsp");
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("失敗"+ e.getMessage());
-			res.sendRedirect(req.getContextPath());		// back to index
+			res.sendRedirect(req.getContextPath()+"/member/forgetpassword.jsp");		// back to index
 		}
 
 	}
