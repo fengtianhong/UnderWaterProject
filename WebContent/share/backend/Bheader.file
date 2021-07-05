@@ -57,7 +57,25 @@
             </li>
             
              <!--------------------------end of  潛水地點 -------------------------->
-             
+           <!-------------------------- 會員管理 -------------------------->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#member"
+                    aria-expanded="true" aria-controls="diveinfo"> 
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>會員</span>
+                </a>
+                <div id="member" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">會員管理:</h6>
+                        <a class="collapse-item" href="<%=request.getContextPath()%>/member/webManagerSystem.jsp">會員管理</a>
+                                         
+                        <div class="collapse-divider"></div>
+                    </div>
+                </div>
+            </li>
+            
+             <!--------------------------end of  會員管理 -------------------------->
+  
              <!-------------------------- 最新消息 -------------------------->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#news"
