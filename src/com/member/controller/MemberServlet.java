@@ -182,9 +182,12 @@ public class MemberServlet extends HttpServlet{
 				return;
 			}
 //			System.out.println();
+			String registersuccessMsgs = "註冊成功";//未實現註冊成功alert在畫面上
+			req.getSession().setAttribute("registersuccessMsgs", registersuccessMsgs);
 			MemberService memberService = new MemberService();
 			memberVO = memberService.insertMember(account, pwd, nickName, userName, gender, birthDate, phone, certification, certificationPic, personID, address, personPhoto);
-			req.getRequestDispatcher("/index.jsp").forward(req, res);
+//			req.getRequestDispatcher("/index.jsp").forward(req, res);
+			res.sendRedirect(req.getContextPath()+ "/index.jsp");
 			
 			
 			
