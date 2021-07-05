@@ -84,9 +84,6 @@
 								<input type="hidden" name="rptSN" value="${rpt.rptSN}">
 								<input type="hidden" name="action" value="getOne_For_Update">
 							</form>
-							<h1>有接到參數了</h1>
-						
-						
 						</td>
 						
 						

@@ -79,21 +79,21 @@ public class ArticleReportServlet extends HttpServlet{
 		if ("getOne_For_Update".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			System.out.println("1");
+			
 			try {
 //				接收參數
 				Integer rptSN = new Integer(req.getParameter("rptSN"));
-				System.out.println("2");
+				
 //				查詢
 				ArticleReportService articleReportSvc = new ArticleReportService();
 				ArticleReportVO articleReportVO = articleReportSvc.getOneArticleReport(rptSN);
-				System.out.println("3");
+				
 //				成功後轉交更新
 				req.setAttribute("articleReportVO", articleReportVO);
 				String url = "/forumArticle/uwRptReply.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
-				System.out.println("4");
+				
 //				其他錯誤處理
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
@@ -102,11 +102,11 @@ public class ArticleReportServlet extends HttpServlet{
 			}
 		}
 		
-//		更新(管理員更新檢舉回復文字)
+//		更新(管理員更新檢舉回覆文字)
 		if ("update".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			
+			System.out.println("1");
 			try {
 //				接收參數
 				Integer rptSN = new Integer(req.getParameter("rptSN"));
@@ -116,31 +116,31 @@ public class ArticleReportServlet extends HttpServlet{
 				if (reRptResult == null || reRptResult.trim().length() == 0) {
 					errorMsgs.add("更新檢舉處理之文字不得為空");
 				} 
-				
+				System.out.println("11");
 				ArticleReportVO articleReportVO = new ArticleReportVO();
 				articleReportVO.setRptSN(rptSN);
-				articleReportVO.setRptStatus(rptStatus);
+				articleReportVO.setRptStatus(true);
 				articleReportVO.setReRptResult(reRptResult);
 				
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("articleReportVO", articleReportVO); 
-					RequestDispatcher failureView = req.getRequestDispatcher("/emp/update_emp_input.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("");
 					failureView.forward(req, res);
 					return; //程式中斷
 				}
 //				更新
 				ArticleReportService articleReportSvc = new ArticleReportService();
-				articleReportVO = articleReportSvc.updateArticleReport(rptSN, null, reRptResult);
-						
+				articleReportVO = articleReportSvc.updateArticleReport(rptSN, rptStatus, reRptResult);
+				System.out.println("111");	
 //				成功後轉交
 				req.setAttribute("articleReportVO", articleReportVO);
-				String url = "某個更新.jsp";
+				String url = "/forumArticle/uwRptManage.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 //				其他錯誤處理
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("是哪個.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/uwRptReply.jsp");
 				failureView.forward(req, res);
 			}	
 		}
