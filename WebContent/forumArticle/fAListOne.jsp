@@ -120,41 +120,46 @@
 				<%-- <%@ include file="page1frontend.file" %>
 				<c:forEach var="forumCommentVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>"> --%>
 
-	 				<div class="commentShowbox" style="margin-left: 20px; display: inline;">
+					<div class="commentShowbox" style="margin-left: 20px; display: inline;">
 						<span class="css_td" style="text-align: center;">From：${memberSvc.getone(forumArticleVO.userID).nickName}</span>
 						<span class="css_td" style="text-align: center;">在<fmt:formatDate value="${forumCommentVO.cmtDate}" pattern="yyyy-MM-dd HH:mm:ss"/>寫下：</span>
 						
-							<c:if test="${userID != forumCommentVO.userID}">
-								<div class="cmtarea" style="margin-left: 20px;"><p>${forumCommentVO.cmtText}</p></div>
-							</c:if> --%>
+						<c:if test="${userID != forumCommentVO.userID}"><!-- 非使用者的留言 -->
+							<div class="cmtarea" style="margin-left: 20px;"><p>${forumCommentVO.cmtText}</p></div>
+						</c:if>
 
-							<c:if test="${userID == forumCommentVO.userID}">
-								<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/forumComment/forumComment.do" name="form2">		
-									<input type="hidden" name="cmtSN" value="${forumCommentVO.cmtSN}">
-									<input type="hidden" name="articleSN" value="${forumCommentVO.articleSN}">
-									<input type="hidden" name="userID" value="${forumCommentVO.userID}">
-									<textarea name="cmtText" rows="4" cols="52" style="border: none; resize: none; cursor: pointer; 
-											background-color: paleturquoise;">${forumCommentVO.getCmtText()}</textarea><br>
-									<input type="submit" name="action" value="編輯">
-									<input type="submit" name="actionDelete" value="刪除">
-								</FORM>
-							</c:if>
+						<c:if test="${userID == forumCommentVO.userID}">
+							<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/forumComment/forumComment.do" name="form2">		
+								<input type="hidden" name="cmtSN" value="${forumCommentVO.cmtSN}">
+								<input type="hidden" name="articleSN" value="${forumCommentVO.articleSN}">
+								<input type="hidden" name="userID" value="${forumCommentVO.userID}">
+								<textarea name="cmtText" rows="4" cols="52" style="border: none; resize: none; cursor: pointer; 
+										background-color: paleturquoise;">${forumCommentVO.getCmtText()}</textarea><br>
+								<input type="submit" name="action" value="編輯">
+								<input type="submit" name="actionDelete" value="刪除">
+							</FORM>
+						</c:if>
 
-								<%-- <c:if test="${userID == forumCommentVO.userID}">
+<%-- 								<c:if test="${userID == forumCommentVO.userID}">
 									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/forumComment/forumComment.do" name="form1">
 										<input type="hidden" name="action" value="delete">
 										<input type="hidden" name="cmtSN" value="${forumCommentVO.cmtSN}">
 										<input type="hidden" name="articleSN" value="${forumCommentVO.articleSN}">
 										<input type="submit" value="刪除">
 									</FORM>
-								</c:if>		 	 --%>					
-
+								</c:if>		 --%>						
+							<!-- </div> -->
+							
+							
+							
+							
+							
 					</div>
 					
 					
-				
+				<%-- </c:forEach> --%>
 				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/forumComment/forumComment.do" name="form1">
-					<div id="cmtArea" style="margin: 300px;">
+					<div id="cmtArea">
 						<div>來自${memberSvc.getone(forumArticleVO.userID).nickName}的留言</div>
 						<div>
 							<textarea name="cmtText" rows="4" cols="50"></textarea>
