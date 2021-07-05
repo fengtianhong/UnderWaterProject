@@ -22,7 +22,7 @@ a.mall:hover { BORDER-RIGHT: ##605080 1px outset; PADDING-RIGHT: 2px; BORDER-TOP
 
 .front{
 margin: 0 auto;
-	width: 800px;
+	width: 950px;
 	/* 		display: flex; */
 	background-color: snow;
 	border-radius: 10px;
@@ -90,7 +90,7 @@ margin: 0 auto;
 	</tr>
 	<hr>
 	
-	<jsp:include page="/shoppingCar/Cart.jsp" flush="true" />
+<%-- 	<jsp:include page="/shoppingCar/Cart.jsp" flush="true" /> --%>
 	<table>
 		<tr>
 			<td>商品編號</td>

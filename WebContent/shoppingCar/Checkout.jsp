@@ -8,6 +8,11 @@
 	pageContext.setAttribute("userID", userID);
 %>
 
+<%
+	String amount = (String) session.getAttribute("amount");
+	pageContext.setAttribute("amount", amount);
+%>
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -32,7 +37,7 @@
 		
 		<%
 			Vector<ProductVO> buylist = (Vector<ProductVO>) session.getAttribute("shoppingcart");
-			String amount =  (String) request.getAttribute("amount");
+			String amounts =  (String) session.getAttribute("amount");
 		%>
 		
 		<%	for (int i = 0; i < buylist.size(); i++) {
@@ -57,7 +62,7 @@
 			<td></td>
 			<td></td>
 			<td><div align="center"><font color="red"><b>總金額：</b></font></div></td>
-			<td><font color="red"><b>$<%=amount%></b></font></td>
+			<td><font color="red"><b>$<%=amounts%></b></font></td>
 		</tr>
 		
 	</table>
@@ -65,9 +70,9 @@
 		<FORM name ="createOrder" METHOD="post" ACTION="<%=request.getContextPath()%>/mall/shoppingCar.html">
 			
 			<input type="hidden" name="productSN" value="${productVO.productSN}">
-	      	<input type="hidden" name="Price" value="<%=amount%>">
+	      	<input type="hidden" name="Price" value="<%=amounts%>">
 				
-			<input type="submit" name="buy" value="結帳購買">	
+			<input type="submit" name="buy" value="結帳購買">
 	      	<input type="hidden" name="action" value="createOrder">
 	      	
 	  	</FORM>
