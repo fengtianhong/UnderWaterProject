@@ -3,11 +3,11 @@
 
 <%@ page import="com.member.model.*"%>
 <%
-	int userid =(Integer)session.getAttribute("userID");
+	int userid = (Integer) session.getAttribute("userID");
 	System.out.print(userid);
 	MemberService MemberSvc = new MemberService();
 	MemberVO memberVO = MemberSvc.getone(userid);
-	 pageContext.setAttribute("memberVO",memberVO);
+	pageContext.setAttribute("memberVO", memberVO);
 %>
 <!DOCTYPE html>
 <html>
@@ -64,12 +64,14 @@ html, body {
 	<div id="outPopUp">
 		<h1 align="center" style="color: white;">水平線下聊天室</h1>
 		<h2 align="center" style="color: white;">${memberVO.nickName}</h2>
-	
+
 		<form id="myForm" action="<%=request.getContextPath()%>/chat/chat.do"
 			method="POST">
 			<input id="userName" name="userName" value="${memberVO.nickName}"
 				class="text-field" type="hidden" placeholder="Input user name" /> <input
-				type="submit" id="send" class="button" value="開始聊天"
+				type="button" value="大家來聊天" class="button"
+				onclick="location.href='<%=request.getContextPath()%>/chat/together.jsp'">
+			<input type="submit" id="send" class="button"  style="margin-top: 70px" value="找好友聊天"
 				onclick="sendName();" />
 		</form>
 	</div>
