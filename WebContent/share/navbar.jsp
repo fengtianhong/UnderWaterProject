@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<jsp:useBean id="memberSvc" class="com.member.model.MemberService" />
 
 <div id="container">
 	<!-- navbar navbar-expand-lg navbar-light bg-light -->
@@ -29,7 +30,7 @@
                         <c:if test="${userID!=null}">
                         	<form id="logout" action="<%=request.getContextPath()%>/member/LogoutServlet.do" method="post">
 					        <li class="nav-item">
-					        <a class="nav-link" href="#" onclick='document.getElementById("logout").submit();'>登出</a>
+					        <a class="nav-link" href="#" onclick='document.getElementById("logout").submit();'>${memberSvc.getone(userID).userName} | 登出</a>
 					        </li>
 					     	</form>
                         </c:if>
