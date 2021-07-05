@@ -55,9 +55,6 @@
 <!-- 							<div class="tab-content"> -->
 <!-- 								<div class="tab-pane fade show active" id="account"	role="tabpanel"> -->
 <!-- 									<div class="card"> -->
-										<form action="LogoutServlet.do" method="post">
-											<button >登出(暫時)</button>
-										</form>
 										
 										<div class="card-body">
 											<div class="text-center" style="margin-bottom:30px">

@@ -18,8 +18,10 @@
 <html>
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<%@ include file="../share/backend/Bmeta.file"%>
 <title>Web Manager System UnderWater</title>
 <style>
 .navbar h1 {
@@ -67,7 +69,7 @@
 	height: 800px;
 	position: absolute;
 	left: 42%;
-	top: 0%;
+	top: 5%;
 	margin-left: -250px;
 	z-index: 100;
 	background-color: white;
@@ -81,18 +83,8 @@
 </style>
 <link rel="stylesheet" href="css/bootstrap.css" />
 </head>
-
 <body>
-	<nav class="navbar navbar-inverse">
-        <div id="navInfo">
-            <div id="systemName">
-                <h1>後台系統</h1>
-            </div>
-            <div id="systemInfo">
-                <h3 id="welcome"></h3>
-            </div>
-        </div>
-    </nav>
+		<%@ include file="../share/backend/Bheader.file"%>
 <div class="container">
  		<div class="row">
             <div class="col-lg-1">
@@ -114,7 +106,7 @@
             </div>
         </div>
 		
-		<table class="table table-striped table-bordered">
+		<table class="table table-striped table-bordered" style="text-align:center;">
                 <tr>
 					<td>編號</td>
                     <td>帳號</td>
@@ -145,7 +137,7 @@
 			<td>${memberVO.birthDate}</td>
 			<td>${memberVO.phone}</td>
 			<td>${memberVO.certification}</td>
-			<td><div class="picture"><img class="preview" src="GetImage.do?userid=${memberVO.userID}"></div></td>
+			<td><div class="picture"><img class="preview" src="GetImageCertificationPic.do?userid=${memberVO.userID}"></div></td>
 			<td>${memberVO.personID}</td>
 			<td>${memberVO.address}</td>
 			<td>${memberVO.createTime}</td>
@@ -156,7 +148,7 @@
 			<td><div class="picture"><img class="preview" src="GetImagepersonPhoto.do?userid=${memberVO.userID}"></div></td>
 			<td>
 				<form method="post"  action="<%=request.getContextPath()%>/member/MemberListServlet.do" >
-					<input type="submit" class="update" value="修改" onclick="showupdatediv();">
+					<input type="submit" class="update btn btn-primary btn-user" value="修改" onclick="showupdatediv();">
 					<input type="hidden" name="userid"  value="${memberVO.userID}">
 					<input type="hidden" name="action" value="getOne_For_Update">
 				</form>
@@ -184,13 +176,13 @@
 			暱&#12288;&#12288;稱：<input name="nickname" type="text" value="${memberVO.nickName}"><br />
 			姓&#12288;&#12288;名：<input name="username" type="text" value="${memberVO.userName}"><br />
 			
-			性&#12288;&#12288;別：&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;<input name="gender" type="radio" value="男"${(memberVO.gender=="0")? 'checked' : ''}>男
-								<input name="gender" type="radio" value="女"${(memberVO.gender=="1")? 'checked' : ''}>女<br>
+			性&#12288;&#12288;別：&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;<input name="gender" type="radio" value="0"${(memberVO.gender=="0")? 'checked' : ''}>男
+								<input name="gender" type="radio" value="1"${(memberVO.gender=="1")? 'checked' : ''}>女<br>
 			
 			生&#12288;&#12288;日：<input name="birthdate" type="text" value="${memberVO.birthDate}" class="birthdate"><br />
 			電&#12288;&#12288;話：<input name="phone" type="text" value="${memberVO.phone}"><br />
 			證&#12288;&#12288;照：<input name="certification" type="text" value="${memberVO.certification}"><br />
-			<input type="file" id="the_file" name="certificationpic" accept="image/*"><br />
+			<input type="file" id="the_file" name="certificationPic" accept="image/*"><br />
 <%-- 				<td>證照照片<input  type="text" name="certificationpic" value="${memberVO.certificationPic}"></td> --%>
 <%-- 				<td><div class="picture"><img class="preview" src="GetImage.do?userid=${memberVO.userID}"></div></td> --%>
 			身分證字號：<input type="text" name="personid" value="${membeVO.personID}"><br />
@@ -213,6 +205,8 @@
 	</form> 
 </div>
 </div>
+	<%@ include file="../share/backend/Bfooter.file"%>
+	<%@ include file="../share/backend/Bjs.file"%>
 </body>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />

@@ -21,7 +21,7 @@
 
 <body onload="connect();" onunload="disconnect();">
 	<h1>UnderWater-聊天室</h1>
-	<h3 id="statusOutput" class="statusOutput"></h3>
+	
 	<textarea id="messagesArea" class="panel message-area" readonly></textarea>
 	<div class="panel input-area">
 		<input id="userName" class="text-field" type="text" placeholder="User name" value="${memberVO.nickName}" readonly/> 
@@ -29,6 +29,7 @@
 		<input type="submit" id="sendMessage" class="button" value="Send" onclick="sendMessage();" /> 
 		<input type="button" id="connect" class="button" value="Connect" onclick="connect();" /> 
 		<input type="button" id="disconnect" class="button" value="Disconnect" onclick="disconnect();" />
+		<h3 id="statusOutput" class="statusOutput"></h3>
 	</div>
 </body>
 
@@ -47,22 +48,23 @@
 		webSocket = new WebSocket(endPointURL);//產生物件的同時，就根據參數的URL去連結serverEndPoint了
 
 		webSocket.onopen = function(event) {
-			updateStatus("WebSocket Connected");
+			updateStatus("上線中");
 			document.getElementById('sendMessage').disabled = false;
 			document.getElementById('connect').disabled = true;
 			document.getElementById('disconnect').disabled = false;
 		};
 
 		webSocket.onmessage = function(event) {
+			var timer = new Date();
 			var messagesArea = document.getElementById("messagesArea");
 			var jsonObj = JSON.parse(event.data);
-			var message = jsonObj.userName + ": " + jsonObj.message + "\r\n";
+			var message = timer.toLocaleTimeString() +" " +jsonObj.userName + ": " + jsonObj.message + "\r\n";
 			messagesArea.value = messagesArea.value + message;
 			messagesArea.scrollTop = messagesArea.scrollHeight;
 		};
 
 		webSocket.onclose = function(event) {
-			updateStatus("WebSocket Disconnected");
+			updateStatus("離線中");
 		};
 	}
 

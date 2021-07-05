@@ -121,7 +121,7 @@ public class MemberListServlet extends HttpServlet {
 					InputStream in = null;
 					
 					try {
-						Part part = req.getPart("certificationpic");
+						Part part = req.getPart("certificationPic");
 						in = part.getInputStream();
 						certificationPic = new byte[in.available()];
 						in.read(certificationPic);
@@ -145,10 +145,10 @@ public class MemberListServlet extends HttpServlet {
 					try {
 						Part part = req.getPart("personPhoto");
 						in = part.getInputStream();
-						certificationPic = new byte[in.available()];
+						personPhoto = new byte[in.available()];
 						in.read(personPhoto);
 						
-						if(certificationPic.length == 0) {//未修正則存取原圖
+						if(personPhoto.length == 0) {//未修正則存取原圖
 							MemberService membersvc = new MemberService();
 							MemberVO originalVO = membersvc.getone(userId);
 							personPhoto = originalVO.getPersonPhoto();

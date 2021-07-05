@@ -66,33 +66,6 @@
 			if ("open" === jsonObj.type) {
 				refreshFriendList(jsonObj);
 			} else if ("history" === jsonObj.type) {
-
-				// 				=========================
-				// 				var repeat = false;
-				// 				var row = document.getElementById("row");
-				// 				var receivers = row.childNodes;
-				// 				if (row.childNodes.length == 0) {
-				// 					row.innerHTML += '<div onclick="HtmlClick(this)" id='
-				// 							+ jsonObj.receiver
-				// 							+ ' class="column" name="friendName" value='
-				// 							+ jsonObj.receiver + ' ><h2>' + jsonObj.receiver
-				// 							+ '</h2></div>';
-				// 				}
-				// 				for (var i = 0; i < row.childNodes.length; i++) {
-				// 					if (receivers[i].getAttribute("id") == jsonObj.receiver) {
-				// 						repeat = true;
-				// 						break;
-				// 					}
-				// 				}
-				// 				if (repeat == false) {
-				// 					row.innerHTML += '<div onclick="HtmlClick(this)" id='
-				// 							+ jsonObj.receiver
-				// 							+ ' class="column" name="friendName" value='
-				// 							+ jsonObj.receiver + ' ><h2>' + jsonObj.receiver
-				// 							+ '</h2></div>';
-				// 				}
-				// 				===========================
-
 				messagesArea.innerHTML = '';
 				var ul = document.createElement('ul');
 				ul.id = "area";
@@ -104,34 +77,29 @@
 					var showMsg = historyData.message;
 					var li = document.createElement('li');
 					// 根據發送者是自己還是對方來給予不同的class名, 以達到訊息左右區分
-					historyData.sender === self ? li.className += 'me'
-							: li.className += 'friend';
+					historyData.sender === self ? li.className += 'me' : li.className += 'friend';
 					li.innerHTML = showMsg;
 					ul.appendChild(li);
 				}
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			} else if ("chat" === jsonObj.type) {
-				if ((statusOutput.textContext == jsonObj.sender)
-						|| jsonObj.sender == self) {
-					var li = document.createElement('li');
-					jsonObj.sender === self ? li.className += 'me'
-							: li.className += 'friend';
-					li.innerHTML = jsonObj.message;
-					console.log(li);
-					document.getElementById("area").appendChild(li);
-					messagesArea.scrollTop = messagesArea.scrollHeight;
-				}
+				var li = document.createElement('li');
+				jsonObj.sender === self ? li.className += 'me' : li.className += 'friend';
+				li.innerHTML = jsonObj.message;
+				console.log(li);
+				document.getElementById("area").appendChild(li);
+				messagesArea.scrollTop = messagesArea.scrollHeight;
 			} else if ("close" === jsonObj.type) {
 				refreshFriendList(jsonObj);
 			}
-
+			
 		};
 
 		webSocket.onclose = function(event) {
 			console.log("Disconnected!");
 		};
 	}
-
+	
 	function sendMessage() {
 		var inputMessage = document.getElementById("message");
 		var friend = statusOutput.textContent;
@@ -154,46 +122,18 @@
 			inputMessage.focus();
 		}
 	}
+	
 	// 有好友上線或離線就更新列表
 	function refreshFriendList(jsonObj) {
-		var friends = jsonObj.users;  //當前在線的人
+		var friends = jsonObj.users;
 		var row = document.getElementById("row");
-		var receivers = row.childNodes;  //顯示在畫面上的人
-// 		var repeat = false;
-				row.innerHTML = '';
+		row.innerHTML = '';
 		for (var i = 0; i < friends.length; i++) {
-			if (friends[i] === self) {
-				continue;
-			}
-// 			for (var j = 0; j < row.childNodes.length; j++) {
-// 				if (row.childNodes[j].getAttribute("id") == friends[i]) {
-// 					repeat = true;
-// 				}
-// 			}
-// 			if (!repeat) {
-				row.innerHTML += '<div id='
-						+ friends[i]
-						+ ' onclick="HtmlClick(this)" class="column" name="friendName" value='
-						+ friends[i] + ' ><h2>' + friends[i] + '</h2></div>';
-// 			}
+			if (friends[i] === self) { continue; }
+			row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' ><h2>' + friends[i] + '</h2></div>';
 		}
-// 		for (var i = 0; i < row.childNodes.length; i++) {
-// 			if (row.childNodes[i].getAttribute("id") === self) {
-// 				continue;
-// 			}
-// 		}
-// 			var exist = true;
-// 			for (var j = 0; j < friends.length; j++) {
-// 				if (row.childNodes[i].getAttribute("id") == friends[j]) {
-// 					exist = false;
-// 				}
-// 			}
-// 			if (!exist) {
-// 				receivers[i].classList.toggle("offline");
-// 			} 
-		// 		addListener();
+		addListener();
 	}
-
 	// 註冊列表點擊事件並抓取好友名字以取得歷史訊息
 	function addListener() {
 		var container = document.getElementById("row");
