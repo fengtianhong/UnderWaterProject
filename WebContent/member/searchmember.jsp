@@ -14,37 +14,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<link href="css/app.css" rel="stylesheet">
+	<meta charset="UTF-8">
+<!-- 	<link href="css/app.css" rel="stylesheet"> -->
+	<link rel="stylesheet" href="../share/index.css">
+	<link rel="stylesheet" href="../vendors/bootstrap/css/bootstrap.min.css">
 <title>Search Member</title>
 </head>
 <body>
+<jsp:include page="../share/navbar.jsp" flush="true" />
+<jsp:include page="../share/member/Mheader.jsp" flush="true"/>
+<!-- <div class="wrapper"> -->
+<!-- 		<div class="main"> -->
+<!-- 			<main class="content"> -->
+<!-- 				<div class="container-fluid p-0"> -->
+<!-- 					<div class="row"> -->
+<!-- 						<div class="col-md-3 col-xl-2"> -->
 
-<div class="wrapper">
-		<div class="main">
-			<main class="content">
-				<div class="container-fluid p-0">
-					<div class="row">
-						<div class="col-md-3 col-xl-2">
+<!-- 							<div class="card"> -->
+<!-- 								<div class="list-group list-group-flush" role="tablist"> -->
+<!-- 									<a class="list-group-item list-group-item-action" href="personinfo.jsp" role="tab"> 會員資訊 </a>  -->
+<!-- 									<a class="list-group-item list-group-item-action" href="personinfochange.jsp" role="tab"> 資訊變更</a>  -->
+<!-- 									<a class="list-group-item list-group-item-action" href="personchangepwd.jsp" role="tab"> 密碼變更</a>  -->
+<!-- 									<a class="list-group-item list-group-item-action active" href="#" role="tab"> 尋找會員 </a>  -->
+<!-- 									<a class="list-group-item list-group-item-action" href="#" role="tab"> 待新增</a>  -->
+<!-- 									<a class="list-group-item list-group-item-action" href="#" role="tab"> 待新增 </a>  -->
+<!-- 									<a class="list-group-item list-group-item-action" href="#" role="tab"> 待新增 </a>  -->
+<!-- 									<a class="list-group-item list-group-item-action" href="#" role="tab"> 待新增 </a> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
 
-							<div class="card">
-								<div class="list-group list-group-flush" role="tablist">
-									<a class="list-group-item list-group-item-action" href="personinfo.jsp" role="tab"> 會員資訊 </a> 
-									<a class="list-group-item list-group-item-action" href="personinfochange.jsp" role="tab"> 資訊變更</a> 
-									<a class="list-group-item list-group-item-action" href="personchangepwd.jsp" role="tab"> 密碼變更</a> 
-									<a class="list-group-item list-group-item-action active" href="#" role="tab"> 尋找會員 </a> 
-									<a class="list-group-item list-group-item-action" href="#" role="tab"> 待新增</a> 
-									<a class="list-group-item list-group-item-action" href="#" role="tab"> 待新增 </a> 
-									<a class="list-group-item list-group-item-action" href="#" role="tab"> 待新增 </a> 
-									<a class="list-group-item list-group-item-action" href="#" role="tab"> 待新增 </a>
-								</div>
-							</div>
-						</div>
-
-						<div class="col-md-9 col-xl-10">
-							<div class="tab-content">
-								<div class="tab-pane fade show active" id="account"	role="tabpanel">
-									<div class="card">
+<!-- 						<div class="col-md-9 col-xl-10"> -->
+<!-- 							<div class="tab-content"> -->
+<!-- 								<div class="tab-pane fade show active" id="account"	role="tabpanel"> -->
+<!-- 									<div class="card"> -->
 										
 										<form action="MemberInfoServlet.do" method="post">
 											<div class="card-header">
@@ -59,9 +62,9 @@
 											</div>
 										</form>
 										
-									</div>
-								</div>
-								<table style="border:solid; margin: auto; ">
+<!-- 									</div> -->
+<!-- 								</div> -->
+								<table style="border:solid; text-align:center; ">
 									<tr>
 										<th>帳號</th>
 										<th>暱稱</th>
@@ -89,21 +92,27 @@
 									<%@ include file="page2.file" %>	
 									</c:if>
 							</table>					
-							</div>
-						</div>
+<!-- 							</div> -->
+<!-- 						</div> -->
 						
-					</div>
-				</div>
-				</main>
-		</div>
-	</div>
-	<script src="js/vendor.js"></script>
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 				</main> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+<!-- 	<script src="js/vendor.js"></script> -->
+<jsp:include page="../share/member/Mfooter.html" flush="true"/>    
+<jsp:include page="../share/footer.jsp" flush="true" />
 	<script src="js/app.js"></script>
 
 </body>
 <style>
 	th,td{
 		border:1px solid black;
+	}
+	.content{
+	    width: 1000px;
+    	margin: 0 auto;
 	}
 </style>
 </html>

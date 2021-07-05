@@ -29,6 +29,7 @@ MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<%@ include file="../share/backend/Bmeta.file"%>
 <title>Web Manager System UnderWater</title>
 <style>
 .navbar h1 {
@@ -92,22 +93,14 @@ MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
 </head>
 
 <body>
-	<nav class="navbar navbar-inverse">
-        <div id="navInfo">
-            <div id="systemName">
-                <h1>後台系統</h1>
-            </div>
-            <div id="systemInfo">
-                <h3 id="welcome"></h3>
-            </div>
-        </div>
-    </nav>
+<%@ include file="../share/backend/Bheader.file"%>
+
 <div class="container">
  		<div class="row">
             <div class="col-lg-1">
 
             </div>
-            <form action="<%=request.getContextPath()%>/member/MemberListServlet.do" method="post">
+            <form action="<%=request.getContextPath()%>/member/MemberListServlet.do" method="post" style="width:82%">
             <div class="col-lg-6">
                 <div class="input-group">
                     <input type="text" class="form-control" name="keyword" placeholder="全部查詢" id="searchInput">
@@ -183,6 +176,8 @@ MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
 
 
 </div>
+<%@ include file="../share/backend/Bfooter.file"%>
+<%@ include file="../share/backend/Bjs.file"%>
 </body>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />

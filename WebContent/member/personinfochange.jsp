@@ -3,10 +3,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<% 	Integer userID = Integer.parseInt(session.getAttribute("userID").toString());
+<% 	
+	Integer userID = Integer.parseInt(session.getAttribute("userID").toString());
 	MemberService memberSvc = new MemberService();
 	MemberVO memberVO = memberSvc.getone(userID);
-	
 	pageContext.setAttribute("memberVO", memberVO);
 %>
 
@@ -24,7 +24,6 @@
 	    width: 1000px;
     	margin: 0 auto;
 	}
-
 </style>
 </head>
 <body>
@@ -70,11 +69,11 @@
 													<div class="col-md-8">
 														<div class="form-group" style="margin-left:70px;">
 															<label for="account">帳號:
-																<a style="margin-left:25px"   id="account">${memberVO.account}</a>
-																<input type="hidden" name="account" value="${memberVO.account}">
+															<a style="margin-left:25px"   id="account">${memberVO.account}</a>
+															<input type="hidden" name="account" value="${memberVO.account}">
 															</label> 
 														</div>
-														<div class="form-group" style="margin-left:70px;">
+															<div class="form-group" style="margin-left:70px;">
 															<label for="nickname">暱稱:
 																<input type="text" style="margin-left:25px" size="20" name="nickName" id="nickname" value="${memberVO.nickName}">
 															</label>
@@ -121,35 +120,41 @@
 														</div>
 													</div>
 													<div class="col-md-4">
-														<div class="text-center">
-															<img id="showimgperson" src="GetImagepersonPhoto.do?userid=${memberVO.userID}" class="rounded-circle img-responsive mt-2" width="128" height="128" />
-															<div class="mt-2">
-																<input type="file" name="personPhoto" onchange="showImgperson(this)" value="上傳照片"/>
+														<div style="border:solid 1px;">
+															<div style="text-align:center;">個人照片</div>
+																<div class="text-center">
+																	<img id="showimgperson" src="GetImagepersonPhoto.do?userid=${memberVO.userID}" class="rounded-circle img-responsive mt-2" width="128" height="128" />
+																	<div class="mt-2">
+																		<input type="file" name="personPhoto" onchange="showImgperson(this)" value="上傳照片"/>
+																	</div>
+																</div>
 															</div>
-														</div>
-														<div class="mt-2"></div>
-														<div class="text-center">
-															<img id="showimg" src="GetImage.do?userid=${memberVO.userID}" style="" width="128" height="128"/>
-															<div class="mt-2">
-																<input type="file" name="certificationPic" onchange="showImg(this)" value="上傳證照"/>
-																
+															<div class="mt-2"></div>
+																<div style="border:solid 1px;">
+																	<div style="text-align:center;">證照照片
+																	</div>
+																		<div class="text-center">
+																			<img id="showimg" src="GetImageCertificationPic.do?userid=${memberVO.userID}" style="left:10%;" width="128" height="128"/>
+																			<div class="mt-2">
+																				<input type="file" name="certificationPic" onchange="showImg(this)" value="上傳證照"/>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<input type="hidden" name="action" value="update_info">
+																<input type="hidden" name="userID" value="${memberVO.userID}">
 															</div>
-														</div>
+															<button type="submit" class="btn btn-primary" style="margin-left:140px">送出</button>
+														</form>
+														<c:if test="${not empty errorMsgs}">
+														<font style="color:red">請修正以下錯誤:</font>
+														<ul>
+															<c:forEach var="message" items="${errorMsgs}">
+																<li style="color:red">${message}</li>
+															</c:forEach>
+														</ul>
+														</c:if>
 													</div>
-													<input type="hidden" name="action" value="update_info">
-													<input type="hidden" name="userID" value="${memberVO.userID}">
-												</div>
-												<button type="submit" class="btn btn-primary" style="margin-left:140px">送出</button>
-											</form>
-											<c:if test="${not empty errorMsgs}">
-	<font style="color:red">請修正以下錯誤:</font>
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li style="color:red">${message}</li>
-		</c:forEach>
-	</ul>
-</c:if>
-										</div>
 <!-- 									</div> -->
 <!-- 								</div> -->
 
