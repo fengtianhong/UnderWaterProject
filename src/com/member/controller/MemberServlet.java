@@ -94,7 +94,7 @@ public class MemberServlet extends HttpServlet{
 			java.sql.Date birthDate = null;
 			try {
 				birthDate = Date.valueOf(req.getParameter("birthDate").trim());
-				System.out.println(birthDate);
+//				System.out.println(birthDate);
 			}catch(IllegalArgumentException e) {
 				birthDate = Date.valueOf("1970-01-01");
 				

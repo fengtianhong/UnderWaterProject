@@ -120,7 +120,7 @@ MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
             <div><c:if test="${msg!=null}"> ${msg}</c:if></div>
         </div>
 		
-		<table class="table table-striped table-bordered" style="text-align:center;">
+		<table class="table table-striped" style="text-align:center;">
                 <tr>
 					<td>編號</td>
                     <td>帳號</td>
