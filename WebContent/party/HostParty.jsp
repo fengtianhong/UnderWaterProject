@@ -38,7 +38,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="partyTitle">揪團主旨: </td>
+			<td class="partyTitle">揪團主旨(30字內): </td>
 			<td><input type="text" name="partyTitle" maxlength="30" <c:if test="${partyVO != null}">value="${partyVO.partyTitle}"</c:if>>
 				
 			</td>

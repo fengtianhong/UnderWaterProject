@@ -9,6 +9,15 @@
 <head>
 	<%@ include file="../share/backend/Bmeta.file" %>
 	<title>揪團後台修改</title>
+	<!-- CKEditor -->
+	<script type="text/javascript" src="<%=request.getContextPath()%>/party/ckeditor/ckeditor.js"></script>
+	<style>
+		section.msg {
+			color: red;
+			margin-bottom: 5px;
+		}
+		
+	</style>
 </head>
 <body>
 <%@ include file="../share/backend/Bheader.file" %>
@@ -100,10 +109,13 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="partyDetail">詳細內容: (CKEditor還沒測) </td>
-			<td><textarea name="partyDetail" maxlength=100>${partyVO.partyDetail}</textarea></td>
+			<td class="partyDetail">詳細內容: </td>
 		</tr>
 	</table>
+	<textarea name="partyDetail" maxlength=1000><c:if test="${partyVO != null}">${partyVO.partyDetail}</c:if></textarea>
+	<script>
+		CKEDITOR.replace("partyDetail");
+	</script>
 	
 	<button type="button" onclick="location.href='<%=request.getContextPath()%>/party/partyManage.jsp'" class="btn btn-primary btn-sm">回上頁(放棄修改)</button>
 	<button type="submit" name="action" value="submitUpdate" class="btn btn-primary btn-sm">確認修改</button>
@@ -112,8 +124,56 @@
 <%@ include file="../share/backend/Bfooter.file" %>
 <%@ include file="../share/backend/Bjs.file" %>
 
-<!-- 待更新js click browser goBack功能 -->
+<script>
+// HostParty.jsp也有(不完整)
+	// 設定活動 開放報名時間最小值: 當下
+	$('input[name="regDate"]').attr('min', new Date().toISOString().split("T")[0]);
+	
+	// 設定活動 開始時間 : 當下隔天
+	var today = new Date();
+	var minDay = today.getDate() + 1;
+	var minMonth = today.getMonth() + 1;
+	var minYear = today.getFullYear();
+//不完整  還差day==30 or 31 的判斷QQ (month+1的話記得加if)
+	if (minDay < 10) {
+		minDay ="0" + minDay;
+	}
+	if (minMonth < 10) {
+		minMonth = "0" + minMonth;
+	}
+	var minStartDate = minYear + "-" + minMonth + "-" + minDay;
+	$('input[name="startDate"]').attr('min', minStartDate);
 
+	var maxDay = today.getDate();
+	var maxYear = today.getFullYear() + 1 ;
+	if (maxDay < 10) {
+		maxDay = "0" + maxDay;
+	}
+	var maxStartDate = maxYear + "-" + minMonth + "-" + maxDay;
+	$('input[name="startDate"]').attr('max', maxStartDate);
+	
+	// 設定活動 結束時間
+	$('input[name="endDate"]').on('click', function(){
+		var startDate = $('input[name="startDate"]').val();
+		$('input[name="endDate"]').attr('min', startDate);
+	});
 
+	// 設定活動 結束報名時間: 在活動開始前一天
+	$('input[name="closeDate"]').on('click', function(){
+		var startDate = $('input[name="startDate"]').val();
+		var array1 = startDate.split('-');
+		var year = array1[0];
+		var month = array1[1];
+		var day = array1[2] - 1;
+		if (day < 10) {
+			day ="0" + day;
+		}
+		console.log(day);
+//不完整  還差day==0的判斷QQ (month-1的話記得加if)
+		$('input[name="closeDate"]').attr('max', year + "-" + month + "-" + day);
+		$('input[name="closeDate"]').attr('min', new Date().toISOString().split("T")[0]);
+	});
+</script>
+	
 </body>
 </html>

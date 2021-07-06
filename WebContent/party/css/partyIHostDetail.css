@@ -27,7 +27,7 @@ section.party {
 	box-shadow: 0px 2px 15px 0px rgba(0,0,0,0.5);
 }
 
-section.registration {
+section.reg {
 	color: #666666;	
 	background-color: #e8edf7;
 	width: 90%;
@@ -37,15 +37,28 @@ section.registration {
 	box-shadow: 0px 2px 15px 0px rgba(0,0,0,0.5);
 }
 
-section.registration table.reg {
+/* 下方表格 */
+section.reg table#reg {
 	margin-right: auto;
 	margin-left: auto;
 }
 
-section.registration table.reg tr, td {
-	text-align: center;
-	padding: 5px 10px;
+/* section.reg table#reg>tr, td { */
+/* 	text-align: center; */
+/* 	padding: 5px 10px; */
+/* } */
+
+/* 上方表格 */
+section.party table#detail {
+	margin-right: auto;
+	margin-left: auto;
 }
+
+/* section.party table#detail>tr, td { */
+/* 	text-align: left; */
+/* 	padding: 5px 10px; */
+/* } */
+
 
 div.alert {
 	font-weight: bold;
@@ -58,6 +71,6 @@ td > img.showpic {
 }
 
 section.msg {
-	color: #98f4fc;
+	color: #17a2b8;
 	text-align: center;
 }

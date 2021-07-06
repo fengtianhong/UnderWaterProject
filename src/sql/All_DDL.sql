@@ -205,9 +205,9 @@ CREATE TABLE `Party` (
 insert into party (partyHost, partyTitle, regDate, closeDate, startDate, endDate, partyMinSize, partyLocation, partyDetail)
 values 
 ('1', '要不要一起去找珊迪', '2021-01-01', '2021-01-31', '2021-03-03', '2021-03-04', '2', '200001', '很久沒有去找珊迪玩耍了! 大家有沒有興趣來約一下啊!'), 
-('1', '之前是不是也說要去追逐派大星', '2020-09-09', '2020-10-10', '2020-12-20', '2020-12-23', '2', '200002', '不過派大星可能在冬眠惹...'),
+('1', '之前是不是也說要去追逐派大星', '2021-09-09', '2021-10-10', '2021-12-20', '2021-12-23', '3', '200002', '不過派大星可能在冬眠惹...'),
 ('2', '有人想去很酷的外星海嗎?!', '2021-06-18', '2021-09-18', '2021-12-31', '2022-01-01', '10', '200003', '聽說克卜勒22b也有海洋，要不要一起去玩玩看呀?'),
-('3', '開一團教你如何宅在家裡也能享受潛水樂趣', '2020-01-01', '2020-01-31', '2020-02-01', '2020-02-28', '3', '200004', '這可厲害了沒聽說過吧!');
+('3', '開一團教你如何宅在家裡也能享受潛水樂趣', '2021-05-05', '2021-07-05', '2021-07-06', '2021-07-08', '2', '200004', '這可厲害了沒聽說過吧!');
 
 CREATE TABLE `PartyMember` (
   `partyMemberSN` int NOT NULL AUTO_INCREMENT COMMENT '揪團團員名單流水號',
@@ -216,9 +216,9 @@ CREATE TABLE `PartyMember` (
   `gender` varchar(1) NOT NULL COMMENT '性別 0:男 1:女',
   `email` varchar(50) NOT NULL COMMENT 'Email',
   `phone` varchar(10) NOT NULL COMMENT '手機',
-  `birthDate` date NOT NULL COMMENT '生日',
-  `personID` char(10) NOT NULL COMMENT '身份證字號',
-  `certification` char(2) COMMENT '證照',
+  `birthDate` date COMMENT '生日',
+  `personID` char(10) COMMENT '身份證字號',
+  `certification` char(1) COMMENT '證照',
   `certificationPic` longblob COMMENT '證照圖片',
   `appliedTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '報名時間',
   `comment` varchar(1000) DEFAULT NULL COMMENT '備註',
