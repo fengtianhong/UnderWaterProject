@@ -40,7 +40,7 @@ public class ForumArticleServlet extends HttpServlet {
 				}
 				
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/fASelect.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/error.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -53,7 +53,7 @@ public class ForumArticleServlet extends HttpServlet {
 				}
 				
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/fASelect.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/error.jsp");
 					failureView.forward(req, res);
 					return;
 				}

@@ -41,6 +41,11 @@ public class ForumCommentService {
 		return dao.findByPrimaryKey(articleSN);
 	}
 	
+//	public List<ForumCommentVO> getOneForumComment(Integer cmtSN) {
+//	return dao.findByPrimaryKey(cmtSN);
+//}
+	
+	
 	public List<ForumCommentVO> getAll(){
 		return dao.getAll();
 	}

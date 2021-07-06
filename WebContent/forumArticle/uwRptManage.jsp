@@ -62,6 +62,7 @@
 					<td>檢舉理由</td>
 					<td>檢舉狀態</td>
 					<td>處理回覆</td>
+					<td>回覆頁面</td>
 				</tr>
 				<c:forEach var="rpt" items="${rptlist}">
 					<tr>

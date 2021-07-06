@@ -23,10 +23,6 @@
 
 
 
-<%-- <%=articleSN %>
-<%=list == null %>
-<%=userID %> 
-<%=cmtSN %> --%>
 
 
 
@@ -47,23 +43,12 @@
 				margin-bottom: 10px;
 			}
 			
-/* 			.red {
+			.red {
 				position: relative;
 			    top: 24px;
-			    left: 750px;
-			} */
-			
-			.infobox {
-				display: flex;
-			    align-items: flex-end;
-			    flex-direction: row;
-			    position: relative;
+			    left: 600px;
 			}
 			
-			.rpt {
-				margin-left: 500px
-			}
-		
 		</style>
 		
 		
@@ -71,11 +56,10 @@
 	<body>
 		<jsp:include page="../share/navbar.jsp" flush="true" />
 			<div id="showbox">
-				<div class="infobox" style="display:flex;" >
-					<div id="title" style="margin-left: 20px; margin-top: 20px; font-size: 24px; font-style: italic; font-weight: bold;">
-							${forumArticleVO.articleTitle}</div><br>
-							
-						<span class="rpt">
+				<div id="infobox" style="display:flex; align-items: ;" >
+					<span id="title" style="margin-left: 20px; margin-top: 20px; font-size: 24px; font-style: italic; font-weight: bold;">
+							${forumArticleVO.articleTitle}</span>
+						<span class="red">
 							<c:if test="${forumArticleVO.userID != userID }">
 								<form method="post" action="articleReport.do">
 									<input type="submit" value="檢舉">
@@ -84,7 +68,7 @@
 								</form>
 							</c:if>
 						</span>	
- 						<span class="edit">
+ 						<span class="red">
 							<c:if test="${forumArticleVO.userID == userID }">
 								<form method="post" action="forumArticle.do">
 									<input type="submit" value="編輯">
@@ -93,8 +77,15 @@
 								</form>
 							</c:if>
 						</span>	
-						<span class="delete">
+						<span class="red">
 							<c:if test="${forumArticleVO.userID == userID }">
+								<%-- <!-- 會導向使用者個人頁面 -->
+								<form method="post" action="forumArticle.do">
+									<input type="submit" value="刪除">
+									<input type="hidden" name="articleSN" value="<%=articleSN%>">
+									<input type="hidden" name="action" value="deleteArticle">
+								</form> --%>
+								<!-- 此處是在文章內的刪除，試試看是否能夠成功導回文章列表 -->
 								<form method="post" action="forumArticle.do">
 									<input type="submit" value="刪除">
 									<input type="hidden" name="articleSN" value="<%=articleSN%>">
@@ -111,56 +102,46 @@
 					<jsp:useBean id="memberSvc" scope="session" class="com.member.model.MemberService" />
 					<span class="css_td">作者：${memberSvc.getone(forumArticleVO.userID).nickName}</span>
 					<span class="css_td" style=""><fmt:formatDate value="${forumArticleVO.publishedDate}" pattern="yyyy-MM-dd HH:mm:ss "/></span>
-					<%-- <span class="css_td">文章好評：${forumArticleVO.rateGCount}</span>
-					<span class="css_td">文章負評：${forumArticleVO.rateNGCount}</span> --%>
+					
 				</div>
 				
-				<div id="text" style="margin-left: 20px; margin-top: 20px; margin-bottom: 60px;"><h5>${forumArticleVO.articleText}</h5></div>
+				<div id="text" style="margin-left: 20px; margin-top: 20px; margin-bottom: 60px;"><h5>${forumCommentVO.articleText}</h5></div>
 				
-				<%-- <%@ include file="page1frontend.file" %>
-				<c:forEach var="forumCommentVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>"> --%>
-
-					<div class="commentShowbox" style="margin-left: 20px; display: inline;">
+				
+				<c:forEach var="forumCommentVO" items="${list}">
+					<div class="commentShowbox" style="margin-left: 20px">
 						<span class="css_td" style="text-align: center;">From：${memberSvc.getone(forumArticleVO.userID).nickName}</span>
 						<span class="css_td" style="text-align: center;">在<fmt:formatDate value="${forumCommentVO.cmtDate}" pattern="yyyy-MM-dd HH:mm:ss"/>寫下：</span>
-						
-						<c:if test="${userID != forumCommentVO.userID}"><!-- 非使用者的留言 -->
-							<div class="cmtarea" style="margin-left: 20px;"><p>${forumCommentVO.cmtText}</p></div>
-						</c:if>
-
-						<c:if test="${userID == forumCommentVO.userID}">
-							<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/forumComment/forumComment.do" name="form2">		
-								<input type="hidden" name="cmtSN" value="${forumCommentVO.cmtSN}">
-								<input type="hidden" name="articleSN" value="${forumCommentVO.articleSN}">
-								<input type="hidden" name="userID" value="${forumCommentVO.userID}">
-								<textarea name="cmtText" rows="4" cols="52" style="border: none; resize: none; cursor: pointer; 
-										background-color: paleturquoise;">${forumCommentVO.getCmtText()}</textarea><br>
-								<input type="submit" name="action" value="編輯">
-								<input type="submit" name="actionDelete" value="刪除">
-							</FORM>
-						</c:if>
-
-<%-- 								<c:if test="${userID == forumCommentVO.userID}">
+						<div class="cmtarea" style="margin-left: 20px;"><p>${forumCommentVO.cmtText}</p></div>
+							<div>
+							
+								<c:if test="${userID == forumCommentVO.userID}">
 									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/forumComment/forumComment.do" name="form1">
 										<input type="hidden" name="action" value="delete">
 										<input type="hidden" name="cmtSN" value="${forumCommentVO.cmtSN}">
 										<input type="hidden" name="articleSN" value="${forumCommentVO.articleSN}">
 										<input type="submit" value="刪除">
 									</FORM>
-								</c:if>		 --%>						
-							<!-- </div> -->
+								</c:if>
+								
+								<c:if test="${userID == forumCommentVO.userID}">
+										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/forumComment/forumComment.do" name="form2">
+										<input type="hidden" name="action" value="update">
+										<input type="hidden" name="cmtSN" value="${forumCommentVO.cmtSN}">
+										<input type="hidden" name="articleSN" value="${forumCommentVO.articleSN}">
+										<input type="hidden" name="userID" value="${forumCommentVO.userID}">
+										<input type="submit" value="編輯">
+									</FORM>
+								</c:if>
 							
-							
-							
-							
-							
+							</div>
 					</div>
 					
 					
-				<%-- </c:forEach> --%>
+				</c:forEach>
 				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/forumComment/forumComment.do" name="form1">
 					<div id="cmtArea">
-						<div>來自${memberSvc.getone(forumArticleVO.userID).nickName}的留言</div>
+						<div>來自${memberVO.userID.nickName}的留言</div>
 						<div>
 							<textarea name="cmtText" rows="4" cols="50"></textarea>
 							<input type="hidden" name="action" value="insert">
@@ -172,8 +153,6 @@
 					<input type="button" onclick="window.location.href='<%=request.getContextPath()%>/forumArticle/forumArticle.jsp'"
 							value="回文章列表" style="border-radius: 7px; margin-bottom: 20px; margin-left: 20px;">
 			</div>	
-				
-		<%-- <%@ include file="page2frontend.file" %> --%>
 		<jsp:include page="../share/footer.jsp" flush="true" />
 	</body>
 </html>

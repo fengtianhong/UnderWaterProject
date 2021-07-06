@@ -77,10 +77,8 @@
 				<table>
 					<tr>
 						<td>文章編號</td>
-						<!-- <td>標題選項</td> -->
 						<td>文章標題</td>
 						<td>發布日期</td>
-						<!-- <td>文章狀態</td> -->
 						<td>文章編輯</td>
 						<td>刪除文章</td>		
 					</tr>
@@ -88,12 +86,8 @@
 						<c:if test="${userID == article.userID}">
 							<tr>
 								<td>${article.articleSN}</td>
-								<%-- <td>${article.articleTitleOptSN}</td> --%>
 								<td>${article.articleTitle}</td>
-								<td>${article.publishedDate}</td>
-								<%-- <c:if test="${article.articleStatus == true}">
-									<td>正常</td>
-								</c:if>	 --%>						
+								<td>${article.publishedDate}</td>						
 								<td>
 									<form method="post" action="forumArticle.do">
 										<input type="submit" value="修改">

@@ -24,9 +24,7 @@ public class ForumCommentServlet extends HttpServlet{
 		
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		String actionDelete = req.getParameter("actionDelete");
-		String delete = "刪除";
-		String update = "編輯";
+//		String actionDelete = req.getParameter("actionDelete");
 		
 		
 //		查詢單筆
@@ -106,7 +104,6 @@ public class ForumCommentServlet extends HttpServlet{
 //				查詢
 				ForumCommentService forumCommentSvc = new ForumCommentService();
 				List<ForumCommentVO> forumCommentVO = forumCommentSvc.getOneForumComment(articleSN);
-				
 //				List<ForumCommentVO> forumCommentVO = forumCommentSvc.getOneForumComment(cmtSN);
 				
 //				成功後轉交
@@ -122,7 +119,7 @@ public class ForumCommentServlet extends HttpServlet{
 			}
 		}
 //		更新評論
-		if (update.equals(action)) {
+		if ("update".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			
@@ -218,8 +215,8 @@ public class ForumCommentServlet extends HttpServlet{
 			}				
 		}
 		
-//		刪除評論
-		if (delete.equals(actionDelete)) {
+//		刪除留言
+		if ("delete".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			
