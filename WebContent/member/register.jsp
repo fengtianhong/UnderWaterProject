@@ -8,6 +8,9 @@
 	response.setCharacterEncoding("UTF-8");		
 	
 %>
+<%	
+	String successMsgs = (String)session.getAttribute("successMsgs");
+	%>
 <%
 	// 抓取新增失敗時回傳的VO
 	MemberVO memberVO = (MemberVO) request.getAttribute("MemberVO");
@@ -65,7 +68,8 @@
                                     <input id="Emailsignup" name="account" required="required" type="email" value="<%=(memberVO == null) ? "" : memberVO.getAccount()%>"/> 
                                 </p>
 								<p>
-									<input type="button" name="btn_account" class="btn_checkaccount" value="檢查帳號可用性" size="30" id="btn_account" onclick="CheckAccountUse()"><p>${used}
+<%-- 									<input type="button" name="btn_account" class="btn_checkaccount" value="檢查帳號可用性" size="30" id="btn_account" onclick="CheckAccountUse()"><p>${used} --%>
+									<span id="show" style="color:red"></span>	
 								</p>
                                 <p> 
                                     <label for="Passwordsignup" class="youpasswd" >密碼: </label>
@@ -144,11 +148,29 @@
             </section>
         </div>
     </body>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<script>
-<%	
-	String successMsgs = (String)session.getAttribute("successMsgs");
-	%>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+
+    $(function(){
+ 	   $("#Emailsignup").blur(function () {
+		var account = $("#Emailsignup").val();
+ 	    $.ajax({
+ 	     type:"get",
+ 	     url:"<%=request.getContextPath()%>/member/CheckAccountServlet.do?account=" + account  ,
+ 	     dataType:"text",
+ 	     success:function (data) {
+//  	      alert(data);
+ 	      if (data=="1"){
+ 	       $("#show").html("帳號已存在！！！")
+ 	      }else {
+ 	       $("#show").html("帳號已被註冊過")
+ 	      }
+ 	     }
+ 	    })
+ 	   })
+    });
+   
+
 	
 	
 	function checkform(form){
@@ -156,18 +178,6 @@
 		if($("#Passwordsignup_confirm").val() != $("#Passwordsignup").val()){
 			alert("兩次輸入密碼不正確");
 		}
-// 		if(form.account.value == ""){
-// 			alert("帳號不得空白");
-// 			return false;
-// 		}else if(form.pwd.value == ""){
-// 			alert("密碼不能空白");
-// 			return false;
-// 		}else(form.pwd.value != form.repwd.value ) {
-// 			alert("兩次輸入密碼不正確");
-// 			return false;
-// 		}else{
-// 			return true;
-// 		}
 	}	
 
 		function Email(strEmail){
@@ -179,16 +189,12 @@
 	}
 
 		function reloadImage() {
-// 			$('#identity').each(function(i,e){
-// 				alert($(e));
-// 				$(e).attr('src','IdentityServlet?ts=' + new Date().getTime());
-// 			})
-// 			document.getElementById('btn').disabled = true;
-// 			document.getElementById('identity').src = 'IdentityServlet?ts='
-// 					+ new Date().getTime();
 			document.getElementById('identitye').src = 'IdentityServlet?ts='
 					+ new Date().getTime();
 		}
+		
+
+
 	</script>
 	
 </html>
