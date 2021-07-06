@@ -74,7 +74,7 @@
 						<td><span class="badge badge-secondary">已額滿</span></td>
 					</c:if>
 					<c:if test="${partySvc.findByPartySN(partyMemberVO.partySN).status == '2'}">
-						td><span class="badge badge-secondary">已結束</span></td>
+						<td><span class="badge badge-secondary">已結束</span></td>
 					</c:if>
 					<c:if test="${partySvc.findByPartySN(partyMemberVO.partySN).status == '3'}">
 						<td><span class="badge badge-secondary">已取消</span></td>

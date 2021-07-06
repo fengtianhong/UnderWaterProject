@@ -76,6 +76,7 @@ public class PartyServlet extends HttpServlet {
 				
 			} catch(Exception e) {
 				errorMsgs.add("按條件搜尋失敗: " + e.getMessage());
+				session.removeAttribute("listBySearch");
 				RequestDispatcher failureView = req.getRequestDispatcher("/party/partyList.jsp");
 				failureView.forward(req, res);	
 			}
@@ -132,7 +133,7 @@ public class PartyServlet extends HttpServlet {
 					
 					//判斷是否為主揪
 					Integer partyHost = partySvc.findByPartySN(partySN).getPartyHost();
-					if (partyHost == partyMember) {
+					if (partyHost.equals(partyMember)) {
 						errorMsgs.add("您是主揪，不需要報名喔!");	
 						RequestDispatcher failureView = req.getRequestDispatcher("/party/partyDetail.jsp");
 						failureView.forward(req, res);
@@ -175,6 +176,9 @@ public class PartyServlet extends HttpServlet {
 				}
 				
 				String phone = req.getParameter("phone").trim();  // HTML input驗證 (reg)
+				if (phone == null || phone.length() == 0) {
+					errorMsgs.add("輸入手機號碼格式不正確");
+				}
 
 				Date birthDate = null;
 				try {
@@ -263,12 +267,12 @@ public class PartyServlet extends HttpServlet {
 			try {
 				Integer partyHost = Integer.parseInt(req.getParameter("partyHost"));  // hidden input
 				String partyTitle = req.getParameter("partyTitle");
-				String partyTitleReg = "^[(\\u4e00-\\u9fa5)(a-zA-Z0-9,!@#$%^&*()_+=)\\/?<>;:\'\"|.]{2,}$";
+				String partyTitleReg = "^[(\\u4e00-\\u9fa5)(a-zA-Z0-9,!@#$%^&*()_+=)\\/?<>;:\'\"|. ˋˊ~]{2,}$";
 				
 				if (partyTitle == null || partyTitle.trim().length() == 0) {
-					errorMsgs.add("標題不可空白, 或是包含 [] {}");
+					errorMsgs.add("標題不可空白!");
 				} else if (!partyTitle.matches(partyTitleReg)) {
-					errorMsgs.add("標題至少要有兩個中/英文字");
+					errorMsgs.add("標題至少要有兩個中/英文字, 不可以注音文或包含 [] {}");
 				}
 				
 				Date startDate = null;
@@ -299,6 +303,19 @@ public class PartyServlet extends HttpServlet {
 					errorMsgs.add("請輸入截止報名日期");
 				}
 				
+				if (regDate.after(closeDate)) {
+					errorMsgs.add("開始報名日期不可晚於截止報名日期");
+				}
+				
+				if (closeDate.after(startDate)) {
+					errorMsgs.add("截止報名日期不可晚於揪團開始日期");
+				}
+				
+				if (startDate.after(endDate)) {
+					errorMsgs.add("揪團開始日期不可晚於揪團結束日期");
+				}
+				
+				
 				Integer partyLocation = Integer.parseInt(req.getParameter("partyLocation"));  // hidden input
 				Integer partyMinSize = Integer.parseInt(req.getParameter("partyMinSize"));  // hidden input
 				String partyDetail = req.getParameter("partyDetail");  // 可填可不填
@@ -327,8 +344,8 @@ public class PartyServlet extends HttpServlet {
 				partySvc.insert(pv1);
 				
 				// 跳轉到無條件的總列表(新增的才會在最上面)
-				List<PartyVO> listBySearch = null;
-				req.setAttribute("listBySearch", listBySearch);
+				session.setAttribute("listBySearch", null);
+				req.setAttribute("partyVO", null);
 				
 				RequestDispatcher successView = req.getRequestDispatcher("/party/partyList.jsp");
 				successView.forward(req, res);
@@ -361,6 +378,108 @@ public class PartyServlet extends HttpServlet {
 //					RequestDispatcher successView = req.getRequestDispatcher("/party/partyIHost.jsp");
 //					successView.forward(req, res);
 //				}
+		
+//未完成日期部分
+		//會員後台 確認修改
+		if ("submitUpdateByMember".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			try {
+				Integer partySN = Integer.parseInt(req.getParameter("partySN").trim());  // hidden input
+				Integer partyHost = Integer.parseInt(req.getParameter("partyHost").trim());  // hidden input
+				
+				String partyTitle = req.getParameter("partyTitle");
+				String partyTitleReg = "^[(\\u4e00-\\u9fa5)(a-zA-Z0-9,!@#$%^&*()_+=)\\/?<>;:\'\"|. ˋˊ~]{2,}$";
+				if (partyTitle == null || partyTitle.trim().length() == 0) {
+					errorMsgs.add("標題不可空白!");
+				} else if (!partyTitle.matches(partyTitleReg)) {
+					errorMsgs.add("標題至少要有兩個中/英文字, 不可以注音文或包含 [] {}");
+				}
+				
+				Date startDate = null;
+				try {
+					startDate = Date.valueOf(req.getParameter("startDate"));
+				} catch (IllegalArgumentException e) {
+					errorMsgs.add("請輸入活動開始日期");
+				}
+				
+				Date endDate = null;
+				try {
+					endDate = Date.valueOf(req.getParameter("endDate"));
+				} catch (IllegalArgumentException e) {
+					errorMsgs.add("請輸入活動結束日期");
+				}
+				
+				Date regDate = null;
+				try {
+					regDate = Date.valueOf(req.getParameter("regDate"));
+				} catch (IllegalArgumentException e) {
+					errorMsgs.add("請輸入開放報名日期");
+				}
+				
+				Date closeDate = null;
+				try {
+					closeDate = Date.valueOf(req.getParameter("closeDate"));
+				} catch (IllegalArgumentException e) {
+					errorMsgs.add("請輸入截止報名日期");
+				}
+				
+				if (regDate.after(closeDate)) {
+					errorMsgs.add("開始報名日期不可晚於截止報名日期");
+				}
+				
+				if (closeDate.after(startDate)) {
+					errorMsgs.add("截止報名日期不可晚於揪團開始日期");
+				}
+				
+				if (startDate.after(endDate)) {
+					errorMsgs.add("揪團開始日期不可晚於揪團結束日期");
+				}
+				
+				Integer partyMinSize = Integer.parseInt(req.getParameter("partyMinSize").trim());  // 下拉式選單
+				Integer partyLocation = Integer.parseInt(req.getParameter("partyLocation").trim());  // 下拉式選單
+				String partyDetail = req.getParameter("partyDetail");  // 可填可不填
+				String status = req.getParameter("status");  // 下拉式選單
+				
+				PartyVO pv1 = new PartyVO();
+				pv1.setPartySN(partySN);
+				pv1.setPartyHost(partyHost);
+				pv1.setPartyTitle(partyTitle);
+				pv1.setStartDate(startDate);
+				pv1.setEndDate(endDate);
+				pv1.setRegDate(regDate);
+				pv1.setCloseDate(closeDate);
+				pv1.setPartyMinSize(partyMinSize);
+				pv1.setPartyLocation(partyLocation);
+				pv1.setPartyDetail(partyDetail);
+				pv1.setStatus(status);
+				
+				if (!errorMsgs.isEmpty()) {
+					// 如果修改內容有輸入錯誤, 須回傳當下已填寫的partyVO
+					req.setAttribute("partyVO", pv1); 
+					RequestDispatcher failureView = req.getRequestDispatcher("/party/partyIHostDetail.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+				
+				partySvc.update(pv1);
+				
+				// 跳轉回總列表
+				errorMsgs.add("修改成功!");
+				RequestDispatcher successView = req.getRequestDispatcher("/party/partyIHost.jsp");
+				successView.forward(req, res);
+				
+			} catch (Exception e) {
+				errorMsgs.add("管理者後台修改揪團失敗: " + e.getMessage());
+				System.out.println("partyservlet #submitUpdate = " + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/party/partyManage.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+		
+		
 		
 		//使用者 審核團員名單 => AJAX呼叫controller
 		if ("updatePartyMemberStatus".equals(action)) {
@@ -435,11 +554,12 @@ public class PartyServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 			
 			
-			if ("".equals(req.getParameter("partySN").trim())) {
+			if (req.getParameter("partySN") == null || (req.getParameter("partySN").trim()).length() == 0 ) {
 				session.removeAttribute("findByPartySNLike");
 				errorMsgs.add("請輸入欲查詢之揪團編號!");
 				RequestDispatcher successView = req.getRequestDispatcher("/party/partyManage.jsp");
 				successView.forward(req, res);
+				return;
 			} 
 			
 			Integer partySN = Integer.parseInt(req.getParameter("partySN").trim());
@@ -455,8 +575,6 @@ public class PartyServlet extends HttpServlet {
 				RequestDispatcher successView = req.getRequestDispatcher("/party/partyManage.jsp");
 				successView.forward(req, res);
 			}
-			
-			
 		}
 		
 		//管理者 查看內容 前往修改
@@ -472,7 +590,7 @@ public class PartyServlet extends HttpServlet {
 		}
 		
 //未完成日期部分
-		//管理者 及 會員後台 確認修改
+		//管理者 確認修改
 		if ("submitUpdate".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -482,11 +600,11 @@ public class PartyServlet extends HttpServlet {
 				Integer partyHost = Integer.parseInt(req.getParameter("partyHost").trim());  // hidden input
 				
 				String partyTitle = req.getParameter("partyTitle");
-				String partyTitleReg = "^[(\\u4e00-\\u9fa5)(a-zA-Z0-9)]{2,}$";
+				String partyTitleReg = "^[(\\u4e00-\\u9fa5)(a-zA-Z0-9,!@#$%^&*()_+=)\\/?<>;:\'\"|. ˋˊ~]{2,}$";
 				if (partyTitle == null || partyTitle.trim().length() == 0) {
 					errorMsgs.add("標題不可空白!");
 				} else if (!partyTitle.matches(partyTitleReg)) {
-					errorMsgs.add("標題至少要有兩個中/英文字");
+					errorMsgs.add("標題至少要有兩個中/英文字, 不可以注音文或包含 [] {}");
 				}
 				
 				Date startDate = null;
@@ -515,6 +633,18 @@ public class PartyServlet extends HttpServlet {
 					closeDate = Date.valueOf(req.getParameter("closeDate"));
 				} catch (IllegalArgumentException e) {
 					errorMsgs.add("請輸入截止報名日期");
+				}
+				
+				if (regDate.after(closeDate)) {
+					errorMsgs.add("開始報名日期不可晚於截止報名日期");
+				}
+				
+				if (closeDate.after(startDate)) {
+					errorMsgs.add("截止報名日期不可晚於揪團開始日期");
+				}
+				
+				if (startDate.after(endDate)) {
+					errorMsgs.add("揪團開始日期不可晚於揪團結束日期");
 				}
 				
 				Integer partyMinSize = Integer.parseInt(req.getParameter("partyMinSize").trim());  // 下拉式選單
@@ -547,6 +677,7 @@ public class PartyServlet extends HttpServlet {
 				
 				// 跳轉回總列表
 				errorMsgs.add("修改成功!");
+				session.removeAttribute("findByPartySNLike");
 				RequestDispatcher successView = req.getRequestDispatcher("/party/partyManage.jsp");
 				successView.forward(req, res);
 				

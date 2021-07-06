@@ -29,40 +29,40 @@
 </c:forEach>
 <section class="party">
 	<form method="post" action="<%=request.getContextPath()%>/party/party.do">
-		<table>
+		<table id="detail">
 			<tr>
-				<td class="partySN">揪團編號： </td>
+				<td class="partySN">揪團編號 </td>
 				<td>
 					${partyVO.partySN}
 					<input type="hidden" name="partySN" value="${partyVO.partySN}">
 				</td>
 			</tr>
 			<tr>
-				<td class="partyHost">主揪人：(可刪) </td>
+				<td class="partyHost">主揪人(可刪) </td>
 				<td>${partyVO.partyHost}
 					<input type="hidden" name="partyHost" value="${partyVO.partyHost}">
 				</td>
 			</tr>
 			<tr>
-				<td class="partyTitle">揪團主旨: </td>
+				<td class="partyTitle">揪團主旨 </td>
 				<td><input type="text" name="partyTitle" value="${partyVO.partyTitle}"></td>
 			</tr>
 			<tr>
-				<td class="date">活動日期: </td>
+				<td class="date">活動日期 </td>
 				<td>
 					<input type="date" name="startDate" value="${partyVO.startDate}"> 至  <input type="date" name="endDate" value="${partyVO.endDate}">
 				</td>
 			</tr>
 			<tr>
-				<td class="regDate">報名開放日期: </td>
+				<td class="regDate">報名開放日期 </td>
 				<td><input type="date" name="regDate" value="${partyVO.regDate}"></td>
 			</tr>
 			<tr>
-				<td class="closeDate">報名截止日期: </td>
+				<td class="closeDate">報名截止日期  </td>
 				<td><input type="date" name="closeDate" value="${partyVO.closeDate}"></td>
 			</tr>
 			<tr>
-				<td class="partyLocation">揪團潛點: </td>
+				<td class="partyLocation">揪團潛點 </td>
 				<td>
 					<select size="" name="partyLocation">
 					<c:forEach var="diveInfoVO" items="${diveInfoSvc.getAll()}">
@@ -72,7 +72,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="partyMinSize">最低成團人數<br>(如何和下方審核連動): </td>
+				<td class="partyMinSize">最低成團人數<br>(如何和下方審核連動) </td>
 				<td>
 					<c:if test="${partyVO.status == '1' or partyVO.status == '4'}">
 						<input type="number" value="${partyVO.partyMinSize}" disabled>
@@ -83,10 +83,10 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="sizenow">目前已通過審核人數: </td>
+				<td class="sizenow">目前已通過審核人數 </td>
 				<td>${partyMemberSvc.findByPartySNAndStatus(partyVO.partySN, "1").size()}</td>
 			<tr>
-				<td class="status">揪團狀態: </td>
+				<td class="status">揪團狀態 </td>
 				<c:if test="${partyVO.status == 0}">
 					<td>
 						<select class="status" size="" name="status">
@@ -120,7 +120,7 @@
 				<c:if test="${partyVO.status == 4}">
 					<td>
 						<select class="status" size="" name="status">
-							<option value="1" ${partyVO.status == "1"? "selected": ""}>額滿
+							<option value="1" ${partyVO.status == "1"? "selected": ""}>已額滿
 							<option value="3" ${partyVO.status == "3"? "selected": ""}>取消
 							<option value="4" selected>已成團(仍可報名)
 						</select>
@@ -135,7 +135,7 @@
 				</c:if>
 			</tr>
 			<tr>
-				<td class="partyDetail">詳細內容: </td>
+				<td class="partyDetail">揪團詳細內容 </td>
 			</tr>
 		</table>
 		<textarea name="partyDetail" maxlength=1000>${partyVO.partyDetail}</textarea>
@@ -144,7 +144,7 @@
 		</script>
 	<!-- 待測試 -->
 		<button type="button" onclick="location.href='<%=request.getContextPath()%>/party/partyIHost.jsp'" class="btn btn-outline-info btn-sm">回上頁(放棄揪團內容變更)</button>
-		<button type="submit" name="action" value="submitUpdate" class="btn btn-outline-info btn-sm">確認修改揪團內容</button>
+		<button type="submit" name="action" value="submitUpdateByMember" class="btn btn-outline-info btn-sm">確認修改揪團內容</button>
 	</form>
 </section>
 
@@ -155,13 +155,13 @@
 <c:forEach var="msg" items="${errorMsgs2}">
 	<section class="msg">${msg}</section>
 </c:forEach>
-<section class="registration">
+<section class="reg">
 	<c:if test="${empty partyMembers}">
 		<div class="alert">目前尚無會員報名喔!</div>
 	</c:if>
 	
 	<c:if test="${not empty partyMembers}">
-		<table class="reg">
+		<table id="reg">
 			<tr>
 				<td>報名序號</td>
 				<td>報名會員</td>

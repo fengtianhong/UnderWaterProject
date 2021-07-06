@@ -90,14 +90,17 @@
             <div class="col-lg-1">
 
             </div>
+            <form action="<%=request.getContextPath()%>/member/MemberListServlet.do" method="post" style="width:82%">
             <div class="col-lg-6">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="全部查詢" id="searchInput">
+                    <input type="text" class="form-control" name="keyword" placeholder="全部查詢" id="searchInput">
                     <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" id="search">查詢</button>
+                    	<input type="hidden" name="action" value="search">
+                        <input class="btn btn-default" type="submit" value="查詢">
                     </span>
                 </div>
             </div>
+			</form>
 
             <div class="col-lg-1" >
             	<form action="WebManagerSystemLogoutServlet.do" method="post">
@@ -106,7 +109,7 @@
             </div>
         </div>
 		
-		<table class="table table-striped table-bordered" style="text-align:center;">
+		<table class="table table-striped" style="text-align:center;">
                 <tr>
 					<td>編號</td>
                     <td>帳號</td>

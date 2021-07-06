@@ -49,12 +49,15 @@ public class MemberListServlet extends HttpServlet {
 				
 				RequestDispatcher successView = req.getRequestDispatcher("/member/webManagerSystemChange.jsp");
 				successView.forward(req, res);
+//				System.out.println("有跑到change");
 				return;
 			}catch(Exception e) {
 				e.printStackTrace();
 				//錯誤導到指定的JSP
 				RequestDispatcher failureView = req.getRequestDispatcher("/member/webManagerSystem.jsp");
 				failureView.forward(req, res);
+//				System.out.println("跑到壞掉");
+				return;
 			}
 		}
 			
@@ -97,8 +100,7 @@ public class MemberListServlet extends HttpServlet {
 					try {
 						birthDate =  Date.valueOf(req.getParameter("birthdate").trim());
 					}catch(IllegalArgumentException e) {
-						birthDate = new Date(System.currentTimeMillis());
-						errorMsgs.add("請確認生日");
+						birthDate = Date.valueOf("1970-01-01");
 					}
 					
 					String phone= null;

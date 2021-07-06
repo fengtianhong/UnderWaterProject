@@ -93,8 +93,14 @@
 						</tr>
 					</table>
 					<div class="next">
-						<input type="hidden" name="partySN" value="${partyVO.partySN}">
-						<button type="submit" name="action" value="partyIHostDetail" class="btn btn-outline-info btn-sm">查看詳情 / 修改內容 / 審核報名資格</button>
+						<c:if test="${partyVO.status == '0' || partyVO.status == '1' || partyVO.status == '4'}">
+							<input type="hidden" name="partySN" value="${partyVO.partySN}">
+							<button type="submit" name="action" value="partyIHostDetail" class="btn btn-outline-info btn-sm">修改內容 / 審核報名資格</button>
+						</c:if>
+						<c:if test="${partyVO.status == '2' || partyVO.status == '3' || partyVO.status == '5'}">
+							<input type="hidden" name="partySN" value="${partyVO.partySN}">
+							<button type="submit" name="action" value="partyDetail" class="btn btn-outline-secondary btn-sm">查看詳情(不能修改)</button>
+						</c:if>
 					</div>
 				</form>
 			</div>

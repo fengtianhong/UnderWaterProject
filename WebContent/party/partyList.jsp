@@ -33,7 +33,7 @@
 <h4>揪團列表</h4>
 	<form method="post" action="<%=request.getContextPath()%>/party/party.do">
 		<section class="search">
-			<span>關鍵字：</span> 
+			<span>搜尋揪團編號或主旨：</span> 
 			<input type="text" name="keyword" placeholder="查詢全部" maxlength="6" size="10"> 
 			<span>潛點區域：</span >
 			<select size="" name="pointSN">
@@ -80,6 +80,7 @@
 				<div class="partyHost">主揪人: ${memberSvc.getone(partyVO.partyHost).userName}(${memberSvc.getone(partyVO.partyHost).nickName})</div>
 				<div class="partyTitle">揪團主旨: ${partyVO.partyTitle}</div>
 				<div class="date">活動日期: ${partyVO.startDate} 至 ${partyVO.endDate}</div>
+				<div class="date">報名截止日期: ${partyVO.closeDate}</div>
 				<div class="partyLocation">揪團潛點: ${diveInfoSvc.getOneDiveInfo(partyVO.partyLocation).pointName}</div>
 				<div class="size">最低成團人數: ${partyVO.partyMinSize}</div>
 				<c:if test="${partyVO.status == '0'}">

@@ -85,7 +85,9 @@
 	<form method="post" action="<%=request.getContextPath()%>/party/party.do">
 		<input type="hidden" name="partySN" value="${partyVO.partySN}">
 		<input type="button" onclick="history.back()" value="回上頁" class="btn btn-outline-info btn-sm">
-		<button type="submit" name="action" value="goRegister" class="btn btn-outline-info btn-sm">報名去</button>
+		<c:if test="${partyVO.getStatus == '0' || partyVO.getStatus == '4'}">
+			<button type="submit" name="action" value="goRegister" class="btn btn-outline-info btn-sm">報名去</button>
+		</c:if>
 	</form>
 </section>
 </main>

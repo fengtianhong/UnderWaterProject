@@ -123,7 +123,7 @@
 		}
 		
 		// 若session已有圖檔 取出來放
-		if (sessionStorage.getItem("dataIn") != null) {
+		if (sessionStorage.getItem('dataIn') != null) {
 			var dataOut = JSON.parse(sessionStorage.getItem("dataIn"));
 			document.querySelector('#displayArea').innerText = "";
         	let html = `<img id="display" src="" style="max-width:200px">`;
@@ -132,6 +132,7 @@
 		};
 	});
 	
+	var dataIn;
 	// 證照圖片上傳處理
 	document.querySelector('#p_file').addEventListener('change', function() {
 		let file = this.files[0];
@@ -144,21 +145,26 @@
 			document.querySelector('#display').setAttribute('src', reader.result);
 			
 			var pic_base64 = reader.result;
-			var dataIn;
+			
 			dataIn = {
 					pic_base64: pic_base64
 			};
+			console.log(dataIn);
+// 			console.log(dataIn.pic_base64);
 		});
-	});
-	// 提交報名後 站存證照圖檔
-	$('#submitRegistration').on('click', function() {
-			sessionStorage.setItem("dataIn", JSON.stringify(dataIn));
-	})
-	
-	$('#goBack').on('click', function() {
-		sessionStorage.removeItem("dataIn");
-	})
 		
+		// 提交報名後 暫存證照圖檔
+		$('#submitRegistration').on('click', function() {
+				console.log('aa');
+				sessionStorage.setItem('dataIn', JSON.stringify(dataIn));
+				console.log('bb');
+		})
+		
+		$('#goBack').on('click', function() {
+			sessionStorage.removeItem("dataIn");
+		})
+			
+	});
 </script>
 
 </body>

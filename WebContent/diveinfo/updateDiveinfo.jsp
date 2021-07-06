@@ -79,8 +79,9 @@ tr, td {
 					</tr>
 					<tr>
 						<td>詳細介紹:</td>
-						<td><input type="TEXT" name="introduction" size="45"
-							value="<%=diveinfoVO.getIntroduction()%>" /></td>
+<!-- 						<td><input type="TEXT" name="introduction" size="45" -->
+<%-- 							value="<%=diveinfoVO.getIntroduction()%>" /></td> --%>
+							<td><textarea style="resize:none;" name="introduction" rows="7" cols="45"><%=(diveinfoVO == null) ? "" : diveinfoVO.getIntroduction()%></textarea></td>
 					</tr>
 					<tr>
 						<td>季節:</td>
