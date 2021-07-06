@@ -19,6 +19,11 @@
 	<link rel="stylesheet" href="../share/index.css">
 	<link rel="stylesheet" href="../vendors/bootstrap/css/bootstrap.min.css">
 <title>Search Member</title>
+<style>
+.card{
+	height:341px;	
+}
+</style>
 </head>
 <body>
 <jsp:include page="../share/navbar.jsp" flush="true" />
@@ -47,7 +52,7 @@
 <!-- 						<div class="col-md-9 col-xl-10"> -->
 <!-- 							<div class="tab-content"> -->
 <!-- 								<div class="tab-pane fade show active" id="account"	role="tabpanel"> -->
-<!-- 									<div class="card"> -->
+									
 										
 										<form action="MemberInfoServlet.do" method="post">
 											<div class="card-header">
@@ -62,7 +67,7 @@
 											</div>
 										</form>
 										
-<!-- 									</div> -->
+									
 <!-- 								</div> -->
 								<table style="border:solid; text-align:center; ">
 									<tr>

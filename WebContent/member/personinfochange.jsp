@@ -203,7 +203,7 @@ function showImg(thisimg) {
 		showimg.src = e.target.result;
 	};
 	fr.readAsDataURL(file);
-	showimg.style.display = 'block';
+// 	showimg.style.display = 'block';
 	}
 }
 
@@ -217,7 +217,7 @@ function showImgperson(thisimg) {
 		showimgperson.src = e.target.result;
 	};
 	fr.readAsDataURL(file);
-	showimgperson.style.display = 'block';
+// 	showimgperson.style.display = 'block';
 	}
 }
 </script>
