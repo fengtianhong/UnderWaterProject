@@ -15,11 +15,6 @@ MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
 	}else{
 		pageContext.setAttribute("list", list);
 	}
-	
-	
-	
-	
-	
 %>
 
 
@@ -88,6 +83,8 @@ MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
 .popBox input {
 	margin-top: 10px;
 }
+
+
 </style>
 <link rel="stylesheet" href="css/bootstrap.css" />
 </head>
