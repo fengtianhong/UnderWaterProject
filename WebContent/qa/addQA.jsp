@@ -55,14 +55,14 @@
 		<td>解答</td>
 		<td><textarea id="editor" name="answer" class="input1">${qaVO.answer}</textarea></td>
 	</tr>
-	<tr>
-		<td>選單分類</td>
-		<td><input type="TEXT" name="menu" class="input1" value="${qaVO.menu}" /></td>
-	</tr>
-	<tr>
-		<td>選單子分類</td>
-		<td><input type="TEXT" name="submenu" class="input1" value="${qaVO.submenu}" /></td>
-	</tr>
+<!-- 	<tr> -->
+<!-- 		<td>選單分類</td> -->
+<%-- 		<td><input type="TEXT" name="menu" class="input1" value="${qaVO.menu}" /></td> --%>
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>選單子分類</td> -->
+<%-- 		<td><input type="TEXT" name="submenu" class="input1" value="${qaVO.submenu}" /></td> --%>
+<!-- 	</tr> -->
 	<tr>
 		<td>系統分類</td>
 		<td>

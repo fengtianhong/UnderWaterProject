@@ -443,10 +443,10 @@ public Boolean checkAccount(MemberVO MemberVO) {
 		rs = pstmt.executeQuery();
 		
 		if(rs.next()) {
-			System.out.println("沒有重複");
+//			System.out.println("沒有重複");
 			return true;
 		}else {
-			System.out.println("重複了");
+//			System.out.println("重複了");
 			return false;
 		}
 	}catch(Exception e) {
@@ -470,7 +470,7 @@ public Boolean checkAccount(MemberVO MemberVO) {
 		}
 		
 	}
-	System.out.println("走到最後");
+//	System.out.println("走到最後");
 	return false;
 }
 
