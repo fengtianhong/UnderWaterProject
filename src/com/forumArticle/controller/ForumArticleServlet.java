@@ -124,7 +124,7 @@ public class ForumArticleServlet extends HttpServlet {
 
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("forumArticleVO", forumArticleVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/bFAManage.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/forumArticle.jsp");
 					failureView.forward(req, res);
 					return; //程式中斷
 				}
@@ -142,7 +142,7 @@ public class ForumArticleServlet extends HttpServlet {
 				//	其他錯誤處理	
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:"+e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/bFAManage.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/forumArticle.jsp");
 				failureView.forward(req, res);
 			}
 		}

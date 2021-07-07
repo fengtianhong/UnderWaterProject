@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.forumComment.model.*;
-import com.forumRate.model.ForumRateVO;
+
 
 public class ForumCommentServlet extends HttpServlet{
 	
@@ -98,9 +98,10 @@ public class ForumCommentServlet extends HttpServlet{
 			try {
 //				接收
 //				Integer cmtSN =  (Integer)session.getAttribute("cmtSN");
-				Integer articleSN = (Integer)session.getAttribute("articleSN");
+//				Integer articleSN = (Integer)session.getAttribute("articleSN");
 //				Integer userID =  (Integer)session.getAttribute("userID");
-//				Integer articleSN = new Integer(req.getParameter("articleSN"));
+				
+				Integer articleSN = new Integer(req.getParameter("articleSN"));
 //				查詢
 				ForumCommentService forumCommentSvc = new ForumCommentService();
 				List<ForumCommentVO> forumCommentVO = forumCommentSvc.getOneForumComment(articleSN);
@@ -127,15 +128,14 @@ public class ForumCommentServlet extends HttpServlet{
 			
 			try {
 //				接收
-				Integer userID =  (Integer)session.getAttribute("userID");
+				
 				Integer cmtSN = new Integer(req.getParameter("cmtSN").trim());
 				String cmtText = req.getParameter("cmtText");
 		
 				if (cmtText == null || cmtText.trim().length() == 0) {
 					errorMsgs.add("評論內容請勿空白");
 				} 			
-				
-//				Integer userID = new Integer(req.getParameter("userID").trim());
+				Integer userID =  (Integer)session.getAttribute("userID");
 				Integer articleSN = new Integer(req.getParameter("articleSN").trim());
 				
 				ForumCommentVO forumCommentVO = new ForumCommentVO();
@@ -146,7 +146,7 @@ public class ForumCommentServlet extends HttpServlet{
 				
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("forumCommentVO", forumCommentVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/fAListOne.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/forumComment.jsp");
 					failureView.forward(req, res);
 					return; 
 				}
@@ -157,12 +157,14 @@ public class ForumCommentServlet extends HttpServlet{
 				req.setAttribute("forumCommentVO", forumCommentVO);
 				req.setAttribute("articleSN", articleSN);
 				String url = "/forumArticle/fAListOne.jsp";
+
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);
 //				其他錯誤處理
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/fAListOne.jsp");
+
 				failureView.forward(req, res);
 			}				
 		}

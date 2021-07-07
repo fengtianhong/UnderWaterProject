@@ -51,7 +51,6 @@ public class ForumCommentDAO implements ForumCommentDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
-//			pstmt.setTimestamp(1, forumCommentVO.getCmtDate());
 			pstmt.setString(1, forumCommentVO.getCmtText());
 			pstmt.setInt(2, forumCommentVO.getUserID());
 			pstmt.setInt(3, forumCommentVO.getArticleSN());
@@ -89,7 +88,6 @@ public class ForumCommentDAO implements ForumCommentDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 	
-//			pstmt.setTimestamp(1, forumCommentVO.getCmtDate());
 			pstmt.setString(1, forumCommentVO.getCmtText());
 			pstmt.setInt(2, forumCommentVO.getUserID());
 			pstmt.setDouble(3, forumCommentVO.getArticleSN());
@@ -154,7 +152,8 @@ public class ForumCommentDAO implements ForumCommentDAO_interface{
 
 	
 	@Override
-	public List<ForumCommentVO> findByPrimaryKey(Integer articleSN) {
+//	public List<ForumCommentVO> findByPrimaryKey(Integer articleSN) {
+	public List<ForumCommentVO> findByPrimaryKey(Integer cmtSN) {
 		
 		List<ForumCommentVO> list = new ArrayList<ForumCommentVO>();
 		ForumCommentVO forumCommentVO = null;
@@ -166,7 +165,8 @@ public class ForumCommentDAO implements ForumCommentDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
-			pstmt.setInt(1, articleSN);
+//			pstmt.setInt(1, articleSN);
+			pstmt.setInt(1, cmtSN);
 
 			rs = pstmt.executeQuery();
 
