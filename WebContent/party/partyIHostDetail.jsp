@@ -18,6 +18,9 @@
     <link rel="stylesheet" href="../vendors/bootstrap/css/bootstrap.min.css">
     <!-- CKEditor -->
 	<script type="text/javascript" src="<%=request.getContextPath()%>/party/ckeditor/ckeditor.js"></script>
+	 <!-- 自己的fontaweson -->
+    <script src="https://kit.fontawesome.com/99b24a5611.js" crossorigin="anonymous"></script>
+	
 </head>
 <body>
 <jsp:include page="../share/navbar.jsp" flush="true" />
@@ -31,6 +34,7 @@
 	<form method="post" action="<%=request.getContextPath()%>/party/party.do">
 		<table id="detail">
 			<tr>
+				<td><i class="fas fa-glass-cheers"></i></td>
 				<td class="partySN">揪團編號 </td>
 				<td>
 					${partyVO.partySN}
@@ -38,30 +42,36 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="partyHost">主揪人(可刪) </td>
+				<td><i class="far fa-user-circle"></i></td>
+				<td class="partyHost">主揪人</td>
 				<td>${partyVO.partyHost}
 					<input type="hidden" name="partyHost" value="${partyVO.partyHost}">
 				</td>
 			</tr>
 			<tr>
+				<td><i class="fas fa-volume-up"></i></td>
 				<td class="partyTitle">揪團主旨 </td>
 				<td><input type="text" name="partyTitle" value="${partyVO.partyTitle}"></td>
 			</tr>
 			<tr>
+				<td><i class="fas fa-calendar-alt"></i></td>
 				<td class="date">活動日期 </td>
 				<td>
 					<input type="date" name="startDate" value="${partyVO.startDate}"> 至  <input type="date" name="endDate" value="${partyVO.endDate}">
 				</td>
 			</tr>
 			<tr>
+				<td><i class="fas fa-calendar-alt"></i></td>
 				<td class="regDate">報名開放日期 </td>
 				<td><input type="date" name="regDate" value="${partyVO.regDate}"></td>
 			</tr>
 			<tr>
+				<td><i class="fas fa-exclamation-circle"></i></td>
 				<td class="closeDate">報名截止日期  </td>
 				<td><input type="date" name="closeDate" value="${partyVO.closeDate}"></td>
 			</tr>
 			<tr>
+				<td><i class="far fa-compass"></i></td>
 				<td class="partyLocation">揪團潛點 </td>
 				<td>
 					<select size="" name="partyLocation">
@@ -72,20 +82,23 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="partyMinSize">最低成團人數<br>(如何和下方審核連動) </td>
+				<td><i class="fas fa-users"></i></td>
+				<td class="partyMinSize">最低成團人數</td>
 				<td>
-					<c:if test="${partyVO.status == '1' or partyVO.status == '4'}">
+					<c:if test="${partyVO.status == '1'}">
 						<input type="number" value="${partyVO.partyMinSize}" disabled>
 					</c:if>
-					<c:if test="${partyVO.status == '0' or partyVO.status == '2' or partyVO.status == '3' or partyVO.status == '5'}">
+					<c:if test="${partyVO.status == '0' or partyVO.status == '2' or partyVO.status == '3' or partyVO.status == '4' or partyVO.status == '5'}">
 						<input type="number" min="${partyMemberSvc.findByPartySNAndStatus(partyVO.partySN, '1').size()}" max="20" name="partyMinSize" value="${partyVO.partyMinSize}">
 					</c:if>
 				</td>
 			</tr>
 			<tr>
-				<td class="sizenow">目前已通過審核人數 </td>
+				<td><i class="far fa-check-circle"></i></td>
+				<td class="sizenow">通過審核人數 </td>
 				<td>${partyMemberSvc.findByPartySNAndStatus(partyVO.partySN, "1").size()}</td>
 			<tr>
+				<td><i class="far fa-question-circle"></i></td>
 				<td class="status">揪團狀態 </td>
 				<c:if test="${partyVO.status == 0}">
 					<td>
@@ -135,6 +148,7 @@
 				</c:if>
 			</tr>
 			<tr>
+				<td><i class="fas fa-info-circle"></i></td>
 				<td class="partyDetail">揪團詳細內容 </td>
 			</tr>
 		</table>
