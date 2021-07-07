@@ -63,12 +63,12 @@ public class LoginServlet extends HttpServlet {
 					res.sendRedirect(req.getContextPath());
 				}
 			}else {
-				System.out.println("驗證碼不正確");
+//				System.out.println("驗證碼不正確");
 				req.setAttribute("msg", "驗證碼不正確");
 				req.getRequestDispatcher("login.jsp").forward(req, res);
 			}
 		} else {
-			System.out.println("帳號密碼錯誤");
+//			System.out.println("帳號密碼錯誤");
 			req.setAttribute("msg", "帳號密碼錯誤");
 			req.getRequestDispatcher("login.jsp").forward(req, res);
 		}

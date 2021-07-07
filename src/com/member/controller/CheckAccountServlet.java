@@ -37,7 +37,7 @@ public class CheckAccountServlet extends HttpServlet {
 		Boolean vo = membersvc.checkAccountMember(account);
 //		String canuse = "可以使用";
 //		String used = "已經註冊過";
-		System.out.println("到檢查驗證碼這裡");
+//		System.out.println("到檢查驗證碼這裡");
 		if(vo == true) {
 //			req.setAttribute("used", "已經註冊過");
 //			req.getRequestDispatcher("register.jsp").forward(req, res);
