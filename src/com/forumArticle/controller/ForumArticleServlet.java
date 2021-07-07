@@ -146,6 +146,102 @@ public class ForumArticleServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+		//	管理者文章下架頁面閱讀文章
+		//	uwFManage.jsp的請求
+		if ("getOne_For_mDisplay".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			//	接收參數+錯誤處理
+			try {
+				String str = req.getParameter("articleSN");
+				if (str == null || (str.trim()).length() == 0) {
+					errorMsgs.add("請輸入文章編號");
+				}
+				
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/error.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+				
+				Integer articleSN = null;
+				try {
+					articleSN = new Integer(str);
+				} catch (Exception e) {
+					errorMsgs.add("文章編號格式不正確");
+				}
+				
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/error.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+				//	開始查詢
+				ForumArticleService forumArticleSvc = new ForumArticleService();
+				ForumArticleVO forumArticleVO = forumArticleSvc.getOneForumArticle(articleSN);
+				
+				if (forumArticleVO == null) {
+					errorMsgs.add("查無資料");
+				}
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/forumArticle.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+				//	查詢完成轉交 - 閱讀文章內文
+				req.setAttribute("forumArticleVO", forumArticleVO); // 資料庫取出的forumArticleVO物件,存入req
+				req.setAttribute("articleSN", articleSN);
+				String url = "/forumArticle/fAListOne.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 fAListOne.jsp
+				successView.forward(req, res);
+				//	其他錯誤處理
+			} catch (Exception e) {
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/forumArticle.jsp");
+				failureView.forward(req, res);
+			}			
+		}
+		
+		//	****************************** 管理者下架文章 ******************************
+		//	
+		//	管理者刪除文章
+		if ("mArticleHidden".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			//	接收參數+錯誤處理
+			try {
+				Integer articleSN = new Integer(req.getParameter("articleSN").trim());
+				Boolean articleStatus = new Boolean(req.getParameter("articleStatus"));
+
+				ForumArticleVO forumArticleVO = new ForumArticleVO();
+				forumArticleVO.setArticleSN(articleSN);
+				forumArticleVO.setArticleStatus(articleStatus);
+
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("forumArticleVO", forumArticleVO);
+					RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/uwFManage.jsp");
+					failureView.forward(req, res);
+					return; //程式中斷
+				}
+				
+				//	開始修改
+					ForumArticleService forumArticleSvc = new ForumArticleService();
+					forumArticleSvc.deleteForumArticle(articleSN);
+					
+				//	修改完成後轉交
+					req.setAttribute("forumArticleVO", forumArticleVO);
+					String url = "/forumArticle/uwFManage.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
+					
+				//	其他錯誤處理	
+			} catch (Exception e) {
+				errorMsgs.add("修改資料失敗:"+e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/uwFManage.jsp");
+				failureView.forward(req, res);
+			}
+		}
 		
 		//	****************************** 3-1.使用者查詢單一個後更新 (getOne_For_Update)******************************
 		//	

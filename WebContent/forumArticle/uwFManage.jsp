@@ -57,27 +57,9 @@
 		
 		<table class="articlestatus">
 			<tr>
-				<td>文章編號</td>
-				<td>發文作者</td>
-				<td>文章標題</td>
-				<td>文章狀態</td>
-				<td>查看內文</td>
+				<td><td>
 			</tr>
-			<c:forEach var="article" items="${list}">
-				<tr>
-					<td>${article.articleSN}</td>
-					<td>${article.userID}</td>
-					<td>
-					</td>
-					
-					<c:if test="${article.articleStatus == true}">
-						<td>正常顯示</td>
-					</c:if>
-					<c:if test="${article.articleStatus == false}">
-						<td>正常隱藏</td>
-					</c:if>
-				<tr>
-			</c:forEach>
+		
 		</table>
 		
 		

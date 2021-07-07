@@ -109,11 +109,11 @@
 				
 				
 				<hr>
+				<!-- 文章標頭區塊 -->
 				<div id="bar" style="margin-left: 20px; margin-top: 20px; box-shadow: 0 1px; padding-bottom:5px;">
 					<jsp:useBean id="memberSvc" scope="session" class="com.member.model.MemberService" />
 					<span class="css_td">作者：${memberSvc.getone(forumArticleVO.userID).nickName}</span>
 					<span class="css_td" style=""><fmt:formatDate value="${forumArticleVO.publishedDate}" pattern="yyyy-MM-dd HH:mm:ss "/></span>
-					
 				</div>
 				<!-- 文章顯示內文區塊 -->
 				<div id="text" style="margin-left: 20px; margin-top: 20px; margin-bottom: 60px;"><h5>${forumArticleVO.articleText}</h5></div>
@@ -145,6 +145,10 @@
 										<input type="hidden" name="articleSN" value="${forumCommentVO.articleSN}">
 										<input type="submit" value="刪除留言">
 									</FORM>
+								</c:if>
+								
+								<c:if test="${userID != forumCommentVO.userID}">
+									<textarea class="cmtTextarea" name="cmtText" rows="3" cols="36">${forumCommentVO.cmtText}</textarea><br>
 								</c:if>
 							</div>
 					</div>

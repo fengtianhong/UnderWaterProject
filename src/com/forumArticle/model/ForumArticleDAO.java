@@ -26,7 +26,7 @@ public class ForumArticleDAO implements ForumArticleDAO_interface{
 		}		
 	}
 	
-	private static final String INSERT_STMT = 
+		private static final String INSERT_STMT = 
 			"INSERT INTO ForumArticle (articleTitle, articleText, userID, articleTitleOptSN) VALUES (?, ?, ?, ?)";
 		private static final String GET_ALL_STMT = 
 			"SELECT * FROM ForumArticle where articleStatus = 1 order by articleSN desc ";
@@ -36,6 +36,9 @@ public class ForumArticleDAO implements ForumArticleDAO_interface{
 			"UPDATE ForumArticle set articleStatus = 0 where articleSN = ?";
 		private static final String userUPDATE = 
 			"UPDATE ForumArticle set articleTitle = ?, articleText = ? where articleSN = ?";
+		private static final String mArticleHidden = 
+			"UPDATE ForumArticle set articleStatus = 0 where articleSN = ?";
+
 		
 //	新增文章
 	@Override
@@ -80,6 +83,39 @@ public class ForumArticleDAO implements ForumArticleDAO_interface{
 //	
 	@Override
 	public void hiddenAtricle(Integer articleSN) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(hiddenAtricle);
+			
+			pstmt.setInt(1, articleSN);
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}	
+	}
+//	管理員下架文章
+	@Override
+	public void mArticleHidden(Integer articleSN) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		

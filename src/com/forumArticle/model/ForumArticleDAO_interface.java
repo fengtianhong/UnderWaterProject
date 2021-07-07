@@ -7,6 +7,7 @@ public interface ForumArticleDAO_interface {
 	
 	public void userUpdate(ForumArticleVO forumArticleVO);	//	使用者update
 	public void hiddenAtricle(Integer articleSN);	//	假裝刪除文章
+	public void mArticleHidden(Integer articleSN);	//	管理員下架文章
 	
 	public ForumArticleVO findByPrimaryKey(Integer articleSN);
 	public List<ForumArticleVO> getAll();

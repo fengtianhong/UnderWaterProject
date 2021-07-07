@@ -42,7 +42,16 @@
 		<url-pattern>/member/personinfo.jsp</url-pattern>
 		<url-pattern>/member/personchangepwd.jsp</url-pattern>
 		<url-pattern>/member/personchange.jsp</url-pattern>
-		<url-pattern>/forumArticle/*</url-pattern>
+		
+		<url-pattern>/forumArticle/fAListOne.jsp</url-pattern>
+		<url-pattern>/forumArticle/fAUpdate.jsp</url-pattern>
+		<url-pattern>/forumArticle/forumArticle.jsp</url-pattern>
+		<url-pattern>/forumArticle/forumArticleInsert.jsp</url-pattern>
+		<url-pattern>/forumArticle/forumComment.jsp</url-pattern>
+		<url-pattern>/forumArticle/rptForm.jsp</url-pattern>
+		<url-pattern>/forumArticle/bFAManage.jsp</url-pattern>
+		
+		
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
