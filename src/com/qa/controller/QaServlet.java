@@ -31,13 +31,15 @@ public class QaServlet extends HttpServlet {
 			
 			try {
 				
-				String menu = req.getParameter("menu").trim();
+				String menu = "1";
+//				String menu = req.getParameter("menu").trim();
 				if(menu == null || menu.length() == 0) {
 					errMsg.add("請確認選單分類");
 				}
 				
 				
-				String submenu = req.getParameter("submenu").trim();
+				String submenu =  "1";
+//				String submenu = req.getParameter("submenu").trim();
 				if(submenu == null || submenu.length() == 0) {
 					errMsg.add("請確認子選單分類");
 				}
@@ -127,13 +129,15 @@ public class QaServlet extends HttpServlet {
 			try {
 				
 				Integer questionSN = new Integer(req.getParameter("questionSN").trim());
-				String menu = req.getParameter("menu").trim();
+				String menu =  "1";
+//				String menu = req.getParameter("menu").trim();
 				if(menu == null || menu.length() == 0) {
 					errMsg.add("請確認選單分類");
 				}
 				
 				
-				String submenu = req.getParameter("submenu").trim();
+				String submenu =  "1";
+//				String submenu = req.getParameter("submenu").trim();
 				if(submenu == null || submenu.length() == 0) {
 					errMsg.add("請確認子選單分類");
 				}

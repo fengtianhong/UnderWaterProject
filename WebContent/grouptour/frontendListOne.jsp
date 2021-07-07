@@ -71,7 +71,7 @@
 	left: 191px;
 	font-size: 45px;
 }
-.heart.-on {
+.heart.-onred {
 	color: red;
 	
 }
@@ -282,7 +282,7 @@
 
 		
 		<!-- 有空改寫 -->
-		<div><!-- 抓收藏、報名用(有空把他寫在DAO好了 好醜)   -->
+		<div style="display: none;"><!-- 抓收藏、報名用(有空把他寫在DAO好了 好醜)   -->
 			<jsp:useBean id="colSvc" scope="page" class="com.collections.model.CollectionsService"></jsp:useBean>
 			<span class="favorite">${(userID == null)?"":colSvc.getCollectionsByUserid(userID)}</span>
 			<jsp:useBean id="orderSvc" scope="page" class="com.orderforgroup.model.OrderForGroupService"></jsp:useBean>
@@ -362,7 +362,7 @@ function init() {
 	var favorite = $(".favorite").text();
 	var groupTourSN = $(".groupTourSN").val();
 	if(favorite.indexOf(groupTourSN) > 0) {
-		$(".heart").addClass("-on");
+		$(".heart").addClass("-onred");
 	}
 	// 抓取是否已額滿	>>上面三駝都可以寫在 c:if
 	var attendNumber = $(".attendNumber").text();
@@ -410,10 +410,10 @@ $(function () {
                     console.log(data);
                     if(data == "delete") {
                     	alert("移除收藏");
-                    	$(that).removeClass("-on");
+                    	$(that).removeClass("-onred");
                     }else if(data == "add"){
                     	alert("加入收藏");
-                    	$(that).addClass("-on");
+                    	$(that).addClass("-onred");
                     }else if(data == "fail"){	// 
                     	alert("請確認是否已登入");
                     }

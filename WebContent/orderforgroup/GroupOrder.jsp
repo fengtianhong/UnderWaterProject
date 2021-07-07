@@ -3,12 +3,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.orderforgroup.model.*"%>
+<%@ page import="com.collections.model.*"%>
 
 <%
 	Integer userID = (Integer) session.getAttribute("userID");
 	OrderForGroupService orderForGroupSvc = new OrderForGroupService();
 	List<OrderForGroupVO> list = orderForGroupSvc.getOrderByUserID(userID);
 	pageContext.setAttribute("list", list);
+	
+	CollectionsService colSvc = new CollectionsService();
+	List<Integer> listcol = colSvc.getCollectionsByUserid(userID);
+	pageContext.setAttribute("listcol", listcol);
 %>
 
 <!DOCTYPE html>
@@ -46,7 +51,7 @@
 		padding-right: 10px;
 	}
 	.orderSN{
-		color: cadetblue;
+		color: #17a2b8;
 	}
 	.header_orderSN{
 		text-decoration: none !important;
@@ -64,6 +69,9 @@
 	.totalPrice{
 		text-align: end;
 	}
+	.collection{
+		margin-bottom: 50px;
+	}
 /* 	PUT IN SHARE */
 	.content{
 	    width: 1000px;
@@ -76,8 +84,20 @@
 <jsp:include page="../share/navbar.jsp" flush="true" />
 <jsp:include page="../share/member/Mheader.jsp" flush="true"/>
     <div class="main-container">
-        <h5>套裝行程訂單查詢</h5><hr>
-
+    
+    <div class="collection">
+    
+    	<h5>您的收藏</h5><hr>
+    	
+    	<jsp:useBean id="groupTourSvc" scope="page" class="com.grouptour.model.GroupTourService"></jsp:useBean>
+        <c:forEach var="groupTourSN" items="${listcol}">
+        <div class="coltourName btn btn-outline-info" onclick="location.href='<%=request.getContextPath()%>/grouptour/grouptour.do?action=getOne_ForDisplay&groupTourSN=${groupTourSN}';">
+        <i class="fas fa-heart"></i> ${groupTourSN} - ${groupTourSvc.getOne(groupTourSN).tourName}
+        </div>
+        </c:forEach>        
+    </div>
+    
+        <h5>訂單查詢</h5><hr>
 
 	<%@ include file="page1.file" %>
     <c:forEach var="orderForGroupVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">          
@@ -101,10 +121,9 @@
 					</td>
 					<td>
 						<div><span class="gray_title">付款方式</span>信用卡付款</div>
-					    <jsp:useBean id="groupTourSvc" scope="page" class="com.grouptour.model.GroupTourService"></jsp:useBean>
 					
 						<div class="tourName">${orderForGroupVO.groupTourSN} - ${groupTourSvc.getOne(orderForGroupVO.groupTourSN).tourName}</div>
-	            		<div class="time">${groupTourSvc.getOne(orderForGroupVO.groupTourSN).startTime} - ${groupTourSvc.getOne(orderForGroupVO.groupTourSN).endTime}</div>
+	            		<div class="time">行程時間 : ${groupTourSvc.getOne(orderForGroupVO.groupTourSN).startTime} - ${groupTourSvc.getOne(orderForGroupVO.groupTourSN).endTime}</div>
 					</td>
 					<td class="subtotal">小計
 						<div class="pricedetail">$ ${orderForGroupVO.totalPrice}</div>
