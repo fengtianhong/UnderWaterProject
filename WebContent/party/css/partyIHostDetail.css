@@ -43,21 +43,21 @@ section.reg table#reg {
 	margin-left: auto;
 }
 
-/* section.reg table#reg>tr, td { */
-/* 	text-align: center; */
-/* 	padding: 5px 10px; */
-/* } */
+section.reg table#reg>tr>td {
+	text-align: center;
+	padding: 5px 10px;
+}
 
 /* 上方表格 */
 section.party table#detail {
-	margin-right: auto;
-	margin-left: auto;
+		margin-right: auto;
+		margin-left: auto;
 }
 
-/* section.party table#detail>tr, td { */
-/* 	text-align: left; */
-/* 	padding: 5px 10px; */
-/* } */
+section.party table#detail>tr>td {
+	text-align: left;
+	padding: 0px 5px;
+}
 
 
 div.alert {

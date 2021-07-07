@@ -29,8 +29,9 @@ h4 {
 }
 
 section.alert {
-	color: #98f4fc;
+	color: #1983b4; /* 98f4fc */
 	text-align: center;
+	font-weight: bold;
 }
 
 /* section.party { */
@@ -52,6 +53,10 @@ div.status {
 
 div.next {
 	text-align: right;
+}
+
+table tr td {
+	padding: 0 5px;
 }
 
 /* ================  ¤À­¶¬ÛÃö  ================ */

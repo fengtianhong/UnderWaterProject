@@ -50,6 +50,12 @@ div.next {
 	text-align: right;
 }
 
+section.alert {
+	color: #1983b4;
+	text-align: center;
+	font-weight: bold;
+}
+
 /* ================  ¤À­¶¬ÛÃö  ================ */
 
 div.page {

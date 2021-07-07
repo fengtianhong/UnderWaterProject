@@ -98,7 +98,7 @@
 	</tr>
 	<tr>
 		<td>其他備註</td>
-		<td><textarea style="width:450px;height:150px;" placeholder="其他備註" name="comment" maxlength="100"></textarea></td>
+		<td><textarea style="width:450px;height:150px;" placeholder="其他備註" name="comment" maxlength="100">${partyMemberVO == null? "" : partyMemberVO.comment}</textarea></td>
 	</tr>
 	</table>
 	

@@ -49,24 +49,24 @@
 			<table>
 				<tr>
 					<td><i class="fas fa-glass-cheers"></i></td>
-					<td>揪團編號: </td>
+					<td>揪團編號 </td>
 					<td>${partyMemberVO.partySN}
 						<input type="hidden" name=partySN value="${partyMemberVO.partySN}">
 					</td>
 				</tr>
 				<tr>
 					<td><i class="far fa-user-circle"></i></td>
-					<td>主揪人(之後可做點選連結): </td>
+					<td>主揪人 </td>
 					<td>${memberSvc.getone(partySvc.findByPartySN(partyMemberVO.partySN).partyHost).userName}</td>
 				</tr>
 				<tr>
 					<td><i class="fas fa-volume-up"></i></td>
-					<td>揪團主旨: </td>
+					<td>揪團主旨 </td>
 					<td>${partySvc.findByPartySN(partyMemberVO.partySN).partyTitle}</td>
 				</tr>
 				<tr>
 					<td><i class="fas fa-info-circle"></i></td>
-					<td>揪團狀態: </td>
+					<td>揪團狀態 </td>
 					<c:if test="${partySvc.findByPartySN(partyMemberVO.partySN).status == '0'}">
 						<td><span class="badge badge-info">熱烈報名中</span></td>
 					</c:if>
@@ -88,7 +88,7 @@
 				</tr>
 				<tr>
 					<td><i class="fas fa-exclamation-circle"></i></td>
-					<td>報名狀態: </td>
+					<td>報名狀態 </td>
 					<c:if test="${partyMemberVO.status == '0'}">
 						<td>尚待審核確認</td>
 					</c:if>
