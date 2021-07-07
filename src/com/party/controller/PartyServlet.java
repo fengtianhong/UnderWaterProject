@@ -281,13 +281,13 @@ public class PartyServlet extends HttpServlet {
 				} catch (IllegalArgumentException e) {
 					errorMsgs.add("請輸入活動開始日期");
 				}
-				
+
 				Date endDate = null;
 				try {
 					endDate = Date.valueOf(req.getParameter("endDate"));
 				} catch (IllegalArgumentException e) {
 					errorMsgs.add("請輸入活動結束日期");
-				}
+				}				
 				
 				Date regDate = null;
 				try {
@@ -303,21 +303,36 @@ public class PartyServlet extends HttpServlet {
 					errorMsgs.add("請輸入截止報名日期");
 				}
 				
-				if (regDate.after(closeDate)) {
-					errorMsgs.add("開始報名日期不可晚於截止報名日期");
+				if (regDate != null && endDate != null && startDate != null && closeDate != null) {
+					System.out.println("regDate");
+					System.out.println("endDate");
+					System.out.println("startDate");
+					System.out.println("closeDate");
+					
+					if (regDate.after(closeDate)) {
+						errorMsgs.add("開始報名日期不可晚於截止報名日期");
+					}
+					System.out.println("qqq");
+					
+					if (closeDate.after(startDate)) {
+						errorMsgs.add("截止報名日期不可晚於揪團開始日期");
+					}
+					
+					if (startDate.after(endDate)) {
+						errorMsgs.add("揪團開始日期不可晚於揪團結束日期");
+					}
 				}
-				
-				if (closeDate.after(startDate)) {
-					errorMsgs.add("截止報名日期不可晚於揪團開始日期");
-				}
-				
-				if (startDate.after(endDate)) {
-					errorMsgs.add("揪團開始日期不可晚於揪團結束日期");
-				}
-				
 				
 				Integer partyLocation = Integer.parseInt(req.getParameter("partyLocation"));  // hidden input
-				Integer partyMinSize = Integer.parseInt(req.getParameter("partyMinSize"));  // hidden input
+				Integer partyMinSize = null;
+
+				if (req.getParameter("partyMinSize") == "0") {
+					errorMsgs.add("請輸入最低成團人數");
+				} else {
+					partyMinSize =  Integer.parseInt(req.getParameter("partyMinSize"));
+				}
+				
+				System.out.println("here4");
 				String partyDetail = req.getParameter("partyDetail");  // 可填可不填
 				String status = "0";
 				
@@ -351,7 +366,7 @@ public class PartyServlet extends HttpServlet {
 				successView.forward(req, res);
 			
 			} catch (Exception e) {
-				errorMsgs.add("發起揪團失敗: " + e.getMessage());
+//				errorMsgs.add("發起揪團失敗: " + e.getMessage());
 				System.out.println("partyservlet #readyToHost = " + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/party/HostParty.jsp");
 				failureView.forward(req, res);
