@@ -23,7 +23,10 @@
     <!-- Bootstrap 的 CSS -->
     <link rel="stylesheet" href="../vendors/bootstrap/css/bootstrap.min.css">
 	<!-- Favicon-->
-<!-- 	<link rel="icon" type="image/x-icon" href="../vendor/favicon.ico" /> -->
+	<link rel="icon" type="image/x-icon" href="../vendor/favicon.ico" />
+	 <!-- 自己的fontaweson -->
+    <script src="https://kit.fontawesome.com/99b24a5611.js" crossorigin="anonymous"></script>
+	
 </head>
 <body>
 <jsp:include page="../share/navbar.jsp" flush="true" />
@@ -47,19 +50,23 @@
 				<form method="post" action="<%=request.getContextPath()%>/party/party.do">
 					<table>
 						<tr>
-							<td>揪團編號: </td>
+							<td><i class="fas fa-glass-cheers"></i></td>
+							<td>揪團編號 </td>
 							<td>${partyVO.partySN}</td>
 						</tr>
 						<tr>
-							<td>主揪人(之後可刪除): </td>
+							<td><i class="far fa-user-circle"></i></td>
+							<td>主揪人</td>
 							<td>${partyVO.partyHost}</td>
 						</tr>
 						<tr>
-							<td>揪團主旨: </td>
+							<td><i class="fas fa-volume-up"></i></td>
+							<td>揪團主旨</td>
 							<td>${partyVO.partyTitle}</td>
 						</tr>
 						<tr>
-							<td>揪團狀態: </td>
+							<td><i class="fas fa-info-circle"></i></td>
+							<td>揪團狀態</td>
 							<c:if test="${partyVO.status == '0'}">
 								<td><span class="badge badge-info">熱烈報名中</span></td>
 							</c:if>
@@ -80,24 +87,27 @@
 							</c:if>
 						</tr>
 						<tr>
+							<td><i class="fas fa-users"></i></td>
 							<td>最低成團人數: </td>
 							<td>${partyVO.partyMinSize}</td>
 						</tr>
 						<tr>
+							<td><i class="far fa-check-circle"></i></td>
 							<td>已接受人數: </td>
 							<td>${partyMemberSvc.findByPartySNAndStatus(partyVO.partySN, "1").size()}</td>
 						</tr>
 						<tr>
+							<td><i class="far fa-check-circle"></i></td>
 							<td>未審核人數: </td>
 							<td>${partyMemberSvc.findByPartySNAndStatus(partyVO.partySN, "0").size()}</td>
 						</tr>
 					</table>
 					<div class="next">
-						<c:if test="${partyVO.status == '0' || partyVO.status == '1' || partyVO.status == '4'}">
+						<c:if test="${partyVO.status == '0' or partyVO.status == '1' or partyVO.status == '4'}">
 							<input type="hidden" name="partySN" value="${partyVO.partySN}">
 							<button type="submit" name="action" value="partyIHostDetail" class="btn btn-outline-info btn-sm">修改內容 / 審核報名資格</button>
 						</c:if>
-						<c:if test="${partyVO.status == '2' || partyVO.status == '3' || partyVO.status == '5'}">
+						<c:if test="${partyVO.status == '2' or partyVO.status == '3' or partyVO.status == '5'}">
 							<input type="hidden" name="partySN" value="${partyVO.partySN}">
 							<button type="submit" name="action" value="partyDetail" class="btn btn-outline-secondary btn-sm">查看詳情(不能修改)</button>
 						</c:if>

@@ -34,6 +34,8 @@ div.partyDetail  {
 
 div.partyDetail img {
 	max-width: 90%;
-	width: auto;
-	height: auto;
+}
+
+table tr td {
+	padding: 0 5px;
 }

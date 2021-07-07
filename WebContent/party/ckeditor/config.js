@@ -31,6 +31,4 @@ CKEDITOR.editorConfig = function( config ) {
 	
 	//取消預設img屬性
 	config.disallowedContent = 'img{width,height};img[width,height]';
-//	config.imageResize.maxWidth = 450;
-//	config.imageResize.maxHeight = 450;
 };

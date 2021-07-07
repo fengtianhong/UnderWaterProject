@@ -345,7 +345,7 @@ public class PartyServlet extends HttpServlet {
 				
 				// 跳轉到無條件的總列表(新增的才會在最上面)
 				session.setAttribute("listBySearch", null);
-				req.setAttribute("partyVO", null);
+				req.removeAttribute("partyVO");
 				
 				RequestDispatcher successView = req.getRequestDispatcher("/party/partyList.jsp");
 				successView.forward(req, res);

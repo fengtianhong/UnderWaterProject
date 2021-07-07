@@ -25,6 +25,8 @@
     <link rel="stylesheet" href="css/partyList.css">
     <!-- Bootstrap 的 CSS -->
     <link rel="stylesheet" href="../vendors/bootstrap/css/bootstrap.min.css">
+     <!-- 自己的fontaweson -->
+    <script src="https://kit.fontawesome.com/99b24a5611.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <jsp:include page="../share/navbar.jsp" flush="true" />
@@ -73,29 +75,59 @@
 	<section class="party">
 	<%@ include file="page1.file" %>
 		<c:forEach var="partyVO" items="${listAll}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-			<tr><td>
 			<div class="partyintro">
-			<form method="post" action="<%=request.getContextPath()%>/party/party.do">
-				<div class="partySN">揪團編號: <sup>PartyNo.</sup>${partyVO.partySN}</div>
-				<div class="partyHost">主揪人: ${memberSvc.getone(partyVO.partyHost).userName}(${memberSvc.getone(partyVO.partyHost).nickName})</div>
-				<div class="partyTitle">揪團主旨: ${partyVO.partyTitle}</div>
-				<div class="date">活動日期: ${partyVO.startDate} 至 ${partyVO.endDate}</div>
-				<div class="date">報名截止日期: ${partyVO.closeDate}</div>
-				<div class="partyLocation">揪團潛點: ${diveInfoSvc.getOneDiveInfo(partyVO.partyLocation).pointName}</div>
-				<div class="size">最低成團人數: ${partyVO.partyMinSize}</div>
+				<table>
+					<tr>
+						<td><i class="fas fa-glass-cheers"></i></td>
+						<td>揪團編號 </td>
+						<td><sup>PartyNo.</sup>${partyVO.partySN}</td>
+					</tr>
+					<tr>
+						<td><i class="far fa-user-circle"></i></td>
+						<td>主揪人</td>
+						<td>${memberSvc.getone(partyVO.partyHost).userName}(${memberSvc.getone(partyVO.partyHost).nickName})</td>
+					</tr>
+					<tr>
+						<td><i class="fas fa-volume-up"></i></td>
+						<td>揪團主旨</td>
+						<td>${partyVO.partyTitle}</td>
+					</tr>
+					<tr>
+						<td><i class="fas fa-calendar-alt"></i></td>
+						<td>活動日期</td>
+						<td>${partyVO.startDate} 至 ${partyVO.endDate}</td>
+					</tr>
+					<tr>
+						<td><i class="fas fa-exclamation-circle"></i></td>
+						<td>報名截止</td>
+						<td>${partyVO.closeDate}</td>
+					</tr>
+					<tr>
+						<td><i class="far fa-compass"></i></td>
+						<td>揪團潛點</td>
+						<td>${diveInfoSvc.getOneDiveInfo(partyVO.partyLocation).pointName}</td>
+					</tr>
+					<tr>
+						<td><i class="fas fa-users"></i></td>
+						<td>最低人數</td>
+						<td>${partyVO.partyMinSize}</td>
+					</tr>
+				</table>
 				<c:if test="${partyVO.status == '0'}">
-					<div class="status">
-						<span class="badge badge-info">熱烈報名中</span>
-						<input type="hidden" name="partySN" value="${partyVO.partySN}">
-						<input type="hidden" name="listBySearch" value="${listBySearch}">
-						<button type="submit" name="action" value="partyDetail" class="btn btn-outline-info btn-sm">詳細資訊</button>
-						<button type="submit" name="action" value="goRegister" class="btn btn-outline-info btn-sm">立即報名</button>
-					</div>
+					<form method="post" action="<%=request.getContextPath()%>/party/party.do">
+						<div class="status">
+							<span class="badge badge-info">熱烈報名中</span>
+							<input type="hidden" name="partySN" value="${partyVO.partySN}">
+							<input type="hidden" name="listBySearch" value="${listBySearch}">
+							<button type="submit" name="action" value="partyDetail" class="btn btn-outline-info btn-sm">詳細資訊</button>
+							<button type="submit" name="action" value="goRegister" class="btn btn-outline-info btn-sm">立即報名</button>
+						</div>
+					</form>
 				</c:if>
 				<c:if test="${partyVO.status == '1'}">
-					<div class="status">
-						<span class="badge badge-secondary">揪團已額滿</span>
-					</div>
+						<div class="status">
+							<span class="badge badge-secondary">揪團已額滿</span>
+						</div>
 				</c:if>
 				<c:if test="${partyVO.status == '2'}">
 					<div class="status">
@@ -108,22 +140,22 @@
 					</div>
 				</c:if>
 				<c:if test="${partyVO.status == '4'}">
-					<div class="status">
-						<span class="badge badge-info">已成團(仍可報名)</span>
-						<input type="hidden" name="partySN" value="${partyVO.partySN}">
-						<input type="hidden" name="listBySearch" value="${listBySearch}">
-						<button type="submit" name="action" value="partyDetail" class="btn btn-outline-info btn-sm">詳細資訊</button>
-						<button type="submit" name="action" value="goRegister" class="btn btn-outline-info btn-sm">立即報名</button>
-					</div>
+					<form method="post" action="<%=request.getContextPath()%>/party/party.do">
+						<div class="status">
+							<span class="badge badge-info">已成團(仍可報名)</span>
+							<input type="hidden" name="partySN" value="${partyVO.partySN}">
+							<input type="hidden" name="listBySearch" value="${listBySearch}">
+							<button type="submit" name="action" value="partyDetail" class="btn btn-outline-info btn-sm">詳細資訊</button>
+							<button type="submit" name="action" value="goRegister" class="btn btn-outline-info btn-sm">立即報名</button>
+						</div>
+					</form>
 				</c:if>
 				<c:if test="${partyVO.status == '5'}">
 					<div class="status">
 						<span class="badge badge-secondary">揪團已下架</span>
 					</div>
 				</c:if>
-			</form>
 			</div>
-			</td></tr>
 		</c:forEach>
 	<%@ include file="page2.file" %>
 	</section>

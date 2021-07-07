@@ -35,47 +35,47 @@
 	<table>
 	<tr>
 		<td><i class="fas fa-glass-cheers"></i></td>
-		<td class="partyHost">揪團編號： </td>
+		<td class="partyHost">揪團編號 </td>
 		<td><sup>PartyNo.</sup>${partyVO.partySN}</td>
 	</tr>
 	<tr>
 		<td><i class="far fa-user-circle"></i></td>
-		<td class="partyHost">主揪人： </td>
+		<td class="partyHost">主揪人 </td>
 		<td>${memberSvc.getone(partyVO.partyHost).userName}(${memberSvc.getone(partyVO.partyHost).nickName})</td>
 	</tr>
 	<tr>
 		<td><i class="fas fa-volume-up"></i></td>
-		<td class="partyTitle">揪團主旨: </td>
+		<td class="partyTitle">揪團主旨 </td>
 		<td>${partyVO.partyTitle}</td>
 	</tr>
 	<tr>
 		<td><i class="fas fa-calendar-alt"></i></td>
-		<td class="date">活動日期: </td>
+		<td class="date">活動日期 </td>
 		<td>${partyVO.startDate}至 ${partyVO.endDate}</td>
 	</tr>
 	<tr>
 		<td><i class="fas fa-exclamation-circle"></i></td>
-		<td class="closeDate">報名截止日期: </td>
+		<td class="closeDate">報名截止日期 </td>
 		<td>${partyVO.closeDate}</td>
 	</tr>
 	<tr>
 		<td><i class="far fa-compass"></i></td>
-		<td class="partyLocation">揪團潛點: </td>
+		<td class="partyLocation">揪團潛點 </td>
 		<td>${diveInfoSvc.getOneDiveInfo(partyVO.partyLocation).pointName}</td>
 	</tr>
 	<tr>
 		<td><i class="fas fa-users"></i></td>
-		<td class="size">最低成團人數: </td>
+		<td class="size">最低成團人數 </td>
 		<td>${partyVO.partyMinSize}</td>
 	</tr>
 	<tr>
 		<td><i class="far fa-check-circle"></i></td>
-		<td class="sizenow">通過審核人數: </td>
+		<td class="sizenow">通過審核人數 </td>
 		<td>${partyMemberSvc.findByPartySNAndStatus(partyVO.partySN, "1").size()}</td>
 	</tr>
 	<tr>
 		<td><i class="fas fa-info-circle"></i></td>
-		<td>詳細內容: </td>
+		<td>詳細內容 </td>
 		<td class=""></td>
 	</tr>
 	</table>
@@ -85,9 +85,7 @@
 	<form method="post" action="<%=request.getContextPath()%>/party/party.do">
 		<input type="hidden" name="partySN" value="${partyVO.partySN}">
 		<input type="button" onclick="history.back()" value="回上頁" class="btn btn-outline-info btn-sm">
-		<c:if test="${partyVO.getStatus == '0' || partyVO.getStatus == '4'}">
-			<button type="submit" name="action" value="goRegister" class="btn btn-outline-info btn-sm">報名去</button>
-		</c:if>
+		<button type="submit" name="action" value="goRegister" class="btn btn-outline-info btn-sm">報名去</button>
 	</form>
 </section>
 </main>
