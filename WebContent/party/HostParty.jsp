@@ -30,6 +30,7 @@
 
 <section class="party">
 <form method="post" action="<%=request.getContextPath()%>/party/party.do">
+	<div>partyTitle=${partyVO.partyTitle}</div>
 	<table>
 		<tr>
 			<td>主揪人: </td>
@@ -92,7 +93,7 @@
 	</script>
 	
 	<button type="button" onclick="history.back()" class="btn btn-outline-info btn-sm">回上頁(取消)</button>
-	<button type="submit" name="action" value="readyToHost" class="btn btn-outline-info btn-sm">確認發起揪團</button>
+	<button type="submit" id="submit" name="action" value="readyToHost" class="btn btn-outline-info btn-sm">確認發起揪團</button>
 </form>
 </section>
 
