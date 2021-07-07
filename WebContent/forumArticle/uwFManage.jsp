@@ -8,6 +8,7 @@
 
 <%
 	Integer userID = (Integer) session.getAttribute("userID");
+	Integer articleSN = (Integer)request.getAttribute("articleSN");
 
 	ForumArticleService forumArticleSvc = new ForumArticleService();
 	List<ForumArticleVO> list = forumArticleSvc.getAll();
@@ -30,9 +31,10 @@
 		<meta charset="UTF-8">
 		<title>UW - 文章管理</title>
 		<style type="text/css">
-			.articlestatus {
+			.rtpArticle {
 				border: 1px solid black;
 				margin: 0 auto;
+				width: 600px;
 			}
 			
 			tr {
@@ -42,28 +44,37 @@
 			td {
 				border: 1px solid black;
 			}
-			
-/* 			.readone {
-				margin: 0;
-				padding: 0;
-				border: 1px solid transparent;
-				outline: none;
-			} */
+			.articleHidden {
+				margin: 0 auto;
+				width: 600px;
+				text-align: center;
+			}
 		</style>
 
 	</head>
 	<body>
 		<%@ include file="../share/backend/Bheader.file" %>
-		
-		<table class="articlestatus">
-			<tr>
-				<td><td>
-			</tr>
-		
-		</table>
-		
-		
-		
+			<div class="articleHidden"><h3>文章下架</h3></div>
+			<table class="rtpArticle">
+				<tr>
+					<td>文章編號</td>
+					<td>查看內文</td>
+				</tr>
+				<c:forEach var="forumArticleVO" items="${list}">
+					<tr>
+						<td>
+							${forumArticleVO.articleSN}
+						</td>
+						<td>
+							<form method="post" action="forumArticle.do" class="btn-div">
+								<input type="hidden" name="action" value="getOne_For_mDisplay">
+								<input type="hidden" name="articleSN" value="${forumArticleVO.articleSN}">
+								<input class="btn btn-success" type="submit" value="${forumArticleVO.articleTitle}">
+							</form>
+						</td>
+					</tr>
+				</c:forEach>
+			</table>
 		
 
 		<%@ include file="../share/backend/Bfooter.file" %>

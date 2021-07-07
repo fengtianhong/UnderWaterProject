@@ -3,11 +3,6 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.articleTitleOpt.model.*"%>
 
-<%-- <%
-	ArticleTitleOptService articleTitleOptSvc = new ArticleTitleOptService();
-	List<ArticleTitleOptVO> list = articleTitleOptSvc.getAll();
-	pageContext.setAttribute("list", list);
-%> --%>
 
 <html>
 	<head>

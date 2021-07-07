@@ -8,6 +8,7 @@
 <%
 	Integer userID = (Integer) session.getAttribute("userID");
 	Integer rptSN = (Integer)request.getAttribute("rptSN");
+	Integer articleSN = (Integer)request.getAttribute("articleSN");
 
 	ForumArticleService forumArticleSvc = new ForumArticleService();
 	List<ForumArticleVO> list = forumArticleSvc.getAll();
@@ -57,8 +58,7 @@
 			<table>
 				<tr>
 					<td>檢舉編號</td>
-					<td>檢舉userID</td>
-					<td>檢舉文章</td>
+					<td>文章編號</td>
 					<td>檢舉理由</td>
 					<td>檢舉狀態</td>
 					<td>處理回覆</td>
@@ -67,7 +67,6 @@
 				<c:forEach var="rpt" items="${rptlist}">
 					<tr>
 						<td>${rpt.rptSN}</td>
-						<td>${rpt.userID}</td>
 						<td>${rpt.articleSN}</td>
 						<td>${rpt.rptReason}</td>
 						
@@ -87,9 +86,7 @@
 								<input type="hidden" name="rptSN" value="${rpt.rptSN}">
 								<input type="hidden" name="action" value="getOne_For_Update">
 							</form>
-						</td>
-						
-						
+						</td>						
 					</tr>
 				</c:forEach>
 			</table>

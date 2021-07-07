@@ -79,11 +79,7 @@ public class ArticleReportDAO implements ArticleReportDAO_interface{
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
-			
-//			pstmt.setString(1, articleReportVO.getRptReason());
-//			pstmt.setInt(2, articleReportVO.getUserID());
-//			pstmt.setInt(3, articleReportVO.getArticleSN());
-//			pstmt.setBoolean(1, articleReportVO.getRptStatus());
+
 			pstmt.setString(1, articleReportVO.getReRptResult());
 			pstmt.setInt(2, articleReportVO.getRptSN());
 			

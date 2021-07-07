@@ -185,20 +185,20 @@ public class ForumArticleServlet extends HttpServlet {
 					errorMsgs.add("查無資料");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/forumArticle.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/uwFManage.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				//	查詢完成轉交 - 閱讀文章內文
 				req.setAttribute("forumArticleVO", forumArticleVO); // 資料庫取出的forumArticleVO物件,存入req
 				req.setAttribute("articleSN", articleSN);
-				String url = "/forumArticle/fAListOne.jsp";
+				String url = "/forumArticle/uwReadArticle.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 fAListOne.jsp
 				successView.forward(req, res);
 				//	其他錯誤處理
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/forumArticle.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/forumArticle/uwFManage.jsp");
 				failureView.forward(req, res);
 			}			
 		}

@@ -109,7 +109,6 @@
 				
 				
 				<hr>
-				<!-- 文章標頭區塊 -->
 				<div id="bar" style="margin-left: 20px; margin-top: 20px; box-shadow: 0 1px; padding-bottom:5px;">
 					<jsp:useBean id="memberSvc" scope="session" class="com.member.model.MemberService" />
 					<span class="css_td">作者：${memberSvc.getone(forumArticleVO.userID).nickName}</span>

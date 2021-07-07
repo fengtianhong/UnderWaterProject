@@ -75,7 +75,6 @@ public class ForumCommentServlet extends HttpServlet{
 				
 //				查詢轉交
 				req.setAttribute("forumCommentVO", forumCommentVO);
-//				req.setAttribute("articleSN", articleSN);
 				String url = "/forumArticle/fAListOne.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);				
@@ -97,16 +96,12 @@ public class ForumCommentServlet extends HttpServlet{
 			
 			try {
 //				接收
-//				Integer cmtSN =  (Integer)session.getAttribute("cmtSN");
-//				Integer articleSN = (Integer)session.getAttribute("articleSN");
-//				Integer userID =  (Integer)session.getAttribute("userID");
 				
 				Integer articleSN = new Integer(req.getParameter("articleSN"));
 //				查詢
 				ForumCommentService forumCommentSvc = new ForumCommentService();
 				List<ForumCommentVO> forumCommentVO = forumCommentSvc.getOneForumComment(articleSN);
-//				List<ForumCommentVO> forumCommentVO = forumCommentSvc.getOneForumComment(cmtSN);
-				
+
 //				成功後轉交
 				req.setAttribute("forumCommentVO", forumCommentVO);
 				String url = "/forumArticle/fAListOne.jsp";
@@ -128,7 +123,6 @@ public class ForumCommentServlet extends HttpServlet{
 			
 			try {
 //				接收
-				
 				Integer cmtSN = new Integer(req.getParameter("cmtSN").trim());
 				String cmtText = req.getParameter("cmtText");
 		

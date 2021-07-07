@@ -63,11 +63,7 @@
 			
 
 		</head>
-		<body>
-			<%-- 錯誤表列 --%>
-
-		
-		
+		<body>		
 			<jsp:include page="../share/navbar.jsp" flush="true" />
 		
 			<table id="table-1">

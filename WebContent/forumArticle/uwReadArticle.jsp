@@ -41,13 +41,15 @@
 			<div id="text" style="margin-left: 20px; margin-top: 20px; margin-bottom: 60px;"><h5>${forumArticleVO.articleText}</h5></div>
 
 
+			<input type="button" onclick="window.location.href='<%=request.getContextPath()%>/forumArticle/uwFManage.jsp'"
+							value="文章管理" style="border-radius: 7px; margin-bottom: 20px; margin-left: 20px;">
+							
+			<form method="post" action="forumArticle.do" style="margin-left: 20px;">
+				<input type="submit" value="下架文章">
+				<input type="hidden" name="articleSN" value="<%=articleSN%>">
+				<input type="hidden" name="action" value="mArticleHidden">
+			</form>
 
-
-
-
-
-
-	
 	
 		<%@ include file="../share/backend/Bfooter.file" %>
 	</body>

@@ -7,7 +7,6 @@
 	ArticleTitleOptVO articleTitleOptVO = (ArticleTitleOptVO) request.getAttribute("articleTitleOptVO");
 %>
 
-<%-- <%= articleTitleOptVO == null%>> --%>
 
 <html>
 	<head>
