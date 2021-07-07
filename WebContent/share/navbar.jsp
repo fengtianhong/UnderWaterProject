@@ -20,7 +20,7 @@
                             </div>
                         </li>
                         <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/product/ft_listAllProduct.jsp">商城</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/forumArticle/forumArticle.jsp">論壇</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/uwDiveSideIntro/Northcoast.jsp">潛點分享討論</a></li>
                         <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/member/personinfo.jsp">會員中心</a></li>
                         <li class="nav-item"><a class="nav-link"  target="_blank"  href="<%=request.getContextPath()%>/chat/index.jsp">聊天</a></li>
 						<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/shoppingCar/Cart.jsp">購物車</a></li>
