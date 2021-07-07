@@ -255,10 +255,19 @@ public class OrderListDAO implements OrderListDAO_interface {
 
 		try {
 			pstmt = con.prepareStatement(INSERT_STMT);
+			
 			pstmt.setInt(1, orderListVO.getProductSN());
+//			System.out.println(orderListVO.getProductSN());
+			
 			pstmt.setInt(2, orderListVO.getOrderSN());
+//			System.out.println(orderListVO.getOrderSN());
+			
 			pstmt.setInt(3, orderListVO.getPurchaseQuantity());
+//			System.out.println(orderListVO.getPurchaseQuantity());
+			
 			pstmt.setInt(4, orderListVO.getProductPrice());
+//			System.out.println(orderListVO.getProductPrice());
+			
 			pstmt.setInt(5, 0);
 			pstmt.executeUpdate();
 

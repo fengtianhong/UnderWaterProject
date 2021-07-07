@@ -72,6 +72,7 @@
 		<url-pattern>/qa/addQA.jsp</url-pattern>
 		<url-pattern>/qa/backendList.jsp</url-pattern>
 		<url-pattern>/qa/updateQA.jsp</url-pattern>
+		<url-pattern>/product/bk_listAllProduct.jsp</url-pattern>
 		<url-pattern>/member/webManagerSystem.jsp</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
