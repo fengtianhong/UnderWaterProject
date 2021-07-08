@@ -245,7 +245,6 @@ public class PartyServlet extends HttpServlet {
 				}
 
 				partyMemberSvc.insert(pm1);
-				
 				session.removeAttribute("certificationPic");
 				RequestDispatcher successView = req.getRequestDispatcher("/party/partyIJoin.jsp");
 				successView.forward(req, res);	
@@ -326,13 +325,12 @@ public class PartyServlet extends HttpServlet {
 				Integer partyLocation = Integer.parseInt(req.getParameter("partyLocation"));  // hidden input
 				Integer partyMinSize = null;
 
-				if (req.getParameter("partyMinSize") == "0") {
-					errorMsgs.add("請輸入最低成團人數");
-				} else {
+//				if ("0".equals(req.getParameter("partyMinSize"))) {
+//					errorMsgs.add("請輸入最低成團人數");
+//				} else {
 					partyMinSize =  Integer.parseInt(req.getParameter("partyMinSize"));
-				}
+//				}
 				
-				System.out.println("here4");
 				String partyDetail = req.getParameter("partyDetail");  // 可填可不填
 				String status = "0";
 				
@@ -357,7 +355,6 @@ public class PartyServlet extends HttpServlet {
 				}
 				
 				partySvc.insert(pv1);
-				
 				// 跳轉到無條件的總列表(新增的才會在最上面)
 				session.setAttribute("listBySearch", null);
 				req.removeAttribute("partyVO");

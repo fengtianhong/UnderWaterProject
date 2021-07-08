@@ -30,7 +30,6 @@
 
 <section class="party">
 <form method="post" action="<%=request.getContextPath()%>/party/party.do">
-	<div>partyTitle=${partyVO.partyTitle}</div>
 	<table>
 		<tr>
 			<td>主揪人: </td>
@@ -158,6 +157,15 @@
 		$('input[name="closeDate"]').attr('min', new Date().toISOString().split("T")[0]);
 	});
 	
+	var inputNumber = document.querySelectorAll('input[type=number]')
+
+	inputNumber.forEach(function(input) {
+	  input.addEventListener('change', function(e) {
+	    if (e.target.value == '') {
+	      e.target.value = 0
+	    }
+	  })
+	});
 		
 </script>
 
