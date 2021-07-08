@@ -30,7 +30,7 @@
 
 <section class="party">
 <form method="post" action="<%=request.getContextPath()%>/party/party.do">
-	
+	<div>partyTitle=${partyVO.partyTitle}</div>
 	<table>
 		<tr>
 			<td>主揪人: </td>
